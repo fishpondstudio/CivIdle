@@ -102,7 +102,7 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { srand } from "../../../shared/utilities/Random";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { TileBuildings, client, isAllyWith, populateTileBuildings } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { getNeighboringPlayers, getOwnedOrOccupiedTiles } from "../scenes/PathFinder";
@@ -132,10 +132,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "Headquarter": {
          mapSafePush(Tick.next.tileMultipliers, xy, {
             output: round(getPermanentGreatPeopleLevel(getGameOptions()) * 0.1, 1),
-            source: t(L.PermanentGreatPeople),
+            source: $t(L.PermanentGreatPeople),
          });
          if (gs.unlockedUpgrades.SpaceshipIdle) {
-            tickUnlockable(Config.Upgrade.SpaceshipIdle, t(L.WishlistSpaceshipIdle), gs);
+            tickUnlockable(Config.Upgrade.SpaceshipIdle, $t(L.WishlistSpaceshipIdle), gs);
          }
          if (hasFeature(GameFeature.Festival, gs)) {
             if (gs.festival) {
@@ -164,13 +164,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(
                   building,
                   { output: TRADE_TILE_BONUS, unstable: true },
-                  `${t(L.PlayerMapMapTileBonus)} (${i + 1})`,
+                  `${$t(L.PlayerMapMapTileBonus)} (${i + 1})`,
                );
                if (wtoLevel > 0) {
                   addMultiplier(
                      building,
                      { output: wtoLevel, unstable: true },
-                     `${t(L.WorldTradeOrganization)} (${i + 1})`,
+                     `${$t(L.WorldTradeOrganization)} (${i + 1})`,
                   );
                }
             }
@@ -189,7 +189,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                      addMultiplier(
                         building,
                         { output: TRADE_TILE_ALLY_BONUS, unstable: true },
-                        `${t(L.PlayerMapMapAllyTileBonus)} (${tile.handle})`,
+                        `${$t(L.PlayerMapMapAllyTileBonus)} (${tile.handle})`,
                      );
                      if (hasLakeLouise) {
                         mapSafeAdd(lakeLouiseLevelBoosts, building, TRADE_TILE_ALLY_BONUS);
@@ -198,7 +198,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                      addMultiplier(
                         building,
                         { output: TRADE_TILE_NEIGHBOR_BONUS, unstable: true },
-                        `${t(L.PlayerMapMapNeighborTileBonus)} (${tile.handle})`,
+                        `${$t(L.PlayerMapMapNeighborTileBonus)} (${tile.handle})`,
                      );
                   }
                }
@@ -209,7 +209,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
 
          for (const [building, level] of lakeLouiseLevelBoosts) {
-            addLevelBoost(building, level, t(L.LakeLouise), gs);
+            addLevelBoost(building, level, $t(L.LakeLouise), gs);
          }
 
          if (isSteam() && allyCount > 0 && !declareFriendshipAchievementUnlocked) {
@@ -268,12 +268,12 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (mul > 0) {
                mapSafePush(Tick.next.tileMultipliers, xy, {
                   output: mul,
-                  source: t(L.NaturalWonderName, { name: buildingName }),
+                  source: $t(L.NaturalWonderName, { name: buildingName }),
                });
                if (isFestival("Alps", gs)) {
                   mapSafePush(Tick.next.levelBoost, xy, {
                      value: mul,
-                     source: t(L.NaturalWonderName, { name: buildingName }),
+                     source: $t(L.NaturalWonderName, { name: buildingName }),
                   });
                }
             }
@@ -776,7 +776,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                if (isFestival("GreatSphinx", gs)) {
                   mapSafePush(Tick.next.levelBoost, tileXy, {
                      value: count,
-                     source: t(L.NaturalWonderName, { name: buildingName }),
+                     source: $t(L.NaturalWonderName, { name: buildingName }),
                   });
                }
             }
@@ -983,7 +983,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             forEach(gs.greatPeople, (gp, level) => {
                if (level > 0) {
                   const def = Config.GreatPerson[gp];
-                  def.tick(gp, 1, `${t(L.Festival)}: ${def.name()}`, GreatPersonTickFlag.Unstable);
+                  def.tick(gp, 1, `${$t(L.Festival)}: ${def.name()}`, GreatPersonTickFlag.Unstable);
                }
             });
          }
@@ -1069,7 +1069,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   gs.unlockedUpgrades[trad] = true;
                   def.onUnlocked?.(gs);
                }
-               tickUnlockable(def, t(L.SourceTradition, { tradition: def.name() }), gs);
+               tickUnlockable(def, $t(L.SourceTradition, { tradition: def.name() }), gs);
             }
          }
          break;
@@ -1089,7 +1089,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   gs.unlockedUpgrades[rel] = true;
                   def.onUnlocked?.(gs);
                }
-               tickUnlockable(def, t(L.SourceReligion, { religion: def.name() }), gs);
+               tickUnlockable(def, $t(L.SourceReligion, { religion: def.name() }), gs);
             }
          }
          break;
@@ -1109,7 +1109,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   gs.unlockedUpgrades[ideo] = true;
                   def.onUnlocked?.(gs);
                }
-               tickUnlockable(def, t(L.SourceIdeology, { ideology: def.name() }), gs);
+               tickUnlockable(def, $t(L.SourceIdeology, { ideology: def.name() }), gs);
             }
          }
          break;
@@ -1614,7 +1614,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                greatPerson.tick(
                   gp,
                   1,
-                  t(L.CambridgeUniversitySource, { age: Config.TechAge[age].name() }),
+                  $t(L.CambridgeUniversitySource, { age: Config.TechAge[age].name() }),
                   GreatPersonTickFlag.None,
                );
             });
@@ -1669,7 +1669,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const ageWisdomLevel = options.ageWisdom[previousAge] ?? 0;
             getGreatPeopleForWisdom(previousAge).forEach((gp) => {
                const greatPerson = Config.GreatPerson[gp];
-               greatPerson.tick(gp, ageWisdomLevel, t(L.DuneOfPilat), GreatPersonTickFlag.Unstable);
+               greatPerson.tick(gp, ageWisdomLevel, $t(L.DuneOfPilat), GreatPersonTickFlag.Unstable);
             });
          }
          break;
@@ -1970,7 +1970,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                greatPerson.tick(
                   gp,
                   level * 0.5,
-                  `${buildingName} (${t(L.AgeWisdomSource, { age: Config.TechAge[age].name(), person: greatPerson.name() })})`,
+                  `${buildingName} (${$t(L.AgeWisdomSource, { age: Config.TechAge[age].name(), person: greatPerson.name() })})`,
                   GreatPersonTickFlag.None,
                );
             });
@@ -2138,7 +2138,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             addMultiplier(
                "Cosmodrome",
                { output: ageWisdomLevel, storage: ageWisdomLevel },
-               `${buildingName} (${t(L.AgeWisdom)})`,
+               `${buildingName} (${$t(L.AgeWisdom)})`,
             );
          }
          break;
@@ -2201,7 +2201,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             addMultiplier(
                "AILab",
                { output: informationAgeWisdomLevel, storage: informationAgeWisdomLevel },
-               `${t(L.AgeWisdom)} (${buildingName})`,
+               `${$t(L.AgeWisdom)} (${buildingName})`,
             );
          }
          const happiness = Tick.current.happiness?.value ?? 0;

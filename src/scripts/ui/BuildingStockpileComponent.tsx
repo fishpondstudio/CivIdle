@@ -10,7 +10,7 @@ import {
    STOCKPILE_MAX_MIN,
 } from "../../../shared/logic/Tile";
 import { isEmpty } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
@@ -31,10 +31,10 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
    return (
       <fieldset>
          <legend>
-            {t(L.StockpileSettings)}: {building.stockpileCapacity}x
+            {$t(L.StockpileSettings)}: {building.stockpileCapacity}x
          </legend>
          <div className="sep5"></div>
-         <Tippy content={t(L.StockpileDesc, { capacity: building.stockpileCapacity })}>
+         <Tippy content={$t(L.StockpileDesc, { capacity: building.stockpileCapacity })}>
             <input
                type="range"
                min={STOCKPILE_CAPACITY_MIN}
@@ -55,16 +55,16 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
          <div className="sep10"></div>
          <div className="separator has-title">
             <div>
-               {t(L.StockpileMax)}:{" "}
-               {building.stockpileMax <= 0 ? t(L.StockpileMaxUnlimited) : `${building.stockpileMax}x`}
+               {$t(L.StockpileMax)}:{" "}
+               {building.stockpileMax <= 0 ? $t(L.StockpileMaxUnlimited) : `${building.stockpileMax}x`}
             </div>
          </div>
          <div className="sep5"></div>
          <Tippy
             content={
                building.stockpileMax <= 0
-                  ? t(L.StockpileMaxUnlimitedDesc)
-                  : t(L.StockpileMaxDesc, { cycle: building.stockpileMax })
+                  ? $t(L.StockpileMaxUnlimitedDesc)
+                  : $t(L.StockpileMaxDesc, { cycle: building.stockpileMax })
             }
          >
             <input

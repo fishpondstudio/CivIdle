@@ -3,7 +3,7 @@ import { NoPrice, type Material } from "../definitions/MaterialDefinitions";
 import { forEach, type Tile } from "../utilities/Helper";
 import type { RequireAtLeastOne } from "../utilities/Type";
 import { TypedEvent } from "../utilities/TypedEvent";
-import { L, t } from "../utilities/i18n";
+import { $t, L } from "../utilities/i18n";
 import { getBuildingValue } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
@@ -108,8 +108,8 @@ export enum NotProducingReason {
 
 export class GlobalMultipliers {
    sciencePerIdleWorker: IValueWithSource[] = [];
-   sciencePerBusyWorker: IValueWithSource[] = [{ value: 1, source: t(L.BaseProduction) }];
-   builderCapacity: IValueWithSource[] = [{ value: 1, source: t(L.BaseMultiplier) }];
+   sciencePerBusyWorker: IValueWithSource[] = [{ value: 1, source: $t(L.BaseProduction) }];
+   builderCapacity: IValueWithSource[] = [{ value: 1, source: $t(L.BaseMultiplier) }];
    transportCapacity: IValueWithSource[] = [];
    happiness: IValueWithSource[] = [];
    input: IValueWithSource[] = [];
@@ -119,15 +119,15 @@ export class GlobalMultipliers {
 }
 
 export const GlobalMultiplierNames: Record<keyof GlobalMultipliers, () => string> = {
-   sciencePerBusyWorker: () => t(L.ScienceFromBusyWorkers),
-   sciencePerIdleWorker: () => t(L.ScienceFromIdleWorkers),
-   builderCapacity: () => t(L.BuilderCapacity),
-   happiness: () => t(L.Happiness),
-   transportCapacity: () => t(L.TransportCapacity),
-   input: () => t(L.ConsumptionMultiplier),
-   output: () => t(L.ProductionMultiplier),
-   worker: () => t(L.WorkerCapacityMultiplier),
-   storage: () => t(L.StorageMultiplier),
+   sciencePerBusyWorker: () => $t(L.ScienceFromBusyWorkers),
+   sciencePerIdleWorker: () => $t(L.ScienceFromIdleWorkers),
+   builderCapacity: () => $t(L.BuilderCapacity),
+   happiness: () => $t(L.Happiness),
+   transportCapacity: () => $t(L.TransportCapacity),
+   input: () => $t(L.ConsumptionMultiplier),
+   output: () => $t(L.ProductionMultiplier),
+   worker: () => $t(L.WorkerCapacityMultiplier),
+   storage: () => $t(L.StorageMultiplier),
 };
 
 export function freezeTickData(t: ITickData): ITickData {
@@ -164,9 +164,9 @@ export const AllMultiplierTypes = ["output", "worker", "storage"] satisfies (key
 
 export type MultiplierType = keyof IMultiplier;
 export const MultiplierTypeDesc: Record<MultiplierType, () => string> = {
-   output: () => t(L.ProductionMultiplier),
-   worker: () => t(L.WorkerMultiplier),
-   storage: () => t(L.StorageMultiplier),
+   output: () => $t(L.ProductionMultiplier),
+   worker: () => $t(L.WorkerMultiplier),
+   storage: () => $t(L.StorageMultiplier),
 };
 
 export interface IValueWithSource {

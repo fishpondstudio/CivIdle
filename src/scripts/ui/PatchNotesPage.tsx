@@ -1,5 +1,5 @@
 import { PatchNotes } from "../../../shared/definitions/PatchNotes";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { openUrl } from "../utilities/Platform";
 import { MenuComponent } from "./MenuComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
@@ -7,7 +7,7 @@ import { TitleBarComponent } from "./TitleBarComponent";
 export function PatchNotesPage(): React.ReactNode {
    return (
       <div className="window">
-         <TitleBarComponent>{t(L.PatchNotes)}</TitleBarComponent>
+         <TitleBarComponent>{$t(L.PatchNotes)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             {PatchNotes.map((note) => {
@@ -23,7 +23,7 @@ export function PatchNotesPage(): React.ReactNode {
                      })}
                      {note.link ? (
                         <div className="text-link text-strong" onClick={() => openUrl(note.link!)}>
-                           {t(L.ReadFullPatchNotes)}
+                           {$t(L.ReadFullPatchNotes)}
                         </div>
                      ) : null}
                   </fieldset>

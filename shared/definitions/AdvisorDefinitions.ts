@@ -1,7 +1,7 @@
 import type { GameState } from "../logic/GameState";
 import { Tick } from "../logic/TickLogic";
 import { deepFreeze } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
+import { $t, L } from "../utilities/i18n";
 
 export interface IAdvisor {
    title: () => string;
@@ -49,8 +49,8 @@ export const Advisors = deepFreeze({
    //    },
    // },
    Tradition: {
-      title: () => t(L.AdvisorTraditionTitle),
-      content: () => t(L.AdvisorTraditionContent),
+      title: () => $t(L.AdvisorTraditionTitle),
+      content: () => $t(L.AdvisorTraditionContent),
       condition: (gs) => {
          return (
             Tick.current.specialBuildings.has("ChoghaZanbil") ||
@@ -60,8 +60,8 @@ export const Advisors = deepFreeze({
       },
    },
    Electricity: {
-      title: () => t(L.AdvisorElectricityTitle),
-      content: () => t(L.AdvisorElectricityContentV2),
+      title: () => $t(L.AdvisorElectricityTitle),
+      content: () => $t(L.AdvisorElectricityContentV2),
       condition: (gs) => !!gs.unlockedTech.Electricity,
    },
    // GreatPeople: {

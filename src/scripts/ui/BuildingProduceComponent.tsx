@@ -1,7 +1,7 @@
 import { IOFlags } from "../../../shared/logic/BuildingLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
 import { isEmpty } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { BuildingIOTreeViewComponent } from "./BuildingIOTreeViewComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { RenderHTML } from "./RenderHTMLComponent";
@@ -14,10 +14,10 @@ export function BuildingProduceComponent({ gameState, xy }: IBuildingComponentPr
    }
    return (
       <fieldset>
-         <legend>{t(L.Produce)}</legend>
+         <legend>{$t(L.Produce)}</legend>
          {gameState.tiles.get(xy)?.building?.type === "CloneLab" ? (
             <WarningComponent icon="info" className="mb10 text-small">
-               <RenderHTML html={t(L.CloneLabScienceMultiplierHTML)} />
+               <RenderHTML html={$t(L.CloneLabScienceMultiplierHTML)} />
             </WarningComponent>
          ) : null}
          <BuildingIOTreeViewComponent gameState={gameState} xy={xy} type="output" />

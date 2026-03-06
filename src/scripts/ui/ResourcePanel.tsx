@@ -31,7 +31,7 @@ import {
    round,
    tileToPoint,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { FloatingModeChanged, useFloatingMode, useGameOptions, useGameState } from "../Global";
 import { useCurrentTick } from "../logic/ClientUpdate";
 import { TimeSeries } from "../logic/TimeSeries";
@@ -115,7 +115,7 @@ export function ResourcePanel(): React.ReactNode {
       >
          {isSteam() && (
             <>
-               <Tippy content={t(L.EnterExitMinimizedMode)}>
+               <Tippy content={$t(L.EnterExitMinimizedMode)}>
                   <div className="menu-button app-region-none">
                      <div
                         className="m-icon"
@@ -157,7 +157,7 @@ export function ResourcePanel(): React.ReactNode {
                      onPointerDown={(e) => {
                         if (gs.favoriteTiles.size === 0) {
                            playError();
-                           showToast(t(L.FavoriteBuildingEmptyToast));
+                           showToast($t(L.FavoriteBuildingEmptyToast));
                            return;
                         }
                         e.nativeEvent.stopPropagation();
@@ -191,7 +191,7 @@ export function ResourcePanel(): React.ReactNode {
                                  <div className="f1">{Config.Building[building.type].name()}</div>
                                  {!isSpecialBuilding(building.type) ? (
                                     <span className="ml10 text-small text-desc">
-                                       {t(L.LevelX, { level: building.level })}
+                                       {$t(L.LevelX, { level: building.level })}
                                     </span>
                                  ) : null}
                               </div>
@@ -206,7 +206,9 @@ export function ResourcePanel(): React.ReactNode {
             <>
                <Tippy
                   placement="bottom"
-                  content={options.resourceBarShowUncappedHappiness ? t(L.HappinessUncapped) : t(L.Happiness)}
+                  content={
+                     options.resourceBarShowUncappedHappiness ? $t(L.HappinessUncapped) : $t(L.Happiness)
+                  }
                >
                   <div
                      id="tutorial-happiness"
@@ -274,7 +276,7 @@ export function ResourcePanel(): React.ReactNode {
          )}
          {!options.hideResourcePanelSections.has("Workers") && (
             <>
-               <Tippy content={`${t(L.WorkersBusy)} / ${t(L.TotalWorkers)}`} placement="bottom">
+               <Tippy content={`${$t(L.WorkersBusy)} / ${$t(L.TotalWorkers)}`} placement="bottom">
                   <div className="section">
                      <div
                         className={classNames({
@@ -294,7 +296,7 @@ export function ResourcePanel(): React.ReactNode {
          {!options.hideResourcePanelSections.has("Electricity") &&
             hasFeature(GameFeature.Electricity, gs) && (
                <>
-                  <Tippy placement="bottom" content={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}>
+                  <Tippy placement="bottom" content={`${$t(L.PowerUsed)}/${$t(L.PowerAvailable)}`}>
                      <div className="section">
                         <div
                            className={classNames({
@@ -321,7 +323,7 @@ export function ResourcePanel(): React.ReactNode {
             )}
          {!options.hideResourcePanelSections.has("Science") && (
             <>
-               <Tippy content={t(L.Science)} placement="bottom">
+               <Tippy content={$t(L.Science)} placement="bottom">
                   <div
                      className="section pointer"
                      onClick={() => Singleton().sceneManager.loadScene(TechTreeScene)}
@@ -358,7 +360,7 @@ export function ResourcePanel(): React.ReactNode {
                   content={
                      <>
                         <div className="row">
-                           <div className="f1">{t(L.TotalEmpireValue)}</div>
+                           <div className="f1">{$t(L.TotalEmpireValue)}</div>
                            <div className="text-strong">
                               <FormatNumber value={tick.totalValue} />
                            </div>
@@ -399,10 +401,10 @@ export function ResourcePanel(): React.ReactNode {
                   content={
                      <>
                         <div>
-                           {t(L.ExtraGreatPeopleAtReborn)}: {getRebirthGreatPeopleCount()}
+                           {$t(L.ExtraGreatPeopleAtReborn)}: {getRebirthGreatPeopleCount()}
                         </div>
                         <div>
-                           {t(L.ProgressTowardsNextGreatPerson)}:{" "}
+                           {$t(L.ProgressTowardsNextGreatPerson)}:{" "}
                            {formatPercent(
                               clamp(getProgressTowardsNextGreatPerson(), 0, 1),
                               0,
@@ -437,7 +439,7 @@ export function ResourcePanel(): React.ReactNode {
          getOwnedTradeTile() &&
          Tick.current.playerTradeBuildings.size > 0 ? (
             <>
-               <Tippy content={t(L.PlayerTrade)}>
+               <Tippy content={$t(L.PlayerTrade)}>
                   <div
                      className="section pointer mh10"
                      onPointerDown={(e) => {
@@ -459,12 +461,12 @@ export function ResourcePanel(): React.ReactNode {
                content={
                   <>
                      <div className="row g20">
-                        <div className="f1">{t(L.WarpSpeed)}</div>
+                        <div className="f1">{$t(L.WarpSpeed)}</div>
                         <div>{gs.speedUp}x</div>
                      </div>
                      {gs.speedUp > 1 ? (
                         <div className="row g20">
-                           <div className="f1">{t(L.EstimatedTimeLeft)}</div>
+                           <div className="f1">{$t(L.EstimatedTimeLeft)}</div>
                            <div>{formatHMS((1000 * currentWarp) / (gs.speedUp - 1))}</div>
                         </div>
                      ) : null}
@@ -508,13 +510,13 @@ function DeficitResources(): React.ReactNode {
          maxWidth="50vw"
          content={
             <>
-               <div>{t(L.DeficitResources)}</div>
+               <div>{$t(L.DeficitResources)}</div>
                <table className="date-table" style={{ minWidth: 250 }}>
                   <thead>
                      <tr>
-                        <th className="text-left">{t(L.Resource)}</th>
-                        <th className="text-right">{t(L.StatisticsResourcesDeficit)}</th>
-                        <th className="text-right">{t(L.StatisticsResourcesRunOut)}</th>
+                        <th className="text-left">{$t(L.Resource)}</th>
+                        <th className="text-right">{$t(L.StatisticsResourcesDeficit)}</th>
+                        <th className="text-right">{$t(L.StatisticsResourcesRunOut)}</th>
                      </tr>
                   </thead>
                   <tbody>

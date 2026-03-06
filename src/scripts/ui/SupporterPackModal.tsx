@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import { GameAnalytics } from "gameanalytics";
 import { useEffect } from "react";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import SupporterPackImage from "../../images/SupporterPackImage.jpg";
 import { isSteam } from "../rpc/SteamClient";
 import { isAndroid, isIOS } from "../utilities/Platforms";
@@ -28,7 +28,7 @@ export function SupporterPackModal(): React.ReactNode {
    return (
       <div className="window" style={{ width: "500px", maxWidth: "50vw" }}>
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.SupporterPack)}</div>
+            <div className="title-bar-text">{$t(L.SupporterPack)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
@@ -41,7 +41,7 @@ export function SupporterPackModal(): React.ReactNode {
                <div>
                   <MiscTextureComponent name="Supporter" scale={0.5} />
                </div>
-               <div style={{ fontSize: "1.6rem" }}>{t(L.ThankYouForSupporting)}</div>
+               <div style={{ fontSize: "1.6rem" }}>{$t(L.ThankYouForSupporting)}</div>
             </div>
             <div className="sep10" />
             <div className="row">
@@ -52,7 +52,7 @@ export function SupporterPackModal(): React.ReactNode {
                      hideModal();
                   }}
                >
-                  {t(L.EmpireMustGrow)}
+                  {$t(L.EmpireMustGrow)}
                </button>
             </div>
          </div>

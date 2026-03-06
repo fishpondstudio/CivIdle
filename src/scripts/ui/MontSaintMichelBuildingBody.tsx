@@ -2,7 +2,7 @@ import { getBuildingCost, getScienceFromWorkers } from "../../../shared/logic/Bu
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { formatNumber, safeAdd } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playClick, playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -27,13 +27,13 @@ export function MontSaintMichelBuildingBody({ gameState, xy }: IBuildingComponen
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
             <div className="row">
-               <div className="f1">{t(L.WonderUpgradeLevel)}</div>
+               <div className="f1">{$t(L.WonderUpgradeLevel)}</div>
                <div className="text-strong">{building.level}</div>
             </div>
             <div className="separator" />
             <ProgressBarComponent progress={currentAmount / maxAmount} />
             <div className="row mt5">
-               <div className="f1">{t(L.Culture)}</div>
+               <div className="f1">{$t(L.Culture)}</div>
                <div className="text-strong">
                   <FormatNumber value={currentAmount} />
                   <span className="text-green">+{formatNumber(culture)}</span>
@@ -57,7 +57,7 @@ export function MontSaintMichelBuildingBody({ gameState, xy }: IBuildingComponen
                }}
             >
                <div className="m-icon small">assistant_navigation</div>
-               <div className="text-strong f1">{t(L.Upgrade)}</div>
+               <div className="text-strong f1">{$t(L.Upgrade)}</div>
             </button>
          </fieldset>
          <BuildingValueComponent gameState={gameState} xy={xy} />

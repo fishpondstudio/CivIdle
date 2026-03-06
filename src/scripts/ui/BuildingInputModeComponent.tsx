@@ -6,7 +6,7 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
 import { BuildingInputModeNames, BuildingInputModeTooltips } from "../../../shared/logic/Tile";
 import { clamp, isEmpty, safeParseInt } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { jsxMMapOf } from "../utilities/Helper";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -28,7 +28,7 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
    }
    return (
       <fieldset>
-         <legend>{t(L.ResourceTransportPreference)}</legend>
+         <legend>{$t(L.ResourceTransportPreference)}</legend>
          <div className="row">
             {jsxMMapOf(BuildingInputModeNames, (mode, name) => {
                return (
@@ -58,7 +58,7 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
          />
          <div className="sep10"></div>
          <div className="separator has-title">
-            <div>{t(L.MaxTransportDistance)}</div>
+            <div>{$t(L.MaxTransportDistance)}</div>
          </div>
          <div className="sep5"></div>
          <div className="row">
@@ -88,12 +88,12 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
                      "text-desc": building.maxInputDistance !== Number.POSITIVE_INFINITY,
                   })}
                >
-                  {t(L.DistanceInfinity)}
+                  {$t(L.DistanceInfinity)}
                </div>
             </div>
 
             <div className="f1"></div>
-            <div>{t(L.DistanceInTiles)}</div>
+            <div>{$t(L.DistanceInTiles)}</div>
             <input
                value={building.maxInputDistance}
                onChange={(e) => {

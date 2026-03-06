@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { client } from "../rpc/RPCClient";
 import { Fonts } from "../visuals/Fonts";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -24,7 +24,7 @@ export function HagiaSophiaBuildingBody({ gameState, xy }: IBuildingComponentPro
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset className="text-center">
             <div className="text-small text-desc" style={{ textTransform: "uppercase" }}>
-               {t(L.SupporterThankYou)}
+               {$t(L.SupporterThankYou)}
             </div>
             <div style={{ fontFamily: Fonts.OldTypefaces, fontSize: 22, margin: "10px 0" }}>
                {supporters.join(", ")}

@@ -10,7 +10,7 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { SuspendedInput } from "../../../shared/logic/Tile";
 import { formatHMS, formatNumber, formatPercent, sizeOf } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
@@ -34,12 +34,12 @@ export function BuildingConstructionProgressComponent({
    return (
       <fieldset>
          <div className="row">
-            <div className="f1">{t(L.ConstructionProgress)}</div>
+            <div className="f1">{$t(L.ConstructionProgress)}</div>
             <div>{formatPercent(percent, 0)}</div>
          </div>
          <div className="sep5"></div>
          <div className="row">
-            <div className="f1">{t(L.EstimatedTimeLeft)}</div>
+            <div className="f1">{$t(L.EstimatedTimeLeft)}</div>
             <div>{formatHMS(secondsLeft * 1000)}</div>
          </div>
          <div className="sep5"></div>
@@ -50,13 +50,13 @@ export function BuildingConstructionProgressComponent({
                <tbody>
                   <tr>
                      <th style={{ width: 0 }}></th>
-                     <th>{t(L.ConstructionResource)}</th>
+                     <th>{$t(L.ConstructionResource)}</th>
                      <th className="text-right">
-                        <TextWithHelp content={t(L.TransportAllocatedCapacityTooltip)}>
-                           {t(L.Capacity)}
+                        <TextWithHelp content={$t(L.TransportAllocatedCapacityTooltip)}>
+                           {$t(L.Capacity)}
                         </TextWithHelp>
                      </th>
-                     <th className="text-right">{t(L.ConstructionDelivered)}</th>
+                     <th className="text-right">{$t(L.ConstructionDelivered)}</th>
                   </tr>
                   {jsxMapOf(cost, (res, value) => {
                      return (
@@ -72,7 +72,7 @@ export function BuildingConstructionProgressComponent({
                                  notifyGameStateUpdate();
                               }}
                            >
-                              <Tippy content={t(L.TransportManualControlTooltip)}>
+                              <Tippy content={$t(L.TransportManualControlTooltip)}>
                                  {(building.suspendedInput.has(res) ?? false) ? (
                                     <div className="m-icon text-red">toggle_off</div>
                                  ) : (
@@ -106,7 +106,7 @@ export function BuildingConstructionProgressComponent({
          {isWorldWonder(building.type) ? (
             <>
                <WarningComponent icon="info" className="text-small">
-                  <RenderHTML html={t(L.WonderBuilderCapacityDescHTML)} />
+                  <RenderHTML html={$t(L.WonderBuilderCapacityDescHTML)} />
                </WarningComponent>
                <div className="sep10"></div>
             </>
@@ -114,20 +114,20 @@ export function BuildingConstructionProgressComponent({
          <ul className="tree-view">
             <details>
                <summary className="row">
-                  <div className="f1">{t(L.ConstructionBuilderCapacity)}</div>
+                  <div className="f1">{$t(L.ConstructionBuilderCapacity)}</div>
                   <div className="text-strong">
                      <FormatNumber value={total} />
                   </div>
                </summary>
                <ul>
                   <li className="row">
-                     <div className="f1">{t(L.ConstructionBuilderBaseCapacity)}</div>
+                     <div className="f1">{$t(L.ConstructionBuilderBaseCapacity)}</div>
                      <div className="text-strong">
                         <FormatNumber value={base} />
                      </div>
                   </li>
                   <li className="row">
-                     <div className="f1">{t(L.ConstructionBuilderMultiplier)}</div>
+                     <div className="f1">{$t(L.ConstructionBuilderMultiplier)}</div>
                      <div className="text-strong">
                         x
                         <FormatNumber value={multiplier} />

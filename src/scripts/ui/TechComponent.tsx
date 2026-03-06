@@ -1,4 +1,4 @@
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 
 export function TechPrerequisiteItemComponent({
    name,
@@ -18,7 +18,7 @@ export function TechPrerequisiteItemComponent({
          )}
          <div className="f1">{name}</div>
          <div className="text-link" onClick={action}>
-            {t(L.ViewTechnology)}
+            {$t(L.ViewTechnology)}
          </div>
       </div>
    );

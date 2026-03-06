@@ -28,7 +28,7 @@ import {
    keysOf,
    toggleFlag,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
@@ -77,10 +77,10 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
 
    const headers = [
       { name: "", sortable: false },
-      { name: t(L.ResourceImportResource), sortable: true },
-      { name: t(L.ResourceImportStorage), sortable: true, right: true },
-      { name: t(L.ResourceImportImportPerCycleV2), sortable: true, right: true },
-      { name: t(L.ResourceImportImportCapV2), sortable: true, right: true },
+      { name: $t(L.ResourceImportResource), sortable: true },
+      { name: $t(L.ResourceImportStorage), sortable: true, right: true },
+      { name: $t(L.ResourceImportImportPerCycleV2), sortable: true, right: true },
+      { name: $t(L.ResourceImportImportCapV2), sortable: true, right: true },
    ];
 
    if (!options.warehouseQuickMode) {
@@ -89,10 +89,10 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
 
    return (
       <fieldset>
-         <legend>{t(L.ResourceImport)}</legend>
+         <legend>{$t(L.ResourceImport)}</legend>
          {idleCapacity < 0 ? (
             <WarningComponent className="text-small mb10" icon="warning">
-               <RenderHTML html={t(L.ResourceImportPartialWarningHTML)} />
+               <RenderHTML html={$t(L.ResourceImportPartialWarningHTML)} />
             </WarningComponent>
          ) : null}
          <TableView
@@ -150,7 +150,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                         <div>{Config.Material[res].name()}</div>
                         {isNullOrUndefined(ri?.inputMode) ? null : (
                            <Tippy
-                              content={t(L.TechResourceTransportPreferenceOverrideTooltip, {
+                              content={$t(L.TechResourceTransportPreferenceOverrideTooltip, {
                                  mode: BuildingInputModeNames.get(ri.inputMode)!(),
                               })}
                            >
@@ -193,11 +193,11 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
             <>
                <div className="row text-small">
                   <div className={classNames({ "text-desc": selected.size === 0 })}>
-                     {t(L.SelectedCount, { count: selected.size })}
+                     {$t(L.SelectedCount, { count: selected.size })}
                   </div>
                   <div className="f1"></div>
                   <div className="text-link mr10" onClick={() => setSelected(new Set(resources))}>
-                     {t(L.SelectedAll)}
+                     {$t(L.SelectedAll)}
                   </div>
                   <div
                      className="text-link mr10"
@@ -211,15 +211,15 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                         });
                      }}
                   >
-                     {t(L.InverseSelection)}
+                     {$t(L.InverseSelection)}
                   </div>
                   <div className="text-link" onClick={() => setSelected(new Set())}>
-                     {t(L.ClearSelection)}
+                     {$t(L.ClearSelection)}
                   </div>
                </div>
                <div className="sep5"></div>
                <div className="row text-small">
-                  <div className="text-desc">{t(L.RedistributeAmongSelected)}</div>
+                  <div className="text-desc">{$t(L.RedistributeAmongSelected)}</div>
                   <div className="f1"></div>
                   <div
                      className="text-link mr10"
@@ -238,7 +238,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                         notifyGameStateUpdate();
                      }}
                   >
-                     {t(L.RedistributeAmongSelectedImport)}
+                     {$t(L.RedistributeAmongSelectedImport)}
                   </div>
                   <div
                      className="text-link"
@@ -257,12 +257,12 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                         notifyGameStateUpdate();
                      }}
                   >
-                     {t(L.RedistributeAmongSelectedCap)}
+                     {$t(L.RedistributeAmongSelectedCap)}
                   </div>
                </div>
                <div className="sep5"></div>
                <div className="row text-small">
-                  <div className="text-desc">{t(L.ClearSelected)}</div>
+                  <div className="text-desc">{$t(L.ClearSelected)}</div>
                   <div className="f1"></div>
                   <div
                      className="text-link mr10"
@@ -275,7 +275,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                         notifyGameStateUpdate();
                      }}
                   >
-                     {t(L.RedistributeAmongSelectedImport)}
+                     {$t(L.RedistributeAmongSelectedImport)}
                   </div>
                   <div
                      className="text-link"
@@ -288,7 +288,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                         notifyGameStateUpdate();
                      }}
                   >
-                     {t(L.RedistributeAmongSelectedCap)}
+                     {$t(L.RedistributeAmongSelectedCap)}
                   </div>
                </div>
                <div className="sep10" />
@@ -309,27 +309,27 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
             <li>
                <details>
                   <summary className="row">
-                     <div className="f1">{t(L.ResourceImportCapacity)}</div>
+                     <div className="f1">{$t(L.ResourceImportCapacity)}</div>
                      <div className="text-strong">
                         <FormatNumber value={baseCapacity * capacityMultiplier} />
                      </div>
                   </summary>
                   <ul>
                      <li className="row">
-                        <div className="f1">{t(L.BaseCapacity)}</div>
+                        <div className="f1">{$t(L.BaseCapacity)}</div>
                         <div className="text-strong">
                            <FormatNumber value={baseCapacity} />
                         </div>
                      </li>
                      <li className="row">
-                        <div className="f1">{t(L.ProductionMultiplier)}</div>
+                        <div className="f1">{$t(L.ProductionMultiplier)}</div>
                         <div className="text-strong">
                            <FormatNumber value={capacityMultiplier} />
                         </div>
                      </li>
                      <ul className="text-small">
                         <li className="row">
-                           <div className="f1">{t(L.BaseMultiplier)}</div>
+                           <div className="f1">{$t(L.BaseMultiplier)}</div>
                            <div>1</div>
                         </li>
                         {getMultipliersFor(xy, false, gameState).map((m, idx) => {
@@ -350,8 +350,8 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
          </ul>
          <div className="separator" />
          <div className="row">
-            <div>{t(L.QuickUiMode)}</div>
-            <Tippy content={t(L.QuickUiModeTooltip)}>
+            <div>{$t(L.QuickUiMode)}</div>
+            <Tippy content={$t(L.QuickUiModeTooltip)}>
                <div className="m-icon small ml5 text-desc help-cursor">help</div>
             </Tippy>
             <div className="f1" />
@@ -372,8 +372,8 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
          </div>
          <div className="separator" />
          <div className="row">
-            <div>{t(L.ResourceExportBelowCap)}</div>
-            <Tippy content={t(L.ResourceExportBelowCapTooltip)}>
+            <div>{$t(L.ResourceExportBelowCap)}</div>
+            <Tippy content={$t(L.ResourceExportBelowCapTooltip)}>
                <div className="m-icon small ml5 text-desc help-cursor">help</div>
             </Tippy>
             <div className="f1"></div>
@@ -410,8 +410,8 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
          />
          <div className="separator"></div>
          <div className="row">
-            <div>{t(L.ResourceExportToSameType)}</div>
-            <Tippy content={t(L.ResourceExportToSameTypeTooltip)}>
+            <div>{$t(L.ResourceExportToSameType)}</div>
+            <Tippy content={$t(L.ResourceExportToSameTypeTooltip)}>
                <div className="m-icon small ml5 text-desc help-cursor">help</div>
             </Tippy>
             <div className="f1"></div>
@@ -448,8 +448,8 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
          />
          <div className="separator"></div>
          <div className="row">
-            <div>{t(L.ManagedImport)}</div>
-            <Tippy content={t(L.ManagedImportDescV2, { range: MANAGED_IMPORT_RANGE })}>
+            <div>{$t(L.ManagedImport)}</div>
+            <Tippy content={$t(L.ManagedImportDescV2, { range: MANAGED_IMPORT_RANGE })}>
                <div className="m-icon small ml5 text-desc help-cursor">help</div>
             </Tippy>
             <div className="f1"></div>

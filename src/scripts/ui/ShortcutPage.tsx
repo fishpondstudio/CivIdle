@@ -1,7 +1,7 @@
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IShortcutNameAndScope, Shortcut } from "../../../shared/logic/Shortcut";
 import { ShortcutActions, ShortcutScopes, getShortcutKey } from "../../../shared/logic/Shortcut";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import MiddleClick from "../../videos/MiddleClick.mkv?url";
 import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
@@ -16,16 +16,16 @@ export function ShortcutPage(): React.ReactNode {
    const gameOptions = useGameOptions();
    return (
       <div className="window">
-         <TitleBarComponent>{t(L.Shortcut)}</TitleBarComponent>
+         <TitleBarComponent>{$t(L.Shortcut)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <fieldset>
-               <legend>{t(L.MiddleClick)}</legend>
-               <RenderHTML html={t(L.MiddleClickDescHTML)} />
+               <legend>{$t(L.MiddleClick)}</legend>
+               <RenderHTML html={$t(L.MiddleClickDescHTML)} />
                <div className="separator" />
                <div className="row">
                   <div className="f1">
-                     <RenderHTML html={t(L.RemapMiddleClickToRightClickHTML)} />
+                     <RenderHTML html={$t(L.RemapMiddleClickToRightClickHTML)} />
                   </div>
                   <div
                      onClick={() => {
@@ -61,7 +61,7 @@ export function ShortcutPage(): React.ReactNode {
                                     className="text-link"
                                     onClick={() => showModal(<EditShortcutModal action={key} />)}
                                  >
-                                    <code>{shortcut ? getShortcutKey(shortcut) : t(L.ShortcutNone)}</code>
+                                    <code>{shortcut ? getShortcutKey(shortcut) : $t(L.ShortcutNone)}</code>
                                  </div>
                               </div>
                            );

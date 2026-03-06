@@ -4,7 +4,7 @@ import { Config } from "../../../shared/logic/Config";
 import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebirthLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { forEach, numberToRoman } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
 import { Singleton } from "../utilities/Singleton";
@@ -14,8 +14,8 @@ import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { TilePage } from "./TilePage";
-import { WarningComponent } from "./WarningComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function GreatPersonPage(): React.ReactNode {
    const gs = useGameState();
@@ -30,7 +30,7 @@ export function GreatPersonPage(): React.ReactNode {
 
    return (
       <div className="window">
-         <TitleBarComponent>{t(L.GreatPeople)}</TitleBarComponent>
+         <TitleBarComponent>{$t(L.GreatPeople)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <button
@@ -44,21 +44,21 @@ export function GreatPersonPage(): React.ReactNode {
                <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                   arrow_back
                </div>
-               <div className="f1">{t(L.GoBack)}</div>
+               <div className="f1">{$t(L.GoBack)}</div>
             </button>
 
             {isOnlineUser() ? null : (
                <WarningComponent className="mb10" icon="info">
-                  <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV4)} />
+                  <RenderHTML className="text-small" html={$t(L.TribuneUpgradeDescV4)} />
                </WarningComponent>
             )}
             <TableView
                data={Array.from(greatPeople.values())}
                header={[
                   { name: "", sortable: true },
-                  { name: t(L.GreatPeopleName), sortable: true },
-                  { name: t(L.GreatPeopleThisRunColumn), sortable: true },
-                  { name: t(L.GreatPeoplePermanentColumn), sortable: true },
+                  { name: $t(L.GreatPeopleName), sortable: true },
+                  { name: $t(L.GreatPeopleThisRunColumn), sortable: true },
+                  { name: $t(L.GreatPeoplePermanentColumn), sortable: true },
                ]}
                compareFunc={(a, b, col) => {
                   switch (col) {
@@ -98,7 +98,7 @@ export function GreatPersonPage(): React.ReactNode {
                               <div className="row text-orange text-small">
                                  <div className="m-icon small mr2">map</div>
                                  <Tippy
-                                    content={t(L.OnlyAvailableWhenPlaying, {
+                                    content={$t(L.OnlyAvailableWhenPlaying, {
                                        city: Config.City[person.city].name(),
                                     })}
                                  >

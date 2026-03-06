@@ -2,7 +2,7 @@ import { getPetraBaseStorage, getWonderExtraLevel } from "../../../shared/logic/
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -29,12 +29,12 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
             <div className="row">
-               <div className="f1">{t(L.WonderUpgradeLevel)}</div>
+               <div className="f1">{$t(L.WonderUpgradeLevel)}</div>
                <div className="text-strong">{petra.level}</div>
             </div>
             <div className="row">
                <div className="f1">
-                  {html(t(L.LevelFromGreatPerson, { person: Config.GreatPerson.Zenobia.name() }))}
+                  {html($t(L.LevelFromGreatPerson, { person: Config.GreatPerson.Zenobia.name() }))}
                </div>
                <div className="text-strong">{getWonderExtraLevel(petra.type)}</div>
             </div>
@@ -55,15 +55,15 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
                <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                   input_circle
                </div>
-               <div className="f1 row text-strong">{t(L.Upgrade)}</div>
+               <div className="f1 row text-strong">{$t(L.Upgrade)}</div>
                <div className="text-desc">
-                  <FormatNumber value={baseStorage} /> {t(L.Warp)}
+                  <FormatNumber value={baseStorage} /> {$t(L.Warp)}
                </div>
             </button>
          </fieldset>
          <WarpSpeedComponent />
          <WarningComponent icon="info" className="text-small mb10">
-            <RenderHTML html={t(L.BuildingNoMultiplier, { building: Config.Building[petra.type].name() })} />
+            <RenderHTML html={$t(L.BuildingNoMultiplier, { building: Config.Building[petra.type].name() })} />
          </WarningComponent>
          <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />

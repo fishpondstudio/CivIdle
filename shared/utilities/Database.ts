@@ -5,7 +5,7 @@ import type { TechAge } from "../definitions/TechDefinitions";
 import type { GameOptionServer } from "../logic/GameState";
 import type { IHeartbeatData } from "../logic/GameStateLogic";
 import { HOUR } from "./Helper";
-import { L, t } from "./i18n";
+import { $t, L } from "./i18n";
 
 export enum ChatAttributes {
    None = 0,
@@ -201,21 +201,21 @@ export const UserColorsMapping = {
 } as const satisfies Record<UserColors, string | undefined>;
 
 export const UserColorsNames: Record<UserColors, () => string> = {
-   [UserColors.Default]: () => t(L.ColorNone),
-   [UserColors.Green]: () => t(L.ColorGreen),
-   [UserColors.Turquoise]: () => t(L.ColorTurquoise),
-   [UserColors.Blue]: () => t(L.ColorBlue),
-   [UserColors.Purple]: () => t(L.ColorPurple),
-   [UserColors.Orange]: () => t(L.ColorOrange),
-   [UserColors.Red]: () => t(L.ColorRed),
-   [UserColors.Pink]: () => t(L.ColorPink),
-   [UserColors.Cyan]: () => t(L.ColorCyan),
-   [UserColors.DarkBlue]: () => t(L.ColorDarkBlue),
-   [UserColors.SeaGreen]: () => t(L.ColorSeaGreen),
-   [UserColors.Chocolate]: () => t(L.ColorChocolate),
-   [UserColors.Flamingo]: () => t(L.ColorFlamingo),
-   [UserColors.Cinereous]: () => t(L.ColorCinereous),
-   [UserColors.Glaucous]: () => t(L.ColorGlaucous),
+   [UserColors.Default]: () => $t(L.ColorNone),
+   [UserColors.Green]: () => $t(L.ColorGreen),
+   [UserColors.Turquoise]: () => $t(L.ColorTurquoise),
+   [UserColors.Blue]: () => $t(L.ColorBlue),
+   [UserColors.Purple]: () => $t(L.ColorPurple),
+   [UserColors.Orange]: () => $t(L.ColorOrange),
+   [UserColors.Red]: () => $t(L.ColorRed),
+   [UserColors.Pink]: () => $t(L.ColorPink),
+   [UserColors.Cyan]: () => $t(L.ColorCyan),
+   [UserColors.DarkBlue]: () => $t(L.ColorDarkBlue),
+   [UserColors.SeaGreen]: () => $t(L.ColorSeaGreen),
+   [UserColors.Chocolate]: () => $t(L.ColorChocolate),
+   [UserColors.Flamingo]: () => $t(L.ColorFlamingo),
+   [UserColors.Cinereous]: () => $t(L.ColorCinereous),
+   [UserColors.Glaucous]: () => $t(L.ColorGlaucous),
 };
 
 export interface IUser {

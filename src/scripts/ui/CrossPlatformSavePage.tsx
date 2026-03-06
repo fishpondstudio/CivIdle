@@ -3,7 +3,7 @@ import { CROSS_PLATFORM_SAVE_URL } from "../../../shared/logic/Constants";
 import { Platform, UserAttributes } from "../../../shared/utilities/Database";
 import { getPlatform } from "../../../shared/utilities/DatabaseShared";
 import { hasFlag, isNullOrUndefined } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import "../../css/CrossPlatformSavePage.css";
 import { compressSave, decompressSave, overwriteSaveGame, saveGame } from "../Global";
 import { client, usePlatformInfo, useUser } from "../rpc/RPCClient";
@@ -27,7 +27,7 @@ export function CrossPlatformSavePage(): React.ReactNode {
    return (
       <div className="cloud-save-page">
          <div className="window">
-            <TitleBarComponent>{t(L.CrossPlatformSave)}</TitleBarComponent>
+            <TitleBarComponent>{$t(L.CrossPlatformSave)}</TitleBarComponent>
             <div className="window-body">
                {isSteam() && user && !hasFlag(user.attr, UserAttributes.DLC2) ? (
                   <WarningComponent
@@ -38,28 +38,28 @@ export function CrossPlatformSavePage(): React.ReactNode {
                         openUrl(CROSS_PLATFORM_SAVE_URL);
                      }}
                   >
-                     {html(t(L.CrossPlatformSaveDescHTML))}
+                     {html($t(L.CrossPlatformSaveDescHTML))}
                   </WarningComponent>
                ) : null}
                <fieldset>
-                  <legend>{t(L.CrossPlatformAccount)}</legend>
+                  <legend>{$t(L.CrossPlatformAccount)}</legend>
                   <div className="row mv5">
-                     <div className="f1">{t(L.CurrentPlatform)}</div>
+                     <div className="f1">{$t(L.CurrentPlatform)}</div>
                      <div className="text-strong">{getPlatformName(getPlatform(info?.originalUserId))}</div>
                   </div>
                   <div className="row mv5">
-                     <div className="f1">{t(L.OtherPlatform)}</div>
+                     <div className="f1">{$t(L.OtherPlatform)}</div>
                      <div className="text-strong">{getPlatformName(getPlatform(info?.connectedUserId))}</div>
                   </div>
                   {isConnected ? null : (
                      <>
                         <div className="separator"></div>
                         <div className="row mv5">
-                           <div className="f1">{t(L.PlayerHandle)}</div>
+                           <div className="f1">{$t(L.PlayerHandle)}</div>
                            <div className="text-strong">{user?.handle}</div>
                         </div>
                         <RenderHTML
-                           html={t(L.PlatformSyncInstructionHTML)}
+                           html={$t(L.PlatformSyncInstructionHTML)}
                            className="mb10 text-desc text-small"
                         />
                         <div className="row">
@@ -69,14 +69,14 @@ export function CrossPlatformSavePage(): React.ReactNode {
                                  try {
                                     const code = await client.requestPassCode();
                                     playSuccess();
-                                    showToast(t(L.PasscodeToastHTML, { code }), 10_000);
+                                    showToast($t(L.PasscodeToastHTML, { code }), 10_000);
                                  } catch (error) {
                                     playError();
                                     showToast(String(error));
                                  }
                               }}
                            >
-                              {t(L.SyncToANewDevice)}
+                              {$t(L.SyncToANewDevice)}
                            </button>
                            <div className="mr10"></div>
                            <button
@@ -86,16 +86,16 @@ export function CrossPlatformSavePage(): React.ReactNode {
                                  showModal(<ConnectToDeviceModal />);
                               }}
                            >
-                              {t(L.ConnectToADevice)}
+                              {$t(L.ConnectToADevice)}
                            </button>
                         </div>
                      </>
                   )}
                </fieldset>
                <fieldset>
-                  <legend>{t(L.CrossPlatformSave)}</legend>
+                  <legend>{$t(L.CrossPlatformSave)}</legend>
                   <div className="row mv5">
-                     <div className="f1">{t(L.CrossPlatformSaveStatus)}</div>
+                     <div className="f1">{$t(L.CrossPlatformSaveStatus)}</div>
                      <div className="text-strong">
                         {isConnected ? (
                            user?.saveOwner ? (
@@ -103,23 +103,23 @@ export function CrossPlatformSavePage(): React.ReactNode {
                                  content={
                                     user.saveOwner === info.originalUserId
                                        ? null
-                                       : t(L.CrossPlatformSaveStatusCheckedOutTooltip)
+                                       : $t(L.CrossPlatformSaveStatusCheckedOutTooltip)
                                  }
                                  className="text-red"
                               >
-                                 {t(L.CrossPlatformSaveStatusCheckedOut, {
+                                 {$t(L.CrossPlatformSaveStatusCheckedOut, {
                                     platform: getPlatformName(getPlatform(user?.saveOwner)),
                                  })}
                               </TextWithHelp>
                            ) : (
-                              <span className="text-green">{t(L.CrossPlatformSaveStatusCheckedIn)}</span>
+                              <span className="text-green">{$t(L.CrossPlatformSaveStatusCheckedIn)}</span>
                            )
                         ) : null}
                      </div>
                   </div>
                   {(user?.lastCheckInAt ?? 0) > 0 ? (
                      <div className="row mv5">
-                        <div className="text-strong f1">{t(L.CrossPlatformSaveLastCheckIn)}</div>
+                        <div className="text-strong f1">{$t(L.CrossPlatformSaveLastCheckIn)}</div>
                         <div>{new Date(user?.lastCheckInAt ?? 0).toLocaleString()}</div>
                      </div>
                   ) : null}
@@ -131,7 +131,7 @@ export function CrossPlatformSavePage(): React.ReactNode {
                         window.location.reload();
                      }}
                   >
-                     {t(L.CloudSaveRefresh)}
+                     {$t(L.CloudSaveRefresh)}
                   </button>
                   <div className="mr5"></div>
                   <button
@@ -141,7 +141,7 @@ export function CrossPlatformSavePage(): React.ReactNode {
                         window.location.search = "";
                      }}
                   >
-                     {t(L.CloudSaveReturnToGame)}
+                     {$t(L.CloudSaveReturnToGame)}
                   </button>
                   <div className="mr5"></div>
                   {user && info && user.saveOwner === info.originalUserId ? (
@@ -168,7 +168,7 @@ export function CrossPlatformSavePage(): React.ReactNode {
                            }
                         }}
                      >
-                        {t(L.CheckInCloudSave)}
+                        {$t(L.CheckInCloudSave)}
                      </button>
                   ) : (
                      <button
@@ -204,7 +204,7 @@ export function CrossPlatformSavePage(): React.ReactNode {
                            }
                         }}
                      >
-                        {t(L.CheckOutCloudSave)}
+                        {$t(L.CheckOutCloudSave)}
                      </button>
                   )}
                </div>
@@ -217,11 +217,11 @@ export function CrossPlatformSavePage(): React.ReactNode {
 function getPlatformName(platform: Platform | null | undefined): string {
    switch (platform) {
       case Platform.Android:
-         return t(L.PlatformAndroid);
+         return $t(L.PlatformAndroid);
       case Platform.iOS:
-         return t(L.PlatformiOS);
+         return $t(L.PlatformiOS);
       case Platform.Steam:
-         return t(L.PlatformSteam);
+         return $t(L.PlatformSteam);
       default:
          return "";
    }

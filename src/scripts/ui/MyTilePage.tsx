@@ -8,7 +8,7 @@ import {
 } from "../../../shared/logic/Constants";
 import { UserAttributes, UserColorsMapping } from "../../../shared/utilities/Database";
 import { formatPercent, hasFlag, safeParseInt } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import {
    OnTileBuildingsChanged,
@@ -39,15 +39,15 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
    const user = useUser();
    return (
       <div className="window">
-         <TitleBarComponent>{t(L.PlayerMapYourTile)}</TitleBarComponent>
+         <TitleBarComponent>{$t(L.PlayerMapYourTile)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <MapTileBonusComponent xy={xy} />
             <PlayerHandleComponent />
             <fieldset>
-               <legend>{t(L.PlayerMapSetYourTariff)}</legend>
+               <legend>{$t(L.PlayerMapSetYourTariff)}</legend>
                <div className="row">
-                  <div className="f1">{t(L.PlayerMapTariff)}</div>
+                  <div className="f1">{$t(L.PlayerMapTariff)}</div>
                   <div className="text-strong">{formatPercent(tariffRate)}</div>
                </div>
                <div className="sep5"></div>
@@ -62,7 +62,7 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                   }}
                />
                <div className="sep20"></div>
-               <div className="text-desc text-small">{t(L.PlayerMapTariffDesc)}</div>
+               <div className="text-desc text-small">{$t(L.PlayerMapTariffDesc)}</div>
                <div className="sep10"></div>
                <button
                   className="w100 row jcc"
@@ -76,14 +76,14 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                   }}
                >
                   <div className="m-icon small mr5">cached</div>
-                  <div>{t(L.PlayerMapTariffApply)}</div>
+                  <div>{$t(L.PlayerMapTariffApply)}</div>
                </button>
             </fieldset>
             <fieldset>
-               <legend>{t(L.Neighbors)}</legend>
+               <legend>{$t(L.Neighbors)}</legend>
                <WarningComponent icon="info" className="mb10 text-small">
                   <RenderHTML
-                     html={t(L.NeighborsDescHTMLV2, {
+                     html={$t(L.NeighborsDescHTMLV2, {
                         neighbor: TRADE_TILE_NEIGHBOR_BONUS,
                         ally: TRADE_TILE_ALLY_BONUS,
                      })}
@@ -109,7 +109,7 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                                  <AccountLevelComponent level={tile.level} scale={0.17} />
                               </Tippy>
                               {hasFlag(tile.attr, UserAttributes.DLC1) ? (
-                                 <Tippy content={t(L.AccountSupporter)}>
+                                 <Tippy content={$t(L.AccountSupporter)}>
                                     <MiscTextureComponent name="Supporter" scale={0.17} />
                                  </Tippy>
                               ) : null}
@@ -120,11 +120,11 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                               {isAlly ? (
                                  <>
                                     <div className="m-icon text-green small">handshake</div>
-                                    <div className="text-green text-strong">{t(L.Ally)}</div>
+                                    <div className="text-green text-strong">{$t(L.Ally)}</div>
                                  </>
                               ) : (
-                                 <Tippy content={t(L.BecomeAllyTooltipV2)}>
-                                    <div className="text-desc text-strong">{t(L.Neighbor)}</div>
+                                 <Tippy content={$t(L.BecomeAllyTooltipV2)}>
+                                    <div className="text-desc text-strong">{$t(L.Neighbor)}</div>
                                  </Tippy>
                               )}
                            </div>

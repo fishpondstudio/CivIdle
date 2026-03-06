@@ -3,7 +3,7 @@ import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { isNaturalWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import NaturalWonders from "../../images/NaturalWonders.jpg";
 import WorldWonders from "../../images/WorldWonders.jpg";
 import { Fonts } from "../visuals/Fonts";
@@ -64,7 +64,7 @@ export function BuildingCompleteModal({ building }: { building: Building }): Rea
                      hideModal();
                   }}
                >
-                  {t(L.DontShowThisAgain)}
+                  {$t(L.DontShowThisAgain)}
                </div>
                <div className="f1" />
                <button
@@ -73,7 +73,7 @@ export function BuildingCompleteModal({ building }: { building: Building }): Rea
                      hideModal();
                   }}
                >
-                  {isNatural ? html(t(L.NaturallyHTML)) : html(t(L.WonderFullHTML))}
+                  {isNatural ? html($t(L.NaturallyHTML)) : html($t(L.WonderFullHTML))}
                </button>
             </div>
          </div>

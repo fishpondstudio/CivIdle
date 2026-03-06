@@ -18,7 +18,7 @@ import {
    reduceOf,
    safeParseInt,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { jsxMMapOf } from "../utilities/Helper";
 import { playError } from "../visuals/Sound";
@@ -53,7 +53,7 @@ export function ChangeResourceImportModal({
       <div className="window" style={{ width: "450px" }}>
          <div className="title-bar">
             <div className="title-bar-text">
-               {t(L.ResourceImportSettings, { res: Config.Material[resource].name() })}
+               {$t(L.ResourceImportSettings, { res: Config.Material[resource].name() })}
             </div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
@@ -62,8 +62,8 @@ export function ChangeResourceImportModal({
          <div className="window-body">
             <div className="row mv5">
                <div className="row" style={{ width: LABEL_WIDTH }}>
-                  <div>{t(L.ResourceImportImportPerCycleV2)}</div>
-                  <Tippy content={t(L.ResourceImportImportPerCycleV2ToolTip)}>
+                  <div>{$t(L.ResourceImportImportPerCycleV2)}</div>
+                  <Tippy content={$t(L.ResourceImportImportPerCycleV2ToolTip)}>
                      <div className="m-icon small ml5 text-desc">help</div>
                   </Tippy>
                </div>
@@ -105,8 +105,8 @@ export function ChangeResourceImportModal({
             <div className="sep5"></div>
             <div className="row mv5">
                <div className="row" style={{ width: LABEL_WIDTH }}>
-                  <div>{t(L.ResourceImportImportCapV2)}</div>
-                  <Tippy content={t(L.ResourceImportImportCapV2Tooltip)}>
+                  <div>{$t(L.ResourceImportImportCapV2)}</div>
+                  <Tippy content={$t(L.ResourceImportImportCapV2Tooltip)}>
                      <div className="m-icon small ml5 text-desc">help</div>
                   </Tippy>
                </div>
@@ -145,9 +145,9 @@ export function ChangeResourceImportModal({
             <div className="sep10"></div>
             {hasFeature(GameFeature.BuildingInputMode, gs) ? (
                <fieldset className="mb10">
-                  <legend>{t(L.ResourceTransportPreference)}</legend>
+                  <legend>{$t(L.ResourceTransportPreference)}</legend>
                   <div className="row mv5">
-                     <Tippy content={t(L.TechResourceTransportPreferenceDefaultTooltip)}>
+                     <Tippy content={$t(L.TechResourceTransportPreferenceDefaultTooltip)}>
                         <button
                            onClick={() => {
                               delete resourceImport.inputMode;
@@ -161,7 +161,7 @@ export function ChangeResourceImportModal({
                               "text-desc": !isNullOrUndefined(resourceImport.inputMode),
                            })}
                         >
-                           {t(L.TechResourceTransportPreferenceDefault)}
+                           {$t(L.TechResourceTransportPreferenceDefault)}
                         </button>
                      </Tippy>
                      {jsxMMapOf(BuildingInputModeNames, (mode, name) => {
@@ -203,10 +203,10 @@ export function ChangeResourceImportModal({
                      hideModal();
                   }}
                >
-                  {t(L.ChangePlayerHandle)}
+                  {$t(L.ChangePlayerHandle)}
                </button>
                <div style={{ width: "10px" }}></div>
-               <button onClick={hideModal}>{t(L.ChangePlayerHandleCancel)}</button>
+               <button onClick={hideModal}>{$t(L.ChangePlayerHandleCancel)}</button>
             </div>
          </div>
       </div>

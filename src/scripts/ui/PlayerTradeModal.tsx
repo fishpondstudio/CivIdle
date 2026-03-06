@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { hideModal } from "./GlobalModal";
 import { PlayerTradeComponent } from "./PlayerTradeComponent";
 
@@ -9,7 +9,7 @@ export function PlayerTradeModal(): React.ReactNode {
       <>
          <div className="window" style={{ width: "800px", maxWidth: "80vw" }}>
             <div className="title-bar">
-               <div className="title-bar-text">{t(L.PlayerTrade)}</div>
+               <div className="title-bar-text">{$t(L.PlayerTrade)}</div>
                <div className="title-bar-controls">
                   <button onClick={hideModal} aria-label="Close"></button>
                </div>

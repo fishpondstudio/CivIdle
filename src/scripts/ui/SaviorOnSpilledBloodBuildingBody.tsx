@@ -2,7 +2,7 @@ import { useState } from "react";
 import { saviorOnSpilledBloodProductionMultiplier } from "../../../shared/logic/BuildingLogic";
 import type { IAuroraBorealisBuildingData } from "../../../shared/logic/Tile";
 import { cls, formatHMS, range, SECOND } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -24,13 +24,13 @@ export function SaviorOnSpilledBloodBuildingBody({
       <div className="window-body">
          <ul className="tree-view">
             <li className="row">
-               <div className="f1">{t(L.ConstructedTime)}</div>
+               <div className="f1">{$t(L.ConstructedTime)}</div>
                <div className="text-strong">
                   {formatHMS((gameState.tick - saviorOnSpilledBlood.startTick) * SECOND)}
                </div>
             </li>
             <li className="row">
-               <div className="f1">{t(L.ProductionMultiplier)}</div>
+               <div className="f1">{$t(L.ProductionMultiplier)}</div>
                <div className="text-strong">{saviorOnSpilledBloodProductionMultiplier(constructedHours)}</div>
             </li>
          </ul>
@@ -39,8 +39,8 @@ export function SaviorOnSpilledBloodBuildingBody({
             <table>
                <thead>
                   <tr>
-                     <th>{t(L.ConstructedTimeHours)}</th>
-                     <th className="right">{t(L.ProductionMultiplier)}</th>
+                     <th>{$t(L.ConstructedTimeHours)}</th>
+                     <th className="right">{$t(L.ProductionMultiplier)}</th>
                   </tr>
                </thead>
                <tbody>

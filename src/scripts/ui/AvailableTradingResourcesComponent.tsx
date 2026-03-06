@@ -6,7 +6,7 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { combineResources, deductResourceFrom } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { clamp, formatNumber, keysOf, safeParseInt } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
@@ -25,12 +25,12 @@ export function AvailableTradingResourcesComponent(): React.ReactNode {
       return (
          <article role="tabpanel" style={{ padding: "8px" }}>
             <WarningComponent icon="info">
-               <div>{t(L.PlayerTradeClaimTileFirstWarning)}</div>
+               <div>{$t(L.PlayerTradeClaimTileFirstWarning)}</div>
                <div
                   className="text-strong text-link row"
                   onClick={() => Singleton().sceneManager.loadScene(PlayerMapScene)}
                >
-                  {t(L.PlayerTradeClaimTileFirst)}
+                  {$t(L.PlayerTradeClaimTileFirst)}
                </div>
             </WarningComponent>
          </article>
@@ -43,9 +43,9 @@ export function AvailableTradingResourcesComponent(): React.ReactNode {
       <TableView
          style={{ maxHeight: "50vh", overflowY: "auto" }}
          header={[
-            { name: t(L.ResourceImportResource), sortable: true },
-            { name: t(L.ResourceAmount), sortable: true },
-            { name: t(L.DestroyResource), sortable: false },
+            { name: $t(L.ResourceImportResource), sortable: true },
+            { name: $t(L.ResourceAmount), sortable: true },
+            { name: $t(L.DestroyResource), sortable: false },
          ]}
          sortingState={availableTradingResourcesSortingState}
          data={keysOf(availableResources)}
@@ -118,7 +118,7 @@ function TableRowComponent({
                      notifyGameStateUpdate();
                      playClick();
                      showToast(
-                        t(L.XResourceHasBeenDestroyed, {
+                        $t(L.XResourceHasBeenDestroyed, {
                            amount: formatNumber(result.amount),
                            resource: resourceName,
                         }),

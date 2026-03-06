@@ -8,7 +8,7 @@ import {
    makeShortcut,
 } from "../../../shared/logic/Shortcut";
 import { forEach } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
@@ -47,7 +47,7 @@ export function EditShortcutModal({ action }: { action: Shortcut }): React.React
                <div className="row">
                   <div className="m-icon">keyboard</div>
                   <div className="f1 text-center text-strong">
-                     <code>{key ? getShortcutKey(key) : t(L.ShortcutPressShortcut)}</code>
+                     <code>{key ? getShortcutKey(key) : $t(L.ShortcutPressShortcut)}</code>
                   </div>
                </div>
             </fieldset>
@@ -59,7 +59,7 @@ export function EditShortcutModal({ action }: { action: Shortcut }): React.React
                      hideModal();
                   }}
                >
-                  {t(L.ShortcutClear)}
+                  {$t(L.ShortcutClear)}
                </button>
                <div style={{ width: "10px" }}></div>
                <button
@@ -77,7 +77,7 @@ export function EditShortcutModal({ action }: { action: Shortcut }): React.React
                                  isShortcutEqual(value, key) &&
                                  a !== action
                               ) {
-                                 throw new Error(t(L.ShortcutConflict, { name: ShortcutActions[a].name() }));
+                                 throw new Error($t(L.ShortcutConflict, { name: ShortcutActions[a].name() }));
                               }
                            });
                            options.shortcuts[action] = key;
@@ -91,7 +91,7 @@ export function EditShortcutModal({ action }: { action: Shortcut }): React.React
                      }
                   }}
                >
-                  {t(L.ShortcutSave)}
+                  {$t(L.ShortcutSave)}
                </button>
             </div>
          </div>

@@ -20,7 +20,7 @@ import {
    upgradeAllUpgradeablePermanentGreatPeople,
 } from "../../../shared/logic/RebirthLogic";
 import { cls, keysOf, numberToRoman } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
@@ -42,7 +42,7 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
    return (
       <div className="window" style={{ width: "800px", maxWidth: "90vw" }}>
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.PermanentGreatPeople)}</div>
+            <div className="title-bar-text">{$t(L.PermanentGreatPeople)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
@@ -50,7 +50,7 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
          <div className="window-body">
             {isOnlineUser() ? null : (
                <WarningComponent className="mb10" icon="info">
-                  <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV4)} />
+                  <RenderHTML className="text-small" html={$t(L.TribuneUpgradeDescV4)} />
                </WarningComponent>
             )}
             <div className="row mb10">
@@ -79,16 +79,16 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
                   })}
                </select>
                <div className="w5" />
-               <Tippy content={t(L.ShowOnlyAdaptiveGreatPeople)}>
+               <Tippy content={$t(L.ShowOnlyAdaptiveGreatPeople)}>
                   <button
                      onClick={() => setAdaptiveOnly(!adaptiveOnly)}
                      className={cls(adaptiveOnly ? "active" : null)}
                   >
-                     {t(L.Adaptive)}
+                     {$t(L.Adaptive)}
                   </button>
                </Tippy>
                <div className="f1"></div>
-               <Tippy content={t(L.UpgradeAllPermanentGreatPeopleThatAreEligibleForAgeWisdom)}>
+               <Tippy content={$t(L.UpgradeAllPermanentGreatPeopleThatAreEligibleForAgeWisdom)}>
                   <button
                      onClick={() => {
                         playClick();
@@ -96,10 +96,10 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
                         notifyGameOptionsUpdate(options);
                      }}
                   >
-                     {t(L.UpgradeWisdomEligible)}
+                     {$t(L.UpgradeWisdomEligible)}
                   </button>
                </Tippy>
-               <Tippy content={t(L.UpgradeAllPermanentGreatPeopleThatAreUpgradeable)}>
+               <Tippy content={$t(L.UpgradeAllPermanentGreatPeopleThatAreUpgradeable)}>
                   <button
                      onClick={() => {
                         playClick();
@@ -107,14 +107,14 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
                         notifyGameOptionsUpdate(options);
                      }}
                   >
-                     {t(L.UpgradeAll)}
+                     {$t(L.UpgradeAll)}
                   </button>
                </Tippy>
                <Tippy
                   content={
                      isOnlineUser()
-                        ? t(L.UndoUpgradesForAllPermanentGreatPeopleThatAreEligibleForAgeWisdom)
-                        : t(L.FeatureRequireQuaestorOrAbove)
+                        ? $t(L.UndoUpgradesForAllPermanentGreatPeopleThatAreEligibleForAgeWisdom)
+                        : $t(L.FeatureRequireQuaestorOrAbove)
                   }
                >
                   <button
@@ -129,7 +129,7 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
                         notifyGameOptionsUpdate(options);
                      }}
                   >
-                     {t(L.UndoAll)}
+                     {$t(L.UndoAll)}
                   </button>
                </Tippy>
                <button
@@ -142,7 +142,7 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
                   <div className="m-icon" style={{ margin: "0 0 0 -5px", fontSize: "18px" }}>
                      emoji_objects
                   </div>
-                  <div>{t(L.AgeWisdom)}</div>
+                  <div>{$t(L.AgeWisdom)}</div>
                </button>
             </div>
             <div
@@ -153,11 +153,11 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
                   <thead>
                      <tr>
                         <th></th>
-                        <th>{t(L.GreatPeopleName)}</th>
-                        <th className="text-center nowrap">{t(L.GreatPeopleThisRunColumn)}</th>
-                        <th className="text-center">{t(L.GreatPeoplePermanentColumn)}</th>
+                        <th>{$t(L.GreatPeopleName)}</th>
+                        <th className="text-center nowrap">{$t(L.GreatPeopleThisRunColumn)}</th>
+                        <th className="text-center">{$t(L.GreatPeoplePermanentColumn)}</th>
                         <th></th>
-                        <th className="text-center">{t(L.Upgrade)}</th>
+                        <th className="text-center">{$t(L.Upgrade)}</th>
                         <th colSpan={2}></th>
                      </tr>
                   </thead>
@@ -189,7 +189,7 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
                                        <div className="row text-orange text-small">
                                           <div className="m-icon small mr2">map</div>
                                           <Tippy
-                                             content={t(L.OnlyAvailableWhenPlaying, {
+                                             content={$t(L.OnlyAvailableWhenPlaying, {
                                                 city: Config.City[person.city].name(),
                                              })}
                                           >
@@ -275,15 +275,15 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
          </td>
          <td>
             {!isEligibleForWisdom(greatPerson) ? (
-               <Tippy content={t(L.AgeWisdomNotEligible)}>
+               <Tippy content={$t(L.AgeWisdomNotEligible)}>
                   <div className="m-icon text-desc">do_not_disturb_on</div>
                </Tippy>
             ) : wisdomShortage < 0 ? (
-               <Tippy content={t(L.AgeWisdomGreatPeopleShardsNeeded, { amount: -wisdomShortage })}>
+               <Tippy content={$t(L.AgeWisdomGreatPeopleShardsNeeded, { amount: -wisdomShortage })}>
                   <div className="m-icon text-orange">error</div>
                </Tippy>
             ) : (
-               <Tippy content={t(L.AgeWisdomGreatPeopleShardsSatisfied, { amount: -wisdomShortage })}>
+               <Tippy content={$t(L.AgeWisdomGreatPeopleShardsSatisfied, { amount: -wisdomShortage })}>
                   <div className="m-icon text-green">check_circle</div>
                </Tippy>
             )}
@@ -306,10 +306,10 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
                   <Tippy
                      content={
                         isOnlineUser()
-                           ? t(L.PermanentGreatPeopleUpgradeUndo, {
+                           ? $t(L.PermanentGreatPeopleUpgradeUndo, {
                                 amount: getTotalGreatPeopleUpgradeCost(greatPerson, permanent.level),
                              })
-                           : t(L.FeatureRequireQuaestorOrAbove)
+                           : $t(L.FeatureRequireQuaestorOrAbove)
                      }
                   >
                      <div className="m-icon" style={{ fontSize: 20 }}>
@@ -385,11 +385,11 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
                   }
                }}
             >
-               {t(L.GreatPersonWildCardBirth)}
+               {$t(L.GreatPersonWildCardBirth)}
             </button>
          </td>
          <td>
-            <Tippy content={t(L.AgeWisdomNotEligible)}>
+            <Tippy content={$t(L.AgeWisdomNotEligible)}>
                <div className="m-icon text-desc">do_not_disturb_on</div>
             </Tippy>
          </td>
@@ -494,11 +494,11 @@ function GreatPersonPromotionRow({ greatPerson }: { greatPerson: GreatPerson }):
                   playAgeUp();
                }}
             >
-               {t(L.GreatPersonPromotionPromote)}
+               {$t(L.GreatPersonPromotionPromote)}
             </button>
          </td>
          <td>
-            <Tippy content={t(L.AgeWisdomNotEligible)}>
+            <Tippy content={$t(L.AgeWisdomNotEligible)}>
                <div className="m-icon text-desc">do_not_disturb_on</div>
             </Tippy>
          </td>
@@ -534,7 +534,7 @@ function GreatPersonAdaptiveRow({ greatPerson }: { greatPerson: GreatPerson }): 
                   content={
                      <>
                         <div>{person.desc(person, permanent?.level ?? 1)}</div>
-                        <div>{t(L.AdaptiveGreatPersonTooltip)}</div>
+                        <div>{$t(L.AdaptiveGreatPersonTooltip)}</div>
                      </>
                   }
                >
@@ -599,7 +599,7 @@ function GreatPersonAdaptiveRow({ greatPerson }: { greatPerson: GreatPerson }): 
             </button>
          </td>
          <td>
-            <Tippy content={t(L.AgeWisdomNotEligible)}>
+            <Tippy content={$t(L.AgeWisdomNotEligible)}>
                <div className="m-icon text-desc">do_not_disturb_on</div>
             </Tippy>
          </td>

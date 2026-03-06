@@ -9,7 +9,7 @@ import {
 } from "../../../shared/logic/RebirthLogic";
 import { AccountLevel } from "../../../shared/utilities/Database";
 import { numberToRoman, safeAdd } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
 import { getColorCached } from "../utilities/CachedColor";
@@ -28,7 +28,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
    return (
       <div className="window" style={{ width: "500px" }}>
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.ManageAgeWisdom)}</div>
+            <div className="title-bar-text">{$t(L.ManageAgeWisdom)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
@@ -44,10 +44,10 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                   arrow_back
                </div>
-               <div className="f1">{t(L.ManagePermanentGreatPeople)}</div>
+               <div className="f1">{$t(L.ManagePermanentGreatPeople)}</div>
             </button>
             <WarningComponent icon="info" className="text-small mb10">
-               <RenderHTML html={t(L.AgeWisdomDescHTML)} />
+               <RenderHTML html={$t(L.AgeWisdomDescHTML)} />
             </WarningComponent>
             {showWarning ? (
                <div className="inset-shallow white" style={{ padding: "50px 20px" }}>
@@ -59,12 +59,12 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                      <AccountLevelComponent level={AccountLevel.Quaestor} scale={0.5} />
                   </div>
                   <RenderHTML
-                     html={t(L.AgeWisdomUpgradeWarningHTMLV3)}
+                     html={$t(L.AgeWisdomUpgradeWarningHTMLV3)}
                      className="text-desc mt10 text-center"
                      style={{ fontSize: 16 }}
                   />
                   <div className="row cc mt10">
-                     <button onClick={() => setShowWarning(false)}>{t(L.Acknowledge)}</button>
+                     <button onClick={() => setShowWarning(false)}>{$t(L.Acknowledge)}</button>
                   </div>
                </div>
             ) : (
@@ -96,7 +96,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                               ({numberToRoman(def.idx + 1)}) {def.name()}
                            </div>
                            <div className="f1"></div>
-                           <div className="mr10">{t(L.LevelX, { level: wisdomLevel })}</div>
+                           <div className="mr10">{$t(L.LevelX, { level: wisdomLevel })}</div>
                            <button
                               disabled={missing.size > 0}
                               onClick={() => {
@@ -121,7 +121,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                                  content={
                                     <div>
                                        <div className="text-strong">
-                                          {t(L.AgeWisdomNeedMoreGreatPeopleShards)}
+                                          {$t(L.AgeWisdomNeedMoreGreatPeopleShards)}
                                        </div>
                                        {jsxMMapOf(missing, (gp, amount) => {
                                           return (
@@ -134,7 +134,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                                     </div>
                                  }
                               >
-                                 <div>{t(L.Upgrade)}</div>
+                                 <div>{$t(L.Upgrade)}</div>
                               </Tippy>
                            </button>
                         </div>

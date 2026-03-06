@@ -1,5 +1,5 @@
 import { Tick } from "../../../shared/logic/TickLogic";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -20,7 +20,7 @@ export function ScienceProductionWonderBuildingBody({
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
             <div className="row">
-               <div className="f1">{t(L.Science)}</div>
+               <div className="f1">{$t(L.Science)}</div>
                <div className="text-strong">
                   +<FormatNumber value={Tick.current.scienceProduced.get(xy) ?? 0} />
                </div>

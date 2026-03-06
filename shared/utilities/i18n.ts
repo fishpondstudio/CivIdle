@@ -1,6 +1,6 @@
 import { EN } from "../languages/en";
 
-export function t(str: string, substitutions?: Record<string, string | number>) {
+export function $t(str: string, substitutions?: Record<string, string | number>) {
    const translation = str;
    if (translation) {
       return transformPhrase(translation, substitutions);

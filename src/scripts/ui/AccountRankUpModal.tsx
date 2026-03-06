@@ -1,5 +1,5 @@
 import type { AccountLevel, IUser } from "../../../shared/utilities/Database";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import RomanMagistrate from "../../images/RomanMagistrate.jpg";
 import { saveGame } from "../Global";
 import { AccountLevelNames } from "../logic/AccountLevel";
@@ -13,7 +13,7 @@ export function AccountRankUpModal({ rank, user }: { rank: AccountLevel; user: I
    return (
       <div className="window" style={{ width: 500, maxWidth: "50vw" }}>
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.AccountRankUp)}</div>
+            <div className="title-bar-text">{$t(L.AccountRankUp)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
@@ -33,7 +33,7 @@ export function AccountRankUpModal({ rank, user }: { rank: AccountLevel; user: I
                <div className="f1"></div>
             </div>
             <div className="sep20"></div>
-            <div className="text-desc text-center">{t(L.AccountRankUpDesc)}</div>
+            <div className="text-desc text-center">{$t(L.AccountRankUpDesc)}</div>
             <div className="sep10"></div>
             <button
                className="w100 row text-strong"
@@ -50,7 +50,7 @@ export function AccountRankUpModal({ rank, user }: { rank: AccountLevel; user: I
                }}
             >
                <div className="m-icon">upgrade</div>
-               <div className="f1">{t(L.AccountRankUp)}</div>
+               <div className="f1">{$t(L.AccountRankUp)}</div>
             </button>
          </div>
       </div>

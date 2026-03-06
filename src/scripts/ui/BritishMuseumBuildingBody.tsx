@@ -11,7 +11,7 @@ import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/Gam
 import { RequestResetTile } from "../../../shared/logic/TechLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import { forEach } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playUpgrade } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -25,7 +25,7 @@ export function BritishMuseumBuildingBody({ gameState, xy }: IBuildingComponentP
    return (
       <div className="window-body">
          <fieldset>
-            <legend>{t(L.BritishMuseumChooseWonder)}</legend>
+            <legend>{$t(L.BritishMuseumChooseWonder)}</legend>
             <div className="row">
                <select
                   value={building}
@@ -58,7 +58,7 @@ export function BritishMuseumBuildingBody({ gameState, xy }: IBuildingComponentP
                      playUpgrade();
                   }}
                >
-                  {t(L.BritishMuseumTransform)}
+                  {$t(L.BritishMuseumTransform)}
                </button>
             </div>
             <div className="mt5 text-desc text-small">{Config.Building[building].desc?.()}</div>

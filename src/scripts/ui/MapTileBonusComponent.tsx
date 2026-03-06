@@ -7,7 +7,7 @@ import { GameStateChanged } from "../../../shared/logic/GameStateLogic";
 import { getVotingTime } from "../../../shared/logic/PlayerTradeLogic";
 import { UserAttributes, type IClientMapEntry } from "../../../shared/utilities/Database";
 import { formatHMS, hasFlag } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import { getPlayerMap, OnTileBuildingsChanged, TileBuildings } from "../rpc/RPCClient";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
@@ -39,22 +39,22 @@ export function MapTileBonusComponent({ xy }: { xy: string }): React.ReactNode {
             <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                arrow_back
             </div>
-            <div className="f1">{t(L.BackToCity)}</div>
+            <div className="f1">{$t(L.BackToCity)}</div>
          </button>
          <button className="w100 row jcc mb10" onClick={() => showModal(<TradeMapStatModal />)}>
             <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                insights
             </div>
-            <div className="f1">{t(L.TradeMapStatistics)}</div>
+            <div className="f1">{$t(L.TradeMapStatistics)}</div>
          </button>
          <FindPlayerComponent />
          <fieldset>
-            <legend>{t(L.PlayerMapMapTileBonus)}</legend>
+            <legend>{$t(L.PlayerMapMapTileBonus)}</legend>
             <TileBonusRefreshTime />
             <div className="row inset-shallow white ph10 pv5">
                <div className="f1 text-strong">{Config.Building[building].name()}</div>
                <div className="mr10">
-                  +{TRADE_TILE_BONUS} {t(L.ProductionMultiplier)}
+                  +{TRADE_TILE_BONUS} {$t(L.ProductionMultiplier)}
                </div>
                <BuildingSpriteComponent
                   building={building}
@@ -79,7 +79,7 @@ export function MapTileBonusComponent({ xy }: { xy: string }): React.ReactNode {
                         ?.highlightBuildings(new Set([building]));
                   }}
                >
-                  {t(L.HighlightBuilding, { building: Config.Building[building].name() })}
+                  {$t(L.HighlightBuilding, { building: Config.Building[building].name() })}
                </button>
                <button
                   style={{ padding: "0 5px" }}
@@ -94,14 +94,14 @@ export function MapTileBonusComponent({ xy }: { xy: string }): React.ReactNode {
             {showMore ? (
                <>
                   <button className="w100 row jcc mb10 p0" onClick={() => setShowMore(false)}>
-                     <div className="f1">{t(L.HighlightMoreBuildings)}</div>
+                     <div className="f1">{$t(L.HighlightMoreBuildings)}</div>
                      <div className="m-icon">arrow_drop_up</div>
                   </button>
                   <HighlightBuildings />
                </>
             ) : (
                <button className="w100 row jcc p0" onClick={() => setShowMore(true)}>
-                  <div className="f1">{t(L.HighlightMoreBuildings)}</div>
+                  <div className="f1">{$t(L.HighlightMoreBuildings)}</div>
                   <div className="m-icon">arrow_drop_down</div>
                </button>
             )}
@@ -160,7 +160,7 @@ function TileBonusRefreshTime(): React.ReactNode {
    refreshOnTypedEvent(GameStateChanged);
    return (
       <WarningComponent className="mb10" icon="info">
-         <RenderHTML html={t(L.TileBonusRefreshIn, { time: formatHMS(getVotingTime()) })} />
+         <RenderHTML html={$t(L.TileBonusRefreshIn, { time: formatHMS(getVotingTime()) })} />
       </WarningComponent>
    );
 }
@@ -170,7 +170,7 @@ function _FindPlayerComponent(): React.ReactNode {
    const [results, setResults] = useState<Map<string, [string, IClientMapEntry]>>(new Map());
    return (
       <fieldset>
-         <legend>{t(L.FindPlayers)}</legend>
+         <legend>{$t(L.FindPlayers)}</legend>
          <div className="row">
             <input type="text" className="f1" value={search} onChange={(e) => setSearch(e.target.value)} />
             <div className="w10" />
@@ -208,7 +208,7 @@ function _FindPlayerComponent(): React.ReactNode {
                      <PlayerFlagComponent name={entry.flag} scale={0.7} />
                   </Tippy>
                   {hasFlag(entry.attr, UserAttributes.DLC1) ? (
-                     <Tippy content={t(L.AccountSupporter)}>
+                     <Tippy content={$t(L.AccountSupporter)}>
                         <MiscTextureComponent name="Supporter" scale={0.17} />
                      </Tippy>
                   ) : null}

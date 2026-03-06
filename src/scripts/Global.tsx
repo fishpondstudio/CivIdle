@@ -57,6 +57,7 @@ import { WorldScene } from "./scenes/WorldScene";
 import { AccountRankUpModal } from "./ui/AccountRankUpModal";
 import { BuildingCompleteModal } from "./ui/BuildingCompleteModal";
 import { showModal } from "./ui/GlobalModal";
+import { IdeaTreeModal } from "./ui/IdeaTreeModal";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { SupporterPackModal } from "./ui/SupporterPackModal";
 import { idbClear, idbGet, idbSet } from "./utilities/BrowserStorage";
@@ -453,6 +454,11 @@ if (import.meta.env.DEV) {
 
    // @ts-expect-error
    window.hq = () => findSpecialBuilding("Headquarter", getGameState());
+
+   // @ts-expect-error
+   window.ideaTree = () => {
+      showModal(<IdeaTreeModal />);
+   };
 
    // @ts-expect-error
    window.wonders = async () => {

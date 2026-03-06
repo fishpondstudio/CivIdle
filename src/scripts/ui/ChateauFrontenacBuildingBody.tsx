@@ -3,7 +3,7 @@ import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IChateauFrontenacBuildingData } from "../../../shared/logic/Tile";
 import { cls, mapOf } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playClick, playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -28,7 +28,7 @@ export function ChateauFrontenacBuildingBody({ gameState, xy }: IBuildingCompone
                         style={{ width: 100 }}
                         className={cls(data.selected === undefined ? "text-strong" : "")}
                      >
-                        {t(L.LevelX, { level })}
+                        {$t(L.LevelX, { level })}
                      </div>
                      <select
                         disabled={data.selected !== undefined}

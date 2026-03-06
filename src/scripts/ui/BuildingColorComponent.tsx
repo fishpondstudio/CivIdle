@@ -4,7 +4,7 @@ import { NoStorage, type Material } from "../../../shared/definitions/MaterialDe
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { tileToPoint, type Tile } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
@@ -23,7 +23,7 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
    const buildingColor = gameOptions.buildingColors[building.type] ?? "#ffffff";
    return (
       <fieldset>
-         <legend>{t(L.BuildingColor)}</legend>
+         <legend>{$t(L.BuildingColor)}</legend>
          <div className="row mv5">
             <div
                className="m-icon small text-link mr2"
@@ -77,7 +77,7 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
                kid_star
             </div>
             <div className="f1 text-strong">
-               {gameState.favoriteTiles.has(xy) ? t(L.FavoriteBuildingRemove) : t(L.FavoriteBuildingAdd)}
+               {gameState.favoriteTiles.has(xy) ? $t(L.FavoriteBuildingRemove) : $t(L.FavoriteBuildingAdd)}
             </div>
          </button>
       </fieldset>
@@ -106,7 +106,7 @@ function ResourceColor({ resource, buildingColor }: { resource: Material; buildi
                search
             </div>
             <div className="f1">{r.name()}</div>
-            <Tippy content={t(L.BuildingColorMatchBuilding)}>
+            <Tippy content={$t(L.BuildingColorMatchBuilding)}>
                <div
                   className="small mr10 ml10 m-icon text-link"
                   onClick={() => {

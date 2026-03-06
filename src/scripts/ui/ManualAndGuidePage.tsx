@@ -1,6 +1,6 @@
 import { Advisors } from "../../../shared/definitions/AdvisorDefinitions";
 import { ANTICHEAT_FAQ_URL, BACKUP_RECOVERY_URL, STEAM_GUIDE_URL } from "../../../shared/logic/Constants";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { AdvisorModal } from "./AdvisorModal";
@@ -12,12 +12,12 @@ import { TitleBarComponent } from "./TitleBarComponent";
 export function ManualAndGuidePage(): React.ReactNode {
    return (
       <div className="window">
-         <TitleBarComponent>{t(L.ManualAndGuide)}</TitleBarComponent>
+         <TitleBarComponent>{$t(L.ManualAndGuide)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <div className="inset-shallow white row p10 mb10">
                <div className="f1" style={{ fontSize: 16 }}>
-                  {t(L.FirstTimeTutorialWelcome)}
+                  {$t(L.FirstTimeTutorialWelcome)}
                </div>
                <div>
                   <div className="m-icon text-link" onClick={() => showModal(<FirstTimePlayerModal />)}>

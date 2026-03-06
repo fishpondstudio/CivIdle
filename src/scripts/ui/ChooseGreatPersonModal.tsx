@@ -10,7 +10,7 @@ import {
    isEligibleForWisdom,
 } from "../../../shared/logic/RebirthLogic";
 import { formatNumber, safeAdd } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { Fonts } from "../visuals/Fonts";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
@@ -89,7 +89,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
    return (
       <div className="window" style={{ width: greatPeopleChoice.length * 250, maxWidth: "75vw" }}>
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.AGreatPersonIsBorn)}</div>
+            <div className="title-bar-text">{$t(L.AGreatPersonIsBorn)}</div>
          </div>
          <div className="window-body">
             <div className="row" style={{ alignItems: "stretch", columnGap: 5 }}>
@@ -114,7 +114,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
                            p.type === GreatPersonType.LevelBoost) &&
                         (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
                            <Tippy
-                              content={t(L.GreatPersonThisRunEffectiveLevel, {
+                              content={$t(L.GreatPersonThisRunEffectiveLevel, {
                                  count: gs.greatPeople[greatPerson] ?? 0,
                                  person: p.name(),
                                  effect: 1 + (gs.greatPeople[greatPerson] ?? 0),
@@ -139,7 +139,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
             </div>
             <div className="sep10" />
             <div className="f1 text-desc text-small text-center">
-               {t(L.ChooseGreatPersonChoicesLeft, { count: choicesLeft })}
+               {$t(L.ChooseGreatPersonChoicesLeft, { count: choicesLeft })}
             </div>
          </div>
       </div>
@@ -163,7 +163,7 @@ function GreatPersonLevel({
       <div className="outset-shallow-2 p8">
          {!permanent ? (
             <div className="row text-small">
-               <div className="f1">{t(L.GreatPeopleThisRunShort)}</div>
+               <div className="f1">{$t(L.GreatPeopleThisRunShort)}</div>
                <div className="text-right">
                   <FormatNumber value={gs.greatPeople[greatPerson] ?? 0} />
                </div>
@@ -171,8 +171,8 @@ function GreatPersonLevel({
          ) : null}
          <div className="row text-small">
             <div className="f1">
-               {t(L.GreatPeoplePermanentShort)}{" "}
-               {canUpgrade && inventory ? `(${t(L.LevelX, { level: inventory.level })})` : null}
+               {$t(L.GreatPeoplePermanentShort)}{" "}
+               {canUpgrade && inventory ? `(${$t(L.LevelX, { level: inventory.level })})` : null}
             </div>
             <div className="text-right">
                <FormatNumber value={inventory?.amount ?? 0} />
@@ -181,9 +181,9 @@ function GreatPersonLevel({
          </div>
          <div className="row text-small">
             <div className="f1">
-               {t(L.AgeWisdom)}
+               {$t(L.AgeWisdom)}
                {isWisdom
-                  ? ` (${t(L.LevelX, { level: options.ageWisdom[Config.GreatPerson[greatPerson].age] ?? 0 })})`
+                  ? ` (${$t(L.LevelX, { level: options.ageWisdom[Config.GreatPerson[greatPerson].age] ?? 0 })})`
                   : null}
             </div>
             {isWisdom ? (

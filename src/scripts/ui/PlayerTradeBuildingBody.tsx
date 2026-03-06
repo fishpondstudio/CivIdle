@@ -1,4 +1,4 @@
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { PendingClaims } from "../logic/PendingClaim";
 import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
@@ -33,7 +33,7 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
                }}
             >
                <div className="m-icon small">open_in_new</div>
-               <div className="f1">{t(L.OpenPlayerTrades)}</div>
+               <div className="f1">{$t(L.OpenPlayerTrades)}</div>
             </button>
             <div className="row mb10">
                <AddTradeButtonComponent onClick={() => showModal(<AddTradeModal hideModal={hideModal} />)} />
@@ -41,7 +41,7 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
                   className="f1 text-strong"
                   onClick={() => showModal(<PendingClaimModal hideModal={hideModal} />)}
                >
-                  {t(L.PlayerTradeTabPendingTrades)} ({PendingClaims.length})
+                  {$t(L.PlayerTradeTabPendingTrades)} ({PendingClaims.length})
                </button>
             </div>
          </>
@@ -49,12 +49,12 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
    } else {
       tradeButton = (
          <WarningComponent icon="info" className="mb10">
-            <div>{t(L.PlayerTradeClaimTileFirstWarning)}</div>
+            <div>{$t(L.PlayerTradeClaimTileFirstWarning)}</div>
             <div
                className="text-strong text-link row"
                onClick={() => Singleton().sceneManager.loadScene(PlayerMapScene)}
             >
-               {t(L.PlayerTradeClaimTileFirst)}
+               {$t(L.PlayerTradeClaimTileFirst)}
             </div>
          </WarningComponent>
       );

@@ -30,7 +30,7 @@ import {
    sizeOf,
    uuid4,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame } from "../Global";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import { useEligibleAccountRank } from "../logic/ClientUpdate";
@@ -69,7 +69,7 @@ export function PlayerHandleComponent() {
    }, []);
    return (
       <fieldset>
-         <legend>{t(L.PlayerHandle)}</legend>
+         <legend>{$t(L.PlayerHandle)}</legend>
          {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.TribuneOnly) ? (
             <WarningComponent
                icon="error"
@@ -78,11 +78,11 @@ export function PlayerHandleComponent() {
                   openUrl("https://steamcommunity.com/app/2181940/discussions/0/6629936675071563255/")
                }
             >
-               <RenderHTML className="text-small" html={t(L.AntiCheatFailure)} />
+               <RenderHTML className="text-small" html={$t(L.AntiCheatFailure)} />
             </WarningComponent>
          ) : null}
          {user == null ? (
-            <div className="text-strong">{t(L.PlayerHandleOffline)}</div>
+            <div className="text-strong">{$t(L.PlayerHandleOffline)}</div>
          ) : (
             <>
                {!hasFlag(user.attr, UserAttributes.DLC1) && playTime >= 100 * HOUR && (
@@ -94,7 +94,7 @@ export function PlayerHandleComponent() {
                         openUrl(SUPPORTER_PACK_URL);
                      }}
                   >
-                     {html(t(L.SupporterPackReminder, { time: formatHM(playTime) }))}
+                     {html($t(L.SupporterPackReminder, { time: formatHM(playTime) }))}
                   </WarningComponent>
                )}
                {eligibleRank > user.level ? (
@@ -106,7 +106,7 @@ export function PlayerHandleComponent() {
                         showModal(<AccountRankUpModal rank={eligibleRank} user={user} />);
                      }}
                   >
-                     {t(L.AccountRankUpTip)}
+                     {$t(L.AccountRankUpTip)}
                   </WarningComponent>
                ) : null}
 
@@ -118,7 +118,7 @@ export function PlayerHandleComponent() {
                      <PlayerFlagComponent name={user.flag} style={{ marginLeft: 5 }} scale={0.75} />
                   </Tippy>
                   {hasFlag(user.attr, UserAttributes.DLC1) ? (
-                     <Tippy content={t(L.AccountSupporter)}>
+                     <Tippy content={$t(L.AccountSupporter)}>
                         <MiscTextureComponent name="Supporter" scale={0.18} />
                      </Tippy>
                   ) : null}
@@ -133,17 +133,17 @@ export function PlayerHandleComponent() {
                         }
                      }}
                   >
-                     {t(L.ChangePlayerHandle)}
+                     {$t(L.ChangePlayerHandle)}
                   </div>
                </div>
                <div className="row text-strong mt5">
-                  <div className="f1">{t(L.AccountLevel)}</div>
+                  <div className="f1">{$t(L.AccountLevel)}</div>
                   <AccountLevelComponent level={accountLevel} scale={0.15} style={{ marginRight: 5 }} />
                   <div>{AccountLevelNames[accountLevel]()}</div>
                </div>
                {hasFlag(user.attr, UserAttributes.DLC1) && (
                   <div className="row text-strong mt5">
-                     <div className="f1">{t(L.AccountCustomColor)}</div>
+                     <div className="f1">{$t(L.AccountCustomColor)}</div>
                      <select
                         value={user.color}
                         onChange={async (e) => {
@@ -163,7 +163,7 @@ export function PlayerHandleComponent() {
                         {jsxMapOf(UserColorsMapping, (key, color) => {
                            return (
                               <option className="code" style={{ color }} value={key} key={key}>
-                                 {UserColorsNames[key]() ?? t(L.AccountCustomColorDefault)}
+                                 {UserColorsNames[key]() ?? $t(L.AccountCustomColorDefault)}
                               </option>
                            );
                         })}
@@ -207,13 +207,13 @@ function AccountDetails(): React.ReactNode {
                   scale={0.17}
                   style={{ display: "inline-block", verticalAlign: "middle", marginRight: 5 }}
                />
-               {t(L.AccountTypeShowDetailsTribune)}
+               {$t(L.AccountTypeShowDetailsTribune)}
             </div>
          );
       }
       return (
          <div className="text-link mt5" onClick={() => setShowDetails(true)}>
-            {t(L.AccountTypeShowDetails)}
+            {$t(L.AccountTypeShowDetails)}
          </div>
       );
    }
@@ -263,7 +263,7 @@ function AccountDetails(): React.ReactNode {
                      </th>
                   </tr>
                   <tr>
-                     <td>{t(L.AccountChatBadge)}</td>
+                     <td>{$t(L.AccountChatBadge)}</td>
                      <td>
                         <div className="m-icon small text-red">cancel</div>
                      </td>
@@ -287,7 +287,7 @@ function AccountDetails(): React.ReactNode {
                      </td>
                   </tr>
                   <tr>
-                     <td>{t(L.AccountActiveTrade)}</td>
+                     <td>{$t(L.AccountActiveTrade)}</td>
                      <td>2</td>
                      <td>4</td>
                      <td>6</td>
@@ -297,7 +297,7 @@ function AccountDetails(): React.ReactNode {
                      <td>10</td>
                   </tr>
                   <tr>
-                     <td>{t(L.AccountTradeValuePerMinute)}</td>
+                     <td>{$t(L.AccountTradeValuePerMinute)}</td>
                      <td>
                         <FormatNumber value={TRIBUNE_TRADE_VALUE_PER_MINUTE} />
                      </td>
@@ -309,7 +309,7 @@ function AccountDetails(): React.ReactNode {
                      <td>∞</td>
                   </tr>
                   <tr>
-                     <td>{t(L.AccountTradePriceRange)}</td>
+                     <td>{$t(L.AccountTradePriceRange)}</td>
                      <td>5%</td>
                      <td>10%</td>
                      <td>15%</td>
@@ -320,8 +320,8 @@ function AccountDetails(): React.ReactNode {
                   </tr>
                   <tr>
                      <td>
-                        <TextWithHelp content={t(L.AccountTradeTileReservationTimeDesc)}>
-                           {t(L.AccountTradeTileReservationTime)}
+                        <TextWithHelp content={$t(L.AccountTradeTileReservationTimeDesc)}>
+                           {$t(L.AccountTradeTileReservationTime)}
                         </TextWithHelp>
                      </td>
                      <td>{TradeTileReservationDays[AccountLevel.Tribune]}d</td>
@@ -333,7 +333,7 @@ function AccountDetails(): React.ReactNode {
                      <td>{TradeTileReservationDays[AccountLevel.Augustus]}d</td>
                   </tr>
                   <tr>
-                     <td>{t(L.AccountPlayTimeRequirementV2)}</td>
+                     <td>{$t(L.AccountPlayTimeRequirementV2)}</td>
                      <td>-</td>
                      <td>{AccountLevelPlayTime[AccountLevel.Quaestor] / HOUR}</td>
                      <td>{AccountLevelPlayTime[AccountLevel.Aedile] / HOUR}</td>
@@ -343,7 +343,7 @@ function AccountDetails(): React.ReactNode {
                      <td>{AccountLevelPlayTime[AccountLevel.Augustus] / HOUR}</td>
                   </tr>
                   <tr>
-                     <td>{t(L.AccountGreatPeopleLevelRequirement)}</td>
+                     <td>{$t(L.AccountGreatPeopleLevelRequirement)}</td>
                      <td>-</td>
                      <td>{AccountLevelGreatPeopleLevel[AccountLevel.Quaestor]}</td>
                      <td>{AccountLevelGreatPeopleLevel[AccountLevel.Aedile]}</td>
@@ -360,13 +360,13 @@ function AccountDetails(): React.ReactNode {
             <>
                <div className="separator" />
                <WarningComponent className="mb10" icon="info">
-                  <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV4)} />
+                  <RenderHTML className="text-small" html={$t(L.TribuneUpgradeDescV4)} />
                </WarningComponent>
-               <RenderHTML html={t(L.AccountLevelUpgradeConditionAnyHTML)} />
+               <RenderHTML html={$t(L.AccountLevelUpgradeConditionAnyHTML)} />
                <div className="separator" />
                <div className="row text-small">
                   <div className="f1">
-                     {t(L.AccountLevelPlayTime, {
+                     {$t(L.AccountLevelPlayTime, {
                         requiredTime: formatHM(AccountLevelPlayTime[AccountLevel.Quaestor]),
                         actualTime: formatHM(playTime * 1000),
                      })}
@@ -379,7 +379,7 @@ function AccountDetails(): React.ReactNode {
                </div>
                <div className="separator" />
                <div className="row text-small">
-                  <div className="f1">{t(L.AccountLevelSupporterPack)}</div>
+                  <div className="f1">{$t(L.AccountLevelSupporterPack)}</div>
                   {cond2 ? (
                      <div className="m-icon small ml10 text-green">check_circle</div>
                   ) : (
@@ -395,14 +395,14 @@ function AccountDetails(): React.ReactNode {
                      if (!noPendingGreatPerson()) {
                         playError();
                         showModal(
-                           <AlertModal title={t(L.TribuneUpgradeDescGreatPeopleWarningTitle)}>
+                           <AlertModal title={$t(L.TribuneUpgradeDescGreatPeopleWarningTitle)}>
                               <div className="row">
                                  <div className="m-icon text-orange mr10" style={{ fontSize: 48 }}>
                                     warning
                                  </div>
                                  <RenderHTML
                                     className="f1"
-                                    html={t(L.TribuneUpgradeDescGreatPeopleWarning)}
+                                    html={$t(L.TribuneUpgradeDescGreatPeopleWarning)}
                                  />
                               </div>
                            </AlertModal>,
@@ -411,7 +411,7 @@ function AccountDetails(): React.ReactNode {
                      }
                      showModal(
                         <ConfirmModal
-                           title={t(L.AccountUpgradeConfirm)}
+                           title={$t(L.AccountUpgradeConfirm)}
                            onConfirm={async () => {
                               try {
                                  await client.upgrade();
@@ -437,13 +437,13 @@ function AccountDetails(): React.ReactNode {
                               }
                            }}
                         >
-                           <RenderHTML html={t(L.AccountUpgradeConfirmDescV2)} />
+                           <RenderHTML html={$t(L.AccountUpgradeConfirmDescV2)} />
                         </ConfirmModal>,
                      );
                   }}
                >
                   <div className="m-icon small">vpn_lock</div>
-                  <div className="f1 text-center">{t(L.AccountUpgradeButton)}</div>
+                  <div className="f1 text-center">{$t(L.AccountUpgradeButton)}</div>
                </button>
             </>
          ) : null}

@@ -1,7 +1,7 @@
 import { getBranCastleRequiredWorkers, getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { LogicResult } from "../../../shared/logic/LogicResult";
 import { cls, range } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -19,13 +19,13 @@ export function BranCastleBuildingBody({ gameState, xy }: IBuildingComponentProp
       <div className="window-body">
          <fieldset>
             <div className="row">
-               <div className="f1">{t(L.ProducedWorkers)}</div>
+               <div className="f1">{$t(L.ProducedWorkers)}</div>
                <div className="text-strong">
                   <FormatNumber value={LogicResult.branCastleGeneratedWorkers} />
                </div>
             </div>
             <div className="row">
-               <div className="f1">{t(L.EmployedVampires)}</div>
+               <div className="f1">{$t(L.EmployedVampires)}</div>
                <div className="text-strong">
                   <FormatNumber value={LogicResult.branCastleEmployedWorkers} />
                </div>
@@ -36,7 +36,7 @@ export function BranCastleBuildingBody({ gameState, xy }: IBuildingComponentProp
                   <thead>
                      <tr>
                         <th>Level</th>
-                        <th className="right">{t(L.RequiredTotalWorkers)}</th>
+                        <th className="right">{$t(L.RequiredTotalWorkers)}</th>
                      </tr>
                   </thead>
                   <tbody>

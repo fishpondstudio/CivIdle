@@ -20,7 +20,7 @@ import {
    numberToRoman,
    safeParseInt,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import { PendingClaims } from "../logic/PendingClaim";
@@ -116,10 +116,10 @@ export function PlayerTradeComponent({
                className={cls(PendingClaims.length > 0 ? "text-strong" : null)}
                onClick={() => showModal(<PendingClaimModal hideModal={hideModal} />)}
             >
-               {t(L.PlayerTradeTabPendingTrades)} ({PendingClaims.length})
+               {$t(L.PlayerTradeTabPendingTrades)} ({PendingClaims.length})
             </button>
             <button onClick={() => showModal(<AvailableTradingResourcesModal hideModal={hideModal} />)}>
-               {t(L.PlayerTradeTabAvailableTrades)}
+               {$t(L.PlayerTradeTabAvailableTrades)}
             </button>
             <div className="w10"></div>
             <button
@@ -136,10 +136,10 @@ export function PlayerTradeComponent({
             >
                <div className="m-icon small">filter_list</div>
                <div className="f1">
-                  {t(L.PlayerTradeFilters)} ({filterCount})
+                  {$t(L.PlayerTradeFilters)} ({filterCount})
                </div>
             </button>
-            <Tippy content={t(L.PlayerTradeFilterWhatIHave)}>
+            <Tippy content={$t(L.PlayerTradeFilterWhatIHave)}>
                <button
                   onClick={() => {
                      clearSavedFilters();
@@ -154,7 +154,7 @@ export function PlayerTradeComponent({
                   <div className="m-icon small">database</div>
                </button>
             </Tippy>
-            <Tippy content={t(L.PlayerTradeClearFilter)}>
+            <Tippy content={$t(L.PlayerTradeClearFilter)}>
                <button onClick={clearFilters}>
                   <div className="m-icon small">cancel</div>
                </button>
@@ -241,7 +241,7 @@ export function PlayerTradeComponent({
                            }}
                         >
                            <div className="row pointer">
-                              {t(L.PlayerTradeWant)}
+                              {$t(L.PlayerTradeWant)}
                               {playerTradesSortingState.column === "buyResource" ? (
                                  <div className="m-icon small">
                                     {playerTradesSortingState.asc ? "arrow_upward" : "arrow_downward"}
@@ -272,7 +272,7 @@ export function PlayerTradeComponent({
                            }}
                         >
                            <div className="row">
-                              {t(L.PlayerTradeOffer)}
+                              {$t(L.PlayerTradeOffer)}
                               {playerTradesSortingState.column === "sellResource" ? (
                                  <div className="m-icon small">
                                     {playerTradesSortingState.asc ? "arrow_upward" : "arrow_downward"}
@@ -308,7 +308,7 @@ export function PlayerTradeComponent({
                               </div>
                            ) : null}
                         </th>
-                        <th>{t(L.PlayerTradeFrom)}</th>
+                        <th>{$t(L.PlayerTradeFrom)}</th>
                         <th
                            className="pointer"
                            onClick={() => {
@@ -384,7 +384,7 @@ function PlayerTradeTableRow({
                "text-desc": Math.abs(percentage) < CURRENCY_PERCENT_EPSILON,
             })}
          >
-            <Tippy content={t(L.MarketValueDesc, { value: formatPercent(percentage, 0) })}>
+            <Tippy content={$t(L.MarketValueDesc, { value: formatPercent(percentage, 0) })}>
                <div>
                   {mathSign(percentage, CURRENCY_PERCENT_EPSILON)}
                   {formatPercent(Math.abs(percentage), 0)}
@@ -402,7 +402,7 @@ function PlayerTradeTableRow({
                   </Tippy>
                ) : null}
                {hasFlag(trade.fromAttr, UserAttributes.DLC1) ? (
-                  <Tippy content={t(L.AccountSupporter)}>
+                  <Tippy content={$t(L.AccountSupporter)}>
                      <MiscTextureComponent name="Supporter" scale={0.17} />
                   </Tippy>
                ) : null}
@@ -426,7 +426,7 @@ function PlayerTradeTableRow({
                      }
                      showModal(
                         <ConfirmModal
-                           title={t(L.PlayerTradeCancelTrade)}
+                           title={$t(L.PlayerTradeCancelTrade)}
                            hideModalFunc={hideModal}
                            onConfirm={async () => {
                               try {
@@ -445,7 +445,7 @@ function PlayerTradeTableRow({
                            }}
                         >
                            <RenderHTML
-                              html={t(L.PlayerTradeCancelDescHTML, {
+                              html={$t(L.PlayerTradeCancelDescHTML, {
                                  percent: formatPercent(1 - TRADE_CANCEL_REFUND_PERCENT),
                                  res: `${formatNumber(
                                     trade.sellAmount * TRADE_CANCEL_REFUND_PERCENT,
@@ -472,7 +472,7 @@ function PlayerTradeTableRow({
                      }
                   }}
                >
-                  {t(L.PlayerTradeFill)}
+                  {$t(L.PlayerTradeFill)}
                </div>
             )}
          </td>
@@ -492,7 +492,7 @@ function PlayerTradeFilterModal({
    return (
       <div className="window" style={{ width: 500 }}>
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.PlayerTradeFilters)}</div>
+            <div className="title-bar-text">{$t(L.PlayerTradeFilters)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
@@ -500,7 +500,7 @@ function PlayerTradeFilterModal({
          <div className="window-body">
             <div className="row g10" style={{ alignItems: "stretch", height: 300 }}>
                <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-                  <div>{t(L.PlayerTradePlayerNameFilter)}</div>
+                  <div>{$t(L.PlayerTradePlayerNameFilter)}</div>
                   <input
                      className="w100"
                      type="text"
@@ -514,7 +514,7 @@ function PlayerTradeFilterModal({
                      onClick={(e) => (e.target as HTMLInputElement)?.select()}
                   />
                   <div className="sep5" />
-                  <div>{t(L.PlayerTradeMaxTradeAmountFilter)}</div>
+                  <div>{$t(L.PlayerTradeMaxTradeAmountFilter)}</div>
                   <div>
                      <input
                         type="text"
@@ -530,7 +530,7 @@ function PlayerTradeFilterModal({
                      />
                   </div>
                   <div className="sep5" />
-                  <div>{t(L.AccountLevel)}</div>
+                  <div>{$t(L.AccountLevel)}</div>
                   <div className="row">
                      {mapOf(AccountLevelNames, (level, name) => {
                         return (
@@ -552,7 +552,7 @@ function PlayerTradeFilterModal({
                      })}
                   </div>
                   <div className="sep5"></div>
-                  <div>{t(L.PlayerTradeFlagFilter)}</div>
+                  <div>{$t(L.PlayerTradeFlagFilter)}</div>
                   <div
                      className="inset-shallow white f1"
                      style={{
@@ -593,9 +593,9 @@ function PlayerTradeFilterModal({
                      <table>
                         <thead>
                            <tr>
-                              <th>{t(L.PlayerTradeResource)}</th>
-                              <th>{t(L.PlayerTradeWant)}</th>
-                              <th>{t(L.PlayerTradeOffer)}</th>
+                              <th>{$t(L.PlayerTradeResource)}</th>
+                              <th>{$t(L.PlayerTradeWant)}</th>
+                              <th>{$t(L.PlayerTradeOffer)}</th>
                            </tr>
                         </thead>
                         <tbody>
@@ -664,7 +664,7 @@ function PlayerTradeFilterModal({
                      hideModal();
                   }}
                >
-                  {t(L.PlayerTradeFiltersClear)}
+                  {$t(L.PlayerTradeFiltersClear)}
                </button>
                <button
                   className="f1 text-center text-strong"
@@ -673,7 +673,7 @@ function PlayerTradeFilterModal({
                      hideModal();
                   }}
                >
-                  {t(L.PlayerTradeFiltersApply)}
+                  {$t(L.PlayerTradeFiltersApply)}
                </button>
             </div>
          </div>

@@ -28,7 +28,7 @@ import {
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import "../../css/EmptyTilePage.css";
 import { useGameState } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
@@ -205,9 +205,9 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             classNames="sticky-header building-list f1"
             sortingState={savedSorting}
             header={[
-               { name: t(L.BuildingTier), sortable: true },
+               { name: $t(L.BuildingTier), sortable: true },
                { name: "", sortable: false },
-               { name: t(L.BuildingName), sortable: true },
+               { name: $t(L.BuildingName), sortable: true },
                { name: "", sortable: false },
             ]}
             data={filteredBuildings}
@@ -292,7 +292,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                               )}
                            </div>
                            {extractsDeposit(building) ? (
-                              <Tippy content={t(L.BuildingExtractDeposit)}>
+                              <Tippy content={$t(L.BuildingExtractDeposit)}>
                                  <div className="m-icon small text-orange ml5">stars</div>
                               </Tippy>
                            ) : null}
@@ -345,20 +345,20 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            {building.power ? (
                               <div className="row text-small text-desc">
                                  <div className="m-icon small mr2">bolt</div>
-                                 <div>{t(L.RequirePower)}</div>
+                                 <div>{$t(L.RequirePower)}</div>
                               </div>
                            ) : null}
                         </div>
                      </td>
                      <td style={{ width: 0 }}>
-                        <Tippy content={t(L.XBuildingsWillBeBuilt, { count: buildCount })}>
+                        <Tippy content={$t(L.XBuildingsWillBeBuilt, { count: buildCount })}>
                            <div
                               className="text-link text-strong"
                               onClick={() => build(k)}
                               onMouseOver={() => onMouseOver(k)}
                               onMouseLeave={() => onMouseLeave(k)}
                            >
-                              {t(L.Build)}
+                              {$t(L.Build)}
                            </div>
                         </Tippy>
                      </td>
@@ -371,12 +371,12 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
 
    return (
       <div className="window" onPointerDown={() => setSelected(null)}>
-         <TitleBarComponent>{t(L.Tile)}</TitleBarComponent>
+         <TitleBarComponent>{$t(L.Tile)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body" style={{ display: "flex", flexDirection: "column" }}>
             {sizeOf(tile.deposit) > 0 ? (
                <div className="row inset-shallow-2 mb5" style={{ padding: "0 5px" }}>
-                  <div className="f1 text-strong">{t(L.Deposit)}</div>
+                  <div className="f1 text-strong">{$t(L.Deposit)}</div>
                   {jsxMapOf(tile.deposit, (k, v) => {
                      return (
                         <button
@@ -404,7 +404,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                <input
                   type="text"
                   className="f1"
-                  placeholder={t(L.BuildingSearchText)}
+                  placeholder={$t(L.BuildingSearchText)}
                   onChange={(e) => setSearch(e.target.value)}
                />
             </div>
@@ -434,8 +434,8 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                <Tippy
                   content={
                      buildRange === 0
-                        ? t(L.BuildWithin0TileRange)
-                        : t(L.BuildWithinXTileRange, { range: buildRange })
+                        ? $t(L.BuildWithin0TileRange)
+                        : $t(L.BuildWithinXTileRange, { range: buildRange })
                   }
                >
                   <select
@@ -467,7 +467,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   <div className="m-icon small">grid_view</div>
                </button>
                <Filter
-                  tooltip={t(L.ShowUnbuiltOnly)}
+                  tooltip={$t(L.ShowUnbuiltOnly)}
                   filter={buildingFilter}
                   current={BuildingFilter.NotBuilt}
                   savedFilter={savedFilter}
@@ -495,7 +495,7 @@ function BuildingInfoComponent({ building }: { building: Building }): React.Reac
       <>
          <div className="row mt5">
             <div className="m-icon small mr2">build</div>
-            <div className="text-strong">{t(L.Construction)}</div>
+            <div className="text-strong">{$t(L.Construction)}</div>
          </div>
          {jsxMapOf(buildCost, (res, amount) => (
             <ResourceAmountComponent
@@ -511,7 +511,7 @@ function BuildingInfoComponent({ building }: { building: Building }): React.Reac
             <>
                <div className="row mt5">
                   <div className="m-icon small mr2">exit_to_app</div>
-                  <div className="text-strong">{t(L.Consume)}</div>
+                  <div className="text-strong">{$t(L.Consume)}</div>
                </div>
                {jsxMapOf(def.input, (res, amount) => (
                   <ResourceAmountComponent
@@ -529,7 +529,7 @@ function BuildingInfoComponent({ building }: { building: Building }): React.Reac
             <>
                <div className="row mt5">
                   <div className="m-icon small mr2">output</div>
-                  <div className="text-strong">{t(L.Produce)}</div>
+                  <div className="text-strong">{$t(L.Produce)}</div>
                </div>
                {jsxMapOf(def.output, (res, amount) => (
                   <ResourceAmountComponent
@@ -547,7 +547,7 @@ function BuildingInfoComponent({ building }: { building: Building }): React.Reac
             <div className="m-icon small mr2">sell</div>
             {tier > 0 ? (
                <div>
-                  {t(L.BuildingTier)} {numberToRoman(tier)}
+                  {$t(L.BuildingTier)} {numberToRoman(tier)}
                </div>
             ) : null}
             {age ? <div className="ml10">{Config.TechAge[age].name()}</div> : null}
@@ -575,7 +575,7 @@ function _BuildingGridItem({
          content={
             <>
                {buildCount > 0 ? (
-                  <div className="text-strong">{t(L.XBuildingsWillBeBuilt, { count: buildCount })}</div>
+                  <div className="text-strong">{$t(L.XBuildingsWillBeBuilt, { count: buildCount })}</div>
                ) : null}
                <BuildingInfoComponent building={building} />
             </>

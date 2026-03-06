@@ -12,7 +12,7 @@ import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { MAX_ELECTRIFICATION_LEVEL } from "../../../shared/logic/Tile";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -33,8 +33,8 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
          <>
             <div className="separator"></div>
             <div className="row">
-               {t(L.ElectrificationStatusV2)}
-               <Tippy content={t(L.ElectrificationStatusDescV2)}>
+               {$t(L.ElectrificationStatusV2)}
+               <Tippy content={$t(L.ElectrificationStatusDescV2)}>
                   <div className="m-icon small ml5 text-desc help-cursor">help</div>
                </Tippy>
                <div className="f1"></div>
@@ -52,27 +52,27 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
             <div className="sep5" />
             <ul className="tree-view">
                <li className="row">
-                  <div className="f1">{t(L.ElectrificationLevel)}</div>
+                  <div className="f1">{$t(L.ElectrificationLevel)}</div>
                   <div className="text-strong">
                      <FormatNumber value={building.electrification} />
                   </div>
                </li>
                <li className="row">
                   <div className="f1">
-                     <RenderHTML html={t(L.ActualElectrificationLevel)} />
+                     <RenderHTML html={$t(L.ActualElectrificationLevel)} />
                   </div>
                   <div className="text-strong">
                      <FormatNumber value={getElectrificationLevel(building, gameState)} />
                   </div>
                </li>
                <li className="row">
-                  <div className="f1">{t(L.ElectrificationPowerRequired)}</div>
+                  <div className="f1">{$t(L.ElectrificationPowerRequired)}</div>
                   <div className="text-strong">
                      <FormatNumber value={getPowerRequired(building, gameState)} binary={true} />W
                   </div>
                </li>
                <li className="row">
-                  <div className="f1">{t(L.BuildingLevelBoostFromElectrification)}</div>
+                  <div className="f1">{$t(L.BuildingLevelBoostFromElectrification)}</div>
                   <div className="text-green text-strong">
                      +
                      <FormatNumber value={Tick.current.electrified.get(xy) ?? 0} />
@@ -104,12 +104,12 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
 
    return (
       <fieldset>
-         <legend>{t(L.Power)}</legend>
+         <legend>{$t(L.Power)}</legend>
          {Config.Building[building.type].power ? (
             <div className="row text-strong">
                {hasPower ? null : <img src={warning} style={{ margin: "0 2px 0 0" }} />}
-               {t(L.RequirePower)}
-               <Tippy content={t(L.RequirePowerDesc)}>
+               {$t(L.RequirePower)}
+               <Tippy content={$t(L.RequirePowerDesc)}>
                   <div className="m-icon small ml5 text-desc help-cursor">help</div>
                </Tippy>
                <div className="f1"></div>
@@ -127,7 +127,7 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
             </div>
          ) : (
             <div>
-               <div>{t(L.NoPowerRequired)}</div>
+               <div>{$t(L.NoPowerRequired)}</div>
             </div>
          )}
          {electrification}

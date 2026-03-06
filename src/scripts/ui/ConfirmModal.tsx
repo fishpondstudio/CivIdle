@@ -1,4 +1,4 @@
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 
@@ -28,7 +28,7 @@ export function ConfirmModal({
                      hideModalFunc();
                   }}
                >
-                  {t(L.ConfirmYes)}
+                  {$t(L.ConfirmYes)}
                </button>
                <div style={{ width: "10px" }}></div>
                <button
@@ -38,7 +38,7 @@ export function ConfirmModal({
                      hideModalFunc();
                   }}
                >
-                  {t(L.ConfirmNo)}
+                  {$t(L.ConfirmNo)}
                </button>
             </div>
          </div>

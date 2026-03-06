@@ -5,7 +5,7 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
 import { playClick } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -22,13 +22,13 @@ export function UpgradeableWonderComponent({ gameState, xy }: IBuildingComponent
    return (
       <fieldset>
          <div className="row">
-            <div className="f1">{t(L.WonderUpgradeLevel)}</div>
+            <div className="f1">{$t(L.WonderUpgradeLevel)}</div>
             <div className="text-strong">{building.level}</div>
          </div>
          {greatPerson && (
             <div className="row">
                <div className="f1">
-                  {html(t(L.LevelFromGreatPerson, { person: Config.GreatPerson[greatPerson].name() }))}
+                  {html($t(L.LevelFromGreatPerson, { person: Config.GreatPerson[greatPerson].name() }))}
                </div>
                <div className="text-strong">{extraLevel}</div>
             </div>
@@ -61,7 +61,7 @@ export function UpgradeableWonderComponent({ gameState, xy }: IBuildingComponent
             }}
          >
             <div className="m-icon small">assistant_navigation</div>
-            <div className="text-strong f1">{t(L.Upgrade)}</div>
+            <div className="text-strong f1">{$t(L.Upgrade)}</div>
          </button>
       </fieldset>
    );

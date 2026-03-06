@@ -6,7 +6,7 @@ import { DISCORD_URL, SUPPORTER_PACK_URL } from "../../../shared/logic/Constants
 import { Tick } from "../../../shared/logic/TickLogic";
 import { isSaveOwner } from "../../../shared/utilities/DatabaseShared";
 import { isNullOrUndefined, sizeOf } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import Bat from "../../images/Bat.svg";
 import SpiderWeb from "../../images/SpiderWeb.svg";
 import Xmas1 from "../../images/Xmas1.png";
@@ -112,7 +112,7 @@ export function MenuComponent(): React.ReactNode {
                   }
                }}
             >
-               <MenuButton name={t(L.ViewMenu)} />
+               <MenuButton name={$t(L.ViewMenu)} />
                <div
                   className={classNames({
                      "menu-popover": true,
@@ -127,7 +127,7 @@ export function MenuComponent(): React.ReactNode {
                      }}
                   >
                      <MenuItem check={Singleton().sceneManager.isCurrent(WorldScene)}>
-                        {t(L.CityViewMap)}
+                        {$t(L.CityViewMap)}
                      </MenuItem>
                   </div>
                   <div
@@ -138,7 +138,7 @@ export function MenuComponent(): React.ReactNode {
                      }}
                   >
                      <MenuItem check={Singleton().sceneManager.isCurrent(TechTreeScene)}>
-                        {t(L.ResearchMenu)}
+                        {$t(L.ResearchMenu)}
                      </MenuItem>
                   </div>
                   {sizeOf(Tick.current.playerTradeBuildings) <= 0 ? null : (
@@ -150,7 +150,7 @@ export function MenuComponent(): React.ReactNode {
                         }}
                      >
                         <MenuItem check={Singleton().sceneManager.isCurrent(PlayerMapScene)}>
-                           {t(L.PlayerMapMenuV2)}
+                           {$t(L.PlayerMapMenuV2)}
                         </MenuItem>
                      </div>
                   )}
@@ -163,7 +163,7 @@ export function MenuComponent(): React.ReactNode {
                         }}
                      >
                         <MenuItem check={Singleton().sceneManager.isCurrent(PlayerMapScene)}>
-                           {t(L.PlayerTradeMenu)}
+                           {$t(L.PlayerTradeMenu)}
                         </MenuItem>
                      </div>
                   ) : null}
@@ -174,7 +174,7 @@ export function MenuComponent(): React.ReactNode {
                         setActive(null);
                      }}
                   >
-                     <MenuItem check={false}>{t(L.Reborn)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.Reborn)}</MenuItem>
                   </div>
                   <div
                      className="menu-popover-item"
@@ -183,7 +183,7 @@ export function MenuComponent(): React.ReactNode {
                         setActive(null);
                      }}
                   >
-                     <MenuItem check={false}>{t(L.GreatPeople)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.GreatPeople)}</MenuItem>
                   </div>
                   <div
                      className="menu-popover-item"
@@ -192,7 +192,7 @@ export function MenuComponent(): React.ReactNode {
                         setActive(null);
                      }}
                   >
-                     <MenuItem check={false}>{t(L.AgeWisdom)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.AgeWisdom)}</MenuItem>
                   </div>
                </div>
             </div>
@@ -212,7 +212,7 @@ export function MenuComponent(): React.ReactNode {
                   }
                }}
             >
-               <MenuButton name={t(L.OptionsMenu)} />
+               <MenuButton name={$t(L.OptionsMenu)} />
                <div
                   className={classNames({
                      "menu-popover": true,
@@ -225,7 +225,7 @@ export function MenuComponent(): React.ReactNode {
                         Singleton().routeTo(GameplayOptionPage, {});
                      }}
                   >
-                     <MenuItem check={false}>{t(L.Gameplay)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.Gameplay)}</MenuItem>
                   </div>
                   <div
                      className="menu-popover-item"
@@ -233,7 +233,7 @@ export function MenuComponent(): React.ReactNode {
                         Singleton().routeTo(ThemePage, {});
                      }}
                   >
-                     <MenuItem check={false}>{t(L.Theme)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.Theme)}</MenuItem>
                   </div>
                   <div
                      className="menu-popover-item"
@@ -241,7 +241,7 @@ export function MenuComponent(): React.ReactNode {
                         Singleton().routeTo(ShortcutPage, {});
                      }}
                   >
-                     <MenuItem check={false}>{t(L.Shortcut)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.Shortcut)}</MenuItem>
                   </div>
                   <div
                      className="menu-popover-item"
@@ -255,7 +255,7 @@ export function MenuComponent(): React.ReactNode {
                         }
                      }}
                   >
-                     <MenuItem check={false}>{t(L.ManageSave)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.ManageSave)}</MenuItem>
                   </div>
                </div>
             </div>
@@ -275,7 +275,7 @@ export function MenuComponent(): React.ReactNode {
                   }
                }}
             >
-               <MenuButton name={t(L.HelpMenu)}></MenuButton>
+               <MenuButton name={$t(L.HelpMenu)}></MenuButton>
                <div
                   className={classNames({
                      "menu-popover": true,
@@ -288,7 +288,7 @@ export function MenuComponent(): React.ReactNode {
                         Singleton().routeTo(PatchNotesPage, {});
                      }}
                   >
-                     <MenuItem check={false}>{t(L.PatchNotes)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.PatchNotes)}</MenuItem>
                   </div>
                   <div
                      className="menu-popover-item"
@@ -296,7 +296,7 @@ export function MenuComponent(): React.ReactNode {
                         Singleton().routeTo(ManualAndGuidePage, {});
                      }}
                   >
-                     <MenuItem check={false}>{t(L.ManualAndGuide)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.ManualAndGuide)}</MenuItem>
                   </div>
                   <div
                      className="menu-popover-item"
@@ -304,7 +304,7 @@ export function MenuComponent(): React.ReactNode {
                         openUrl(DISCORD_URL);
                      }}
                   >
-                     <MenuItem check={false}>{t(L.JoinDiscord)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.JoinDiscord)}</MenuItem>
                   </div>
                   <div
                      className="menu-popover-item"
@@ -324,7 +324,7 @@ export function MenuComponent(): React.ReactNode {
                         );
                      }}
                   >
-                     <MenuItem check={false}>{t(L.EmailDeveloper)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.EmailDeveloper)}</MenuItem>
                   </div>
                   <div
                      className="menu-popover-item"
@@ -333,7 +333,7 @@ export function MenuComponent(): React.ReactNode {
                         openUrl(SUPPORTER_PACK_URL);
                      }}
                   >
-                     <MenuItem check={false}>{t(L.SupporterPack)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.SupporterPack)}</MenuItem>
                   </div>
                   {isSteam() && (
                      <div
@@ -347,7 +347,7 @@ export function MenuComponent(): React.ReactNode {
                               });
                         }}
                      >
-                        <MenuItem check={false}>{t(L.SaveAndExit)}</MenuItem>
+                        <MenuItem check={false}>{$t(L.SaveAndExit)}</MenuItem>
                      </div>
                   )}
                   {isSteam() &&
@@ -367,7 +367,7 @@ export function MenuComponent(): React.ReactNode {
                            }
                         }}
                      >
-                        <MenuItem check={false}>{t(L.CheckInAndExit)}</MenuItem>
+                        <MenuItem check={false}>{$t(L.CheckInAndExit)}</MenuItem>
                      </div>
                   ) : null}
                   <div
@@ -376,7 +376,7 @@ export function MenuComponent(): React.ReactNode {
                         showModal(<AboutModal />);
                      }}
                   >
-                     <MenuItem check={false}>{t(L.About)}</MenuItem>
+                     <MenuItem check={false}>{$t(L.About)}</MenuItem>
                   </div>
                </div>
             </div>

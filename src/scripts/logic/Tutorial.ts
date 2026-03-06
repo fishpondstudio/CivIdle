@@ -3,7 +3,7 @@ import type { GameState } from "../../../shared/logic/GameState";
 import { isAgeUnlocked } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { mReduceOf } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import KeepYourEmpireHappy from "../../videos/KeepYourEmpireHappy.mp4";
 import TutorialBuildHouse from "../../videos/TutorialBuildHouse.mp4";
 import TutorialBuildHut from "../../videos/TutorialBuildHut.mp4";
@@ -31,8 +31,8 @@ export interface ITutorial {
 
 export const Tutorial: ITutorial[] = [
    {
-      name: () => t(L.TutorialBuildXBuildings, { count: 3, building: Config.Building.Hut.name() }),
-      desc: () => t(L.TutorialBuildHutsHTML),
+      name: () => $t(L.TutorialBuildXBuildings, { count: 3, building: Config.Building.Hut.name() }),
+      desc: () => $t(L.TutorialBuildHutsHTML),
       progress: (gs) => {
          return [
             mReduceOf(gs.tiles, (prev, _xy, tile) => prev + (tile.building?.type === "Hut" ? 1 : 0), 0),
@@ -43,8 +43,8 @@ export const Tutorial: ITutorial[] = [
    },
    {
       name: () =>
-         t(L.TutorialHaveTotalXLevelsOfBuildings, { count: 15, building: Config.Building.Hut.name() }),
-      desc: () => t(L.TutorialUpgradeHutsHTML),
+         $t(L.TutorialHaveTotalXLevelsOfBuildings, { count: 15, building: Config.Building.Hut.name() }),
+      desc: () => $t(L.TutorialUpgradeHutsHTML),
       progress: (gs) => {
          return [
             mReduceOf(
@@ -58,8 +58,8 @@ export const Tutorial: ITutorial[] = [
       video: TutorialUpgradeHut,
    },
    {
-      name: () => t(L.TutorialBuildXBuildings, { count: 2, building: Config.Building.LoggingCamp.name() }),
-      desc: () => t(L.TutorialBuildLoggingCampsHTML),
+      name: () => $t(L.TutorialBuildXBuildings, { count: 2, building: Config.Building.LoggingCamp.name() }),
+      desc: () => $t(L.TutorialBuildLoggingCampsHTML),
       progress: (gs) => {
          return [
             mReduceOf(
@@ -73,8 +73,8 @@ export const Tutorial: ITutorial[] = [
       video: TutorialBuildLoggingCamp,
    },
    {
-      name: () => t(L.TutorialBuildXBuildings, { count: 2, building: Config.Building.StoneQuarry.name() }),
-      desc: () => t(L.TutorialBuildStoneQuarriesHTML),
+      name: () => $t(L.TutorialBuildXBuildings, { count: 2, building: Config.Building.StoneQuarry.name() }),
+      desc: () => $t(L.TutorialBuildStoneQuarriesHTML),
       progress: (gs) => {
          return [
             mReduceOf(
@@ -88,16 +88,16 @@ export const Tutorial: ITutorial[] = [
       video: TutorialBuildStoneQuarry,
    },
    {
-      name: () => t(L.TutorialHaveTotalXLevels, { count: 35 }),
-      desc: () => t(L.TutorialUpgrade35LevelsHTML),
+      name: () => $t(L.TutorialHaveTotalXLevels, { count: 35 }),
+      desc: () => $t(L.TutorialUpgrade35LevelsHTML),
       progress: (gs) => {
          return [mReduceOf(gs.tiles, (prev, _xy, tile) => prev + (tile.building?.level ?? 0), 0), 35];
       },
       video: TutorialUpgrade50Levels,
    },
    {
-      name: () => t(L.TutorialKeepYourEmpireHappy),
-      desc: () => t(L.TutorialHappinessHTML),
+      name: () => $t(L.TutorialKeepYourEmpireHappy),
+      desc: () => $t(L.TutorialHappinessHTML),
       progress: (gs) => {
          return [Tick.current.happiness?.value ?? 0, 0];
       },
@@ -105,8 +105,8 @@ export const Tutorial: ITutorial[] = [
       selector: "#tutorial-happiness",
    },
    {
-      name: () => t(L.TutorialResearchXTech, { tech: Config.Tech.Counting.name() }),
-      desc: () => t(L.TutorialResearchCountingHTML),
+      name: () => $t(L.TutorialResearchXTech, { tech: Config.Tech.Counting.name() }),
+      desc: () => $t(L.TutorialResearchCountingHTML),
       progress: (gs) => {
          return [gs.unlockedTech.Counting ? 1 : 0, 1];
       },
@@ -114,8 +114,8 @@ export const Tutorial: ITutorial[] = [
       selector: "#tutorial-research-button",
    },
    {
-      name: () => t(L.TutorialBuildX, { building: Config.Building.Statistics.name() }),
-      desc: () => t(L.TutorialBuildStatisticsOfficeHTML),
+      name: () => $t(L.TutorialBuildX, { building: Config.Building.Statistics.name() }),
+      desc: () => $t(L.TutorialBuildStatisticsOfficeHTML),
       progress: (gs) => {
          return [
             mReduceOf(
@@ -129,8 +129,8 @@ export const Tutorial: ITutorial[] = [
       video: TutorialBuildStatisticsOffice,
    },
    {
-      name: () => t(L.TutorialResearchXTech, { tech: Config.Tech.Housing.name() }),
-      desc: () => t(L.TutorialResearchHousingHTML),
+      name: () => $t(L.TutorialResearchXTech, { tech: Config.Tech.Housing.name() }),
+      desc: () => $t(L.TutorialResearchHousingHTML),
       progress: (gs) => {
          return [gs.unlockedTech.Housing ? 1 : 0, 1];
       },
@@ -139,8 +139,8 @@ export const Tutorial: ITutorial[] = [
    },
    {
       name: () =>
-         t(L.TutorialHaveTotalXLevelsOfBuildings, { count: 15, building: Config.Building.WheatFarm.name() }),
-      desc: () => t(L.TutorialBuildWheatFarmHTML),
+         $t(L.TutorialHaveTotalXLevelsOfBuildings, { count: 15, building: Config.Building.WheatFarm.name() }),
+      desc: () => $t(L.TutorialBuildWheatFarmHTML),
       progress: (gs) => {
          return [
             mReduceOf(
@@ -155,8 +155,8 @@ export const Tutorial: ITutorial[] = [
    },
    {
       name: () =>
-         t(L.TutorialHaveTotalXLevelsOfBuildings, { count: 10, building: Config.Building.House.name() }),
-      desc: () => t(L.TutorialBuildHouseHTML),
+         $t(L.TutorialHaveTotalXLevelsOfBuildings, { count: 10, building: Config.Building.House.name() }),
+      desc: () => $t(L.TutorialBuildHouseHTML),
       progress: (gs) => {
          return [
             mReduceOf(
@@ -170,8 +170,8 @@ export const Tutorial: ITutorial[] = [
       video: TutorialBuildHouse,
    },
    {
-      name: () => t(L.TutorialSetPriorityToX, { building: Config.Building.House.name(), priority: 10 }),
-      desc: () => t(L.TutorialSetHousePriorityHTML),
+      name: () => $t(L.TutorialSetPriorityToX, { building: Config.Building.House.name(), priority: 10 }),
+      desc: () => $t(L.TutorialSetHousePriorityHTML),
       progress: (gs) => {
          return [
             mReduceOf(
@@ -187,8 +187,8 @@ export const Tutorial: ITutorial[] = [
    },
    {
       name: () =>
-         t(L.TutorialHaveTotalXLevelsOfBuildings, { count: 10, building: Config.Building.Aqueduct.name() }),
-      desc: () => t(L.TutorialBuildAqueductHTML),
+         $t(L.TutorialHaveTotalXLevelsOfBuildings, { count: 10, building: Config.Building.Aqueduct.name() }),
+      desc: () => $t(L.TutorialBuildAqueductHTML),
       progress: (gs) => {
          return [
             mReduceOf(
@@ -202,16 +202,16 @@ export const Tutorial: ITutorial[] = [
       video: TutorialUpgradeAqueduct,
    },
    {
-      name: () => t(L.TutorialResearchXTech, { tech: Config.Tech.Bronze.name() }),
-      desc: () => t(L.TutorialResearchBronzeTechHTML),
+      name: () => $t(L.TutorialResearchXTech, { tech: Config.Tech.Bronze.name() }),
+      desc: () => $t(L.TutorialResearchBronzeTechHTML),
       progress: (gs) => {
          return [gs.unlockedTech.Bronze ? 1 : 0, 1];
       },
       selector: "#tutorial-research-button",
    },
    {
-      name: () => t(L.TutorialBuildXBuildings, { count: 1, building: Config.Building.LumberMill.name() }),
-      desc: () => t(L.TutorialBuildLumberMillsHTML),
+      name: () => $t(L.TutorialBuildXBuildings, { count: 1, building: Config.Building.LumberMill.name() }),
+      desc: () => $t(L.TutorialBuildLumberMillsHTML),
       progress: (gs) => {
          return [
             mReduceOf(
@@ -224,16 +224,16 @@ export const Tutorial: ITutorial[] = [
       },
    },
    {
-      name: () => t(L.TutorialResearchXTech, { tech: Config.Tech.LandTrade.name() }),
-      desc: () => t(L.TutorialResearchLandTradeTechHTML),
+      name: () => $t(L.TutorialResearchXTech, { tech: Config.Tech.LandTrade.name() }),
+      desc: () => $t(L.TutorialResearchLandTradeTechHTML),
       progress: (gs) => {
          return [gs.unlockedTech.LandTrade ? 1 : 0, 1];
       },
       selector: "#tutorial-research-button",
    },
    {
-      name: () => t(L.TutorialBuildXBuildings, { count: 1, building: Config.Building.Caravansary.name() }),
-      desc: () => t(L.TutorialBuildCaravansaryHTML),
+      name: () => $t(L.TutorialBuildXBuildings, { count: 1, building: Config.Building.Caravansary.name() }),
+      desc: () => $t(L.TutorialBuildCaravansaryHTML),
       progress: (gs) => {
          return [
             mReduceOf(
@@ -246,16 +246,16 @@ export const Tutorial: ITutorial[] = [
       },
    },
    {
-      name: () => t(L.TutorialClaimATradeTile),
-      desc: () => t(L.TutorialClaimTradeTileHTML),
+      name: () => $t(L.TutorialClaimATradeTile),
+      desc: () => $t(L.TutorialClaimTradeTileHTML),
       progress: (gs) => {
          return [getOwnedTradeTile() ? 1 : 0, 1];
       },
       video: TutorialClaimTradeTile,
    },
    {
-      name: () => t(L.TutorialBuildX, { building: Config.Building.PyramidOfGiza.name() }),
-      desc: () => t(L.BuildPyramidOfGizaHTML),
+      name: () => $t(L.TutorialBuildX, { building: Config.Building.PyramidOfGiza.name() }),
+      desc: () => $t(L.BuildPyramidOfGizaHTML),
       progress: (gs) => {
          return [
             mReduceOf(
@@ -268,15 +268,15 @@ export const Tutorial: ITutorial[] = [
       },
    },
    {
-      name: () => t(L.TutorialEnterClassicalAge),
-      desc: () => t(L.TutorialEnterClassicalAgeHTML),
+      name: () => $t(L.TutorialEnterClassicalAge),
+      desc: () => $t(L.TutorialEnterClassicalAgeHTML),
       progress: (gs) => {
          return [isAgeUnlocked("ClassicalAge", gs) ? 1 : 0, 1];
       },
    },
    {
-      name: () => t(L.TutorialRebirth),
-      desc: () => t(L.TutorialRebirthHTML),
+      name: () => $t(L.TutorialRebirth),
+      desc: () => $t(L.TutorialRebirthHTML),
       progress: (gs) => {
          return [0, 1];
       },

@@ -28,7 +28,7 @@ import {
 } from "../../../shared/logic/Update";
 import { AccountLevel } from "../../../shared/utilities/Database";
 import { clamp, forEach, safeAdd, type Tile } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { client, disconnectWebSocket, getUser, reconnectWebSocket } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
@@ -113,7 +113,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 
    forEach(gs.unlockedTech, (tech) => {
       const td = Config.Tech[tech];
-      tickUnlockable(td, t(L.SourceResearch, { tech: td.name() }), gs);
+      tickUnlockable(td, $t(L.SourceResearch, { tech: td.name() }), gs);
    });
 
    forEach(gs.greatPeople, (person, level) => {
@@ -121,7 +121,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       greatPerson.tick(
          person,
          getGreatPersonThisRunLevel(level),
-         t(L.SourceGreatPerson, { person: greatPerson.name() }),
+         $t(L.SourceGreatPerson, { person: greatPerson.name() }),
          GreatPersonTickFlag.None,
       );
    });
@@ -135,7 +135,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       greatPerson.tick(
          person,
          v.level,
-         t(L.SourceGreatPersonPermanent, { person: greatPerson.name() }),
+         $t(L.SourceGreatPersonPermanent, { person: greatPerson.name() }),
          GreatPersonTickFlag.None,
       );
    });
@@ -146,7 +146,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
          greatPerson.tick(
             gp,
             level,
-            t(L.AgeWisdomSource, { age: Config.TechAge[age].name(), person: greatPerson.name() }),
+            $t(L.AgeWisdomSource, { age: Config.TechAge[age].name(), person: greatPerson.name() }),
             GreatPersonTickFlag.None,
          );
       });
@@ -277,7 +277,7 @@ OnBuildingProductionComplete.on(onProductionComplete);
 OnPriceUpdated.on((gs) => {
    const count = getBuildingsByType("Market", gs)?.size ?? 0;
    if (count > 0) {
-      showToast(t(L.MarketRefreshMessage, { count }));
+      showToast($t(L.MarketRefreshMessage, { count }));
       playDing();
    }
 });

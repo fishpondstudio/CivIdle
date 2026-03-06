@@ -16,7 +16,7 @@ import {
    hasFlag,
    xyToPoint,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { client, getPlayerMap, getUser, usePlayerMap, useUser } from "../rpc/RPCClient";
 import { getOwnedOrOccupiedTiles, getOwnedTradeTile } from "../scenes/PathFinder";
 import { refreshOnTypedEvent } from "../utilities/Hook";
@@ -42,19 +42,19 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
    return (
       <>
          <fieldset>
-            <legend>{t(L.PlayerMapClaimThisTile)}</legend>
+            <legend>{$t(L.PlayerMapClaimThisTile)}</legend>
             <div className="row mv5">
                {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.Banned) ? (
                   <div className="m-icon small mr10 text-red">cancel</div>
                ) : (
                   <div className="m-icon small mr10 text-green">check_circle</div>
                )}
-               <div className="f1">{t(L.PlayerMapClaimTileCondition2)}</div>
+               <div className="f1">{$t(L.PlayerMapClaimTileCondition2)}</div>
             </div>
             <div className="row mv5">
                <div className="m-icon small mr10 text-green">check_circle</div>
                <div className="f1">
-                  {t(L.PlayerMapClaimTileCondition3, { tech: Config.Tech.LandTrade.name() })}
+                  {$t(L.PlayerMapClaimTileCondition3, { tech: Config.Tech.LandTrade.name() })}
                </div>
             </div>
             <div className="row mv5">
@@ -64,10 +64,10 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
                   <div className="m-icon small mr10 text-green">check_circle</div>
                )}
                <div className="f1">
-                  {t(L.PlayerMapClaimTileCondition4)}
+                  {$t(L.PlayerMapClaimTileCondition4)}
                   {cooldownLeft > 0 ? (
                      <div className="text-strong">
-                        {t(L.PlayerMapClaimTileCooldownLeft, { time: formatHMS(cooldownLeft) })}
+                        {$t(L.PlayerMapClaimTileCooldownLeft, { time: formatHMS(cooldownLeft) })}
                      </div>
                   ) : null}
                </div>
@@ -87,36 +87,36 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
                }}
             >
                <div className="m-icon small mr5">health_and_safety</div>
-               <div className="text-strong f1">{t(L.PlayerMapClaimThisTile)}</div>
+               <div className="text-strong f1">{$t(L.PlayerMapClaimThisTile)}</div>
             </button>
          </fieldset>
          <fieldset>
-            <legend>{t(L.PlayerMapOccupyThisTile)}</legend>
+            <legend>{$t(L.PlayerMapOccupyThisTile)}</legend>
             <div className="row mv5">
                {user && isAdjacentToOwnedOrOccupiedTile(user.userId, xy) ? (
                   <div className="m-icon small mr10 text-green">check_circle</div>
                ) : (
                   <div className="m-icon small mr10 text-red">cancel</div>
                )}
-               <div className="f1">{t(L.PlayerMapOccupyTileCondition1)}</div>
+               <div className="f1">{$t(L.PlayerMapOccupyTileCondition1)}</div>
             </div>
             <ul className="tree-view">
                <li>
                   <div className="row">
-                     <div className="f1 text-strong">{t(L.PlayerMapTileTilePoint)}</div>
+                     <div className="f1 text-strong">{$t(L.PlayerMapTileTilePoint)}</div>
                      <div className="text-strong">{formatNumber(fromRank + fromOccupying)}</div>
                   </div>
                   <ul>
                      <li className="row">
-                        <div className="f1">{t(L.PlayerMapTileFromRank)}</div>
+                        <div className="f1">{$t(L.PlayerMapTileFromRank)}</div>
                         <div>{formatNumber(fromRank)}</div>
                      </li>
                      <li className="row">
-                        <div>{t(L.PlayerMapTileFromOccupying)}</div>
+                        <div>{$t(L.PlayerMapTileFromOccupying)}</div>
                         <Tippy
                            content={
                               <RenderHTML
-                                 html={t(L.PlayerMapTileFromOccupyingTooltipHTML, {
+                                 html={$t(L.PlayerMapTileFromOccupyingTooltipHTML, {
                                     point: TilePointPerHour,
                                     max: Math.round(MaxTilePointTime / DAY),
                                  })}
@@ -133,11 +133,11 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
                </li>
 
                <li className="row">
-                  <div className="text-strong">{t(L.PlayerMapTileUsedTilePoint)}</div>
+                  <div className="text-strong">{$t(L.PlayerMapTileUsedTilePoint)}</div>
                   <Tippy
                      content={
                         <RenderHTML
-                           html={t(L.PlayerMapTileUsedTilePointTooltipHTML, { point: TilePointPerHour })}
+                           html={$t(L.PlayerMapTileUsedTilePointTooltipHTML, { point: TilePointPerHour })}
                         />
                      }
                   >
@@ -148,7 +148,7 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
                   <div className="text-strong">{formatNumber(myTiles.length)}</div>
                </li>
                <li className="row">
-                  <div className="f1 text-strong">{t(L.PlayerMapTileAvailableTilePoint)}</div>
+                  <div className="f1 text-strong">{$t(L.PlayerMapTileAvailableTilePoint)}</div>
                   <div className="text-strong">{formatNumber(fromRank + fromOccupying - myTiles.length)}</div>
                </li>
             </ul>
@@ -171,7 +171,7 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
                }}
             >
                <div className="m-icon small mr5">swords</div>
-               <div className="text-strong f1">{t(L.PlayerMapOccupyThisTile)}</div>
+               <div className="text-strong f1">{$t(L.PlayerMapOccupyThisTile)}</div>
             </button>
          </fieldset>
       </>

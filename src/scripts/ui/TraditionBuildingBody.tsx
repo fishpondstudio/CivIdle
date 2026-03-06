@@ -1,6 +1,6 @@
 import { Config } from "../../../shared/logic/Config";
 import type { ITraditionBuildingData } from "../../../shared/logic/Tile";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -19,7 +19,7 @@ export function TraditionBuildingBody({ gameState, xy }: IBuildingComponentProps
       <div className="window-body">
          {!building.tradition ? (
             <WarningComponent icon="info" className="text-small mb10">
-               <RenderHTML html={t(L.TraditionDescHTML)} />
+               <RenderHTML html={$t(L.TraditionDescHTML)} />
             </WarningComponent>
          ) : null}
          {jsxMapOf(Config.Tradition, (tradition, def) => {

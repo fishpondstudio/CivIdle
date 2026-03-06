@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 
 export interface ITableHeader {
    name: React.ReactNode;
@@ -79,7 +79,7 @@ export function TableView<T>({
                   .map(renderRow)}
                {data.length === 0 ? (
                   <tr className="text-center text-desc">
-                     <td colSpan={999}>{t(L.NothingHere)}</td>
+                     <td colSpan={999}>{$t(L.NothingHere)}</td>
                   </tr>
                ) : null}
             </tbody>

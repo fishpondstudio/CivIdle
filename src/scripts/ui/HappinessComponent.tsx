@@ -8,7 +8,7 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { HAPPINESS_MULTIPLIER, HappinessNames, getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { useCurrentTick } from "../logic/ClientUpdate";
 import { jsxMapOf } from "../utilities/Helper";
@@ -27,7 +27,7 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
    }
    return (
       <fieldset>
-         <legend>{t(L.Happiness)}</legend>
+         <legend>{$t(L.Happiness)}</legend>
          <div className="row">
             <div>
                <div className="text-red m-icon">{getHappinessIcon(-50)}</div>
@@ -57,7 +57,7 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
             <li>
                <details open={open}>
                   <summary className="row">
-                     <div className="f1">{t(L.Happiness)}</div>
+                     <div className="f1">{$t(L.Happiness)}</div>
                      <div className="text-strong">
                         <FormatNumber value={happiness.value} />
                      </div>
@@ -68,7 +68,7 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                            <li className="row" key={type}>
                               <div className="f1">
                                  <TextWithHelp
-                                    content={type === "fromBuildingTypes" ? t(L.WellStockedTooltip) : null}
+                                    content={type === "fromBuildingTypes" ? $t(L.WellStockedTooltip) : null}
                                  >
                                     {HappinessNames[type]()}
                                  </TextWithHelp>
@@ -100,7 +100,7 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                         );
                      })}
                      <li className="row">
-                        <div className="f1">{t(L.HappinessUncapped)}</div>
+                        <div className="f1">{$t(L.HappinessUncapped)}</div>
                         <div
                            className={classNames({
                               "text-strong": true,
@@ -117,7 +117,7 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
             <li>
                <details open={open}>
                   <summary className="row">
-                     <div className="f1">{t(L.WorkerHappinessPercentage)}</div>
+                     <div className="f1">{$t(L.WorkerHappinessPercentage)}</div>
                      <div
                         className={classNames({
                            "text-strong": true,
@@ -129,15 +129,15 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                      </div>
                   </summary>
                   <ul>
-                     <li>{t(L.WorkerPercentagePerHappiness, { value: HAPPINESS_MULTIPLIER })}</li>
+                     <li>{$t(L.WorkerPercentagePerHappiness, { value: HAPPINESS_MULTIPLIER })}</li>
                      <li className="row">
-                        <div className="f1">{t(L.WorkersAvailableBeforeHappinessMultiplier)}</div>
+                        <div className="f1">{$t(L.WorkersAvailableBeforeHappinessMultiplier)}</div>
                         <div className="text-strong">
                            <FormatNumber value={workersBeforeHappiness} />
                         </div>
                      </li>
                      <li className="row">
-                        <div className="f1">{t(L.WorkersAvailableAfterHappinessMultiplier)}</div>
+                        <div className="f1">{$t(L.WorkersAvailableAfterHappinessMultiplier)}</div>
                         <div className="text-strong">
                            <FormatNumber value={workersAfterHappiness} />
                         </div>
@@ -152,12 +152,12 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                <div className="row text-strong mb5">
                   <div className="m-icon mr5">celebration</div>
                   <Tippy
-                     content={t(L.FestivalTechTooltipV2, {
+                     content={$t(L.FestivalTechTooltipV2, {
                         desc: Config.City[gs.city].festivalDesc(),
                         point: FESTIVAL_CONVERSION_RATE,
                      })}
                   >
-                     <div>{t(L.StartFestival)}</div>
+                     <div>{$t(L.StartFestival)}</div>
                   </Tippy>
                   <div className="f1"></div>
                   <div
@@ -177,13 +177,13 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                </div>
                <ul className="tree-view">
                   <li className="row">
-                     <div className="f1">{t(L.Festival)}</div>
+                     <div className="f1">{$t(L.Festival)}</div>
                      <div className="text-strong">
                         <FormatNumber value={festival} />
                      </div>
                   </li>
                   <li className="row">
-                     <div className="f1">{t(L.FestivalCycle)}</div>
+                     <div className="f1">{$t(L.FestivalCycle)}</div>
                      <div className="text-strong">
                         <FormatNumber value={Math.floor(festival / FESTIVAL_CONVERSION_RATE)} />
                      </div>

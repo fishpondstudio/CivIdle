@@ -20,7 +20,7 @@ import {
    xyToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { client, getUser, usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { findPathAsync, findUserOwnedTile, getOwnedTradeTile } from "../scenes/PathFinder";
@@ -93,7 +93,7 @@ export function FillPlayerTradeModal({
    if (!myXy) {
       hideModal();
       playError();
-      showToast(t(L.PlayerTradeClaimTileFirstWarning));
+      showToast($t(L.PlayerTradeClaimTileFirstWarning));
       return null;
    }
 
@@ -129,7 +129,7 @@ export function FillPlayerTradeModal({
 
    const doFill = async (fills: Map<Tile, number>) => {
       if (!fillsAreValid(fills) || !hasValidPath()) {
-         showToast(t(L.OperationNotAllowedError));
+         showToast($t(L.OperationNotAllowedError));
          playError();
          return;
       }
@@ -168,7 +168,7 @@ export function FillPlayerTradeModal({
          }
          playKaching();
          showToast(
-            t(L.PlayerTradeFillSuccessV2, {
+            $t(L.PlayerTradeFillSuccessV2, {
                success: queue.length,
                total: queue.length,
                fillAmount: formatNumber(totalAmount),
@@ -263,7 +263,7 @@ export function FillPlayerTradeModal({
    return (
       <div className="window" style={{ width: 600, maxWidth: "75vw" }}>
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.PlayerTradeFillTradeTitle)}</div>
+            <div className="title-bar-text">{$t(L.PlayerTradeFillTradeTitle)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
@@ -272,7 +272,7 @@ export function FillPlayerTradeModal({
             {!findingPath && !hasValidPath() ? (
                <>
                   <WarningComponent icon="warning">
-                     {t(L.PlayerTradeNoValidRoute, { name: trade.from })}
+                     {$t(L.PlayerTradeNoValidRoute, { name: trade.from })}
                   </WarningComponent>
                   <div className="sep10"></div>
                </>
@@ -283,8 +283,8 @@ export function FillPlayerTradeModal({
                      <tr>
                         <th></th>
                         <th className="text-right">{Config.Material[trade.buyResource].name()}</th>
-                        <th className="text-right">{t(L.Storage)}</th>
-                        <th className="text-right">{t(L.PlayerTradeFillAmount)}</th>
+                        <th className="text-right">{$t(L.Storage)}</th>
+                        <th className="text-right">{$t(L.PlayerTradeFillAmount)}</th>
                         <th></th>
                      </tr>
                      {Array.from(allTradeBuildings.entries())
@@ -299,7 +299,7 @@ export function FillPlayerTradeModal({
                                  <td>
                                     <div>{Config.Building[building.type].name()}</div>
                                     <div className="text-desc text-small">
-                                       {t(L.LevelX, { level: building.level })}
+                                       {$t(L.LevelX, { level: building.level })}
                                     </div>
                                  </td>
                                  <td className="text-right">
@@ -313,7 +313,7 @@ export function FillPlayerTradeModal({
                                           });
                                        }}
                                     >
-                                       {t(L.PlayerTradeFillAmountMaxV2)}
+                                       {$t(L.PlayerTradeFillAmountMaxV2)}
                                     </div>
                                  </td>
                                  <td className="text-right">
@@ -357,10 +357,10 @@ export function FillPlayerTradeModal({
                      setFills(() => new Map());
                   }}
                >
-                  {t(L.PlayerTradeClearAll)}
+                  {$t(L.PlayerTradeClearAll)}
                </div>
                <div className="text-strong text-link" onClick={() => setFills(() => calculateMaxFill(1))}>
-                  {t(L.PlayerTradeMaxAll)}
+                  {$t(L.PlayerTradeMaxAll)}
                </div>
             </div>
             <ul className="tree-view" style={{ overflowY: "auto", maxHeight: "20vh" }}>
@@ -373,7 +373,7 @@ export function FillPlayerTradeModal({
                         })}
                      >
                         <div className="f1">
-                           {t(L.PlayerTradeYouPay, {
+                           {$t(L.PlayerTradeYouPay, {
                               res: Config.Material[trade.buyResource].name(),
                            })}
                         </div>
@@ -388,7 +388,7 @@ export function FillPlayerTradeModal({
                               "text-strong text-red": getTotalFillAmount(fills) > trade.buyAmount,
                            })}
                         >
-                           <div className="f1">{t(L.PlayerTradeFillPercentage)}</div>
+                           <div className="f1">{$t(L.PlayerTradeFillPercentage)}</div>
                            <div>{formatPercent(getTotalFillAmount(fills) / trade.buyAmount)}</div>
                         </li>
                      </ul>
@@ -397,7 +397,7 @@ export function FillPlayerTradeModal({
                <li>
                   <details>
                      <summary className="row">
-                        <div className="f1">{t(L.PlayerMapTariff)}</div>
+                        <div className="f1">{$t(L.PlayerMapTariff)}</div>
                         <div>
                            {findingPath ? (
                               <div className="m-icon small inline spinning">currency_exchange</div>
@@ -409,7 +409,7 @@ export function FillPlayerTradeModal({
                      <ul className="text-small">
                         {seaTileCost > 0 ? (
                            <li className="row">
-                              <div className="f1">{t(L.SeaTradeCost)}</div>
+                              <div className="f1">{$t(L.SeaTradeCost)}</div>
                               <div>{formatPercent(seaTileCost)}</div>
                            </li>
                         ) : null}
@@ -439,7 +439,7 @@ export function FillPlayerTradeModal({
                   <details>
                      <summary className="row">
                         <div className="f1">
-                           {t(L.PlayerTradeYouGetNet, {
+                           {$t(L.PlayerTradeYouGetNet, {
                               res: Config.Material[trade.sellResource].name(),
                            })}
                         </div>
@@ -450,7 +450,7 @@ export function FillPlayerTradeModal({
                      <ul>
                         <li className="row text-small">
                            <div className="f1">
-                              {t(L.PlayerTradeYouGetGross, {
+                              {$t(L.PlayerTradeYouGetGross, {
                                  res: Config.Material[trade.sellResource].name(),
                               })}
                            </div>
@@ -466,7 +466,7 @@ export function FillPlayerTradeModal({
                               "text-strong text-red": !fillsHaveEnoughStorage(fills),
                            })}
                         >
-                           <div className="f1">{t(L.PlayerTradeStorageRequired)}</div>
+                           <div className="f1">{$t(L.PlayerTradeStorageRequired)}</div>
                            <div>
                               <FormatNumber value={getTotalStorageRequired(fills)} />
                            </div>
@@ -475,7 +475,7 @@ export function FillPlayerTradeModal({
                   </details>
                </li>
                <li className="row">
-                  <div className="f1">{t(L.EmpireValueImpactAfterTariff)}</div>
+                  <div className="f1">{$t(L.EmpireValueImpactAfterTariff)}</div>
                   <div className={cls("text-strong", evChange >= 0 ? "text-green" : "text-red")}>
                      {mathSign(evChange)}
                      {formatNumber(Math.abs(evChange))}
@@ -484,7 +484,7 @@ export function FillPlayerTradeModal({
             </ul>
             <div className="sep15"></div>
             <div className="row">
-               <button onClick={hideModal}>{t(L.ChangePlayerHandleCancel)}</button>
+               <button onClick={hideModal}>{$t(L.ChangePlayerHandleCancel)}</button>
                <div className="f1"></div>
                <button
                   onClick={() => {
@@ -493,12 +493,12 @@ export function FillPlayerTradeModal({
                         doFill(fills);
                      } else {
                         playError();
-                        showToast(t(L.PlayerTradeNoFillBecauseOfResources));
+                        showToast($t(L.PlayerTradeNoFillBecauseOfResources));
                         hideModal();
                      }
                   }}
                >
-                  {t(L.PlayerTradeFill50)}
+                  {$t(L.PlayerTradeFill50)}
                </button>
                <button
                   onClick={() => {
@@ -507,12 +507,12 @@ export function FillPlayerTradeModal({
                         doFill(fills);
                      } else {
                         playError();
-                        showToast(t(L.PlayerTradeNoFillBecauseOfResources));
+                        showToast($t(L.PlayerTradeNoFillBecauseOfResources));
                         hideModal();
                      }
                   }}
                >
-                  {t(L.PlayerTradeFill95)}
+                  {$t(L.PlayerTradeFill95)}
                </button>
                <button
                   onClick={() => {
@@ -521,15 +521,15 @@ export function FillPlayerTradeModal({
                         doFill(fills);
                      } else {
                         playError();
-                        showToast(t(L.PlayerTradeNoFillBecauseOfResources));
+                        showToast($t(L.PlayerTradeNoFillBecauseOfResources));
                         hideModal();
                      }
                   }}
                >
-                  {t(L.PlayerTradeFillAmountMaxV2)}
+                  {$t(L.PlayerTradeFillAmountMaxV2)}
                </button>
                <button className="text-strong" disabled={!fillsAreValid(fills)} onClick={() => doFill(fills)}>
-                  {t(L.PlayerTradeFillTradeButton)}
+                  {$t(L.PlayerTradeFillTradeButton)}
                </button>
             </div>
          </div>

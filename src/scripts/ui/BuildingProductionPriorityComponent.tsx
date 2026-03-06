@@ -5,7 +5,7 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
 import { PRIORITY_MAX, PRIORITY_MIN } from "../../../shared/logic/Tile";
 import { isEmpty, safeParseInt } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
@@ -30,9 +30,9 @@ export function BuildingProductionPriorityComponent({
    return (
       <fieldset>
          <legend>
-            {t(L.ProductionPriority)}: {building.productionPriority}
+            {$t(L.ProductionPriority)}: {building.productionPriority}
          </legend>
-         <Tippy content={t(L.ProductionPriorityDescV4)}>
+         <Tippy content={$t(L.ProductionPriorityDescV4)}>
             <input
                type="range"
                min={PRIORITY_MIN}

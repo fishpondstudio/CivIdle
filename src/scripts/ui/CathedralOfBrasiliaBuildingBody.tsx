@@ -1,7 +1,7 @@
 import { getCathedralOfBrasiliaResources } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { ILouvreBuildingData } from "../../../shared/logic/Tile";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -21,7 +21,7 @@ export function CathedralOfBrasiliaBuildingBody({ gameState, xy }: IBuildingComp
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
             <WarningComponent icon="info" className="mb10 text-sm">
-               <RenderHTML html={t(L.CathedralOfBrasiliaWarningHTML)} />
+               <RenderHTML html={$t(L.CathedralOfBrasiliaWarningHTML)} />
             </WarningComponent>
             <div className="table-view">
                <table>

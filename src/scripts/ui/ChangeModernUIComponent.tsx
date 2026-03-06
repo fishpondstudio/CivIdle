@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { syncUITheme, useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 
@@ -8,7 +8,7 @@ export function ChangeModernUIComponent(): React.ReactNode {
    const gameOptions = useGameOptions();
    return (
       <div className="row">
-         <div className="f1">{t(L.OptionsUseModernUIV2)}</div>
+         <div className="f1">{$t(L.OptionsUseModernUIV2)}</div>
          <div
             onClick={() => {
                playClick();

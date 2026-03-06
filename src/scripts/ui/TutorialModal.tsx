@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import { useEffect, useRef } from "react";
 import { getGameOptions, notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import Clippy from "../../images/Clippy.svg";
 import { useGameState } from "../Global";
 import { Tutorial, getCurrentTutorial } from "../logic/Tutorial";
@@ -56,7 +56,7 @@ export function TutorialModal(): React.ReactNode {
                      hideModal();
                   }}
                >
-                  {t(L.SkipTutorial)}
+                  {$t(L.SkipTutorial)}
                </div>
             </div>
             {Tutorial.map((t) => {

@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import { hasRequiredDeposit } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { sizeOf } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { DepositTextureComponent } from "./TextureSprites";
@@ -22,7 +22,7 @@ export function BuildingDepositComponent({ gameState, xy }: IBuildingComponentPr
    }
    return (
       <fieldset>
-         <legend>{t(L.RequiredDeposit)}</legend>
+         <legend>{$t(L.RequiredDeposit)}</legend>
          <ul className="tree-view">
             {jsxMapOf(deposits, (k) => {
                return (
@@ -39,7 +39,7 @@ export function BuildingDepositComponent({ gameState, xy }: IBuildingComponentPr
                         </>
                      ) : (
                         <>
-                           <Tippy content={t(L.NotOnDeposit, { deposit: Config.Material[k].name() })}>
+                           <Tippy content={$t(L.NotOnDeposit, { deposit: Config.Material[k].name() })}>
                               <div className="f1 text-red text-strong">{Config.Material[k].name()}</div>
                            </Tippy>
 

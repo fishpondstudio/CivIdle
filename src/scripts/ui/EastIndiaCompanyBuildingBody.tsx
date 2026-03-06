@@ -5,7 +5,7 @@ import { Config } from "../../../shared/logic/Config";
 import { EAST_INDIA_COMPANY_BOOST_PER_EV } from "../../../shared/logic/Constants";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { formatNumber, safeAdd } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playClick, playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -23,13 +23,13 @@ export function EastIndiaCompanyBuildingBody({ gameState, xy }: IBuildingCompone
       <div className="window-body">
          <fieldset>
             <div className="row mv5">
-               <div className="f1">{t(L.TradeValue)}</div>
+               <div className="f1">{$t(L.TradeValue)}</div>
                <div className="text-strong">
                   <FormatNumber value={building.resources.TradeValue ?? 0} />
                </div>
             </div>
             <div className="row mv5">
-               <div className="f1">{t(L.BoostCyclesLeft)}</div>
+               <div className="f1">{$t(L.BoostCyclesLeft)}</div>
                <div className="text-strong">
                   <FormatNumber
                      value={Math.floor(
@@ -40,7 +40,7 @@ export function EastIndiaCompanyBuildingBody({ gameState, xy }: IBuildingCompone
             </div>
             <div className="separator" />
             <div className="row mv5">
-               <div className="f1">{t(L.Level)}</div>
+               <div className="f1">{$t(L.Level)}</div>
                <div className="text-strong">{building.level}</div>
             </div>
             <button
@@ -77,7 +77,7 @@ export function EastIndiaCompanyBuildingBody({ gameState, xy }: IBuildingCompone
                      </span>
                   }
                >
-                  <div className="text-strong f1">{t(L.Upgrade)}</div>
+                  <div className="text-strong f1">{$t(L.Upgrade)}</div>
                </Tippy>
             </button>
          </fieldset>

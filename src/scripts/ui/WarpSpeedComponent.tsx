@@ -2,7 +2,7 @@ import { getMaxWarpSpeed, getMaxWarpStorage } from "../../../shared/logic/Buildi
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { clamp, formatPercent } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
@@ -19,7 +19,7 @@ export function WarpSpeedComponent(): React.ReactNode {
    return (
       <fieldset>
          <legend>
-            <b>{gs.speedUp}x</b> {t(L.WarpSpeed)}
+            <b>{gs.speedUp}x</b> {$t(L.WarpSpeed)}
          </legend>
          <input
             type="range"
@@ -35,17 +35,17 @@ export function WarpSpeedComponent(): React.ReactNode {
          <div className="text-center text-strong"></div>
          {gs.speedUp > 1 ? (
             <div className="text-small text-des mt5">
-               {t(L.TurnOnTimeWarpDescV2, { speed: gs.speedUp, cost: gs.speedUp - 1 })}
+               {$t(L.TurnOnTimeWarpDescV2, { speed: gs.speedUp, cost: gs.speedUp - 1 })}
             </div>
          ) : null}
          {gs.speedUp > 2 ? (
-            <div className="text-small text-strong text-red mt5">{t(L.TimeWarpWarning)}</div>
+            <div className="text-small text-strong text-red mt5">{$t(L.TimeWarpWarning)}</div>
          ) : null}
          <div className="separator" />
          <ProgressBarComponent progress={current / total} />
          <div className="sep5" />
          <div className="row">
-            <div className="f1">{t(L.Warp)}</div>
+            <div className="f1">{$t(L.Warp)}</div>
             <div className="f1 text-center text-desc">{formatPercent(current / total)}</div>
             <div className="f1 text-right text-strong">
                <FormatNumber value={current} /> / <FormatNumber value={total} />

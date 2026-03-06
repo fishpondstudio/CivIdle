@@ -2,7 +2,7 @@ import type React from "react";
 import { GameStateChanged } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { cls, sizeOf } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
@@ -24,7 +24,7 @@ export function BottomPanel(): React.ReactNode {
             }}
             className={cls(Singleton().sceneManager.isCurrent(WorldScene) ? "active" : null, "nowrap")}
          >
-            {t(L.CityViewMap)}
+            {$t(L.CityViewMap)}
          </button>
          <button
             id="tutorial-research-button"
@@ -34,7 +34,7 @@ export function BottomPanel(): React.ReactNode {
                Singleton().sceneManager.loadScene(TechTreeScene);
             }}
          >
-            {t(L.ResearchMenu)}
+            {$t(L.ResearchMenu)}
          </button>
          {sizeOf(Tick.current.playerTradeBuildings) <= 0 ? null : (
             <button
@@ -44,7 +44,7 @@ export function BottomPanel(): React.ReactNode {
                   Singleton().sceneManager.loadScene(PlayerMapScene);
                }}
             >
-               {t(L.PlayerMapMenuShort)}
+               {$t(L.PlayerMapMenuShort)}
             </button>
          )}
       </div>

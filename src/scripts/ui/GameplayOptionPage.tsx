@@ -29,7 +29,7 @@ import {
    safeParseInt,
    sizeOf,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { Todo } from "../logic/Todo";
 import { client } from "../rpc/RPCClient";
@@ -52,11 +52,11 @@ export function GameplayOptionPage(): React.ReactNode {
    const options = useGameOptions();
    return (
       <div className="window">
-         <TitleBarComponent>{t(L.Gameplay)}</TitleBarComponent>
+         <TitleBarComponent>{$t(L.Gameplay)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <fieldset>
-               <legend>{t(L.Language)}</legend>
+               <legend>{$t(L.Language)}</legend>
                <LanguageSelect className="w100" />
                {options.language !== "en" ? (
                   <div
@@ -65,7 +65,7 @@ export function GameplayOptionPage(): React.ReactNode {
                         openUrl("https://github.com/fishpondstudio/CivIdle/tree/main/shared/languages")
                      }
                   >
-                     {t(L.TranslationPercentage, {
+                     {$t(L.TranslationPercentage, {
                         language: L.CurrentLanguage,
                         percentage: formatPercent(getTranslatedPercentage()),
                      })}
@@ -73,9 +73,9 @@ export function GameplayOptionPage(): React.ReactNode {
                ) : null}
             </fieldset>
             <fieldset>
-               <legend>{t(L.GlobalBuildingDefault)}</legend>
+               <legend>{$t(L.GlobalBuildingDefault)}</legend>
                <div className="row mb5">
-                  <div className="f1">{t(L.DefaultBuildingLevel)}</div>
+                  <div className="f1">{$t(L.DefaultBuildingLevel)}</div>
                   <div className="text-strong">{options.defaultBuildingLevel}</div>
                </div>
                <input
@@ -92,7 +92,7 @@ export function GameplayOptionPage(): React.ReactNode {
                <div className="sep10" />
                <div className="separator"></div>
                <div className="row mb5">
-                  <div className="f1">{t(L.DefaultProductionPriority)}</div>
+                  <div className="f1">{$t(L.DefaultProductionPriority)}</div>
                   <div className="text-strong">{options.defaultProductionPriority}</div>
                </div>
                <input
@@ -109,7 +109,7 @@ export function GameplayOptionPage(): React.ReactNode {
                <div className="sep10" />
                <div className="separator"></div>
                <div className="row mb5">
-                  <div className="f1">{t(L.DefaultProductionPriorityForBuildingsThatProduceWorkers)}</div>
+                  <div className="f1">{$t(L.DefaultProductionPriorityForBuildingsThatProduceWorkers)}</div>
                   <div className="text-strong">{options.defaultWorkerProductionPriority}</div>
                </div>
                <input
@@ -126,7 +126,7 @@ export function GameplayOptionPage(): React.ReactNode {
                <div className="sep10" />
                <div className="separator" />
                <div className="row mb5">
-                  <div className="f1">{t(L.DefaultConstructionPriority)}</div>
+                  <div className="f1">{$t(L.DefaultConstructionPriority)}</div>
                   <div className="text-strong">{options.defaultConstructionPriority}</div>
                </div>
                <input
@@ -143,7 +143,7 @@ export function GameplayOptionPage(): React.ReactNode {
                <div className="sep10" />
                <div className="separator" />
                <div className="row mb5">
-                  <div className="f1">{t(L.DefaultWonderConstructionPriority)}</div>
+                  <div className="f1">{$t(L.DefaultWonderConstructionPriority)}</div>
                   <div className="text-strong">{options.defaultWonderConstructionPriority}</div>
                </div>
                <input
@@ -160,7 +160,7 @@ export function GameplayOptionPage(): React.ReactNode {
                <div className="sep10" />
                <div className="separator"></div>
                <div className="row mb5">
-                  <div className="f1">{t(L.DefaultStockpileSettings)}</div>
+                  <div className="f1">{$t(L.DefaultStockpileSettings)}</div>
                   <div className="text-strong">{options.defaultStockpileCapacity}x</div>
                </div>
                <input
@@ -176,10 +176,10 @@ export function GameplayOptionPage(): React.ReactNode {
                <div className="sep10" />
                <div className="separator" />
                <div className="row mb5">
-                  <div className="f1">{t(L.DefaultStockpileMax)}</div>
+                  <div className="f1">{$t(L.DefaultStockpileMax)}</div>
                   <div className="text-strong">
                      {options.defaultStockpileMax <= 0
-                        ? t(L.StockpileMaxUnlimited)
+                        ? $t(L.StockpileMaxUnlimited)
                         : `${options.defaultStockpileMax}x`}
                   </div>
                </div>
@@ -197,7 +197,7 @@ export function GameplayOptionPage(): React.ReactNode {
                <div className="sep10" />
                <div className="separator" />
                <div className="row mb5">
-                  <div className="f1">{t(L.DefaultElectrificationLevel)}</div>
+                  <div className="f1">{$t(L.DefaultElectrificationLevel)}</div>
                   <div className="text-strong">{options.defaultElectrificationLevel}</div>
                </div>
                <input
@@ -214,8 +214,8 @@ export function GameplayOptionPage(): React.ReactNode {
                <div className="sep10" />
                <div className="separator" />
                <ToggleComponent
-                  title={t(L.GreedyTransport)}
-                  contentHTML={t(L.GreedyTransportDescHTML)}
+                  title={$t(L.GreedyTransport)}
+                  contentHTML={$t(L.GreedyTransportDescHTML)}
                   value={options.greedyTransport}
                   onValueChange={(value) => {
                      playClick();
@@ -225,9 +225,9 @@ export function GameplayOptionPage(): React.ReactNode {
                />
             </fieldset>
             <fieldset>
-               <legend>{t(L.Tutorial)}</legend>
+               <legend>{$t(L.Tutorial)}</legend>
                <ToggleComponent
-                  title={t(L.ShowTutorial)}
+                  title={$t(L.ShowTutorial)}
                   contentHTML=""
                   value={options.showTutorial}
                   onValueChange={(value) => {
@@ -241,9 +241,9 @@ export function GameplayOptionPage(): React.ReactNode {
                   <table>
                      <thead>
                         <tr>
-                           <th>{t(L.TodoTabs)}</th>
-                           <th className="text-right">{t(L.EnableTodo)}</th>
-                           <th className="text-right">{t(L.PinTodo)}</th>
+                           <th>{$t(L.TodoTabs)}</th>
+                           <th className="text-right">{$t(L.EnableTodo)}</th>
+                           <th className="text-right">{$t(L.PinTodo)}</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -270,7 +270,7 @@ export function GameplayOptionPage(): React.ReactNode {
                                        }}
                                     />
                                  </td>
-                                 <Tippy content={t(L.PinTodoTooltip)}>
+                                 <Tippy content={$t(L.PinTodoTooltip)}>
                                     <td>
                                        <ToggleComponent
                                           title=""
@@ -296,7 +296,7 @@ export function GameplayOptionPage(): React.ReactNode {
                </div>
                <div className="separator" />
                <ToggleComponent
-                  title={t(L.ShowWonderPopup)}
+                  title={$t(L.ShowWonderPopup)}
                   contentHTML=""
                   value={options.showWonderPopup}
                   onValueChange={(value) => {
@@ -305,7 +305,7 @@ export function GameplayOptionPage(): React.ReactNode {
                   }}
                />
                <ToggleComponent
-                  title={t(L.ShowNaturalWonderPopup)}
+                  title={$t(L.ShowNaturalWonderPopup)}
                   contentHTML=""
                   value={options.showNaturalWonderPopup}
                   onValueChange={(value) => {
@@ -315,7 +315,7 @@ export function GameplayOptionPage(): React.ReactNode {
                />
             </fieldset>
             <fieldset>
-               <legend>{t(L.ResourcePanelSections)}</legend>
+               <legend>{$t(L.ResourcePanelSections)}</legend>
                {ResourcePanelSections.map((section) => {
                   const label = ResourcePanelSectionLabels[section];
                   return (
@@ -338,10 +338,10 @@ export function GameplayOptionPage(): React.ReactNode {
                })}
             </fieldset>
             <fieldset>
-               <legend>{t(L.OfflineProduction)}</legend>
+               <legend>{$t(L.OfflineProduction)}</legend>
                <WarningComponent icon="info" className="mb10 text-small">
                   <RenderHTML
-                     html={t(L.OfflineProductionTimeDescHTML, {
+                     html={$t(L.OfflineProductionTimeDescHTML, {
                         time: formatHM(MAX_OFFLINE_PRODUCTION_SEC * 1000),
                      })}
                   />
@@ -360,28 +360,28 @@ export function GameplayOptionPage(): React.ReactNode {
                />
                <div className="sep5" />
                <div className="row">
-                  <div>{t(L.TimeWarp)}</div>
+                  <div>{$t(L.TimeWarp)}</div>
                   <div className="f1"></div>
-                  <div>{t(L.OfflineProduction)}</div>
+                  <div>{$t(L.OfflineProduction)}</div>
                </div>
                <div className="separator"></div>
                <div className="row mt5">
-                  <div className="f1">{t(L.OfflineProductionTime)}</div>
+                  <div className="f1">{$t(L.OfflineProductionTime)}</div>
                   <div className="text-strong">
                      {formatHM(options.offlineProductionPercent * MAX_OFFLINE_PRODUCTION_SEC * 1000)}
                   </div>
                </div>
                <div className="row mt5">
-                  <div className="f1">{t(L.TimeWarp)}</div>
+                  <div className="f1">{$t(L.TimeWarp)}</div>
                   <div className="text-strong">
                      {formatHM((1 - options.offlineProductionPercent) * MAX_OFFLINE_PRODUCTION_SEC * 1000)}
                   </div>
                </div>
             </fieldset>
             <fieldset>
-               <legend>{t(L.ResourceBar)}</legend>
+               <legend>{$t(L.ResourceBar)}</legend>
                <div className="row">
-                  <div className="f1">{t(L.ResourceBarShowUncappedHappiness)}</div>
+                  <div className="f1">{$t(L.ResourceBarShowUncappedHappiness)}</div>
                   <div
                      onClick={() => {
                         playClick();
@@ -399,8 +399,8 @@ export function GameplayOptionPage(): React.ReactNode {
                </div>
             </fieldset>
             <fieldset>
-               <legend>{t(L.ExtraTileInfoType)}</legend>
-               <RenderHTML className="f1 mb5" html={t(L.ExtraTileInfoTypeDesc)} />
+               <legend>{$t(L.ExtraTileInfoType)}</legend>
+               <RenderHTML className="f1 mb5" html={$t(L.ExtraTileInfoTypeDesc)} />
                <select
                   value={options.extraTileInfoType}
                   onChange={(e) => {
@@ -419,10 +419,10 @@ export function GameplayOptionPage(): React.ReactNode {
                </select>
             </fieldset>
             <fieldset>
-               <legend>{t(L.PorcelainTower)}</legend>
+               <legend>{$t(L.PorcelainTower)}</legend>
                <ToggleComponent
-                  title={t(L.PorcelainTowerMaxPickPerRoll)}
-                  contentHTML={t(L.PorcelainTowerMaxPickPerRollDescHTML)}
+                  title={$t(L.PorcelainTowerMaxPickPerRoll)}
+                  contentHTML={$t(L.PorcelainTowerMaxPickPerRollDescHTML)}
                   value={options.porcelainTowerMaxPickPerRoll}
                   onValueChange={(value) => {
                      playClick();
@@ -432,13 +432,13 @@ export function GameplayOptionPage(): React.ReactNode {
                />
             </fieldset>
             <fieldset>
-               <legend>{t(L.Sound)}</legend>
+               <legend>{$t(L.Sound)}</legend>
                <ChangeSoundComponent />
                {options.soundEffect ? (
                   <>
                      <div className="separator" />
                      <div className="row">
-                        <div className="f1">{t(L.TradeFillSound)}</div>
+                        <div className="f1">{$t(L.TradeFillSound)}</div>
                         <div
                            onClick={() => {
                               options.tradeFilledSound = !options.tradeFilledSound;
@@ -458,9 +458,9 @@ export function GameplayOptionPage(): React.ReactNode {
                ) : null}
             </fieldset>
             <fieldset>
-               <legend>{t(L.Chat)}</legend>
+               <legend>{$t(L.Chat)}</legend>
                <div className="row">
-                  <div className="f1">{t(L.ChatHideLatestMessage)}</div>
+                  <div className="f1">{$t(L.ChatHideLatestMessage)}</div>
                   <div
                      onClick={() => {
                         playClick();
@@ -478,10 +478,10 @@ export function GameplayOptionPage(): React.ReactNode {
                </div>
             </fieldset>
             <fieldset>
-               <legend>{t(L.Performance)}</legend>
+               <legend>{$t(L.Performance)}</legend>
                <ToggleComponent
-                  title={t(L.TransportPlanCache)}
-                  contentHTML={t(L.TransportPlanCacheDescHTML)}
+                  title={$t(L.TransportPlanCache)}
+                  contentHTML={$t(L.TransportPlanCacheDescHTML)}
                   value={options.enableTransportSourceCache}
                   onValueChange={(value) => {
                      playClick();
@@ -496,15 +496,15 @@ export function GameplayOptionPage(): React.ReactNode {
                      clearTransportSourceCache();
                   }}
                >
-                  {t(L.ClearTransportPlanCache)}
+                  {$t(L.ClearTransportPlanCache)}
                </button>
                <RegenerateGreatPersonImagesButton />
             </fieldset>
             <fieldset>
-               <legend>{t(L.MirrorServer)}</legend>
+               <legend>{$t(L.MirrorServer)}</legend>
                <ToggleComponent
-                  title={t(L.UseMirrorServer)}
-                  contentHTML={t(L.UseMirrorServerDescHTML)}
+                  title={$t(L.UseMirrorServer)}
+                  contentHTML={$t(L.UseMirrorServerDescHTML)}
                   value={options.useMirrorServer}
                   onValueChange={(value) => {
                      options.useMirrorServer = value;
@@ -513,8 +513,8 @@ export function GameplayOptionPage(): React.ReactNode {
                />
             </fieldset>
             <fieldset>
-               <legend>{t(L.ServerBackup)}</legend>
-               <div className="text-small text-desc">{html(t(L.ServerBackupDescHTML))}</div>
+               <legend>{$t(L.ServerBackup)}</legend>
+               <div className="text-small text-desc">{html($t(L.ServerBackupDescHTML))}</div>
                <div className="sep5" />
                <button
                   className="w100"
@@ -525,19 +525,19 @@ export function GameplayOptionPage(): React.ReactNode {
                         ageWisdom: options.ageWisdom,
                         greatPeople: options.greatPeople,
                      });
-                     showToast(t(L.OperationSuccessful));
+                     showToast($t(L.OperationSuccessful));
                   }}
                >
-                  {t(L.BackupToServer)}
+                  {$t(L.BackupToServer)}
                </button>
                <div className="sep5" />
                <button className="w100 text-red" onClick={() => recoverFromServer()}>
-                  {t(L.RecoverFromServer)}
+                  {$t(L.RecoverFromServer)}
                </button>
             </fieldset>
             {sizeOf(options.buildingDefaults) > 0 ? (
                <fieldset>
-                  <legend>{t(L.BuildingDefaults)}</legend>
+                  <legend>{$t(L.BuildingDefaults)}</legend>
                   <div className="table-view">
                      <table>
                         <tbody>
@@ -552,13 +552,13 @@ export function GameplayOptionPage(): React.ReactNode {
                                        <td>{Config.Building[building].name()}</td>
                                        <td>
                                           <TextWithHelp
-                                             content={t(L.BuildingDefaultsCount, { count: sizeOf(value) })}
+                                             content={$t(L.BuildingDefaultsCount, { count: sizeOf(value) })}
                                           >
                                              {sizeOf(value)}
                                           </TextWithHelp>
                                        </td>
                                        <td style={{ width: 0 }}>
-                                          <Tippy content={t(L.BuildingDefaultsRemove)}>
+                                          <Tippy content={$t(L.BuildingDefaultsRemove)}>
                                              <div
                                                 className="text-red m-icon small"
                                                 onClick={() => {
@@ -586,7 +586,7 @@ export function GameplayOptionPage(): React.ReactNode {
 function RegenerateGreatPersonImagesButton(): React.ReactNode {
    const [ongoing, setOngoing] = useState(false);
    return (
-      <Tippy content={t(L.RegenerateGreatPersonPortraitsDesc)}>
+      <Tippy content={$t(L.RegenerateGreatPersonPortraitsDesc)}>
          <button
             disabled={ongoing}
             className="jcc w100 mt5"
@@ -598,7 +598,7 @@ function RegenerateGreatPersonImagesButton(): React.ReactNode {
                setOngoing(false);
             }}
          >
-            {ongoing ? t(L.Regenerating) : t(L.RegenerateGreatPersonPortraits)}
+            {ongoing ? $t(L.Regenerating) : $t(L.RegenerateGreatPersonPortraits)}
          </button>
       </Tippy>
    );

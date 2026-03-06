@@ -1,6 +1,6 @@
 import { formatPercent } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
-import { L, t } from "../utilities/i18n";
+import { $t, L } from "../utilities/i18n";
 import type { Deposit, Material } from "./MaterialDefinitions";
 
 export enum BuildingSpecial {
@@ -30,31 +30,31 @@ export const BuildingDefaultVisionRange = 2;
 export class BuildingDefinitions {
    // #region Workers ////////////////////////////////////////////////////////////////////////////////////////
    Hut: IBuildingDefinition = {
-      name: () => t(L.Hut),
+      name: () => $t(L.Hut),
       input: {},
       output: { Worker: 1 },
       construction: { Wood: 1 },
    };
    House: IBuildingDefinition = {
-      name: () => t(L.House),
+      name: () => $t(L.House),
       input: { Wheat: 1, Water: 1 },
       output: { Worker: 6 },
       construction: { Wood: 1, Stone: 1, Water: 1 },
    };
    Apartment: IBuildingDefinition = {
-      name: () => t(L.Apartment),
+      name: () => $t(L.Apartment),
       input: { Cheese: 1, Meat: 2, Bread: 1 },
       output: { Worker: 84 },
       construction: { Brick: 1, Cheese: 1, Meat: 1, Bread: 1 },
    };
    Condo: IBuildingDefinition = {
-      name: () => t(L.Condo),
+      name: () => $t(L.Condo),
       input: { Pizza: 3 },
       output: { Worker: 510 },
       construction: { ReinforcedConcrete: 3, Steel: 1 },
    };
    Penthouse: IBuildingDefinition = {
-      name: () => t(L.Penthouse),
+      name: () => $t(L.Penthouse),
       input: { Bond: 1 },
       output: { Worker: 4358 },
    };
@@ -62,41 +62,41 @@ export class BuildingDefinitions {
 
    // #region Resources //////////////////////////////////////////////////////////////////////////////////////
    WheatFarm: IBuildingDefinition = {
-      name: () => t(L.WheatFarm),
+      name: () => $t(L.WheatFarm),
       input: {},
       output: { Wheat: 1 },
       construction: { Wood: 1 },
    };
    StoneQuarry: IBuildingDefinition = {
-      name: () => t(L.StoneQuarry),
+      name: () => $t(L.StoneQuarry),
       input: {},
       deposit: { Stone: true },
       output: { Stone: 1 },
       construction: { Wood: 1 },
    };
    LoggingCamp: IBuildingDefinition = {
-      name: () => t(L.LoggingCamp),
+      name: () => $t(L.LoggingCamp),
       input: {},
       deposit: { Wood: true },
       output: { Wood: 1 },
       construction: { Stone: 1 },
    };
    Aqueduct: IBuildingDefinition = {
-      name: () => t(L.Aqueduct),
+      name: () => $t(L.Aqueduct),
       input: {},
       deposit: { Water: true },
       output: { Water: 1 },
       construction: { Stone: 1 },
    };
    IronMiningCamp: IBuildingDefinition = {
-      name: () => t(L.IronMiningCamp),
+      name: () => $t(L.IronMiningCamp),
       input: {},
       deposit: { Iron: true },
       output: { Iron: 1 },
       construction: { Brick: 1 },
    };
    CopperMiningCamp: IBuildingDefinition = {
-      name: () => t(L.CopperMiningCamp),
+      name: () => $t(L.CopperMiningCamp),
       input: {},
       deposit: { Copper: true },
       output: { Copper: 1 },
@@ -104,7 +104,7 @@ export class BuildingDefinitions {
    };
 
    CoalMine: IBuildingDefinition = {
-      name: () => t(L.CoalMine),
+      name: () => $t(L.CoalMine),
       input: {},
       deposit: { Coal: true },
       output: { Coal: 1 },
@@ -112,14 +112,14 @@ export class BuildingDefinitions {
    };
 
    Sandpit: IBuildingDefinition = {
-      name: () => t(L.Sandpit),
+      name: () => $t(L.Sandpit),
       input: {},
       output: { Sand: 1 },
       construction: { Wood: 1 },
    };
 
    GoldMiningCamp: IBuildingDefinition = {
-      name: () => t(L.GoldMiningCamp),
+      name: () => $t(L.GoldMiningCamp),
       input: {},
       deposit: { Gold: true },
       output: { Gold: 1 },
@@ -127,7 +127,7 @@ export class BuildingDefinitions {
    };
 
    UraniumMine: IBuildingDefinition = {
-      name: () => t(L.UraniumMine),
+      name: () => $t(L.UraniumMine),
       input: {},
       deposit: { Uranium: true },
       output: { Uranium: 1 },
@@ -135,7 +135,7 @@ export class BuildingDefinitions {
    };
 
    UraniumEnrichmentPlant: IBuildingDefinition = {
-      name: () => t(L.UraniumEnrichmentPlant),
+      name: () => $t(L.UraniumEnrichmentPlant),
       input: { Uranium: 10 },
       output: { NuclearFuelRod: 1 },
       construction: { ReinforcedConcrete: 4, Steel: 5 },
@@ -143,14 +143,14 @@ export class BuildingDefinitions {
    };
 
    FusionFuelPlant: IBuildingDefinition = {
-      name: () => t(L.FusionFuelPlant),
+      name: () => $t(L.FusionFuelPlant),
       input: { NuclearFuelRod: 10 },
       output: { FusionFuel: 1 },
       power: true,
    };
 
    OilWell: IBuildingDefinition = {
-      name: () => t(L.OilWell),
+      name: () => $t(L.OilWell),
       input: {},
       deposit: { Oil: true },
       output: { Oil: 1 },
@@ -158,7 +158,7 @@ export class BuildingDefinitions {
    };
 
    NaturalGasWell: IBuildingDefinition = {
-      name: () => t(L.NaturalGasWell),
+      name: () => $t(L.NaturalGasWell),
       input: {},
       deposit: { NaturalGas: true },
       output: { NaturalGas: 1 },
@@ -166,7 +166,7 @@ export class BuildingDefinitions {
    };
 
    AluminumSmelter: IBuildingDefinition = {
-      name: () => t(L.AluminumSmelter),
+      name: () => $t(L.AluminumSmelter),
       input: {},
       deposit: { Aluminum: true },
       output: { Aluminum: 1 },
@@ -174,21 +174,21 @@ export class BuildingDefinitions {
    };
 
    CoalPowerPlant: IBuildingDefinition = {
-      name: () => t(L.CoalPowerPlant),
+      name: () => $t(L.CoalPowerPlant),
       input: { Coal: 1 },
       output: { Power: 1 },
       construction: { Lumber: 5, Brick: 4 },
    };
 
    GasPowerPlant: IBuildingDefinition = {
-      name: () => t(L.GasPowerPlant),
+      name: () => $t(L.GasPowerPlant),
       input: { NaturalGas: 2 },
       output: { Power: 3 },
       construction: { Concrete: 2 },
    };
 
    HydroDam: IBuildingDefinition = {
-      name: () => t(L.HydroDam),
+      name: () => $t(L.HydroDam),
       input: {},
       deposit: { Water: true },
       output: { Water: 1, Power: 2 },
@@ -196,14 +196,14 @@ export class BuildingDefinitions {
    };
 
    NuclearPowerPlant: IBuildingDefinition = {
-      name: () => t(L.NuclearPowerPlant),
+      name: () => $t(L.NuclearPowerPlant),
       input: { NuclearFuelRod: 2 },
       output: { Power: 65 },
       construction: { ReinforcedConcrete: 16, Steel: 16 },
    };
 
    FusionPowerPlant: IBuildingDefinition = {
-      name: () => t(L.FusionPowerPlant),
+      name: () => $t(L.FusionPowerPlant),
       input: { FusionFuel: 2 },
       output: { Power: 1140 },
    };
@@ -211,148 +211,148 @@ export class BuildingDefinitions {
 
    // #region Military ///////////////////////////////////////////////////////////////////////////////////////
    SwordForge: IBuildingDefinition = {
-      name: () => t(L.SwordForge),
+      name: () => $t(L.SwordForge),
       input: { Tool: 2 },
       output: { Sword: 1 },
       construction: { Tool: 1, Brick: 1, Copper: 2 },
    };
    Armory: IBuildingDefinition = {
-      name: () => t(L.Armory),
+      name: () => $t(L.Armory),
       input: { Tool: 2 },
       output: { Armor: 1 },
       construction: { Tool: 1, Brick: 1, Iron: 1, Wood: 1 },
    };
    ChariotWorkshop: IBuildingDefinition = {
-      name: () => t(L.ChariotWorkshop),
+      name: () => $t(L.ChariotWorkshop),
       input: { Horse: 2, Lumber: 2, Copper: 1 },
       output: { Chariot: 1 },
       construction: { Horse: 1, Copper: 1, Lumber: 2, Brick: 2 },
    };
    KnightCamp: IBuildingDefinition = {
-      name: () => t(L.KnightCamp),
+      name: () => $t(L.KnightCamp),
       input: { Horse: 1, Armor: 1, Sword: 1 },
       output: { Knight: 1 },
    };
    CannonWorkshop: IBuildingDefinition = {
-      name: () => t(L.CannonWorkshop),
+      name: () => $t(L.CannonWorkshop),
       input: { Iron: 2, Wood: 1, Tool: 1 },
       output: { Cannon: 1 },
       construction: { Iron: 1, Wood: 1, Tool: 1, Brick: 1, Stone: 1 },
    };
    GunpowderMill: IBuildingDefinition = {
-      name: () => t(L.GunpowderMill),
+      name: () => $t(L.GunpowderMill),
       input: { Wood: 1, Coal: 1 },
       output: { Gunpowder: 1 },
       construction: { Stone: 1, Coal: 1 },
    };
    DynamiteWorkshop: IBuildingDefinition = {
-      name: () => t(L.DynamiteWorkshop),
+      name: () => $t(L.DynamiteWorkshop),
       input: { Wheat: 1, Gunpowder: 1, Coal: 1 },
       output: { Dynamite: 1 },
       construction: { Stone: 2, Gunpowder: 1, Coal: 1 },
    };
    SiegeWorkshop: IBuildingDefinition = {
-      name: () => t(L.SiegeWorkshop),
+      name: () => $t(L.SiegeWorkshop),
       input: { Lumber: 2, Iron: 2, Tool: 1 },
       output: { SiegeRam: 1 },
       construction: { Lumber: 2, Iron: 1, Brick: 1, Tool: 1, Stone: 1 },
    };
    CaravelBuilder: IBuildingDefinition = {
-      name: () => t(L.CaravelBuilder),
+      name: () => $t(L.CaravelBuilder),
       input: { Lumber: 5, Cloth: 2, Tool: 2 },
       output: { Caravel: 1 },
       construction: { Lumber: 5, Marble: 1, Brick: 2, Tool: 2 },
    };
    GalleonBuilder: IBuildingDefinition = {
-      name: () => t(L.GalleonBuilder),
+      name: () => $t(L.GalleonBuilder),
       input: { Caravel: 1, Sword: 1, SiegeRam: 1, Armor: 1 },
       output: { Galleon: 1 },
    };
    FrigateBuilder: IBuildingDefinition = {
-      name: () => t(L.FrigateBuilder),
+      name: () => $t(L.FrigateBuilder),
       input: { Galleon: 1, Knight: 1, Cannon: 1, Lens: 1 },
       output: { Frigate: 1 },
    };
    RifleFactory: IBuildingDefinition = {
-      name: () => t(L.RifleFactory),
+      name: () => $t(L.RifleFactory),
       input: { Gunpowder: 5, Tool: 5 },
       output: { Rifle: 1 },
    };
    GatlingGunFactory: IBuildingDefinition = {
-      name: () => t(L.GatlingGunFactory),
+      name: () => $t(L.GatlingGunFactory),
       input: { Rifle: 1, Gunpowder: 5 },
       output: { GatlingGun: 1 },
    };
    ArtilleryFactory: IBuildingDefinition = {
-      name: () => t(L.ArtilleryFactory),
+      name: () => $t(L.ArtilleryFactory),
       input: { GatlingGun: 1, Dynamite: 1, Aluminum: 5 },
       output: { Artillery: 1 },
    };
    IroncladBuilder: IBuildingDefinition = {
-      name: () => t(L.IroncladBuilder),
+      name: () => $t(L.IroncladBuilder),
       input: { GatlingGun: 1, Rifle: 1, Frigate: 1 },
       output: { Ironclad: 1 },
    };
    BattleshipBuilder: IBuildingDefinition = {
-      name: () => t(L.BattleshipBuilder),
+      name: () => $t(L.BattleshipBuilder),
       input: { Ironclad: 1, Artillery: 1, Cable: 5, Steel: 5, Aluminum: 5 },
       output: { Battleship: 1 },
       power: true,
    };
    TankFactory: IBuildingDefinition = {
-      name: () => t(L.TankFactory),
+      name: () => $t(L.TankFactory),
       input: { Engine: 1, Steel: 10, Cannon: 1, GatlingGun: 1 },
       output: { Tank: 1 },
    };
    BiplaneFactory: IBuildingDefinition = {
-      name: () => t(L.BiplaneFactory),
+      name: () => $t(L.BiplaneFactory),
       input: { Engine: 1, Steel: 1, Lens: 1, Petrol: 5 },
       output: { Biplane: 1 },
    };
    RocketFactory: IBuildingDefinition = {
-      name: () => t(L.RocketFactory),
+      name: () => $t(L.RocketFactory),
       input: { Engine: 1, Artillery: 1, Steel: 5, Cable: 5, Petrol: 10 },
       output: { Rocket: 1 },
       power: true,
    };
    AtomicFacility: IBuildingDefinition = {
-      name: () => t(L.AtomicFacility),
+      name: () => $t(L.AtomicFacility),
       input: { Dynamite: 10, Uranium: 10 },
       output: { AtomicBomb: 1 },
       power: true,
    };
    FighterJetPlant: IBuildingDefinition = {
-      name: () => t(L.FighterJetPlant),
+      name: () => $t(L.FighterJetPlant),
       input: { Airplane: 1, Artillery: 1 },
       output: { FighterJet: 2 },
       power: true,
    };
    AircraftCarrierYard: IBuildingDefinition = {
-      name: () => t(L.AircraftCarrierYard),
+      name: () => $t(L.AircraftCarrierYard),
       input: { Battleship: 1, FighterJet: 10 },
       output: { AircraftCarrier: 1 },
       power: true,
    };
    SubmarineYard: IBuildingDefinition = {
-      name: () => t(L.SubmarineYard),
+      name: () => $t(L.SubmarineYard),
       input: { Ironclad: 2 },
       output: { Submarine: 1 },
       power: true,
    };
    NuclearSubmarineYard: IBuildingDefinition = {
-      name: () => t(L.NuclearSubmarineYard),
+      name: () => $t(L.NuclearSubmarineYard),
       input: { Submarine: 2, NuclearMissile: 2 },
       output: { NuclearSubmarine: 1 },
       power: true,
    };
    NuclearMissileSilo: IBuildingDefinition = {
-      name: () => t(L.NuclearMissileSilo),
+      name: () => $t(L.NuclearMissileSilo),
       input: { AtomicBomb: 1, Rocket: 1 },
       output: { NuclearMissile: 1 },
       power: true,
    };
    Peacekeeper: IBuildingDefinition = {
-      name: () => t(L.Peacekeeper),
+      name: () => $t(L.Peacekeeper),
       input: { NuclearMissile: 4, Diplomacy: 1, Radio: 1 },
       output: { Peace: 1 },
       power: true,
@@ -361,179 +361,179 @@ export class BuildingDefinitions {
 
    // #region Culture ////////////////////////////////////////////////////////////////////////////////////////
    WritersGuild: IBuildingDefinition = {
-      name: () => t(L.WritersGuild),
+      name: () => $t(L.WritersGuild),
       input: { Paper: 2 },
       output: { Poem: 1 },
       construction: { Brick: 2 },
    };
    PoetrySchool: IBuildingDefinition = {
-      name: () => t(L.PoetrySchool),
+      name: () => $t(L.PoetrySchool),
       input: { Paper: 2, Alcohol: 1 },
       output: { Poem: 2 },
       construction: { Brick: 1, Lumber: 1 },
    };
    PaintersGuild: IBuildingDefinition = {
-      name: () => t(L.PaintersGuild),
+      name: () => $t(L.PaintersGuild),
       input: { Paper: 2 },
       output: { Painting: 1 },
       construction: { Lumber: 1, Brick: 1 },
    };
    MusiciansGuild: IBuildingDefinition = {
-      name: () => t(L.MusiciansGuild),
+      name: () => $t(L.MusiciansGuild),
       input: { Alcohol: 2 },
       output: { Music: 1 },
       construction: { Lumber: 2, Brick: 1 },
    };
    ActorsGuild: IBuildingDefinition = {
-      name: () => t(L.ActorsGuild),
+      name: () => $t(L.ActorsGuild),
       input: { Music: 1, Poem: 1 },
       output: { Opera: 2 },
    };
    Shrine: IBuildingDefinition = {
-      name: () => t(L.Shrine),
+      name: () => $t(L.Shrine),
       input: { Horse: 1, Alcohol: 1 },
       output: { Faith: 1 },
       construction: { Brick: 1, Lumber: 1, Alcohol: 1 },
    };
    Church: IBuildingDefinition = {
-      name: () => t(L.Church),
+      name: () => $t(L.Church),
       input: { Music: 1, Poem: 1 },
       output: { Faith: 3 },
    };
    Mosque: IBuildingDefinition = {
-      name: () => t(L.Mosque),
+      name: () => $t(L.Mosque),
       input: { Cheese: 1, Opera: 1 },
       output: { Faith: 4 },
    };
    Pagoda: IBuildingDefinition = {
-      name: () => t(L.Pagoda),
+      name: () => $t(L.Pagoda),
       input: { Painting: 1, Furniture: 1 },
       output: { Faith: 3 },
    };
    // Science is valued at 0.2
    Library: IBuildingDefinition = {
-      name: () => t(L.Library),
+      name: () => $t(L.Library),
       input: { Paper: 4 },
       output: { Science: 140 },
       construction: { Brick: 1 },
    };
    School: IBuildingDefinition = {
-      name: () => t(L.School),
+      name: () => $t(L.School),
       input: { Faith: 2, Poem: 2 },
       output: { Science: 800 },
    };
    University: IBuildingDefinition = {
-      name: () => t(L.University),
+      name: () => $t(L.University),
       input: { Poem: 2, Faith: 2 },
       output: { Philosophy: 1, Science: 250 },
    };
    PublishingHouse: IBuildingDefinition = {
-      name: () => t(L.PublishingHouse),
+      name: () => $t(L.PublishingHouse),
       input: { Philosophy: 2, Book: 10 },
       output: { Newspaper: 1, Science: 1000 },
    };
    MagazinePublisher: IBuildingDefinition = {
-      name: () => t(L.MagazinePublisher),
+      name: () => $t(L.MagazinePublisher),
       input: { Sports: 2, Book: 10 },
       output: { Magazine: 1, Science: 1000 },
    };
    ResearchLab: IBuildingDefinition = {
-      name: () => t(L.ResearchLab),
+      name: () => $t(L.ResearchLab),
       input: { Culture: 3, Philosophy: 3 },
       output: { Science: 7500 },
    };
    ResearchFund: IBuildingDefinition = {
-      name: () => t(L.ResearchFund),
+      name: () => $t(L.ResearchFund),
       input: { Banknote: 1, Bond: 1 },
       output: { Science: 25940 },
    };
    ComputerLab: IBuildingDefinition = {
-      name: () => t(L.ComputerLab),
+      name: () => $t(L.ComputerLab),
       input: { Computer: 1 },
       output: { Science: 80625 },
       power: true,
    };
    Museum: IBuildingDefinition = {
-      name: () => t(L.Museum),
+      name: () => $t(L.Museum),
       input: { Music: 2, Painting: 2 },
       output: { Culture: 1 },
    };
    Courthouse: IBuildingDefinition = {
-      name: () => t(L.Courthouse),
+      name: () => $t(L.Courthouse),
       input: { Philosophy: 1, Faith: 1, Culture: 1 },
       output: { Law: 1 },
    };
    Stadium: IBuildingDefinition = {
-      name: () => t(L.Stadium),
+      name: () => $t(L.Stadium),
       input: { Culture: 1, Opera: 1, Philosophy: 1 },
       output: { Sports: 1 },
    };
    Parliament: IBuildingDefinition = {
-      name: () => t(L.Parliament),
+      name: () => $t(L.Parliament),
       input: { Culture: 2, Philosophy: 2, Law: 2 },
       output: { Politics: 1 },
    };
    MovieStudio: IBuildingDefinition = {
-      name: () => t(L.MovieStudio),
+      name: () => $t(L.MovieStudio),
       input: { Sports: 5, Lens: 5, Garment: 5 },
       output: { Movie: 1 },
       power: true,
    };
    RadioStation: IBuildingDefinition = {
-      name: () => t(L.RadioStation),
+      name: () => $t(L.RadioStation),
       input: { Magazine: 5, Newspaper: 5, Culture: 5 },
       output: { Radio: 1 },
       power: true,
    };
    Embassy: IBuildingDefinition = {
-      name: () => t(L.Embassy),
+      name: () => $t(L.Embassy),
       input: { Law: 5, Politics: 5, Philosophy: 5 },
       output: { Diplomacy: 1 },
    };
    TVStation: IBuildingDefinition = {
-      name: () => t(L.TVStation),
+      name: () => $t(L.TVStation),
       input: { Radio: 2, Movie: 10 },
       output: { TV: 1 },
       power: true,
    };
    InternetServiceProvider: IBuildingDefinition = {
-      name: () => t(L.InternetServiceProvider),
+      name: () => $t(L.InternetServiceProvider),
       input: { Computer: 1, OpticalFiber: 5 },
       output: { Internet: 1 },
       power: true,
    };
    SoftwareCompany: IBuildingDefinition = {
-      name: () => t(L.SoftwareCompany),
+      name: () => $t(L.SoftwareCompany),
       input: { Computer: 1, Philosophy: 10 },
       output: { Software: 1 },
       power: true,
    };
    SupercomputerLab: IBuildingDefinition = {
-      name: () => t(L.SupercomputerLab),
+      name: () => $t(L.SupercomputerLab),
       input: { Software: 1, Computer: 5 },
       output: { Supercomputer: 1 },
       power: true,
    };
    CivGPT: IBuildingDefinition = {
-      name: () => t(L.CivGPT),
+      name: () => $t(L.CivGPT),
       input: { Internet: 1, Supercomputer: 2, Radio: 1 },
       output: { CivGPT: 1 },
       power: true,
    };
    AILab: IBuildingDefinition = {
-      name: () => t(L.AILab),
+      name: () => $t(L.AILab),
       input: { Internet: 2, Supercomputer: 4, Radio: 2 },
       output: { CivGPT: 2 },
       power: true,
    };
    CivTok: IBuildingDefinition = {
-      name: () => t(L.CivTok),
+      name: () => $t(L.CivTok),
       input: { Internet: 1, Politics: 1 },
       output: { CivTok: 1 },
       power: true,
    };
    CivOasis: IBuildingDefinition = {
-      name: () => t(L.CivOasis),
+      name: () => $t(L.CivOasis),
       input: { CivTok: 1, Supercomputer: 1, Diplomacy: 2 },
       output: { CivOasis: 1 },
       power: true,
@@ -542,92 +542,92 @@ export class BuildingDefinitions {
 
    // #region Food & Light Industry //////////////////////////////////////////////////////////////////////////
    CottonPlantation: IBuildingDefinition = {
-      name: () => t(L.CottonPlantation),
+      name: () => $t(L.CottonPlantation),
       input: {},
       output: { Cotton: 1 },
       construction: { Wood: 1 },
    };
    CottonMill: IBuildingDefinition = {
-      name: () => t(L.CottonMill),
+      name: () => $t(L.CottonMill),
       input: { Cotton: 2 },
       output: { Cloth: 1 },
       construction: { Brick: 1, Lumber: 1 },
    };
    GarmentWorkshop: IBuildingDefinition = {
-      name: () => t(L.GarmentWorkshop),
+      name: () => $t(L.GarmentWorkshop),
       input: { Cloth: 2 },
       output: { Garment: 1 },
    };
    FurnitureWorkshop: IBuildingDefinition = {
-      name: () => t(L.FurnitureWorkshop),
+      name: () => $t(L.FurnitureWorkshop),
       input: { Lumber: 2, Copper: 1 },
       output: { Furniture: 1 },
    };
    PrintingHouse: IBuildingDefinition = {
-      name: () => t(L.PrintingHouse),
+      name: () => $t(L.PrintingHouse),
       input: { Paper: 5, Poem: 1 },
       output: { Book: 1 },
    };
    FlourMill: IBuildingDefinition = {
-      name: () => t(L.FlourMill),
+      name: () => $t(L.FlourMill),
       input: { Wheat: 2 },
       output: { Flour: 1 },
       construction: { Brick: 1 },
    };
    PoultryFarm: IBuildingDefinition = {
-      name: () => t(L.PoultryFarm),
+      name: () => $t(L.PoultryFarm),
       input: { Wheat: 2 },
       output: { Meat: 2 },
       construction: { Lumber: 1 },
    };
    DairyFarm: IBuildingDefinition = {
-      name: () => t(L.DairyFarm),
+      name: () => $t(L.DairyFarm),
       input: { Wheat: 2 },
       output: { Milk: 2 },
       construction: { Brick: 1 },
    };
    Stable: IBuildingDefinition = {
-      name: () => t(L.Stable),
+      name: () => $t(L.Stable),
       input: { Wheat: 2 },
       output: { Horse: 1 },
       construction: { Lumber: 1 },
    };
    Bakery: IBuildingDefinition = {
-      name: () => t(L.Bakery),
+      name: () => $t(L.Bakery),
       input: { Water: 1, Flour: 1 },
       output: { Bread: 1 },
       construction: { Brick: 1, Lumber: 1, Stone: 1 },
    };
    CheeseMaker: IBuildingDefinition = {
-      name: () => t(L.CheeseMaker),
+      name: () => $t(L.CheeseMaker),
       input: { Milk: 2 },
       output: { Cheese: 1 },
       construction: { Brick: 1, Lumber: 1 },
    };
    Brewery: IBuildingDefinition = {
-      name: () => t(L.Brewery),
+      name: () => $t(L.Brewery),
       input: { Wheat: 1, Water: 1 },
       output: { Alcohol: 1 },
       construction: { Copper: 1 },
    };
    PaperMaker: IBuildingDefinition = {
-      name: () => t(L.PaperMaker),
+      name: () => $t(L.PaperMaker),
       input: { Wood: 1, Water: 1 },
       output: { Paper: 1 },
       construction: { Wood: 1, Stone: 1 },
    };
    Pizzeria: IBuildingDefinition = {
-      name: () => t(L.Pizzeria),
+      name: () => $t(L.Pizzeria),
       input: { Cheese: 1, Meat: 1, Flour: 2, Water: 2 },
       output: { Pizza: 1 },
    };
    PlasticsFactory: IBuildingDefinition = {
-      name: () => t(L.PlasticsFactory),
+      name: () => $t(L.PlasticsFactory),
       input: { Oil: 2 },
       output: { Plastics: 1 },
    };
    GasPlasticsPlant: IBuildingDefinition = {
-      name: () => t(L.GasPlasticsPlant),
+      name: () => $t(L.GasPlasticsPlant),
       input: { NaturalGas: 2 },
       output: { Plastics: 1 },
    };
@@ -635,156 +635,156 @@ export class BuildingDefinitions {
 
    // #region Heavy Industry /////////////////////////////////////////////////////////////////////////////////
    LumberMill: IBuildingDefinition = {
-      name: () => t(L.LumberMill),
+      name: () => $t(L.LumberMill),
       input: { Wood: 2 },
       output: { Lumber: 1 },
       construction: { Stone: 2 },
    };
    Glassworks: IBuildingDefinition = {
-      name: () => t(L.Glassworks),
+      name: () => $t(L.Glassworks),
       input: { Sand: 2 },
       output: { Glass: 1 },
       construction: { Brick: 1, Wood: 2 },
    };
    LensWorkshop: IBuildingDefinition = {
-      name: () => t(L.LensWorkshop),
+      name: () => $t(L.LensWorkshop),
       input: { Glass: 2 },
       output: { Lens: 1 },
    };
    Blacksmith: IBuildingDefinition = {
-      name: () => t(L.Blacksmith),
+      name: () => $t(L.Blacksmith),
       input: { Copper: 1, Wood: 1 },
       output: { Tool: 1 },
       construction: { Brick: 1 },
    };
    IronForge: IBuildingDefinition = {
-      name: () => t(L.IronForge),
+      name: () => $t(L.IronForge),
       input: { Iron: 1 },
       output: { Tool: 1 },
       construction: { Brick: 1 },
    };
    Brickworks: IBuildingDefinition = {
-      name: () => t(L.Brickworks),
+      name: () => $t(L.Brickworks),
       input: { Stone: 2 },
       output: { Brick: 1 },
       construction: { Wood: 2 },
    };
    Marbleworks: IBuildingDefinition = {
-      name: () => t(L.Marbleworks),
+      name: () => $t(L.Marbleworks),
       input: { Stone: 2, Tool: 1 },
       output: { Marble: 1 },
    };
    ConcretePlant: IBuildingDefinition = {
-      name: () => t(L.ConcretePlant),
+      name: () => $t(L.ConcretePlant),
       input: { Brick: 5, Sand: 5, Tool: 5 },
       output: { Concrete: 1 },
    };
    RebarPlant: IBuildingDefinition = {
-      name: () => t(L.RebarPlant),
+      name: () => $t(L.RebarPlant),
       input: { Steel: 5 },
       output: { Rebar: 1 },
    };
    ReinforcedConcretePlant: IBuildingDefinition = {
-      name: () => t(L.ReinforcedConcretePlant),
+      name: () => $t(L.ReinforcedConcretePlant),
       input: { Rebar: 5, Concrete: 5 },
       output: { ReinforcedConcrete: 1 },
    };
    SteelMill: IBuildingDefinition = {
-      name: () => t(L.SteelMill),
+      name: () => $t(L.SteelMill),
       input: { Iron: 1, Coal: 1 },
       output: { Steel: 1 },
       construction: { Brick: 1, Coal: 1 },
    };
    SiliconSmelter: IBuildingDefinition = {
-      name: () => t(L.SiliconSmelter),
+      name: () => $t(L.SiliconSmelter),
       input: { Sand: 5 },
       output: { Silicon: 1 },
       construction: { Brick: 1, Coal: 1 },
       power: true,
    };
    CableFactory: IBuildingDefinition = {
-      name: () => t(L.CableFactory),
+      name: () => $t(L.CableFactory),
       input: { Copper: 5 },
       output: { Cable: 1 },
    };
    Steamworks: IBuildingDefinition = {
-      name: () => t(L.Steamworks),
+      name: () => $t(L.Steamworks),
       input: { Iron: 1, Coal: 1, Tool: 1 },
       output: { Engine: 1 },
    };
    LocomotiveFactory: IBuildingDefinition = {
-      name: () => t(L.LocomotiveFactory),
+      name: () => $t(L.LocomotiveFactory),
       input: { Engine: 1, Steel: 10 },
       output: { Train: 1 },
    };
    MaglevFactory: IBuildingDefinition = {
-      name: () => t(L.MaglevFactory),
+      name: () => $t(L.MaglevFactory),
       input: { Train: 15, Airplane: 15, Car: 15 },
       output: { Maglev: 1 },
       power: true,
    };
    CarFactory: IBuildingDefinition = {
-      name: () => t(L.CarFactory),
+      name: () => $t(L.CarFactory),
       input: { Engine: 1, Steel: 1, Furniture: 1, Cable: 1, Plastics: 1, Petrol: 5 },
       output: { Car: 1 },
       power: true,
    };
    RobocarFactory: IBuildingDefinition = {
-      name: () => t(L.RobocarFactory),
+      name: () => $t(L.RobocarFactory),
       input: { Car: 5, Supercomputer: 2, Satellite: 1 },
       output: { Robocar: 1 },
       power: true,
    };
    SpaceCenter: IBuildingDefinition = {
-      name: () => t(L.SpaceCenter),
+      name: () => $t(L.SpaceCenter),
       input: { Maglev: 1, Radio: 1, Supercomputer: 1 },
       output: { PlanetaryRover: 2 },
       power: true,
    };
    OilRefinery: IBuildingDefinition = {
-      name: () => t(L.OilRefinery),
+      name: () => $t(L.OilRefinery),
       input: { Oil: 2 },
       output: { Petrol: 1 },
       construction: { Steel: 1 },
    };
    SatelliteFactory: IBuildingDefinition = {
-      name: () => t(L.SatelliteFactory),
+      name: () => $t(L.SatelliteFactory),
       input: { Rocket: 2 },
       output: { Satellite: 1 },
       power: true,
    };
    AirplaneFactory: IBuildingDefinition = {
-      name: () => t(L.AirplaneFactory),
+      name: () => $t(L.AirplaneFactory),
       input: { Biplane: 2 },
       output: { Airplane: 1 },
       power: true,
    };
    SpacecraftFactory: IBuildingDefinition = {
-      name: () => t(L.SpacecraftFactory),
+      name: () => $t(L.SpacecraftFactory),
       input: { Rocket: 2, Satellite: 2, Airplane: 2 },
       output: { Spacecraft: 1 },
       power: true,
    };
    Cosmodrome: IBuildingDefinition = {
-      name: () => t(L.Cosmodrome),
+      name: () => $t(L.Cosmodrome),
       input: { Rocket: 4, Satellite: 4, Airplane: 4 },
       output: { Spacecraft: 2 },
       power: true,
    };
    SemiconductorFab: IBuildingDefinition = {
-      name: () => t(L.SemiconductorFab),
+      name: () => $t(L.SemiconductorFab),
       input: { Silicon: 10, Copper: 10 },
       output: { Semiconductor: 1 },
       power: true,
    };
    ComputerFactory: IBuildingDefinition = {
-      name: () => t(L.ComputerFactory),
+      name: () => $t(L.ComputerFactory),
       input: { Semiconductor: 5, Plastics: 5, Aluminum: 5 },
       output: { Computer: 1 },
       power: true,
    };
    OpticalFiberPlant: IBuildingDefinition = {
-      name: () => t(L.OpticalFiberPlant),
+      name: () => $t(L.OpticalFiberPlant),
       input: { Cable: 10, Glass: 10, Plastics: 10 },
       output: { OpticalFiber: 1 },
       power: true,
@@ -793,43 +793,43 @@ export class BuildingDefinitions {
 
    // #region Financial & Trade //////////////////////////////////////////////////////////////////////////////
    CoinMint: IBuildingDefinition = {
-      name: () => t(L.CoinMint),
+      name: () => $t(L.CoinMint),
       input: { Gold: 3 },
       output: { Coin: 1 },
       construction: { Gold: 2, Lumber: 1, Copper: 1 },
    };
    Bank: IBuildingDefinition = {
-      name: () => t(L.Bank),
+      name: () => $t(L.Bank),
       input: { Coin: 3 },
       output: { Banknote: 1 },
    };
    BondMarket: IBuildingDefinition = {
-      name: () => t(L.BondMarket),
+      name: () => $t(L.BondMarket),
       input: { Banknote: 3 },
       output: { Bond: 1 },
    };
    StockExchange: IBuildingDefinition = {
-      name: () => t(L.StockExchange),
+      name: () => $t(L.StockExchange),
       input: { Bond: 3 },
       output: { Stock: 1 },
    };
    ForexMarket: IBuildingDefinition = {
-      name: () => t(L.ForexMarket),
+      name: () => $t(L.ForexMarket),
       input: { Banknote: 2, Bond: 2 },
       output: { Forex: 1 },
    };
    MutualFund: IBuildingDefinition = {
-      name: () => t(L.MutualFund),
+      name: () => $t(L.MutualFund),
       input: { Forex: 1, Stock: 1 },
       output: { MutualFund: 1 },
    };
    HedgeFund: IBuildingDefinition = {
-      name: () => t(L.HedgeFund),
+      name: () => $t(L.HedgeFund),
       input: { MutualFund: 2 },
       output: { HedgeFund: 1 },
    };
    BitcoinMiner: IBuildingDefinition = {
-      name: () => t(L.BitcoinMiner),
+      name: () => $t(L.BitcoinMiner),
       input: { HedgeFund: 2, CivTok: 1 },
       output: { Bitcoin: 1 },
       power: true,
@@ -841,39 +841,39 @@ export class BuildingDefinitions {
    //    power: true,
    // };
    Caravansary: IBuildingDefinition = {
-      name: () => t(L.Caravansary),
-      desc: () => t(L.CaravansaryDesc),
+      name: () => $t(L.Caravansary),
+      desc: () => $t(L.CaravansaryDesc),
       input: {},
       output: {},
       construction: { Brick: 1, Horse: 1, Tool: 1 },
    };
    Market: IBuildingDefinition = {
-      name: () => t(L.Market),
+      name: () => $t(L.Market),
       input: {},
       output: {},
-      desc: () => t(L.MarketDesc),
+      desc: () => $t(L.MarketDesc),
       construction: { Brick: 2, Copper: 2, Lumber: 2 },
    };
    Warehouse: IBuildingDefinition = {
-      name: () => t(L.Warehouse),
+      name: () => $t(L.Warehouse),
       input: {},
       output: {},
-      desc: () => t(L.WarehouseDesc),
+      desc: () => $t(L.WarehouseDesc),
       construction: { Lumber: 1, Brick: 1, Horse: 1 },
    };
    CloneFactory: IBuildingDefinition = {
-      name: () => t(L.CloneFactory),
+      name: () => $t(L.CloneFactory),
       input: {},
       output: {},
-      desc: () => t(L.CloneFactoryDesc),
+      desc: () => $t(L.CloneFactoryDesc),
       construction: { Software: 5, Tank: 5 },
       power: true,
    };
    CloneLab: IBuildingDefinition = {
-      name: () => t(L.CloneLab),
+      name: () => $t(L.CloneLab),
       input: {},
       output: {},
-      desc: () => t(L.CloneLabDesc),
+      desc: () => $t(L.CloneLabDesc),
       construction: { Rocket: 5, Computer: 5 },
       power: true,
    };
@@ -881,7 +881,7 @@ export class BuildingDefinitions {
 
    // #region Functional Wonders /////////////////////////////////////////////////////////////////////////////
    Headquarter: IBuildingDefinition = {
-      name: () => t(L.Headquarter),
+      name: () => $t(L.Headquarter),
       input: {},
       output: { Worker: 10 },
       vision: 3,
@@ -889,8 +889,8 @@ export class BuildingDefinitions {
       special: BuildingSpecial.HQ,
    };
    Statistics: IBuildingDefinition = {
-      name: () => t(L.StatisticsOffice),
-      desc: () => t(L.StatisticsOfficeDesc),
+      name: () => $t(L.StatisticsOffice),
+      desc: () => $t(L.StatisticsOfficeDesc),
       input: {},
       output: {},
       construction: { Stone: 10, Wood: 10 },
@@ -898,8 +898,8 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
    };
    Petra: IBuildingDefinition = {
-      name: () => t(L.Petra),
-      desc: () => t(L.PetraDescV2),
+      name: () => $t(L.Petra),
+      desc: () => $t(L.PetraDescV2),
       input: {},
       output: {},
       max: 1,
@@ -911,8 +911,8 @@ export class BuildingDefinitions {
 
    // #region Natural Wonders ////////////////////////////////////////////////////////////////////////////////
    Alps: IBuildingDefinition = {
-      name: () => t(L.Alps),
-      desc: () => t(L.AlpsDescV2),
+      name: () => $t(L.Alps),
+      desc: () => $t(L.AlpsDescV2),
       input: {},
       output: {},
       construction: {},
@@ -921,8 +921,8 @@ export class BuildingDefinitions {
       special: BuildingSpecial.NaturalWonder,
    };
    GrottaAzzurra: IBuildingDefinition = {
-      name: () => t(L.GrottaAzzurra),
-      desc: () => t(L.GrottaAzzurraDescV2),
+      name: () => $t(L.GrottaAzzurra),
+      desc: () => $t(L.GrottaAzzurraDescV2),
       input: {},
       output: {},
       construction: {},
@@ -931,8 +931,8 @@ export class BuildingDefinitions {
       special: BuildingSpecial.NaturalWonder,
    };
    Aphrodite: IBuildingDefinition = {
-      name: () => t(L.Aphrodite),
-      desc: () => t(L.AphroditeDescV2),
+      name: () => $t(L.Aphrodite),
+      desc: () => $t(L.AphroditeDescV2),
       input: {},
       output: {},
       construction: {},
@@ -941,8 +941,8 @@ export class BuildingDefinitions {
       special: BuildingSpecial.NaturalWonder,
    };
    Poseidon: IBuildingDefinition = {
-      name: () => t(L.Poseidon),
-      desc: () => t(L.PoseidonDescV2),
+      name: () => $t(L.Poseidon),
+      desc: () => $t(L.PoseidonDescV2),
       input: {},
       output: {},
       construction: {},
@@ -951,8 +951,8 @@ export class BuildingDefinitions {
       special: BuildingSpecial.NaturalWonder,
    };
    NileRiver: IBuildingDefinition = {
-      name: () => t(L.NileRiver),
-      desc: () => t(L.NileRiverDesc),
+      name: () => $t(L.NileRiver),
+      desc: () => $t(L.NileRiverDesc),
       input: {},
       output: {},
       construction: {},
@@ -961,8 +961,8 @@ export class BuildingDefinitions {
       special: BuildingSpecial.NaturalWonder,
    };
    MountSinai: IBuildingDefinition = {
-      name: () => t(L.MountSinai),
-      desc: () => t(L.MountSinaiDesc),
+      name: () => $t(L.MountSinai),
+      desc: () => $t(L.MountSinaiDesc),
       input: {},
       output: {},
       construction: {},
@@ -974,8 +974,8 @@ export class BuildingDefinitions {
 
    // #region World Wonders //////////////////////////////////////////////////////////////////////////////////
    Stonehenge: IBuildingDefinition = {
-      name: () => t(L.Stonehenge),
-      desc: () => t(L.StonehengeDesc),
+      name: () => $t(L.Stonehenge),
+      desc: () => $t(L.StonehengeDesc),
       input: {},
       output: {},
       max: 1,
@@ -984,8 +984,8 @@ export class BuildingDefinitions {
       construction: { Stone: 300 },
    };
    HatshepsutTemple: IBuildingDefinition = {
-      name: () => t(L.HatshepsutTemple),
-      desc: () => t(L.HatshepsutTempleDesc),
+      name: () => $t(L.HatshepsutTemple),
+      desc: () => $t(L.HatshepsutTempleDesc),
       input: {},
       output: {},
       max: 1,
@@ -994,8 +994,8 @@ export class BuildingDefinitions {
       construction: { Stone: 100, Wood: 100, Copper: 100 },
    };
    LighthouseOfAlexandria: IBuildingDefinition = {
-      name: () => t(L.LighthouseOfAlexandria),
-      desc: () => t(L.LighthouseOfAlexandriaDesc),
+      name: () => $t(L.LighthouseOfAlexandria),
+      desc: () => $t(L.LighthouseOfAlexandriaDesc),
       input: {},
       output: {},
       max: 1,
@@ -1004,8 +1004,8 @@ export class BuildingDefinitions {
       wikipedia: "Lighthouse_of_Alexandria",
    };
    PyramidOfGiza: IBuildingDefinition = {
-      name: () => t(L.PyramidOfGiza),
-      desc: () => t(L.PyramidOfGizaDesc),
+      name: () => $t(L.PyramidOfGiza),
+      desc: () => $t(L.PyramidOfGizaDesc),
       input: {},
       output: {},
       construction: { Stone: 300 },
@@ -1014,8 +1014,8 @@ export class BuildingDefinitions {
       wikipedia: "Great_Pyramid_of_Giza",
    };
    ColossusOfRhodes: IBuildingDefinition = {
-      name: () => t(L.ColossusOfRhodes),
-      desc: () => t(L.ColossusOfRhodesDesc),
+      name: () => $t(L.ColossusOfRhodes),
+      desc: () => $t(L.ColossusOfRhodesDesc),
       input: {},
       output: {},
       construction: { Stone: 300 },
@@ -1024,8 +1024,8 @@ export class BuildingDefinitions {
       wikipedia: "Colossus_of_Rhodes",
    };
    GreatMosqueOfSamarra: IBuildingDefinition = {
-      name: () => t(L.GreatMosqueOfSamarra),
-      desc: () => t(L.GreatMosqueOfSamarraDescV2),
+      name: () => $t(L.GreatMosqueOfSamarra),
+      desc: () => $t(L.GreatMosqueOfSamarraDescV2),
       input: {},
       output: {},
       construction: { Sand: 100, Brick: 100, Cotton: 100 },
@@ -1034,8 +1034,8 @@ export class BuildingDefinitions {
       wikipedia: "Great_Mosque_of_Samarra",
    };
    HangingGarden: IBuildingDefinition = {
-      name: () => t(L.HangingGarden),
-      desc: () => t(L.HangingGardenDesc),
+      name: () => $t(L.HangingGarden),
+      desc: () => $t(L.HangingGardenDesc),
       input: {},
       output: {},
       construction: { Stone: 100, Water: 100, Copper: 100 },
@@ -1044,8 +1044,8 @@ export class BuildingDefinitions {
       wikipedia: "Hanging_Gardens_of_Babylon",
    };
    TempleOfHeaven: IBuildingDefinition = {
-      name: () => t(L.TempleOfHeaven),
-      desc: () => t(L.TempleOfHeavenDesc),
+      name: () => $t(L.TempleOfHeaven),
+      desc: () => $t(L.TempleOfHeavenDesc),
       input: {},
       output: {},
       max: 1,
@@ -1054,8 +1054,8 @@ export class BuildingDefinitions {
       wikipedia: "Temple_of_Heaven",
    };
    Parthenon: IBuildingDefinition = {
-      name: () => t(L.Parthenon),
-      desc: () => t(L.ParthenonDescV2),
+      name: () => $t(L.Parthenon),
+      desc: () => $t(L.ParthenonDescV2),
       input: {},
       output: {},
       max: 1,
@@ -1064,8 +1064,8 @@ export class BuildingDefinitions {
       wikipedia: "Parthenon",
    };
    TempleOfArtemis: IBuildingDefinition = {
-      name: () => t(L.TempleOfArtemis),
-      desc: () => t(L.TempleOfArtemisDesc),
+      name: () => $t(L.TempleOfArtemis),
+      desc: () => $t(L.TempleOfArtemisDesc),
       input: {},
       output: {},
       max: 1,
@@ -1074,8 +1074,8 @@ export class BuildingDefinitions {
       wikipedia: "Temple_of_Artemis",
    };
    LuxorTemple: IBuildingDefinition = {
-      name: () => t(L.LuxorTemple),
-      desc: () => t(L.LuxorTempleDescV2),
+      name: () => $t(L.LuxorTemple),
+      desc: () => $t(L.LuxorTempleDescV2),
       input: {},
       output: {},
       max: 1,
@@ -1084,8 +1084,8 @@ export class BuildingDefinitions {
       wikipedia: "Luxor_Temple",
    };
    ChichenItza: IBuildingDefinition = {
-      name: () => t(L.ChichenItza),
-      desc: () => t(L.ChichenItzaDesc),
+      name: () => $t(L.ChichenItza),
+      desc: () => $t(L.ChichenItzaDesc),
       input: {},
       output: {},
       max: 1,
@@ -1094,8 +1094,8 @@ export class BuildingDefinitions {
       wikipedia: "Chichen_Itza",
    };
    MausoleumAtHalicarnassus: IBuildingDefinition = {
-      name: () => t(L.MausoleumAtHalicarnassus),
-      desc: () => t(L.MausoleumAtHalicarnassusDescV2),
+      name: () => $t(L.MausoleumAtHalicarnassus),
+      desc: () => $t(L.MausoleumAtHalicarnassusDescV2),
       input: {},
       output: {},
       max: 1,
@@ -1104,8 +1104,8 @@ export class BuildingDefinitions {
       wikipedia: "Mausoleum_at_Halicarnassus",
    };
    HagiaSophia: IBuildingDefinition = {
-      name: () => t(L.HagiaSophia),
-      desc: () => t(L.HagiaSophiaDescV2),
+      name: () => $t(L.HagiaSophia),
+      desc: () => $t(L.HagiaSophiaDescV2),
       input: {},
       construction: { Faith: 150, Marble: 150, Knight: 150 },
       output: {},
@@ -1114,8 +1114,8 @@ export class BuildingDefinitions {
       wikipedia: "Hagia_Sophia",
    };
    AngkorWat: IBuildingDefinition = {
-      name: () => t(L.AngkorWat),
-      desc: () => t(L.AngkorWatDesc),
+      name: () => $t(L.AngkorWat),
+      desc: () => $t(L.AngkorWatDesc),
       input: {},
       output: {},
       construction: { Faith: 100, Tool: 100, Marble: 100 },
@@ -1124,8 +1124,8 @@ export class BuildingDefinitions {
       wikipedia: "Angkor_Wat",
    };
    TerracottaArmy: IBuildingDefinition = {
-      name: () => t(L.TerracottaArmy),
-      desc: () => t(L.TerracottaArmyDesc),
+      name: () => $t(L.TerracottaArmy),
+      desc: () => $t(L.TerracottaArmyDesc),
       input: {},
       output: {},
       max: 1,
@@ -1134,8 +1134,8 @@ export class BuildingDefinitions {
       wikipedia: "Terracotta_Army",
    };
    Persepolis: IBuildingDefinition = {
-      name: () => t(L.Persepolis),
-      desc: () => t(L.PersepolisDesc),
+      name: () => $t(L.Persepolis),
+      desc: () => $t(L.PersepolisDesc),
       input: {},
       output: {},
       max: 1,
@@ -1144,8 +1144,8 @@ export class BuildingDefinitions {
       wikipedia: "Persepolis",
    };
    OxfordUniversity: IBuildingDefinition = {
-      name: () => t(L.OxfordUniversity),
-      desc: () => t(L.OxfordUniversityDescV3),
+      name: () => $t(L.OxfordUniversity),
+      desc: () => $t(L.OxfordUniversityDescV3),
       input: {},
       output: {},
       max: 1,
@@ -1154,8 +1154,8 @@ export class BuildingDefinitions {
       wikipedia: "University_of_Oxford",
    };
    SaintBasilsCathedral: IBuildingDefinition = {
-      name: () => t(L.SaintBasilsCathedral),
-      desc: () => t(L.SaintBasilsCathedralDescV2),
+      name: () => $t(L.SaintBasilsCathedral),
+      desc: () => $t(L.SaintBasilsCathedralDescV2),
       input: {},
       output: {},
       max: 1,
@@ -1164,8 +1164,8 @@ export class BuildingDefinitions {
       wikipedia: "Saint_Basil%27s_Cathedral",
    };
    ForbiddenCity: IBuildingDefinition = {
-      name: () => t(L.ForbiddenCity),
-      desc: () => t(L.ForbiddenCityDesc),
+      name: () => $t(L.ForbiddenCity),
+      desc: () => $t(L.ForbiddenCityDesc),
       input: {},
       output: {},
       max: 1,
@@ -1174,8 +1174,8 @@ export class BuildingDefinitions {
       wikipedia: "Forbidden_City",
    };
    HimejiCastle: IBuildingDefinition = {
-      name: () => t(L.HimejiCastle),
-      desc: () => t(L.HimejiCastleDesc),
+      name: () => $t(L.HimejiCastle),
+      desc: () => $t(L.HimejiCastleDesc),
       input: {},
       output: {},
       max: 1,
@@ -1184,8 +1184,8 @@ export class BuildingDefinitions {
       wikipedia: "Himeji_Castle",
    };
    TajMahal: IBuildingDefinition = {
-      name: () => t(L.TajMahal),
-      desc: () => t(L.TajMahalDescV2),
+      name: () => $t(L.TajMahal),
+      desc: () => $t(L.TajMahalDescV2),
       input: {},
       output: {},
       construction: { Faith: 100, Marble: 100, Garment: 100 },
@@ -1194,8 +1194,8 @@ export class BuildingDefinitions {
       wikipedia: "Taj_Mahal",
    };
    Colosseum: IBuildingDefinition = {
-      name: () => t(L.Colosseum),
-      desc: () => t(L.ColosseumDescV2),
+      name: () => $t(L.Colosseum),
+      desc: () => $t(L.ColosseumDescV2),
       input: { Chariot: 10 },
       output: {},
       construction: { Brick: 100, Chariot: 100, Alcohol: 100 },
@@ -1204,8 +1204,8 @@ export class BuildingDefinitions {
       wikipedia: "Colosseum",
    };
    MogaoCaves: IBuildingDefinition = {
-      name: () => t(L.MogaoCaves),
-      desc: () => t(L.MogaoCavesDescV3),
+      name: () => $t(L.MogaoCaves),
+      desc: () => $t(L.MogaoCavesDescV3),
       input: {},
       output: {},
       construction: { Faith: 100, Marble: 100, Painting: 100 },
@@ -1214,8 +1214,8 @@ export class BuildingDefinitions {
       wikipedia: "Mogao_Caves",
    };
    StatueOfZeus: IBuildingDefinition = {
-      name: () => t(L.StatueOfZeus),
-      desc: () => t(L.StatueOfZeusDesc),
+      name: () => $t(L.StatueOfZeus),
+      desc: () => $t(L.StatueOfZeusDesc),
       input: {},
       output: {},
       construction: { Marble: 100, Brick: 100, Music: 100 },
@@ -1224,8 +1224,8 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
    };
    CircusMaximus: IBuildingDefinition = {
-      name: () => t(L.CircusMaximus),
-      desc: () => t(L.CircusMaximusDescV2),
+      name: () => $t(L.CircusMaximus),
+      desc: () => $t(L.CircusMaximusDescV2),
       input: {},
       output: {},
       construction: { Music: 100, Poem: 100, Painting: 100 },
@@ -1234,8 +1234,8 @@ export class BuildingDefinitions {
       wikipedia: "Circus_Maximus",
    };
    EiffelTower: IBuildingDefinition = {
-      name: () => t(L.EiffelTower),
-      desc: () => t(L.EiffelTowerDesc),
+      name: () => $t(L.EiffelTower),
+      desc: () => $t(L.EiffelTowerDesc),
       input: {},
       output: {},
       construction: { Steel: 300 },
@@ -1244,8 +1244,8 @@ export class BuildingDefinitions {
       wikipedia: "Eiffel_Tower",
    };
    Rijksmuseum: IBuildingDefinition = {
-      name: () => t(L.Rijksmuseum),
-      desc: () => t(L.RijksmuseumDesc),
+      name: () => $t(L.Rijksmuseum),
+      desc: () => $t(L.RijksmuseumDesc),
       input: {},
       output: {},
       construction: { Newspaper: 100, Culture: 100, Concrete: 100 },
@@ -1254,8 +1254,8 @@ export class BuildingDefinitions {
       wikipedia: "Rijksmuseum",
    };
    SummerPalace: IBuildingDefinition = {
-      name: () => t(L.SummerPalace),
-      desc: () => t(L.SummerPalaceDesc),
+      name: () => $t(L.SummerPalace),
+      desc: () => $t(L.SummerPalaceDesc),
       input: {},
       output: {},
       construction: { Gunpowder: 100, Rifle: 100, GatlingGun: 100 },
@@ -1264,8 +1264,8 @@ export class BuildingDefinitions {
       wikipedia: "Summer_Palace",
    };
    StatueOfLiberty: IBuildingDefinition = {
-      name: () => t(L.StatueOfLiberty),
-      desc: () => t(L.StatueOfLibertyDesc),
+      name: () => $t(L.StatueOfLiberty),
+      desc: () => $t(L.StatueOfLibertyDesc),
       input: {},
       output: {},
       construction: { Philosophy: 100, Politics: 100, Law: 100 },
@@ -1274,8 +1274,8 @@ export class BuildingDefinitions {
       wikipedia: "Statue_of_Liberty",
    };
    Neuschwanstein: IBuildingDefinition = {
-      name: () => t(L.Neuschwanstein),
-      desc: () => t(L.NeuschwansteinDesc),
+      name: () => $t(L.Neuschwanstein),
+      desc: () => $t(L.NeuschwansteinDesc),
       input: {},
       output: {},
       construction: { Rifle: 100, Bond: 100, Cannon: 100 },
@@ -1284,8 +1284,8 @@ export class BuildingDefinitions {
       wikipedia: "Neuschwanstein_Castle",
    };
    BrandenburgGate: IBuildingDefinition = {
-      name: () => t(L.BrandenburgGate),
-      desc: () => t(L.BrandenburgGateDesc),
+      name: () => $t(L.BrandenburgGate),
+      desc: () => $t(L.BrandenburgGateDesc),
       input: {},
       output: {},
       construction: { Train: 100, Politics: 100, ReinforcedConcrete: 100 },
@@ -1294,8 +1294,8 @@ export class BuildingDefinitions {
       wikipedia: "Brandenburg_Gate",
    };
    GrandBazaar: IBuildingDefinition = {
-      name: () => t(L.GrandBazaar),
-      desc: () => t(L.GrandBazaarDesc),
+      name: () => $t(L.GrandBazaar),
+      desc: () => $t(L.GrandBazaarDesc),
       input: {},
       output: {},
       max: 1,
@@ -1304,8 +1304,8 @@ export class BuildingDefinitions {
       wikipedia: "Grand_Bazaar,_Istanbul",
    };
    AbuSimbel: IBuildingDefinition = {
-      name: () => t(L.AbuSimbel),
-      desc: () => t(L.AbuSimbelDesc),
+      name: () => $t(L.AbuSimbel),
+      desc: () => $t(L.AbuSimbelDesc),
       input: {},
       output: {},
       max: 1,
@@ -1314,8 +1314,8 @@ export class BuildingDefinitions {
       wikipedia: "Abu_Simbel",
    };
    GreatSphinx: IBuildingDefinition = {
-      name: () => t(L.GreatSphinx),
-      desc: () => t(L.GreatSphinxDescV2),
+      name: () => $t(L.GreatSphinx),
+      desc: () => $t(L.GreatSphinxDescV2),
       input: {},
       output: {},
       max: 1,
@@ -1324,8 +1324,8 @@ export class BuildingDefinitions {
       wikipedia: "Great_Sphinx_of_Giza",
    };
    Hollywood: IBuildingDefinition = {
-      name: () => t(L.Hollywood),
-      desc: () => t(L.HollywoodDesc),
+      name: () => $t(L.Hollywood),
+      desc: () => $t(L.HollywoodDesc),
       input: {},
       output: {},
       max: 1,
@@ -1334,8 +1334,8 @@ export class BuildingDefinitions {
       wikipedia: "Hollywood,_Los_Angeles",
    };
    GoldenGateBridge: IBuildingDefinition = {
-      name: () => t(L.GoldenGateBridge),
-      desc: () => t(L.GoldenGateBridgeDesc),
+      name: () => $t(L.GoldenGateBridge),
+      desc: () => $t(L.GoldenGateBridgeDesc),
       input: {},
       output: {},
       construction: { ReinforcedConcrete: 100, Movie: 100, Radio: 100 },
@@ -1344,8 +1344,8 @@ export class BuildingDefinitions {
       wikipedia: "Golden_Gate_Bridge",
    };
    CristoRedentor: IBuildingDefinition = {
-      name: () => t(L.CristoRedentor),
-      desc: () => t(L.CristoRedentorDesc),
+      name: () => $t(L.CristoRedentor),
+      desc: () => $t(L.CristoRedentorDesc),
       input: {},
       output: {},
       construction: { ReinforcedConcrete: 100, Sports: 100, Politics: 100 },
@@ -1354,8 +1354,8 @@ export class BuildingDefinitions {
       wikipedia: "Christ_the_Redeemer_(statue)",
    };
    UnitedNations: IBuildingDefinition = {
-      name: () => t(L.UnitedNations),
-      desc: () => t(L.UnitedNationsDescV2),
+      name: () => $t(L.UnitedNations),
+      desc: () => $t(L.UnitedNationsDescV2),
       input: {},
       output: {},
       construction: { Politics: 100, Tank: 100, Diplomacy: 100 },
@@ -1364,8 +1364,8 @@ export class BuildingDefinitions {
       wikipedia: "United_Nations",
    };
    ManhattanProject: IBuildingDefinition = {
-      name: () => t(L.ManhattanProject),
-      desc: () => t(L.ManhattanProjectDesc),
+      name: () => $t(L.ManhattanProject),
+      desc: () => $t(L.ManhattanProjectDesc),
       input: {},
       output: {},
       construction: { NuclearFuelRod: 500 },
@@ -1374,8 +1374,8 @@ export class BuildingDefinitions {
       wikipedia: "Manhattan_Project",
    };
    SagradaFamilia: IBuildingDefinition = {
-      name: () => t(L.SagradaFamilia),
-      desc: () => t(L.SagradaFamiliaDesc),
+      name: () => $t(L.SagradaFamilia),
+      desc: () => $t(L.SagradaFamiliaDesc),
       input: {},
       output: {},
       construction: { Tank: 100, Biplane: 100, Train: 100 },
@@ -1384,8 +1384,8 @@ export class BuildingDefinitions {
       wikipedia: "Sagrada_Família",
    };
    GreatWall: IBuildingDefinition = {
-      name: () => t(L.GreatWall),
-      desc: () => t(L.GreatWallDesc),
+      name: () => $t(L.GreatWall),
+      desc: () => $t(L.GreatWallDesc),
       input: {},
       output: {},
       construction: { Brick: 100, Tool: 100, Horse: 100 },
@@ -1394,8 +1394,8 @@ export class BuildingDefinitions {
       wikipedia: "Great_Wall_of_China",
    };
    YellowCraneTower: IBuildingDefinition = {
-      name: () => t(L.YellowCraneTower),
-      desc: () => t(L.YellowCraneTowerDesc),
+      name: () => $t(L.YellowCraneTower),
+      desc: () => $t(L.YellowCraneTowerDesc),
       input: {},
       output: {},
       construction: { Furniture: 100, Sword: 100, Coin: 100 },
@@ -1404,8 +1404,8 @@ export class BuildingDefinitions {
       wikipedia: "Yellow_Crane_Tower",
    };
    PorcelainTower: IBuildingDefinition = {
-      name: () => t(L.PorcelainTower),
-      desc: () => t(L.PorcelainTowerDesc),
+      name: () => $t(L.PorcelainTower),
+      desc: () => $t(L.PorcelainTowerDesc),
       input: {},
       output: {},
       construction: { Banknote: 100, Garment: 100, Knight: 100 },
@@ -1414,8 +1414,8 @@ export class BuildingDefinitions {
       wikipedia: "Porcelain_Tower_of_Nanjing",
    };
    MountTai: IBuildingDefinition = {
-      name: () => t(L.MountTai),
-      desc: () => t(L.MountTaiDesc),
+      name: () => $t(L.MountTai),
+      desc: () => $t(L.MountTaiDesc),
       input: {},
       output: {},
       construction: {},
@@ -1424,8 +1424,8 @@ export class BuildingDefinitions {
       wikipedia: "Mount_Tai",
    };
    YangtzeRiver: IBuildingDefinition = {
-      name: () => t(L.YangtzeRiver),
-      desc: () => t(L.YangtzeRiverDesc),
+      name: () => $t(L.YangtzeRiver),
+      desc: () => $t(L.YangtzeRiverDesc),
       input: {},
       output: {},
       construction: {},
@@ -1434,8 +1434,8 @@ export class BuildingDefinitions {
       wikipedia: "Yangtze",
    };
    CNTower: IBuildingDefinition = {
-      name: () => t(L.CNTower),
-      desc: () => t(L.CNTowerDesc),
+      name: () => $t(L.CNTower),
+      desc: () => $t(L.CNTowerDesc),
       input: {},
       output: {},
       construction: { Movie: 100, Radio: 100, Diplomacy: 100 },
@@ -1454,8 +1454,8 @@ export class BuildingDefinitions {
    //    wikipedia: "Gateway_Arch",
    // };
    SpaceNeedle: IBuildingDefinition = {
-      name: () => t(L.SpaceNeedle),
-      desc: () => t(L.SpaceNeedleDesc),
+      name: () => $t(L.SpaceNeedle),
+      desc: () => $t(L.SpaceNeedleDesc),
       input: {},
       output: {},
       construction: { Battleship: 150, Rocket: 150, Car: 150 },
@@ -1464,8 +1464,8 @@ export class BuildingDefinitions {
       wikipedia: "Space_Needle",
    };
    ApolloProgram: IBuildingDefinition = {
-      name: () => t(L.ApolloProgram),
-      desc: () => t(L.ApolloProgramDesc),
+      name: () => $t(L.ApolloProgram),
+      desc: () => $t(L.ApolloProgramDesc),
       input: {},
       output: {},
       construction: { FighterJet: 100, Satellite: 100, Spacecraft: 100 },
@@ -1474,8 +1474,8 @@ export class BuildingDefinitions {
       wikipedia: "Apollo_program",
    };
    Atomium: IBuildingDefinition = {
-      name: () => t(L.Atomium),
-      desc: () => t(L.AtomiumDescV2),
+      name: () => $t(L.Atomium),
+      desc: () => $t(L.AtomiumDescV2),
       input: {},
       output: {},
       construction: { NuclearFuelRod: 100, AtomicBomb: 100, Artillery: 100 },
@@ -1484,8 +1484,8 @@ export class BuildingDefinitions {
       wikipedia: "Atomium",
    };
    ChoghaZanbil: IBuildingDefinition = {
-      name: () => t(L.ChoghaZanbil),
-      desc: () => t(L.ChoghaZanbilDescV2),
+      name: () => $t(L.ChoghaZanbil),
+      desc: () => $t(L.ChoghaZanbilDescV2),
       input: {},
       output: {},
       construction: { Water: 100, Wood: 100, Stone: 100, Wheat: 100 },
@@ -1494,8 +1494,8 @@ export class BuildingDefinitions {
       wikipedia: "Chogha_Zanbil",
    };
    Broadway: IBuildingDefinition = {
-      name: () => t(L.Broadway),
-      desc: () => t(L.BroadwayDesc),
+      name: () => $t(L.Broadway),
+      desc: () => $t(L.BroadwayDesc),
       input: {},
       output: {},
       construction: { Opera: 100, Culture: 100, Bond: 100 },
@@ -1504,8 +1504,8 @@ export class BuildingDefinitions {
       wikipedia: "Broadway_theatre",
    };
    TheMet: IBuildingDefinition = {
-      name: () => t(L.ThePentagon),
-      desc: () => t(L.ThePentagonDesc),
+      name: () => $t(L.ThePentagon),
+      desc: () => $t(L.ThePentagonDesc),
       input: {},
       output: {},
       construction: { Book: 100, Law: 100, Rifle: 100 },
@@ -1514,8 +1514,8 @@ export class BuildingDefinitions {
       wikipedia: "The_Pentagon",
    };
    WallStreet: IBuildingDefinition = {
-      name: () => t(L.WallStreet),
-      desc: () => t(L.WallStreetDesc),
+      name: () => $t(L.WallStreet),
+      desc: () => $t(L.WallStreetDesc),
       input: {},
       output: {},
       construction: { Bond: 100, Law: 100, Banknote: 100 },
@@ -1525,8 +1525,8 @@ export class BuildingDefinitions {
    };
 
    Shenandoah: IBuildingDefinition = {
-      name: () => t(L.GrandCanyon),
-      desc: () => t(L.GrandCanyonDesc),
+      name: () => $t(L.GrandCanyon),
+      desc: () => $t(L.GrandCanyonDesc),
       input: {},
       output: {},
       construction: {},
@@ -1536,8 +1536,8 @@ export class BuildingDefinitions {
    };
 
    NiagaraFalls: IBuildingDefinition = {
-      name: () => t(L.NiagaraFalls),
-      desc: () => t(L.NiagaraFallsDescV2),
+      name: () => $t(L.NiagaraFalls),
+      desc: () => $t(L.NiagaraFallsDescV2),
       input: {},
       output: {},
       construction: {},
@@ -1547,8 +1547,8 @@ export class BuildingDefinitions {
    };
 
    StPetersBasilica: IBuildingDefinition = {
-      name: () => t(L.StPetersBasilica),
-      desc: () => t(L.StPetersBasilicaDescV2),
+      name: () => $t(L.StPetersBasilica),
+      desc: () => $t(L.StPetersBasilicaDescV2),
       input: {},
       output: {},
       max: 1,
@@ -1558,8 +1558,8 @@ export class BuildingDefinitions {
    };
 
    ProphetsMosque: IBuildingDefinition = {
-      name: () => t(L.ProphetsMosque),
-      desc: () => t(L.ProphetsMosqueDesc),
+      name: () => $t(L.ProphetsMosque),
+      desc: () => $t(L.ProphetsMosqueDesc),
       input: {},
       output: {},
       max: 1,
@@ -1569,8 +1569,8 @@ export class BuildingDefinitions {
    };
 
    GreatDagonPagoda: IBuildingDefinition = {
-      name: () => t(L.GreatDagonPagoda),
-      desc: () => t(L.GreatDagonPagodaDescV2),
+      name: () => $t(L.GreatDagonPagoda),
+      desc: () => $t(L.GreatDagonPagodaDescV2),
       input: {},
       output: {},
       construction: { Faith: 300 },
@@ -1580,8 +1580,8 @@ export class BuildingDefinitions {
    };
 
    Pantheon: IBuildingDefinition = {
-      name: () => t(L.Pantheon),
-      desc: () => t(L.PantheonDescV2),
+      name: () => $t(L.Pantheon),
+      desc: () => $t(L.PantheonDescV2),
       input: {},
       output: {},
       construction: { Faith: 300 },
@@ -1591,8 +1591,8 @@ export class BuildingDefinitions {
    };
 
    WallOfBabylon: IBuildingDefinition = {
-      name: () => t(L.WallOfBabylon),
-      desc: () => t(L.WallOfBabylonDesc),
+      name: () => $t(L.WallOfBabylon),
+      desc: () => $t(L.WallOfBabylonDesc),
       input: {},
       output: {},
       construction: { Brick: 100, Lumber: 100, Sand: 100 },
@@ -1602,8 +1602,8 @@ export class BuildingDefinitions {
    };
 
    TowerOfBabel: IBuildingDefinition = {
-      name: () => t(L.TowerOfBabel),
-      desc: () => t(L.TowerOfBabelDesc),
+      name: () => $t(L.TowerOfBabel),
+      desc: () => $t(L.TowerOfBabelDesc),
       input: {},
       output: {},
       construction: { Brick: 100, Lumber: 100, Sand: 100 },
@@ -1613,8 +1613,8 @@ export class BuildingDefinitions {
    };
 
    ZigguratOfUr: IBuildingDefinition = {
-      name: () => t(L.ZigguratOfUr),
-      desc: () => t(L.ZigguratOfUrDescV2),
+      name: () => $t(L.ZigguratOfUr),
+      desc: () => $t(L.ZigguratOfUrDescV2),
       input: {},
       output: {},
       construction: { Brick: 100, Lumber: 100, Sand: 100 },
@@ -1624,8 +1624,8 @@ export class BuildingDefinitions {
    };
 
    EuphratesRiver: IBuildingDefinition = {
-      name: () => t(L.EuphratesRiver),
-      desc: () => t(L.EuphratesRiverDesc),
+      name: () => $t(L.EuphratesRiver),
+      desc: () => $t(L.EuphratesRiverDesc),
       input: {},
       output: {},
       construction: {},
@@ -1635,8 +1635,8 @@ export class BuildingDefinitions {
    };
 
    ZagrosMountains: IBuildingDefinition = {
-      name: () => t(L.ZagrosMountains),
-      desc: () => t(L.ZagrosMountainsDesc),
+      name: () => $t(L.ZagrosMountains),
+      desc: () => $t(L.ZagrosMountainsDesc),
       input: {},
       output: {},
       construction: {},
@@ -1646,8 +1646,8 @@ export class BuildingDefinitions {
    };
 
    InternationalSpaceStation: IBuildingDefinition = {
-      name: () => t(L.InternationalSpaceStation),
-      desc: () => t(L.InternationalSpaceStationDesc),
+      name: () => $t(L.InternationalSpaceStation),
+      desc: () => $t(L.InternationalSpaceStationDesc),
       input: {},
       output: {},
       construction: { Spacecraft: 100, AircraftCarrier: 100, NuclearSubmarine: 100 },
@@ -1657,8 +1657,8 @@ export class BuildingDefinitions {
    };
 
    MarinaBaySands: IBuildingDefinition = {
-      name: () => t(L.MarinaBaySands),
-      desc: () => t(L.MarinaBaySandsDesc),
+      name: () => $t(L.MarinaBaySands),
+      desc: () => $t(L.MarinaBaySandsDesc),
       input: {},
       output: {},
       construction: { TV: 100, CivTok: 100, MutualFund: 100 },
@@ -1668,8 +1668,8 @@ export class BuildingDefinitions {
    };
 
    PalmJumeirah: IBuildingDefinition = {
-      name: () => t(L.PalmJumeirah),
-      desc: () => t(L.PalmJumeirahDesc),
+      name: () => $t(L.PalmJumeirah),
+      desc: () => $t(L.PalmJumeirahDesc),
       input: {},
       output: {},
       construction: { HedgeFund: 100, Bitcoin: 100, Supercomputer: 100 },
@@ -1679,8 +1679,8 @@ export class BuildingDefinitions {
    };
 
    AldersonDisk: IBuildingDefinition = {
-      name: () => t(L.AldersonDisk),
-      desc: () => t(L.AldersonDiskDesc),
+      name: () => $t(L.AldersonDisk),
+      desc: () => $t(L.AldersonDiskDesc),
       input: {},
       output: {},
       construction: { CivOasis: 100, Robocar: 100, Bitcoin: 100 },
@@ -1690,8 +1690,8 @@ export class BuildingDefinitions {
    };
 
    DysonSphere: IBuildingDefinition = {
-      name: () => t(L.DysonSphere),
-      desc: () => t(L.DysonSphereDesc),
+      name: () => $t(L.DysonSphere),
+      desc: () => $t(L.DysonSphereDesc),
       input: {},
       output: {},
       construction: { CivGPT: 100, Peace: 100, PlanetaryRover: 100 },
@@ -1701,8 +1701,8 @@ export class BuildingDefinitions {
    };
 
    MatrioshkaBrain: IBuildingDefinition = {
-      name: () => t(L.MatrioshkaBrain),
-      desc: () => t(L.MatrioshkaBrainDescV3),
+      name: () => $t(L.MatrioshkaBrain),
+      desc: () => $t(L.MatrioshkaBrainDescV3),
       input: {},
       output: {},
       construction: { CivOasis: 100, Peace: 100, CivGPT: 100 },
@@ -1712,8 +1712,8 @@ export class BuildingDefinitions {
    };
 
    LargeHadronCollider: IBuildingDefinition = {
-      name: () => t(L.LargeHadronCollider),
-      desc: () => t(L.LargeHadronColliderDescV3),
+      name: () => $t(L.LargeHadronCollider),
+      desc: () => $t(L.LargeHadronColliderDescV3),
       input: {},
       output: {},
       construction: { Supercomputer: 100, CivTok: 100, HedgeFund: 100 },
@@ -1723,8 +1723,8 @@ export class BuildingDefinitions {
    };
 
    BigBen: IBuildingDefinition = {
-      name: () => t(L.BigBen),
-      desc: () => t(L.BigBenDesc),
+      name: () => $t(L.BigBen),
+      desc: () => $t(L.BigBenDesc),
       input: {},
       output: {},
       max: 1,
@@ -1734,8 +1734,8 @@ export class BuildingDefinitions {
    };
 
    ItsukushimaShrine: IBuildingDefinition = {
-      name: () => t(L.ItsukushimaShrine),
-      desc: () => t(L.ItsukushimaShrineDescV2),
+      name: () => $t(L.ItsukushimaShrine),
+      desc: () => $t(L.ItsukushimaShrineDescV2),
       input: {},
       output: {},
       construction: { Furniture: 100, Opera: 100, SiegeRam: 100 },
@@ -1745,8 +1745,8 @@ export class BuildingDefinitions {
    };
 
    GoldenPavilion: IBuildingDefinition = {
-      name: () => t(L.GoldenPavilion),
-      desc: () => t(L.GoldenPavilionDesc),
+      name: () => $t(L.GoldenPavilion),
+      desc: () => $t(L.GoldenPavilionDesc),
       input: {},
       output: {},
       construction: { Faith: 100, Coin: 100, Sword: 100 },
@@ -1756,8 +1756,8 @@ export class BuildingDefinitions {
    };
 
    OsakaCastle: IBuildingDefinition = {
-      name: () => t(L.OsakaCastle),
-      desc: () => t(L.OsakaCastleDesc),
+      name: () => $t(L.OsakaCastle),
+      desc: () => $t(L.OsakaCastleDesc),
       input: {},
       output: {},
       construction: { Train: 100, GatlingGun: 100, Politics: 100 },
@@ -1767,8 +1767,8 @@ export class BuildingDefinitions {
    };
 
    Kanagawa: IBuildingDefinition = {
-      name: () => t(L.Kanagawa),
-      desc: () => t(L.KanagawaDesc),
+      name: () => $t(L.Kanagawa),
+      desc: () => $t(L.KanagawaDesc),
       input: {},
       output: {},
       construction: {},
@@ -1778,8 +1778,8 @@ export class BuildingDefinitions {
    };
 
    MountFuji: IBuildingDefinition = {
-      name: () => t(L.MountFuji),
-      desc: () => t(L.MountFujiDescV2),
+      name: () => $t(L.MountFuji),
+      desc: () => $t(L.MountFujiDescV2),
       input: {},
       output: {},
       construction: {},
@@ -1789,8 +1789,8 @@ export class BuildingDefinitions {
    };
 
    CologneCathedral: IBuildingDefinition = {
-      name: () => t(L.CologneCathedral),
-      desc: () => t(L.CologneCathedralDesc),
+      name: () => $t(L.CologneCathedral),
+      desc: () => $t(L.CologneCathedralDesc),
       input: {},
       output: {},
       construction: { Faith: 100, Knight: 100, Caravel: 100 },
@@ -1800,8 +1800,8 @@ export class BuildingDefinitions {
    };
 
    Elbphilharmonie: IBuildingDefinition = {
-      name: () => t(L.Elbphilharmonie),
-      desc: () => t(L.ElbphilharmonieDesc),
+      name: () => $t(L.Elbphilharmonie),
+      desc: () => $t(L.ElbphilharmonieDesc),
       input: {},
       output: {},
       construction: { Radio: 100, Diplomacy: 100, Rocket: 100 },
@@ -1811,8 +1811,8 @@ export class BuildingDefinitions {
    };
 
    Zugspitze: IBuildingDefinition = {
-      name: () => t(L.Zugspitze),
-      desc: () => t(L.ZugspitzeDesc),
+      name: () => $t(L.Zugspitze),
+      desc: () => $t(L.ZugspitzeDesc),
       input: {},
       output: {},
       construction: {},
@@ -1822,8 +1822,8 @@ export class BuildingDefinitions {
    };
 
    RhineGorge: IBuildingDefinition = {
-      name: () => t(L.RhineGorge),
-      desc: () => t(L.RhineGorgeDesc),
+      name: () => $t(L.RhineGorge),
+      desc: () => $t(L.RhineGorgeDesc),
       input: {},
       output: {},
       construction: {},
@@ -1833,8 +1833,8 @@ export class BuildingDefinitions {
    };
 
    BlackForest: IBuildingDefinition = {
-      name: () => t(L.BlackForest),
-      desc: () => t(L.BlackForestDesc),
+      name: () => $t(L.BlackForest),
+      desc: () => $t(L.BlackForestDesc),
       input: {},
       output: {},
       construction: {},
@@ -1844,8 +1844,8 @@ export class BuildingDefinitions {
    };
 
    SantaClausVillage: IBuildingDefinition = {
-      name: () => t(L.SantaClausVillage),
-      desc: () => t(L.SantaClausVillageDesc),
+      name: () => $t(L.SantaClausVillage),
+      desc: () => $t(L.SantaClausVillageDesc),
       input: {},
       output: {},
       construction: { Faith: 500 },
@@ -1855,8 +1855,8 @@ export class BuildingDefinitions {
    };
 
    Lapland: IBuildingDefinition = {
-      name: () => t(L.Lapland),
-      desc: () => t(L.LaplandDesc),
+      name: () => $t(L.Lapland),
+      desc: () => $t(L.LaplandDesc),
       input: {},
       output: {},
       construction: {},
@@ -1866,8 +1866,8 @@ export class BuildingDefinitions {
    };
 
    RockefellerCenterChristmasTree: IBuildingDefinition = {
-      name: () => t(L.RockefellerCenterChristmasTree),
-      desc: () => t(L.RockefellerCenterChristmasTreeDesc),
+      name: () => $t(L.RockefellerCenterChristmasTree),
+      desc: () => $t(L.RockefellerCenterChristmasTreeDesc),
       input: {},
       output: {},
       construction: {},
@@ -1877,8 +1877,8 @@ export class BuildingDefinitions {
    };
 
    YearOfTheSnake: IBuildingDefinition = {
-      name: () => t(L.YearOfTheSnakeV2),
-      desc: () => t(L.YearOfTheSnakeDesc),
+      name: () => $t(L.YearOfTheSnakeV2),
+      desc: () => $t(L.YearOfTheSnakeDesc),
       input: {},
       output: {},
       construction: { Opera: 500 },
@@ -1888,8 +1888,8 @@ export class BuildingDefinitions {
    };
 
    BritishMuseum: IBuildingDefinition = {
-      name: () => t(L.BritishMuseum),
-      desc: () => t(L.BritishMuseumDesc),
+      name: () => $t(L.BritishMuseum),
+      desc: () => $t(L.BritishMuseumDesc),
       input: {},
       output: {},
       construction: { Tank: 100, Ironclad: 100, Train: 100 },
@@ -1899,8 +1899,8 @@ export class BuildingDefinitions {
    };
 
    CambridgeUniversity: IBuildingDefinition = {
-      name: () => t(L.CambridgeUniversity),
-      desc: () => t(L.CambridgeUniversityDesc),
+      name: () => $t(L.CambridgeUniversity),
+      desc: () => $t(L.CambridgeUniversityDesc),
       input: {},
       output: {},
       construction: { Philosophy: 100, Culture: 100, Faith: 100 },
@@ -1910,8 +1910,8 @@ export class BuildingDefinitions {
    };
 
    TowerBridge: IBuildingDefinition = {
-      name: () => t(L.TowerBridge),
-      desc: () => t(L.TowerBridgeDesc),
+      name: () => $t(L.TowerBridge),
+      desc: () => $t(L.TowerBridgeDesc),
       input: {},
       output: {},
       construction: { ReinforcedConcrete: 150, Steel: 150 },
@@ -1921,8 +1921,8 @@ export class BuildingDefinitions {
    };
 
    EastIndiaCompany: IBuildingDefinition = {
-      name: () => t(L.EastIndiaCompany),
-      desc: () => t(L.EastIndiaCompanyDescV2),
+      name: () => $t(L.EastIndiaCompany),
+      desc: () => $t(L.EastIndiaCompanyDescV2),
       input: {},
       output: {},
       construction: { Bond: 100, Frigate: 100, Gunpowder: 100 },
@@ -1932,8 +1932,8 @@ export class BuildingDefinitions {
    };
 
    CerneAbbasGiant: IBuildingDefinition = {
-      name: () => t(L.CerneAbbasGiant),
-      desc: () => t(L.CerneAbbasGiantDesc),
+      name: () => $t(L.CerneAbbasGiant),
+      desc: () => $t(L.CerneAbbasGiantDesc),
       input: {},
       output: {},
       construction: {},
@@ -1943,8 +1943,8 @@ export class BuildingDefinitions {
    };
 
    DuneOfPilat: IBuildingDefinition = {
-      name: () => t(L.DuneOfPilat),
-      desc: () => t(L.DuneOfPilatDesc),
+      name: () => $t(L.DuneOfPilat),
+      desc: () => $t(L.DuneOfPilatDesc),
       input: {},
       output: {},
       construction: {},
@@ -1954,8 +1954,8 @@ export class BuildingDefinitions {
    };
 
    ArcDeTriomphe: IBuildingDefinition = {
-      name: () => t(L.ArcDeTriomphe),
-      desc: () => t(L.ArcDeTriompheDescV2),
+      name: () => $t(L.ArcDeTriomphe),
+      desc: () => $t(L.ArcDeTriompheDescV2),
       input: {},
       output: {},
       construction: { Train: 100, GatlingGun: 100, Politics: 100 },
@@ -1965,8 +1965,8 @@ export class BuildingDefinitions {
    };
 
    MontSaintMichel: IBuildingDefinition = {
-      name: () => t(L.MontSaintMichel),
-      desc: () => t(L.MontSaintMichelDesc),
+      name: () => $t(L.MontSaintMichel),
+      desc: () => $t(L.MontSaintMichelDesc),
       input: {},
       output: {},
       construction: { Culture: 1000 },
@@ -1976,8 +1976,8 @@ export class BuildingDefinitions {
    };
 
    Louvre: IBuildingDefinition = {
-      name: () => t(L.Louvre),
-      desc: () => t(L.LouvreDesc),
+      name: () => $t(L.Louvre),
+      desc: () => $t(L.LouvreDesc),
       input: {},
       output: {},
       construction: { Bond: 100, Law: 100, Frigate: 100 },
@@ -1987,8 +1987,8 @@ export class BuildingDefinitions {
    };
 
    CentrePompidou: IBuildingDefinition = {
-      name: () => t(L.CentrePompidou),
-      desc: () => t(L.CentrePompidouDesc),
+      name: () => $t(L.CentrePompidou),
+      desc: () => $t(L.CentrePompidouDesc),
       input: {},
       output: {},
       construction: { TV: 100, Computer: 100, Forex: 100 },
@@ -1998,8 +1998,8 @@ export class BuildingDefinitions {
    };
 
    EasterBunny: IBuildingDefinition = {
-      name: () => t(L.EasterBunny),
-      desc: () => t(L.EasterBunnyDesc),
+      name: () => $t(L.EasterBunny),
+      desc: () => $t(L.EasterBunnyDesc),
       input: {},
       output: {},
       construction: { Bond: 100, Book: 100, Culture: 100 },
@@ -2009,8 +2009,8 @@ export class BuildingDefinitions {
    };
 
    BlueMosque: IBuildingDefinition = {
-      name: () => t(L.BlueMosque),
-      desc: () => t(L.BlueMosqueDesc),
+      name: () => $t(L.BlueMosque),
+      desc: () => $t(L.BlueMosqueDesc),
       input: {},
       output: {},
       construction: { Cannon: 100, Lens: 100, Banknote: 100 },
@@ -2020,8 +2020,8 @@ export class BuildingDefinitions {
    };
 
    TopkapiPalace: IBuildingDefinition = {
-      name: () => t(L.TopkapiPalace),
-      desc: () => t(L.TopkapiPalaceDesc),
+      name: () => $t(L.TopkapiPalace),
+      desc: () => $t(L.TopkapiPalaceDesc),
       input: {},
       output: {},
       construction: { Biplane: 100, Tank: 100, Ironclad: 100 },
@@ -2031,8 +2031,8 @@ export class BuildingDefinitions {
    };
 
    Cappadocia: IBuildingDefinition = {
-      name: () => t(L.Cappadocia),
-      desc: () => t(L.CappadociaDesc),
+      name: () => $t(L.Cappadocia),
+      desc: () => $t(L.CappadociaDesc),
       input: {},
       output: {},
       construction: {},
@@ -2042,8 +2042,8 @@ export class BuildingDefinitions {
    };
 
    Pamukkale: IBuildingDefinition = {
-      name: () => t(L.Pamukkale),
-      desc: () => t(L.PamukkaleDesc),
+      name: () => $t(L.Pamukkale),
+      desc: () => $t(L.PamukkaleDesc),
       input: {},
       output: {},
       construction: {},
@@ -2053,8 +2053,8 @@ export class BuildingDefinitions {
    };
 
    MountArarat: IBuildingDefinition = {
-      name: () => t(L.MountArarat),
-      desc: () => t(L.MountAraratDesc),
+      name: () => $t(L.MountArarat),
+      desc: () => $t(L.MountAraratDesc),
       input: {},
       output: {},
       construction: {},
@@ -2064,8 +2064,8 @@ export class BuildingDefinitions {
    };
 
    SwissBank: IBuildingDefinition = {
-      name: () => t(L.SwissBank),
-      desc: () => t(L.SwissBankDescV3),
+      name: () => $t(L.SwissBank),
+      desc: () => $t(L.SwissBankDescV3),
       input: {},
       output: {},
       construction: { Forex: 100, Diplomacy: 100, Radio: 100 },
@@ -2075,8 +2075,8 @@ export class BuildingDefinitions {
    };
 
    ItaipuDam: IBuildingDefinition = {
-      name: () => t(L.ItaipuDam),
-      desc: () => t(L.ItaipuDamDesc),
+      name: () => $t(L.ItaipuDam),
+      desc: () => $t(L.ItaipuDamDesc),
       input: {},
       output: {},
       construction: { Diplomacy: 100, Submarine: 100, ReinforcedConcrete: 100 },
@@ -2086,8 +2086,8 @@ export class BuildingDefinitions {
    };
 
    CathedralOfBrasilia: IBuildingDefinition = {
-      name: () => t(L.CathedralOfBrasilia),
-      desc: () => t(L.CathedralOfBrasiliaDesc),
+      name: () => $t(L.CathedralOfBrasilia),
+      desc: () => $t(L.CathedralOfBrasiliaDesc),
       input: {},
       output: {},
       construction: { Biplane: 100, Tank: 100, Ironclad: 100 },
@@ -2097,8 +2097,8 @@ export class BuildingDefinitions {
    };
 
    Capybara: IBuildingDefinition = {
-      name: () => t(L.Capybara),
-      desc: () => t(L.CapybaraDesc),
+      name: () => $t(L.Capybara),
+      desc: () => $t(L.CapybaraDesc),
       input: {},
       output: {},
       construction: {},
@@ -2108,8 +2108,8 @@ export class BuildingDefinitions {
    };
 
    GiantOtter: IBuildingDefinition = {
-      name: () => t(L.GiantOtter),
-      desc: () => t(L.GiantOtterDesc),
+      name: () => $t(L.GiantOtter),
+      desc: () => $t(L.GiantOtterDesc),
       input: {},
       output: {},
       construction: {},
@@ -2119,8 +2119,8 @@ export class BuildingDefinitions {
    };
 
    Hoatzin: IBuildingDefinition = {
-      name: () => t(L.Hoatzin),
-      desc: () => t(L.HoatzinDesc),
+      name: () => $t(L.Hoatzin),
+      desc: () => $t(L.HoatzinDesc),
       input: {},
       output: {},
       construction: {},
@@ -2130,8 +2130,8 @@ export class BuildingDefinitions {
    };
 
    RoyalFlycatcher: IBuildingDefinition = {
-      name: () => t(L.RoyalFlycatcher),
-      desc: () => t(L.RoyalFlycatcherDesc),
+      name: () => $t(L.RoyalFlycatcher),
+      desc: () => $t(L.RoyalFlycatcherDesc),
       input: {},
       output: {},
       construction: {},
@@ -2141,8 +2141,8 @@ export class BuildingDefinitions {
    };
 
    GlassFrog: IBuildingDefinition = {
-      name: () => t(L.GlassFrog),
-      desc: () => t(L.GlassFrogDesc),
+      name: () => $t(L.GlassFrog),
+      desc: () => $t(L.GlassFrogDesc),
       input: {},
       output: {},
       construction: {},
@@ -2152,8 +2152,8 @@ export class BuildingDefinitions {
    };
 
    PygmyMarmoset: IBuildingDefinition = {
-      name: () => t(L.PygmyMarmoset),
-      desc: () => t(L.PygmyMarmosetDesc),
+      name: () => $t(L.PygmyMarmoset),
+      desc: () => $t(L.PygmyMarmosetDesc),
       input: {},
       output: {},
       construction: {},
@@ -2163,8 +2163,8 @@ export class BuildingDefinitions {
    };
 
    RedFort: IBuildingDefinition = {
-      name: () => t(L.RedFort),
-      desc: () => t(L.RedFortDesc),
+      name: () => $t(L.RedFort),
+      desc: () => $t(L.RedFortDesc),
       input: {},
       output: {},
       construction: { Frigate: 100, Rifle: 100, GatlingGun: 100 },
@@ -2174,8 +2174,8 @@ export class BuildingDefinitions {
    };
 
    SanchiStupa: IBuildingDefinition = {
-      name: () => t(L.SanchiStupa),
-      desc: () => t(L.SanchiStupaDesc),
+      name: () => $t(L.SanchiStupa),
+      desc: () => $t(L.SanchiStupaDesc),
       input: {},
       output: {},
       construction: { Garment: 100, Sword: 100, Furniture: 100 },
@@ -2185,8 +2185,8 @@ export class BuildingDefinitions {
    };
 
    QutbMinar: IBuildingDefinition = {
-      name: () => t(L.QutbMinar),
-      desc: () => t(L.QutbMinarDescV2),
+      name: () => $t(L.QutbMinar),
+      desc: () => $t(L.QutbMinarDescV2),
       input: {},
       output: {},
       construction: { Banknote: 200, Galleon: 200, Knight: 200 },
@@ -2196,8 +2196,8 @@ export class BuildingDefinitions {
    };
 
    GangesRiver: IBuildingDefinition = {
-      name: () => t(L.GangesRiver),
-      desc: () => t(L.GangesRiverDescV3),
+      name: () => $t(L.GangesRiver),
+      desc: () => $t(L.GangesRiverDescV3),
       input: {},
       output: {},
       construction: {},
@@ -2207,8 +2207,8 @@ export class BuildingDefinitions {
    };
 
    Sundarbans: IBuildingDefinition = {
-      name: () => t(L.Sundarbans),
-      desc: () => t(L.SundarbansDescV2),
+      name: () => $t(L.Sundarbans),
+      desc: () => $t(L.SundarbansDescV2),
       input: {},
       output: {},
       construction: {},
@@ -2218,8 +2218,8 @@ export class BuildingDefinitions {
    };
 
    BranCastle: IBuildingDefinition = {
-      name: () => t(L.BranCastle),
-      desc: () => t(L.BranCastleDescV2),
+      name: () => $t(L.BranCastle),
+      desc: () => $t(L.BranCastleDescV2),
       input: {},
       output: {},
       construction: { Coin: 100, Faith: 100, Knight: 100 },
@@ -2229,8 +2229,8 @@ export class BuildingDefinitions {
    };
 
    PortOfSingapore: IBuildingDefinition = {
-      name: () => t(L.PortOfSingapore),
-      desc: () => t(L.PortOfSingaporeDesc),
+      name: () => $t(L.PortOfSingapore),
+      desc: () => $t(L.PortOfSingaporeDesc),
       input: {},
       output: {},
       construction: { Koti: 500 },
@@ -2240,8 +2240,8 @@ export class BuildingDefinitions {
    };
 
    SydneyOperaHouse: IBuildingDefinition = {
-      name: () => t(L.SydneyOperaHouse),
-      desc: () => t(L.SydneyOperaHouseDesc),
+      name: () => $t(L.SydneyOperaHouse),
+      desc: () => $t(L.SydneyOperaHouseDesc),
       input: {},
       output: {},
       construction: { TV: 500, Radio: 500, Diplomacy: 500 },
@@ -2251,8 +2251,8 @@ export class BuildingDefinitions {
    };
 
    SydneyHarbourBridge: IBuildingDefinition = {
-      name: () => t(L.SydneyHarbourBridge),
-      desc: () => t(L.SydneyHarbourBridgeDesc),
+      name: () => $t(L.SydneyHarbourBridge),
+      desc: () => $t(L.SydneyHarbourBridgeDesc),
       input: {},
       output: {},
       construction: { ReinforcedConcrete: 100, Car: 100, Submarine: 100 },
@@ -2262,8 +2262,8 @@ export class BuildingDefinitions {
    };
 
    GreatOceanRoad: IBuildingDefinition = {
-      name: () => t(L.GreatOceanRoad),
-      desc: () => t(L.GreatOceanRoadDesc),
+      name: () => $t(L.GreatOceanRoad),
+      desc: () => $t(L.GreatOceanRoadDesc),
       input: {},
       output: {},
       construction: { Battleship: 150, Rocket: 150 },
@@ -2273,8 +2273,8 @@ export class BuildingDefinitions {
    };
 
    GreatBarrierReef: IBuildingDefinition = {
-      name: () => t(L.GreatBarrierReef),
-      desc: () => t(L.GreatBarrierReefDesc),
+      name: () => $t(L.GreatBarrierReef),
+      desc: () => $t(L.GreatBarrierReefDesc),
       input: {},
       output: {},
       construction: {},
@@ -2284,8 +2284,8 @@ export class BuildingDefinitions {
    };
 
    Uluru: IBuildingDefinition = {
-      name: () => t(L.Uluru),
-      desc: () => t(L.UluruDesc),
+      name: () => $t(L.Uluru),
+      desc: () => $t(L.UluruDesc),
       input: {},
       output: {},
       construction: {},
@@ -2295,8 +2295,8 @@ export class BuildingDefinitions {
    };
 
    LakeBaikal: IBuildingDefinition = {
-      name: () => t(L.LakeBaikal),
-      desc: () => t(L.LakeBaikalDesc),
+      name: () => $t(L.LakeBaikal),
+      desc: () => $t(L.LakeBaikalDesc),
       input: {},
       output: {},
       construction: {},
@@ -2306,8 +2306,8 @@ export class BuildingDefinitions {
    };
 
    KizhiPogost: IBuildingDefinition = {
-      name: () => t(L.KizhiPogost),
-      desc: () => t(L.KizhiPogostDescV2),
+      name: () => $t(L.KizhiPogost),
+      desc: () => $t(L.KizhiPogostDescV2),
       input: {},
       output: {},
       construction: { Bond: 100, Law: 100, Frigate: 100 },
@@ -2317,8 +2317,8 @@ export class BuildingDefinitions {
    };
 
    Hermitage: IBuildingDefinition = {
-      name: () => t(L.Hermitage),
-      desc: () => t(L.HermitageDesc),
+      name: () => $t(L.Hermitage),
+      desc: () => $t(L.HermitageDesc),
       input: {},
       output: {},
       construction: { Politics: 150, Newspaper: 150 },
@@ -2328,8 +2328,8 @@ export class BuildingDefinitions {
    };
 
    Sputnik1: IBuildingDefinition = {
-      name: () => t(L.Sputnik1),
-      desc: () => t(L.Sputnik1DescV3),
+      name: () => $t(L.Sputnik1),
+      desc: () => $t(L.Sputnik1DescV3),
       input: {},
       output: {},
       construction: { Satellite: 500 },
@@ -2339,8 +2339,8 @@ export class BuildingDefinitions {
    };
 
    AkademikLomonosov: IBuildingDefinition = {
-      name: () => t(L.AkademikLomonosov),
-      desc: () => t(L.AkademikLomonosovDescV2),
+      name: () => $t(L.AkademikLomonosov),
+      desc: () => $t(L.AkademikLomonosovDescV2),
       input: {},
       output: {},
       construction: { Spacecraft: 500 },
@@ -2350,8 +2350,8 @@ export class BuildingDefinitions {
    };
 
    AuroraBorealis: IBuildingDefinition = {
-      name: () => t(L.AuroraBorealis),
-      desc: () => t(L.AuroraBorealisDesc),
+      name: () => $t(L.AuroraBorealis),
+      desc: () => $t(L.AuroraBorealisDesc),
       input: {},
       output: {},
       construction: {},
@@ -2361,8 +2361,8 @@ export class BuildingDefinitions {
    };
 
    LakeLouise: IBuildingDefinition = {
-      name: () => t(L.LakeLouise),
-      desc: () => t(L.LakeLouiseDesc),
+      name: () => $t(L.LakeLouise),
+      desc: () => $t(L.LakeLouiseDesc),
       input: {},
       output: {},
       construction: {},
@@ -2372,8 +2372,8 @@ export class BuildingDefinitions {
    };
 
    DinosaurProvincialPark: IBuildingDefinition = {
-      name: () => t(L.DinosaurProvincialPark),
-      desc: () => t(L.DinosaurProvincialParkDesc, { percent: formatPercent(DinosaurProvincialParkPercent) }),
+      name: () => $t(L.DinosaurProvincialPark),
+      desc: () => $t(L.DinosaurProvincialParkDesc, { percent: formatPercent(DinosaurProvincialParkPercent) }),
       input: {},
       output: {},
       construction: {},
@@ -2383,8 +2383,8 @@ export class BuildingDefinitions {
    };
 
    ChateauFrontenac: IBuildingDefinition = {
-      name: () => t(L.ChateauFrontenac),
-      desc: () => t(L.ChateauFrontenacDesc),
+      name: () => $t(L.ChateauFrontenac),
+      desc: () => $t(L.ChateauFrontenacDesc),
       input: {},
       output: {},
       construction: { Tank: 100, Ironclad: 100, Train: 100 },
@@ -2394,8 +2394,8 @@ export class BuildingDefinitions {
    };
 
    Habitat67: IBuildingDefinition = {
-      name: () => t(L.Habitat67),
-      desc: () => t(L.Habitat67DescV2),
+      name: () => $t(L.Habitat67),
+      desc: () => $t(L.Habitat67DescV2),
       input: {},
       output: {},
       construction: { Bitcoin: 500 },
@@ -2405,8 +2405,8 @@ export class BuildingDefinitions {
    };
 
    WorldTradeOrganization: IBuildingDefinition = {
-      name: () => t(L.WorldTradeOrganization),
-      desc: () => t(L.WorldTradeOrganizationDesc),
+      name: () => $t(L.WorldTradeOrganization),
+      desc: () => $t(L.WorldTradeOrganizationDesc),
       input: {},
       output: {},
       construction: { MutualFund: 100, Koti: 100, TV: 100 },

@@ -3,7 +3,7 @@ import { Config } from "../../../shared/logic/Config";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import { UserAttributes, UserColorsMapping } from "../../../shared/utilities/Database";
 import { formatPercent, hasFlag } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import { usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { getCountryName } from "../utilities/CountryCode";
@@ -35,7 +35,7 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
             {isReserved ? null : (
                <>
                   <WarningComponent icon="info" className="mb10">
-                     <RenderHTML html={t(L.PlayerMapClaimTileNoLongerReserved, { name: tile.handle })} />
+                     <RenderHTML html={$t(L.PlayerMapClaimTileNoLongerReserved, { name: tile.handle })} />
                   </WarningComponent>
                   <ClaimTileComponent xy={xy} />
                </>
@@ -50,38 +50,38 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                      <AccountLevelComponent level={tile.level} scale={0.17} style={{ marginLeft: 5 }} />
                   </Tippy>
                   {hasFlag(tile.attr, UserAttributes.DLC1) ? (
-                     <Tippy content={t(L.AccountSupporter)}>
+                     <Tippy content={$t(L.AccountSupporter)}>
                         <MiscTextureComponent name="Supporter" scale={0.17} style={{ marginLeft: 5 }} />
                      </Tippy>
                   ) : null}
                </legend>
                <div className="row mv5">
-                  <div className="f1">{t(L.PlayerMapTariff)}</div>
+                  <div className="f1">{$t(L.PlayerMapTariff)}</div>
                   <div className="text-strong">{formatPercent(tile.tariffRate)}</div>
                </div>
                <div className="row mv5">
-                  <div className="f1">{t(L.PlayerMapEstablishedSince)}</div>
+                  <div className="f1">{$t(L.PlayerMapEstablishedSince)}</div>
                   <div className="text-strong">{new Date(tile.createdAt).toLocaleDateString()}</div>
                </div>
                <div className="row mv5">
-                  <div className="f1">{t(L.Civilization)}</div>
+                  <div className="f1">{$t(L.Civilization)}</div>
                   <div className="text-strong">{tile.city ? Config.City[tile.city].name() : null}</div>
                </div>
                <div className="row mv5">
-                  <div className="f1">{t(L.TechAge)}</div>
+                  <div className="f1">{$t(L.TechAge)}</div>
                   <div className="text-strong">
                      {tile.techAge ? Config.TechAge[tile.techAge].name() : null}
                   </div>
                </div>
             </fieldset>
             <fieldset>
-               <legend>{t(L.PlayerMapTradesFrom, { name: tile.handle })}</legend>
+               <legend>{$t(L.PlayerMapTradesFrom, { name: tile.handle })}</legend>
                <div className="table-view">
                   <table>
                      <tbody>
                         <tr>
-                           <th>{t(L.PlayerTradeWant)}</th>
-                           <th>{t(L.PlayerTradeOffer)}</th>
+                           <th>{$t(L.PlayerTradeWant)}</th>
+                           <th>{$t(L.PlayerTradeOffer)}</th>
                            <th></th>
                         </tr>
                         {trades
@@ -109,7 +109,7 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                                              );
                                           }}
                                        >
-                                          {t(L.PlayerTradeFill)}
+                                          {$t(L.PlayerTradeFill)}
                                        </div>
                                     </td>
                                  </tr>

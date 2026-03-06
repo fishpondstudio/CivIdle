@@ -46,7 +46,7 @@ import {
 import { srand } from "../../../shared/utilities/Random";
 import { setServerNow } from "../../../shared/utilities/ServerNow";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { RequestPendingClaimUpdate } from "../logic/PendingClaim";
 import { getBuildNumber, getVersion } from "../logic/Version";
@@ -424,7 +424,7 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
                if (getGameOptions().tradeFilledSound) {
                   playKaching();
                }
-               showToast(t(L.PlayerTradeClaimAvailable, { count: r.claims[user.userId] }));
+               showToast($t(L.PlayerTradeClaimAvailable, { count: r.claims[user.userId] }));
                RequestPendingClaimUpdate.emit();
             }
             break;
@@ -484,7 +484,7 @@ export function convertOfflineTimeToWarp(w: IWelcomeMessage): void {
    console.log("[convertOfflineTimeToWarp] offlineTime:", offlineTime);
    if (offlineTime >= 60) {
       playBubble();
-      showToast(t(L.PetraOfflineTimeReconciliation, { count: offlineTime }));
+      showToast($t(L.PetraOfflineTimeReconciliation, { count: offlineTime }));
       addPetraOfflineTime(offlineTime, getGameState());
    }
 }

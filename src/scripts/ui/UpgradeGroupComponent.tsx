@@ -6,7 +6,7 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { GlobalMultiplierNames } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import { mapOf, numberToRoman } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
 import { playClick, playError, playUpgrade } from "../visuals/Sound";
 import { RenderHTML } from "./RenderHTMLComponent";
@@ -66,7 +66,7 @@ export function UpgradeGroupComponent<T>({
                                  notifyGameStateUpdate();
                               }}
                            >
-                              {t(L.UnlockBuilding)}
+                              {$t(L.UnlockBuilding)}
                            </div>
                         </Tippy>
                      );
@@ -91,7 +91,7 @@ export function UpgradeGroupComponent<T>({
                                     }}
                                  >
                                     <RenderHTML
-                                       html={t(L.UnlockXHTML, { name: Config.Building[b].name() })}
+                                       html={$t(L.UnlockXHTML, { name: Config.Building[b].name() })}
                                     />
                                     <div className="text-small text-desc">{getBuildingDescription(b)}</div>
                                  </div>
@@ -111,17 +111,17 @@ export function UpgradeGroupComponent<T>({
                                     <div className="f1 text-strong">{Config.Building[bld].name()}</div>
                                     {mul.output ? (
                                        <div className="ml20 text-small">
-                                          +{mul.output} {t(L.ProductionMultiplier)}
+                                          +{mul.output} {$t(L.ProductionMultiplier)}
                                        </div>
                                     ) : null}
                                     {mul.worker ? (
                                        <div className="ml20 text-small">
-                                          +{mul.storage} {t(L.WorkerCapacityMultiplier)}
+                                          +{mul.storage} {$t(L.WorkerCapacityMultiplier)}
                                        </div>
                                     ) : null}
                                     {mul.storage ? (
                                        <div className="ml20 text-small">
-                                          +{mul.storage} {t(L.StorageMultiplier)}
+                                          +{mul.storage} {$t(L.StorageMultiplier)}
                                        </div>
                                     ) : null}
                                  </div>

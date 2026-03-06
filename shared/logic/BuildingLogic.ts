@@ -35,7 +35,7 @@ import {
 import { srand } from "../utilities/Random";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
-import { L, t } from "../utilities/i18n";
+import { $t, L } from "../utilities/i18n";
 import { BetaBuildings } from "./Beta";
 import { Config } from "./Config";
 import { MANAGED_IMPORT_RANGE, MAX_PETRA_SPEED_UP } from "./Constants";
@@ -980,9 +980,9 @@ export function canBeElectrified(b: Building): boolean {
 }
 
 export const ElectrificationStatus = {
-   NotActive: () => t(L.ElectrificationStatusNotActive),
-   NoPower: () => t(L.ElectrificationStatusNoPowerV2),
-   Active: () => t(L.ElectrificationStatusActive),
+   NotActive: () => $t(L.ElectrificationStatusNotActive),
+   NoPower: () => $t(L.ElectrificationStatusNoPowerV2),
+   Active: () => $t(L.ElectrificationStatusActive),
 } as const satisfies Record<string, () => string>;
 
 export type ElectrificationStatus = keyof typeof ElectrificationStatus;

@@ -1,6 +1,6 @@
 import { MAX_TELEPORT, TELEPORT_SECONDS } from "../../../shared/logic/Constants";
 import type { IGreatPeopleBuildingData } from "../../../shared/logic/Tile";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -20,9 +20,9 @@ export function TheMetBuildingBody({ gameState, xy }: IBuildingComponentProps): 
       <div className="window-body">
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
-            <legend>{t(L.Teleport)}</legend>
+            <legend>{$t(L.Teleport)}</legend>
             <WarningComponent icon="info" className="mb10 text-small">
-               <RenderHTML html={t(L.TeleportDescHTML, { time: TELEPORT_SECONDS })} />
+               <RenderHTML html={$t(L.TeleportDescHTML, { time: TELEPORT_SECONDS })} />
             </WarningComponent>
             <ProgressBarComponent progress={(building.resources.Teleport ?? 0) / MAX_TELEPORT} />
             <div className="row mt5">

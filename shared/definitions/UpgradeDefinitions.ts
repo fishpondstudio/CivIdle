@@ -9,7 +9,7 @@ import {
 import { getTechUnlockCost, getTechUnlockCostInAge } from "../logic/TechLogic";
 import { RequestChooseGreatPerson, addMultiplier } from "../logic/Update";
 import { deepFreeze, forEach, pointToTile, safeAdd, tileToPoint } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
+import { $t, L } from "../utilities/i18n";
 import { BuildingDefinitions } from "./BuildingDefinitions";
 import { GreatPersonTickFlag } from "./GreatPersonDefinitions";
 import type { IUpgradeDefinition } from "./ITechDefinition";
@@ -19,14 +19,14 @@ const Buildings = deepFreeze(new BuildingDefinitions());
 
 export class UpgradeDefinitions {
    Cultivation1: IUpgradeDefinition = {
-      name: () => t(L.CultivationLevelX, { level: "I" }),
+      name: () => $t(L.CultivationLevelX, { level: "I" }),
       requireResources: {},
       buildingMultiplier: {
          Aqueduct: { output: 1 },
       },
    };
    Cultivation2: IUpgradeDefinition = {
-      name: () => t(L.CultivationLevelX, { level: "II" }),
+      name: () => $t(L.CultivationLevelX, { level: "II" }),
       requireResources: Buildings.PaperMaker.input,
       buildingMultiplier: {
          Aqueduct: { output: 1 },
@@ -34,7 +34,7 @@ export class UpgradeDefinitions {
       },
    };
    Cultivation3: IUpgradeDefinition = {
-      name: () => t(L.CultivationLevelX, { level: "III" }),
+      name: () => $t(L.CultivationLevelX, { level: "III" }),
       requireResources: Buildings.Library.input,
       buildingMultiplier: {
          Aqueduct: { output: 1 },
@@ -43,7 +43,7 @@ export class UpgradeDefinitions {
       },
    };
    Cultivation4: IUpgradeDefinition = {
-      name: () => t(L.CultivationLevelX, { level: "IV" }),
+      name: () => $t(L.CultivationLevelX, { level: "IV" }),
       requireResources: Buildings.School.input,
       buildingMultiplier: {
          Aqueduct: { output: 1 },
@@ -51,7 +51,7 @@ export class UpgradeDefinitions {
          Library: { output: 1 },
          School: { output: 1 },
       },
-      additionalUpgrades: () => [t(L.Cultivation4UpgradeHTML)],
+      additionalUpgrades: () => [$t(L.Cultivation4UpgradeHTML)],
       onUnlocked: (gs) => {
          const candidates = rollGreatPeopleThisRun(
             new Set(["RenaissanceAge"]),
@@ -66,14 +66,14 @@ export class UpgradeDefinitions {
    };
 
    Commerce1: IUpgradeDefinition = {
-      name: () => t(L.CommerceLevelX, { level: "I" }),
+      name: () => $t(L.CommerceLevelX, { level: "I" }),
       requireResources: {},
       buildingMultiplier: {
          StoneQuarry: { output: 1 },
       },
    };
    Commerce2: IUpgradeDefinition = {
-      name: () => t(L.CommerceLevelX, { level: "II" }),
+      name: () => $t(L.CommerceLevelX, { level: "II" }),
       requireResources: Buildings.Brickworks.input,
       buildingMultiplier: {
          StoneQuarry: { output: 1 },
@@ -81,7 +81,7 @@ export class UpgradeDefinitions {
       },
    };
    Commerce3: IUpgradeDefinition = {
-      name: () => t(L.CommerceLevelX, { level: "III" }),
+      name: () => $t(L.CommerceLevelX, { level: "III" }),
       requireResources: Buildings.GoldMiningCamp.output,
       buildingMultiplier: {
          StoneQuarry: { output: 1 },
@@ -90,7 +90,7 @@ export class UpgradeDefinitions {
       },
    };
    Commerce4: IUpgradeDefinition = {
-      name: () => t(L.CommerceLevelX, { level: "IV" }),
+      name: () => $t(L.CommerceLevelX, { level: "IV" }),
       requireResources: Buildings.CoinMint.input,
       buildingMultiplier: {
          StoneQuarry: { output: 1 },
@@ -98,7 +98,7 @@ export class UpgradeDefinitions {
          GoldMiningCamp: { output: 1 },
          CoinMint: { output: 1 },
       },
-      additionalUpgrades: () => [t(L.Commerce4UpgradeHTMLV2)],
+      additionalUpgrades: () => [$t(L.Commerce4UpgradeHTMLV2)],
       onUnlocked: (gs) => {
          const cz = findSpecialBuilding("ChoghaZanbil", gs);
          if (!cz) return;
@@ -117,14 +117,14 @@ export class UpgradeDefinitions {
    };
 
    Honor1: IUpgradeDefinition = {
-      name: () => t(L.HonorLevelX, { level: "I" }),
+      name: () => $t(L.HonorLevelX, { level: "I" }),
       requireResources: {},
       buildingMultiplier: {
          LoggingCamp: { output: 1 },
       },
    };
    Honor2: IUpgradeDefinition = {
-      name: () => t(L.HonorLevelX, { level: "II" }),
+      name: () => $t(L.HonorLevelX, { level: "II" }),
       requireResources: Buildings.LumberMill.input,
       buildingMultiplier: {
          LoggingCamp: { output: 1 },
@@ -132,7 +132,7 @@ export class UpgradeDefinitions {
       },
    };
    Honor3: IUpgradeDefinition = {
-      name: () => t(L.HonorLevelX, { level: "III" }),
+      name: () => $t(L.HonorLevelX, { level: "III" }),
       requireResources: Buildings.SiegeWorkshop.input,
       buildingMultiplier: {
          LoggingCamp: { output: 1 },
@@ -141,7 +141,7 @@ export class UpgradeDefinitions {
       },
    };
    Honor4: IUpgradeDefinition = {
-      name: () => t(L.HonorLevelX, { level: "IV" }),
+      name: () => $t(L.HonorLevelX, { level: "IV" }),
       requireResources: Buildings.KnightCamp.input,
       buildingMultiplier: {
          LoggingCamp: { output: 1 },
@@ -149,25 +149,25 @@ export class UpgradeDefinitions {
          SiegeWorkshop: { output: 1 },
          KnightCamp: { output: 1 },
       },
-      additionalUpgrades: () => [t(L.Honor4UpgradeHTML)],
+      additionalUpgrades: () => [$t(L.Honor4UpgradeHTML)],
       tick: (gs) => {
          const total = getGreatPersonTotalLevel("ZhengHe", gs);
          if (total > 0) {
             const def = Config.GreatPerson.ZhengHe;
-            def.tick("ZhengHe", total, t(L.ExpansionLevelX, { level: "IV" }), GreatPersonTickFlag.None);
+            def.tick("ZhengHe", total, $t(L.ExpansionLevelX, { level: "IV" }), GreatPersonTickFlag.None);
          }
       },
    };
 
    Expansion1: IUpgradeDefinition = {
-      name: () => t(L.ExpansionLevelX, { level: "I" }),
+      name: () => $t(L.ExpansionLevelX, { level: "I" }),
       requireResources: {},
       buildingMultiplier: {
          WheatFarm: { output: 1 },
       },
    };
    Expansion2: IUpgradeDefinition = {
-      name: () => t(L.ExpansionLevelX, { level: "II" }),
+      name: () => $t(L.ExpansionLevelX, { level: "II" }),
       requireResources: Buildings.FlourMill.input,
       buildingMultiplier: {
          WheatFarm: { output: 1 },
@@ -175,7 +175,7 @@ export class UpgradeDefinitions {
       },
    };
    Expansion3: IUpgradeDefinition = {
-      name: () => t(L.ExpansionLevelX, { level: "III" }),
+      name: () => $t(L.ExpansionLevelX, { level: "III" }),
       requireResources: Buildings.Bakery.input,
       buildingMultiplier: {
          WheatFarm: { output: 1 },
@@ -184,7 +184,7 @@ export class UpgradeDefinitions {
       },
    };
    Expansion4: IUpgradeDefinition = {
-      name: () => t(L.ExpansionLevelX, { level: "IV" }),
+      name: () => $t(L.ExpansionLevelX, { level: "IV" }),
       requireResources: Buildings.Apartment.input,
       buildingMultiplier: {
          WheatFarm: { output: 1 },
@@ -196,14 +196,14 @@ export class UpgradeDefinitions {
    };
 
    Christianity1: IUpgradeDefinition = {
-      name: () => t(L.ChristianityLevelX, { level: "I" }),
+      name: () => $t(L.ChristianityLevelX, { level: "I" }),
       requireResources: {},
       unlockBuilding: ["Church"],
       tech: "Religion",
    };
 
    Christianity2: IUpgradeDefinition = {
-      name: () => t(L.ChristianityLevelX, { level: "II" }),
+      name: () => $t(L.ChristianityLevelX, { level: "II" }),
       requireResources: { Faith: 1 },
       unlockBuilding: ["StPetersBasilica"],
       buildingMultiplier: {
@@ -213,7 +213,7 @@ export class UpgradeDefinitions {
    };
 
    Christianity3: IUpgradeDefinition = {
-      name: () => t(L.ChristianityLevelX, { level: "III" }),
+      name: () => $t(L.ChristianityLevelX, { level: "III" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Church: { output: 1 },
@@ -222,7 +222,7 @@ export class UpgradeDefinitions {
    };
 
    Christianity4: IUpgradeDefinition = {
-      name: () => t(L.ChristianityLevelX, { level: "IV" }),
+      name: () => $t(L.ChristianityLevelX, { level: "IV" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Church: { output: 1 },
@@ -232,7 +232,7 @@ export class UpgradeDefinitions {
    };
 
    Christianity5: IUpgradeDefinition = {
-      name: () => t(L.ChristianityLevelX, { level: "V" }),
+      name: () => $t(L.ChristianityLevelX, { level: "V" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Church: { output: 1 },
@@ -245,14 +245,14 @@ export class UpgradeDefinitions {
    };
 
    Islam1: IUpgradeDefinition = {
-      name: () => t(L.IslamLevelX, { level: "I" }),
+      name: () => $t(L.IslamLevelX, { level: "I" }),
       requireResources: {},
       unlockBuilding: ["Mosque"],
       tech: "Religion",
    };
 
    Islam2: IUpgradeDefinition = {
-      name: () => t(L.IslamLevelX, { level: "II" }),
+      name: () => $t(L.IslamLevelX, { level: "II" }),
       requireResources: { Faith: 1 },
       unlockBuilding: ["ProphetsMosque"],
       buildingMultiplier: {
@@ -262,7 +262,7 @@ export class UpgradeDefinitions {
    };
 
    Islam3: IUpgradeDefinition = {
-      name: () => t(L.IslamLevelX, { level: "III" }),
+      name: () => $t(L.IslamLevelX, { level: "III" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Mosque: { output: 1 },
@@ -271,7 +271,7 @@ export class UpgradeDefinitions {
    };
 
    Islam4: IUpgradeDefinition = {
-      name: () => t(L.IslamLevelX, { level: "IV" }),
+      name: () => $t(L.IslamLevelX, { level: "IV" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Mosque: { output: 1 },
@@ -281,7 +281,7 @@ export class UpgradeDefinitions {
    };
 
    Islam5: IUpgradeDefinition = {
-      name: () => t(L.IslamLevelX, { level: "V" }),
+      name: () => $t(L.IslamLevelX, { level: "V" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Mosque: { output: 1 },
@@ -301,18 +301,18 @@ export class UpgradeDefinitions {
             }
          }
       },
-      additionalUpgrades: () => [t(L.Islam5UpgradeHTML)],
+      additionalUpgrades: () => [$t(L.Islam5UpgradeHTML)],
    };
 
    Buddhism1: IUpgradeDefinition = {
-      name: () => t(L.BuddhismLevelX, { level: "I" }),
+      name: () => $t(L.BuddhismLevelX, { level: "I" }),
       requireResources: {},
       unlockBuilding: ["Pagoda"],
       tech: "Religion",
    };
 
    Buddhism2: IUpgradeDefinition = {
-      name: () => t(L.BuddhismLevelX, { level: "II" }),
+      name: () => $t(L.BuddhismLevelX, { level: "II" }),
       requireResources: { Faith: 1 },
       unlockBuilding: ["GreatDagonPagoda"],
       buildingMultiplier: {
@@ -322,7 +322,7 @@ export class UpgradeDefinitions {
    };
 
    Buddhism3: IUpgradeDefinition = {
-      name: () => t(L.BuddhismLevelX, { level: "III" }),
+      name: () => $t(L.BuddhismLevelX, { level: "III" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Pagoda: { output: 1 },
@@ -331,7 +331,7 @@ export class UpgradeDefinitions {
    };
 
    Buddhism4: IUpgradeDefinition = {
-      name: () => t(L.BuddhismLevelX, { level: "IV" }),
+      name: () => $t(L.BuddhismLevelX, { level: "IV" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Pagoda: { output: 1 },
@@ -341,7 +341,7 @@ export class UpgradeDefinitions {
    };
 
    Buddhism5: IUpgradeDefinition = {
-      name: () => t(L.BuddhismLevelX, { level: "V" }),
+      name: () => $t(L.BuddhismLevelX, { level: "V" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Pagoda: { output: 1 },
@@ -352,7 +352,7 @@ export class UpgradeDefinitions {
    };
 
    Polytheism1: IUpgradeDefinition = {
-      name: () => t(L.PolytheismLevelX, { level: "I" }),
+      name: () => $t(L.PolytheismLevelX, { level: "I" }),
       requireResources: {},
       buildingMultiplier: {
          Shrine: { output: 1 },
@@ -360,7 +360,7 @@ export class UpgradeDefinitions {
    };
 
    Polytheism2: IUpgradeDefinition = {
-      name: () => t(L.PolytheismLevelX, { level: "II" }),
+      name: () => $t(L.PolytheismLevelX, { level: "II" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Shrine: { output: 1 },
@@ -370,7 +370,7 @@ export class UpgradeDefinitions {
    };
 
    Polytheism3: IUpgradeDefinition = {
-      name: () => t(L.PolytheismLevelX, { level: "III" }),
+      name: () => $t(L.PolytheismLevelX, { level: "III" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Shrine: { output: 1 },
@@ -379,7 +379,7 @@ export class UpgradeDefinitions {
    };
 
    Polytheism4: IUpgradeDefinition = {
-      name: () => t(L.PolytheismLevelX, { level: "IV" }),
+      name: () => $t(L.PolytheismLevelX, { level: "IV" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Shrine: { output: 1 },
@@ -389,7 +389,7 @@ export class UpgradeDefinitions {
    };
 
    Polytheism5: IUpgradeDefinition = {
-      name: () => t(L.PolytheismLevelX, { level: "V" }),
+      name: () => $t(L.PolytheismLevelX, { level: "V" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Shrine: { output: 1 },
@@ -400,7 +400,7 @@ export class UpgradeDefinitions {
    };
 
    Liberalism1: IUpgradeDefinition = {
-      name: () => t(L.LiberalismLevelX, { level: "I" }),
+      name: () => $t(L.LiberalismLevelX, { level: "I" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          BondMarket: { output: 1 },
@@ -408,7 +408,7 @@ export class UpgradeDefinitions {
    };
 
    Liberalism2: IUpgradeDefinition = {
-      name: () => t(L.LiberalismLevelX, { level: "II" }),
+      name: () => $t(L.LiberalismLevelX, { level: "II" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          BondMarket: { output: 1 },
@@ -418,18 +418,18 @@ export class UpgradeDefinitions {
    };
 
    Liberalism3: IUpgradeDefinition = {
-      name: () => t(L.LiberalismLevelX, { level: "III" }),
+      name: () => $t(L.LiberalismLevelX, { level: "III" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          BondMarket: { output: 1 },
          Warehouse: { storage: 1 },
          Caravansary: { storage: 1 },
       },
-      additionalUpgrades: () => [t(L.LiberalismLevel3DescHTML)],
+      additionalUpgrades: () => [$t(L.LiberalismLevel3DescHTML)],
    };
 
    Liberalism4: IUpgradeDefinition = {
-      name: () => t(L.LiberalismLevelX, { level: "IV" }),
+      name: () => $t(L.LiberalismLevelX, { level: "IV" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          BondMarket: { output: 1 },
@@ -439,14 +439,14 @@ export class UpgradeDefinitions {
       tick: () => {
          forEach(Config.Building, (b, def) => {
             if (def.output.Power) {
-               addMultiplier(b, { output: 1 }, t(L.LiberalismLevelX, { level: "IV" }));
+               addMultiplier(b, { output: 1 }, $t(L.LiberalismLevelX, { level: "IV" }));
             }
          });
       },
    };
 
    Liberalism5: IUpgradeDefinition = {
-      name: () => t(L.LiberalismLevelX, { level: "V" }),
+      name: () => $t(L.LiberalismLevelX, { level: "V" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          BondMarket: { output: 1 },
@@ -454,11 +454,11 @@ export class UpgradeDefinitions {
          Warehouse: { storage: 1 },
          Caravansary: { storage: 1 },
       },
-      additionalUpgrades: () => [t(L.LiberalismLevel5DescHTMLV3)],
+      additionalUpgrades: () => [$t(L.LiberalismLevel5DescHTMLV3)],
    };
 
    Conservatism1: IUpgradeDefinition = {
-      name: () => t(L.ConservatismLevelX, { level: "I" }),
+      name: () => $t(L.ConservatismLevelX, { level: "I" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          LocomotiveFactory: { output: 1 },
@@ -466,7 +466,7 @@ export class UpgradeDefinitions {
    };
 
    Conservatism2: IUpgradeDefinition = {
-      name: () => t(L.ConservatismLevelX, { level: "II" }),
+      name: () => $t(L.ConservatismLevelX, { level: "II" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          LocomotiveFactory: { output: 1 },
@@ -475,7 +475,7 @@ export class UpgradeDefinitions {
    };
 
    Conservatism3: IUpgradeDefinition = {
-      name: () => t(L.ConservatismLevelX, { level: "III" }),
+      name: () => $t(L.ConservatismLevelX, { level: "III" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          LocomotiveFactory: { output: 1 },
@@ -485,7 +485,7 @@ export class UpgradeDefinitions {
    };
 
    Conservatism4: IUpgradeDefinition = {
-      name: () => t(L.ConservatismLevelX, { level: "IV" }),
+      name: () => $t(L.ConservatismLevelX, { level: "IV" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          LocomotiveFactory: { output: 1 },
@@ -496,7 +496,7 @@ export class UpgradeDefinitions {
    };
 
    Conservatism5: IUpgradeDefinition = {
-      name: () => t(L.ConservatismLevelX, { level: "V" }),
+      name: () => $t(L.ConservatismLevelX, { level: "V" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          LocomotiveFactory: { output: 1 },
@@ -508,7 +508,7 @@ export class UpgradeDefinitions {
    };
 
    Socialism1: IUpgradeDefinition = {
-      name: () => t(L.SocialismLevelX, { level: "I" }),
+      name: () => $t(L.SocialismLevelX, { level: "I" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          PublishingHouse: { output: 1 },
@@ -516,7 +516,7 @@ export class UpgradeDefinitions {
    };
 
    Socialism2: IUpgradeDefinition = {
-      name: () => t(L.SocialismLevelX, { level: "II" }),
+      name: () => $t(L.SocialismLevelX, { level: "II" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          PublishingHouse: { output: 1 },
@@ -525,7 +525,7 @@ export class UpgradeDefinitions {
    };
 
    Socialism3: IUpgradeDefinition = {
-      name: () => t(L.SocialismLevelX, { level: "III" }),
+      name: () => $t(L.SocialismLevelX, { level: "III" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          PublishingHouse: { output: 1 },
@@ -535,7 +535,7 @@ export class UpgradeDefinitions {
    };
 
    Socialism4: IUpgradeDefinition = {
-      name: () => t(L.SocialismLevelX, { level: "IV" }),
+      name: () => $t(L.SocialismLevelX, { level: "IV" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          PublishingHouse: { output: 1 },
@@ -549,11 +549,11 @@ export class UpgradeDefinitions {
             safeAdd(hq.building.resources, "Science", science);
          }
       },
-      additionalUpgrades: () => [t(L.SocialismLevel4DescHTMLV2)],
+      additionalUpgrades: () => [$t(L.SocialismLevel4DescHTMLV2)],
    };
 
    Socialism5: IUpgradeDefinition = {
-      name: () => t(L.SocialismLevelX, { level: "V" }),
+      name: () => $t(L.SocialismLevelX, { level: "V" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          PublishingHouse: { output: 1 },
@@ -567,11 +567,11 @@ export class UpgradeDefinitions {
             safeAdd(hq.building.resources, "Science", science);
          }
       },
-      additionalUpgrades: () => [t(L.SocialismLevel5DescHTMLV2)],
+      additionalUpgrades: () => [$t(L.SocialismLevel5DescHTMLV2)],
    };
 
    Communism1: IUpgradeDefinition = {
-      name: () => t(L.CommunismLevelX, { level: "I" }),
+      name: () => $t(L.CommunismLevelX, { level: "I" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          GatlingGunFactory: { output: 1 },
@@ -579,7 +579,7 @@ export class UpgradeDefinitions {
    };
 
    Communism2: IUpgradeDefinition = {
-      name: () => t(L.CommunismLevelX, { level: "II" }),
+      name: () => $t(L.CommunismLevelX, { level: "II" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          GatlingGunFactory: { output: 1 },
@@ -590,7 +590,7 @@ export class UpgradeDefinitions {
    };
 
    Communism3: IUpgradeDefinition = {
-      name: () => t(L.CommunismLevelX, { level: "III" }),
+      name: () => $t(L.CommunismLevelX, { level: "III" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          GatlingGunFactory: { output: 1 },
@@ -602,7 +602,7 @@ export class UpgradeDefinitions {
    };
 
    Communism4: IUpgradeDefinition = {
-      name: () => t(L.CommunismLevelX, { level: "IV" }),
+      name: () => $t(L.CommunismLevelX, { level: "IV" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          GatlingGunFactory: { output: 1 },
@@ -630,11 +630,11 @@ export class UpgradeDefinitions {
             gs.greatPeopleChoicesV2.push(candidates2);
          }
       },
-      additionalUpgrades: () => [t(L.CommunismLevel4DescHTML)],
+      additionalUpgrades: () => [$t(L.CommunismLevel4DescHTML)],
    };
 
    Communism5: IUpgradeDefinition = {
-      name: () => t(L.CommunismLevelX, { level: "V" }),
+      name: () => $t(L.CommunismLevelX, { level: "V" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
          GatlingGunFactory: { output: 1 },
@@ -651,11 +651,11 @@ export class UpgradeDefinitions {
             gs.greatPeopleChoicesV2.push(candidates);
          }
       },
-      additionalUpgrades: () => [t(L.CommunismLevel5DescHTML)],
+      additionalUpgrades: () => [$t(L.CommunismLevel5DescHTML)],
    };
    BritishMuseum: IUpgradeDefinition = { name: () => "", requireResources: {} };
    SpaceshipIdle: IUpgradeDefinition = {
-      name: () => t(L.WishlistSpaceshipIdle),
+      name: () => $t(L.WishlistSpaceshipIdle),
       requireResources: {},
       buildingMultiplier: {
          SpaceCenter: { output: 1, storage: 1 },

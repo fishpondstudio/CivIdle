@@ -6,7 +6,7 @@ import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGrid } from "../../../shared/logic/IntraTickCache";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import { hasFlag, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
@@ -39,13 +39,13 @@ export function ApplyToAllComponent<T extends IBuildingData>({
    const property = getOptions(building);
    return (
       <div className="text-small row">
-         <Tippy content={t(L.ApplyToAllBuilding, { building: def.name() })}>
+         <Tippy content={$t(L.ApplyToAllBuilding, { building: def.name() })}>
             <button
                style={{ width: 27, padding: 0 }}
                onClick={() => {
                   playSuccess();
                   const count = applyToAllBuildings(building.type, getOptions, gameState);
-                  showToast(t(L.ApplyToBuildingsToastHTML, { count, building: def.name() }));
+                  showToast($t(L.ApplyToBuildingsToastHTML, { count, building: def.name() }));
                }}
             >
                <div className="m-icon small">sync</div>
@@ -53,7 +53,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
          </Tippy>
          {[1, 2, 3, 4, 5].map((tile) => {
             return (
-               <Tippy key={tile} content={t(L.ApplyToBuildingInTile, { building: def.name(), tile })}>
+               <Tippy key={tile} content={$t(L.ApplyToBuildingInTile, { building: def.name(), tile })}>
                   <button
                      style={{ width: 27, padding: 0 }}
                      onMouseEnter={() => {
@@ -82,7 +82,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
                                  Object.assign(b, getOptions(building));
                               }
                            });
-                        showToast(t(L.ApplyToBuildingsToastHTML, { count, building: def.name() }));
+                        showToast($t(L.ApplyToBuildingsToastHTML, { count, building: def.name() }));
                      }}
                   >
                      {tile}
@@ -93,7 +93,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
          <div className="f1"></div>
          {hasFlag(flags, ApplyToAllFlag.NoDefault) ? null : (
             <Tippy
-               content={t(L.SetAsDefaultBuilding, {
+               content={$t(L.SetAsDefaultBuilding, {
                   building: def.name(),
                })}
             >

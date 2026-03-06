@@ -5,7 +5,7 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IWarehouseBuildingData } from "../../../shared/logic/Tile";
 import { WarehouseOptions } from "../../../shared/logic/Tile";
 import { copyFlag, formatNumber, hasFlag, toggleFlag } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -34,14 +34,14 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
          {hasFeature(GameFeature.WarehouseUpgrade, gameState) ? (
             <>
                <WarningComponent className="mb10 text-small" icon="info">
-                  {t(L.WarehouseUpgradeDesc)}
+                  {$t(L.WarehouseUpgradeDesc)}
                </WarningComponent>
                <fieldset>
-                  <legend>{t(L.WarehouseAutopilotSettings)}</legend>
+                  <legend>{$t(L.WarehouseAutopilotSettings)}</legend>
                   <div className="row">
-                     <div>{t(L.WarehouseAutopilotSettingsEnable)}</div>
+                     <div>{$t(L.WarehouseAutopilotSettingsEnable)}</div>
                      <Tippy
-                        content={t(L.WarehouseSettingsAutopilotDesc, {
+                        content={$t(L.WarehouseSettingsAutopilotDesc, {
                            capacity: formatNumber(idleCapacity),
                         })}
                      >
@@ -81,8 +81,8 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
                   />
                   <div className="separator"></div>
                   <div className="row">
-                     <div>{t(L.WarehouseAutopilotSettingsRespectCapSetting)}</div>
-                     <Tippy content={t(L.WarehouseAutopilotSettingsRespectCapSettingTooltip)}>
+                     <div>{$t(L.WarehouseAutopilotSettingsRespectCapSetting)}</div>
+                     <Tippy content={$t(L.WarehouseAutopilotSettingsRespectCapSettingTooltip)}>
                         <div className="m-icon small ml5 text-desc help-cursor">help</div>
                      </Tippy>
                      <div className="f1"></div>

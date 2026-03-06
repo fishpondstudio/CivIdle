@@ -7,7 +7,7 @@ import { getBuildingIO, unlockedResources } from "../../../shared/logic/IntraTic
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import type { ICloneBuildingData } from "../../../shared/logic/Tile";
 import { isEmpty, keysOf } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import { BuildingIOTreeViewComponent } from "./BuildingIOTreeViewComponent";
@@ -22,7 +22,7 @@ export function BuildingConsumeComponent({ gameState, xy }: IBuildingComponentPr
    }
    return (
       <fieldset>
-         <legend>{t(L.Consume)}</legend>
+         <legend>{$t(L.Consume)}</legend>
          <ChooseResource gameState={gameState} xy={xy} />
          <BuildingIOTreeViewComponent gameState={gameState} xy={xy} type="input" />
       </fieldset>
@@ -42,7 +42,7 @@ function ChooseResource({ gameState, xy }: IBuildingComponentProps): React.React
             {building.type === "CloneFactory" ? (
                <WarningComponent icon="info" className="mb10 text-small">
                   <RenderHTML
-                     html={t(L.CloneFactoryInputDescHTML, {
+                     html={$t(L.CloneFactoryInputDescHTML, {
                         res: Config.Material[c.inputResource].name(),
                         buildings: getBuildingsThatProduce(c.inputResource)
                            .map((b) => Config.Building[b].name())

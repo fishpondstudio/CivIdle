@@ -16,7 +16,7 @@ import {
    mathSign,
    type Tile,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
@@ -77,9 +77,9 @@ function TradesTab({
       <>
          <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
             <fieldset>
-               <legend>{t(L.GrandBazaarFilters)}</legend>
+               <legend>{$t(L.GrandBazaarFilters)}</legend>
                <div className="row">
-                  <div style={{ width: "80px" }}>{t(L.GrandBazaarSeach)}</div>
+                  <div style={{ width: "80px" }}>{$t(L.GrandBazaarSeach)}</div>
                   <input
                      type="text"
                      className="f1 mr5"
@@ -99,7 +99,7 @@ function TradesTab({
                         setNameSellFilter(savedNameSellFilter);
                      }}
                   >
-                     {t(L.GrandBazaarSearchPay)}
+                     {$t(L.GrandBazaarSearchPay)}
                   </button>
                   <button
                      className={classNames({
@@ -110,12 +110,12 @@ function TradesTab({
                         setNameBuyFilter(savedNameBuyFilter);
                      }}
                   >
-                     {t(L.GrandBazaarSearchGet)}
+                     {$t(L.GrandBazaarSearchGet)}
                   </button>
                </div>
                <div className="sep10"></div>
                <div className="row">
-                  <div style={{ width: "80px" }}>{t(L.GrandBazaarFilterYouPay)}</div>
+                  <div style={{ width: "80px" }}>{$t(L.GrandBazaarFilterYouPay)}</div>
                   <select
                      className="f1"
                      value={sellResourceFilter ? sellResourceFilter : ""}
@@ -140,7 +140,7 @@ function TradesTab({
                </div>
                <div className="sep10"></div>
                <div className="row">
-                  <div style={{ width: "80px" }}>{t(L.GrandBazaarFilterYouGet)}</div>
+                  <div style={{ width: "80px" }}>{$t(L.GrandBazaarFilterYouGet)}</div>
                   <select
                      className="f1"
                      value={buyResourceFilter ? buyResourceFilter : ""}
@@ -166,16 +166,16 @@ function TradesTab({
             </fieldset>
             {buyResourceFilter === null && sellResourceFilter === null && nameResourceFilter === "" ? (
                <WarningComponent icon="info" className="mb10 text-small">
-                  <RenderHTML html={t(L.GrandBazaarFilterWarningHTML)} />
+                  <RenderHTML html={$t(L.GrandBazaarFilterWarningHTML)} />
                </WarningComponent>
             ) : null}
             <TableView
                classNames="sticky-header f1"
                header={[
-                  { name: t(L.MarketYouPay), sortable: true },
-                  { name: t(L.MarketYouGet), sortable: true },
+                  { name: $t(L.MarketYouPay), sortable: true },
+                  { name: $t(L.MarketYouGet), sortable: true },
                   { name: "", sortable: true },
-                  { name: t(L.MarketSell), sortable: true },
+                  { name: $t(L.MarketSell), sortable: true },
                   { name: "", sortable: false },
                ]}
                data={allMarketTrades.filter((m) => {
@@ -264,7 +264,7 @@ function TradesTab({
                            })}
                         >
                            <TextWithHelp
-                              content={t(L.MarketValueDesc, {
+                              content={$t(L.MarketValueDesc, {
                                  value: formatPercent(tradeValue, 0),
                               })}
                               noStyle
@@ -324,8 +324,8 @@ function ActiveTradesTab({
          <TableView
             classNames="sticky-header f1"
             header={[
-               { name: t(L.MarketYouPay), sortable: true },
-               { name: t(L.MarketYouGet), sortable: true },
+               { name: $t(L.MarketYouPay), sortable: true },
+               { name: $t(L.MarketYouGet), sortable: true },
                { name: "", sortable: true },
                { name: "", sortable: false },
                { name: "", sortable: false },
@@ -361,7 +361,7 @@ function ActiveTradesTab({
                         })}
                      >
                         <TextWithHelp
-                           content={t(L.MarketValueDesc, {
+                           content={$t(L.MarketValueDesc, {
                               value: formatPercent(tradeValue, 0),
                            })}
                            noStyle
@@ -468,7 +468,7 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
             <div className="row">
-               <div className="f1">{t(L.NextMarketUpdateIn)}</div>
+               <div className="f1">{$t(L.NextMarketUpdateIn)}</div>
                <div className="text-strong">
                   {formatHMS(convertPriceIdToTime(gameState.lastPriceUpdated + 1) - Date.now())}
                </div>
@@ -478,10 +478,10 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
          <div className="column">
             <menu role="tablist">
                <button onClick={() => setCurrentTab("trades")} aria-selected={currentTab === "trades"}>
-                  {t(L.GrandBazaarTabTrades)}
+                  {$t(L.GrandBazaarTabTrades)}
                </button>
                <button onClick={() => setCurrentTab("active")} aria-selected={currentTab === "active"}>
-                  {t(L.GrandBazaarTabActive)}
+                  {$t(L.GrandBazaarTabActive)}
                </button>
             </menu>
             {content}

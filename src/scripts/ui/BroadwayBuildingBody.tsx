@@ -6,7 +6,7 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGreatPersonTotalLevel, sortGreatPeople } from "../../../shared/logic/RebirthLogic";
 import type { IGreatPeopleBuildingData } from "../../../shared/logic/Tile";
 import { keysOf } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -29,7 +29,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
 
          {building.greatPeople.size === 0 ? null : (
             <fieldset>
-               <legend>{t(L.BroadwayCurrentlySelected)}</legend>
+               <legend>{$t(L.BroadwayCurrentlySelected)}</legend>
                {[...building.greatPeople].map((gp) => {
                   const def = Config.GreatPerson[gp];
                   const effect = getGreatPersonTotalLevel(gp, gameState);
@@ -61,7 +61,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
             }}
             type="text"
             className="w100 mb10"
-            placeholder={t(L.GreatPeopleFilter)}
+            placeholder={$t(L.GreatPeopleFilter)}
          />
          <div className="table-view mb10">
             <table>

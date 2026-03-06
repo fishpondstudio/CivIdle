@@ -22,7 +22,7 @@ import {
    safeParseInt,
    uuid4,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { playClick, playError, playKaching } from "../visuals/Sound";
@@ -90,7 +90,7 @@ export function AddTradeFormComponent({
 
    return (
       <>
-         <div className="text-strong mb5">{t(L.PlayerTradeIOffer)}</div>
+         <div className="text-strong mb5">{$t(L.PlayerTradeIOffer)}</div>
          <div className="row">
             <select
                className="f1 mr10"
@@ -141,7 +141,7 @@ export function AddTradeFormComponent({
             })}
          </div>
          <div className="separator" style={{ margin: "8px -8px" }} />
-         <div className="text-strong mb5">{t(L.PlayerTradeIWant)}</div>
+         <div className="text-strong mb5">{$t(L.PlayerTradeIWant)}</div>
          <div className="row">
             <select
                className="f1 mr10"
@@ -198,7 +198,7 @@ export function AddTradeFormComponent({
          </div>
          <div className="sep10" />
          <div className="inset-shallow row" style={{ padding: "2px 8px" }}>
-            <div className="f1">{t(L.KeepTheWindowOpenAfterPlacingTrade)}</div>
+            <div className="f1">{$t(L.KeepTheWindowOpenAfterPlacingTrade)}</div>
             <div
                className="pointer"
                onClick={() => {
@@ -222,7 +222,7 @@ export function AddTradeFormComponent({
                   onCancel();
                }}
             >
-               {t(L.PlayerTradeAddTradeCancel)}
+               {$t(L.PlayerTradeAddTradeCancel)}
             </button>
             <button
                className="row f1 jcc"
@@ -234,7 +234,7 @@ export function AddTradeFormComponent({
                      (availableResources[trade.sellResource] ?? 0) < trade.sellAmount
                   ) {
                      playError();
-                     showToast(t(L.OperationNotAllowedError));
+                     showToast($t(L.OperationNotAllowedError));
                      return;
                   }
                   // Note: we deduct the resources first otherwise resource can go negative if a player
@@ -256,7 +256,7 @@ export function AddTradeFormComponent({
                      await client.updateGameId(token);
                      getGameState().id = token;
                      playKaching();
-                     showToast(t(L.PlayerTradeAddSuccess));
+                     showToast($t(L.PlayerTradeAddSuccess));
                      if (!options.keepNewTradeWindowOpen) {
                         hideModal();
                      }
@@ -268,7 +268,7 @@ export function AddTradeFormComponent({
                }}
             >
                <div className="m-icon small">shopping_cart</div>
-               <div className="text-strong">{t(L.PlayerTradePlaceTrade)}</div>
+               <div className="text-strong">{$t(L.PlayerTradePlaceTrade)}</div>
             </button>
          </div>
       </>
@@ -283,9 +283,9 @@ export function AddTradeButtonComponent({ onClick }: { onClick: () => void }): R
       trades.filter((t) => t.fromId === user.userId).length < getMaxActiveTrades(user);
    let disabledReason: string | null = null;
    if (DISABLE_PLAYER_TRADES) {
-      disabledReason = t(L.PlayerTradeDisabledBeta);
+      disabledReason = $t(L.PlayerTradeDisabledBeta);
    } else if (!enabled) {
-      disabledReason = t(L.PlayerTradeMaxTradeExceeded);
+      disabledReason = $t(L.PlayerTradeMaxTradeExceeded);
    }
    return (
       <button
@@ -301,7 +301,7 @@ export function AddTradeButtonComponent({ onClick }: { onClick: () => void }): R
       >
          <div className="m-icon small">add_circle</div>
          <Tippy content={disabledReason} disabled={!disabledReason}>
-            <div className="f1">{t(L.PlayerTradeNewTrade)}</div>
+            <div className="f1">{$t(L.PlayerTradeNewTrade)}</div>
          </Tippy>
       </button>
    );

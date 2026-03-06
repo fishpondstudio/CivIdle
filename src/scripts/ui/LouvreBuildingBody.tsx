@@ -1,5 +1,5 @@
 import type { ILouvreBuildingData } from "../../../shared/logic/Tile";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -16,7 +16,7 @@ export function LouvreBuildingBody({ gameState, xy }: IBuildingComponentProps): 
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
             <div className="row">
-               <div className="f1">{t(L.GreatPeople)}</div>
+               <div className="f1">{$t(L.GreatPeople)}</div>
                <div className="text-strong">{building.greatPeopleCount}</div>
             </div>
          </fieldset>

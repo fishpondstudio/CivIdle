@@ -8,7 +8,7 @@ import { combineResources } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { SwissBankFlags, type ISwissBankBuildingData } from "../../../shared/logic/Tile";
 import { formatNumber, hasFlag, keysOf, toggleFlag } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -71,7 +71,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
             <div className="separator" />
             <ul className="tree-view">
                <li>
-                  <div className="text-strong">{t(L.ActualConsumptionPerCycle)}</div>
+                  <div className="text-strong">{$t(L.ActualConsumptionPerCycle)}</div>
                   <ul>
                      {Tick.current.additionalConsumptions.map(({ xy: xy_, res, amount }) => {
                         if (xy !== xy_) {
@@ -87,7 +87,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                   </ul>
                </li>
                <li>
-                  <div className="text-strong">{t(L.ActualProductionPerCycle)}</div>
+                  <div className="text-strong">{$t(L.ActualProductionPerCycle)}</div>
                   <ul>
                      {Tick.current.additionalProductions.map(({ xy: xy_, res, amount }) => {
                         if (xy !== xy_) {
@@ -104,22 +104,22 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                </li>
                <li>
                   <div className="row">
-                     <div className="text-strong f1">{t(L.KotiProduction)}</div>
+                     <div className="text-strong f1">{$t(L.KotiProduction)}</div>
                      <div className="text-strong">{formatNumber(effectiveLevel * multiplier)}</div>
                   </div>
                   <ul>
                      <li className="row">
-                        <div className="f1">{t(L.BaseProduction)}</div>
+                        <div className="f1">{$t(L.BaseProduction)}</div>
                         <div>{formatNumber(effectiveLevel)}</div>
                      </li>
                      <ul>
                         <li className="row">
-                           <div className="f1">{t(L.BuildingLevel)}</div>
+                           <div className="f1">{$t(L.BuildingLevel)}</div>
                            <div>{formatNumber(building.level)}</div>
                         </li>
                         {electrification > 0 ? (
                            <li className="row">
-                              <div className="f1">{t(L.ElectrificationLevel)}</div>
+                              <div className="f1">{$t(L.ElectrificationLevel)}</div>
                               <FormatNumber value={Tick.current.electrified.get(xy) ?? 0} />
                            </li>
                         ) : null}
@@ -133,12 +133,12 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                            : null}
                      </ul>
                      <li className="row">
-                        <div className="f1">{t(L.ProductionMultiplier)}</div>
+                        <div className="f1">{$t(L.ProductionMultiplier)}</div>
                         <div>x{formatNumber(multiplier)}</div>
                      </li>
                      <ul className="text-small">
                         <li className="row">
-                           <div className="f1">{t(L.BaseMultiplier)}</div>
+                           <div className="f1">{$t(L.BaseMultiplier)}</div>
                            <div>1</div>
                         </li>
                         {getMultipliersFor(xy, false, gameState).map((m, idx) => {
@@ -149,7 +149,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                               <li key={idx} className="row">
                                  <div>{m.source}</div>
                                  {m.unstable ? (
-                                    <Tippy content={t(L.DynamicMultiplierTooltip)}>
+                                    <Tippy content={$t(L.DynamicMultiplierTooltip)}>
                                        <div className="m-icon small ml5 text-desc">whatshot</div>
                                     </Tippy>
                                  ) : null}
@@ -161,15 +161,15 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                   </ul>
                </li>
                <li className="row">
-                  <div className="text-strong f1">{t(L.KotiInStorage)}</div>
+                  <div className="text-strong f1">{$t(L.KotiInStorage)}</div>
                   <div className="text-strong">{formatNumber(building.resources.Koti ?? 0)}</div>
                </li>
             </ul>
          </fieldset>
          <fieldset>
             <div className="row">
-               <div>{t(L.NoKotiExport)}</div>
-               <Tippy content={t(L.NoKotiExportDesc)}>
+               <div>{$t(L.NoKotiExport)}</div>
+               <Tippy content={$t(L.NoKotiExportDesc)}>
                   <div className="m-icon small ml5 text-desc help-cursor">help</div>
                </Tippy>
                <div className="f1"></div>

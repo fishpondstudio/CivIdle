@@ -1,4 +1,4 @@
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { Singleton } from "../utilities/Singleton";
@@ -16,12 +16,12 @@ export function PendingTradesComponent({ gameState, xy }: IBuildingComponentProp
       return (
          <article role="tabpanel" style={{ padding: "8px" }}>
             <WarningComponent icon="info">
-               <div>{t(L.PlayerTradeClaimTileFirstWarning)}</div>
+               <div>{$t(L.PlayerTradeClaimTileFirstWarning)}</div>
                <div
                   className="text-strong text-link row"
                   onClick={() => Singleton().sceneManager.loadScene(PlayerMapScene)}
                >
-                  {t(L.PlayerTradeClaimTileFirst)}
+                  {$t(L.PlayerTradeClaimTileFirst)}
                </div>
             </WarningComponent>
          </article>

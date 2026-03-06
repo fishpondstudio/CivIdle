@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Advisors, type Advisor } from "../../../shared/definitions/AdvisorDefinitions";
 import { getGameOptions, notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { forEach } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { AdvisorImages } from "../logic/AdvisorImages";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
@@ -37,7 +37,7 @@ export function AdvisorModal({ advisor }: { advisor: Advisor }): React.ReactNode
                         });
                      }}
                   >
-                     {t(L.AdvisorSkipAllTutorials)}
+                     {$t(L.AdvisorSkipAllTutorials)}
                   </div>
                   <div className="f1"></div>
                   <button
@@ -47,7 +47,7 @@ export function AdvisorModal({ advisor }: { advisor: Advisor }): React.ReactNode
                         hideModal();
                      }}
                   >
-                     {t(L.AdvisorOkay)}
+                     {$t(L.AdvisorOkay)}
                   </button>
                </div>
             }

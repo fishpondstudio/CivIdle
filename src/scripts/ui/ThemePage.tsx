@@ -22,7 +22,7 @@ import {
    safeParseFloat,
    safeParseInt,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { syncFontSizeScale, syncFontVariantNumeric, useGameOptions } from "../Global";
 import { copyBuildingColorToResource, randomizeBuildingAndResourceColor } from "../logic/ThemeColor";
 import { getUser } from "../rpc/RPCClient";
@@ -42,15 +42,15 @@ export function ThemePage(): React.ReactNode {
    const gameOptions = useGameOptions();
    return (
       <div className="window">
-         <TitleBarComponent>{t(L.Theme)}</TitleBarComponent>
+         <TitleBarComponent>{$t(L.Theme)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <fieldset>
                <ChangeModernUIComponent />
                <div className="separator" />
                <ToggleComponent
-                  title={t(L.UseMonospaceNumbers)}
-                  contentHTML={t(L.UseMonospaceNumbersDescHTML)}
+                  title={$t(L.UseMonospaceNumbers)}
+                  contentHTML={$t(L.UseMonospaceNumbersDescHTML)}
                   value={gameOptions.useMonospaceNumbers}
                   onValueChange={(value) => {
                      gameOptions.useMonospaceNumbers = value;
@@ -63,8 +63,8 @@ export function ThemePage(): React.ReactNode {
                      <div className="separator" />
                      <div className="row">
                         <div className="f1">
-                           <div>{t(L.FontSizeScale)}</div>
-                           <RenderHTML className="text-desc text-small" html={t(L.FontSizeScaleDescHTML)} />
+                           <div>{$t(L.FontSizeScale)}</div>
+                           <RenderHTML className="text-desc text-small" html={$t(L.FontSizeScaleDescHTML)} />
                         </div>
                         <select
                            className="ml10"
@@ -88,7 +88,7 @@ export function ThemePage(): React.ReactNode {
                         </select>
                      </div>
                      <div className="inset-shallow row mt10 p5">
-                        <div className="f1">{t(L.MobileOverride)}</div>
+                        <div className="f1">{$t(L.MobileOverride)}</div>
                         <select
                            className="ml10"
                            value={gameOptions.fontSizeScaleMobile}
@@ -115,8 +115,8 @@ export function ThemePage(): React.ReactNode {
                <div className="separator" />
                <div className="row">
                   <div className="f1">
-                     <div>{t(L.SidePanelWidth)}</div>
-                     <RenderHTML className="text-desc text-small" html={t(L.SidePanelWidthDescHTML)} />
+                     <div>{$t(L.SidePanelWidth)}</div>
+                     <RenderHTML className="text-desc text-small" html={$t(L.SidePanelWidthDescHTML)} />
                   </div>
                   <select
                      className="ml10"
@@ -132,7 +132,7 @@ export function ThemePage(): React.ReactNode {
                   </select>
                </div>
                <div className="inset-shallow row mt10 p5">
-                  <div className="f1">{t(L.MobileOverride)}</div>
+                  <div className="f1">{$t(L.MobileOverride)}</div>
                   <select
                      className="ml10"
                      value={gameOptions.sidePanelWidthMobile}
@@ -149,8 +149,8 @@ export function ThemePage(): React.ReactNode {
                <div className="separator" />
                <div className="row">
                   <div className="f1">
-                     <div>{t(L.CursorStyle)}</div>
-                     <RenderHTML className="text-desc text-small" html={t(L.CursorStyleDescHTML)} />
+                     <div>{$t(L.CursorStyle)}</div>
+                     <RenderHTML className="text-desc text-small" html={$t(L.CursorStyleDescHTML)} />
                   </div>
                   <select
                      className="ml10"
@@ -172,8 +172,8 @@ export function ThemePage(): React.ReactNode {
                <div className="separator" />
                <div className="row">
                   <div className="f1 mr20">
-                     <div>{t(L.ScrollSensitivity)}</div>
-                     <RenderHTML className="text-desc text-small" html={t(L.ScrollSensitivityDescHTML)} />
+                     <div>{$t(L.ScrollSensitivity)}</div>
+                     <RenderHTML className="text-desc text-small" html={$t(L.ScrollSensitivityDescHTML)} />
                   </div>
                   <input
                      type="text"
@@ -187,8 +187,8 @@ export function ThemePage(): React.ReactNode {
                </div>
                <div className="separator" />
                <ToggleComponent
-                  title={t(L.ShowTransportArrow)}
-                  contentHTML={t(L.ShowTransportArrowDescHTML)}
+                  title={$t(L.ShowTransportArrow)}
+                  contentHTML={$t(L.ShowTransportArrowDescHTML)}
                   value={gameOptions.showTransportArrow}
                   onValueChange={(value) => {
                      playClick();
@@ -198,8 +198,8 @@ export function ThemePage(): React.ReactNode {
                />
                <div className="separator" />
                <ToggleComponent
-                  title={t(L.ShowFloaterText)}
-                  contentHTML={t(L.ShowFloaterTextDescHTML)}
+                  title={$t(L.ShowFloaterText)}
+                  contentHTML={$t(L.ShowFloaterTextDescHTML)}
                   value={gameOptions.showFloaterText}
                   onValueChange={(value) => {
                      playClick();
@@ -209,8 +209,8 @@ export function ThemePage(): React.ReactNode {
                />
                <div className="separator" />
                <ToggleComponent
-                  title={t(L.UseScientificNotationForLargeNumbers)}
-                  contentHTML={t(L.UseScientificNotationForLargeNumbersDescHTML)}
+                  title={$t(L.UseScientificNotationForLargeNumbers)}
+                  contentHTML={$t(L.UseScientificNotationForLargeNumbersDescHTML)}
                   value={gameOptions.useScientificFormat}
                   onValueChange={(value) => {
                      playClick();
@@ -221,7 +221,7 @@ export function ThemePage(): React.ReactNode {
                />
             </fieldset>
             <fieldset>
-               <legend>{t(L.Tile)}</legend>
+               <legend>{$t(L.Tile)}</legend>
                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 10 }}>
                   {TileTextures.map((i) => {
                      return (
@@ -240,7 +240,7 @@ export function ThemePage(): React.ReactNode {
                                  !hasFlag(getUser()?.attr ?? UserAttributes.None, UserAttributes.DLC1)
                               ) {
                                  playError();
-                                 showToast(t(L.ThemePremiumTile));
+                                 showToast($t(L.ThemePremiumTile));
                                  return;
                               }
 
@@ -268,7 +268,7 @@ export function ThemePage(): React.ReactNode {
                </div>
             </fieldset>
             <fieldset>
-               <legend>{t(L.Spinner)}</legend>
+               <legend>{$t(L.Spinner)}</legend>
                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 10 }}>
                   {SpinnerTextures.map((i) => {
                      return (
@@ -282,7 +282,7 @@ export function ThemePage(): React.ReactNode {
                                  !hasFlag(getUser()?.attr ?? UserAttributes.None, UserAttributes.DLC1)
                               ) {
                                  playError();
-                                 showToast(t(L.ThemePremiumSpinner));
+                                 showToast($t(L.ThemePremiumSpinner));
                                  return;
                               }
                               gameOptions.spinnerTexture = i;
@@ -309,8 +309,8 @@ export function ThemePage(): React.ReactNode {
                </div>
                <div className="separator" />
                <ToggleComponent
-                  title={t(L.HideSpinner)}
-                  contentHTML={t(L.HideSpinnerDescHTML)}
+                  title={$t(L.HideSpinner)}
+                  contentHTML={$t(L.HideSpinnerDescHTML)}
                   value={gameOptions.spinnerTexture === null}
                   onValueChange={(value) => {
                      playClick();
@@ -321,8 +321,8 @@ export function ThemePage(): React.ReactNode {
                <div className="separator" />
                <div className="row">
                   <div className="f1 mr20">
-                     <div>{t(L.SpinnerSpeed)}</div>
-                     <RenderHTML className="text-desc text-small" html={t(L.SpinnerSpeedDescHTML)} />
+                     <div>{$t(L.SpinnerSpeed)}</div>
+                     <RenderHTML className="text-desc text-small" html={$t(L.SpinnerSpeedDescHTML)} />
                   </div>
                   <input
                      type="text"
@@ -336,7 +336,7 @@ export function ThemePage(): React.ReactNode {
                </div>
             </fieldset>
             <fieldset>
-               <legend>{t(L.ThemeColor)}</legend>
+               <legend>{$t(L.ThemeColor)}</legend>
                <div
                   className="mv5 text-link pointer text-strong"
                   onClick={() => {
@@ -344,7 +344,7 @@ export function ThemePage(): React.ReactNode {
                      resetThemeColor();
                   }}
                >
-                  {t(L.ThemeColorReset)}
+                  {$t(L.ThemeColorReset)}
                </div>
                {keysOf(gameOptions.themeColors).map((k) => {
                   if (typeof gameOptions.themeColors[k] === "string") {
@@ -387,8 +387,8 @@ export function ThemePage(): React.ReactNode {
                })}
                <div className="separator" />
                <ToggleComponent
-                  title={t(L.ThemeBuildingStatusIconFollowBuildingColor)}
-                  contentHTML={t(L.ThemeBuildingStatusIconFollowBuildingColorDescHTML)}
+                  title={$t(L.ThemeBuildingStatusIconFollowBuildingColor)}
+                  contentHTML={$t(L.ThemeBuildingStatusIconFollowBuildingColorDescHTML)}
                   value={gameOptions.buildingStatusIconFollowBuildingColor}
                   onValueChange={(value) => {
                      playClick();
@@ -399,7 +399,7 @@ export function ThemePage(): React.ReactNode {
             </fieldset>
 
             <fieldset>
-               <legend>{t(L.BuildingColor)}</legend>
+               <legend>{$t(L.BuildingColor)}</legend>
                <button
                   onClick={() => {
                      randomizeBuildingAndResourceColor(gameOptions);
@@ -407,7 +407,7 @@ export function ThemePage(): React.ReactNode {
                   }}
                   className="w100 text-strong"
                >
-                  {t(L.RandomColorScheme)}
+                  {$t(L.RandomColorScheme)}
                </button>
                <div
                   className="mv5 text-link pointer text-strong"
@@ -416,7 +416,7 @@ export function ThemePage(): React.ReactNode {
                      resetThemeBuildingColors();
                   }}
                >
-                  {t(L.ThemeColorResetBuildingColors)}
+                  {$t(L.ThemeColorResetBuildingColors)}
                </div>
                {keysOf(gameOptions.buildingColors)
                   .sort((a, b) => Config.Building[a].name().localeCompare(Config.Building[b].name()))
@@ -438,8 +438,8 @@ export function ThemePage(): React.ReactNode {
             </fieldset>
 
             <fieldset>
-               <legend>{t(L.ResourceColor)}</legend>
-               <Tippy content={t(L.BuildingColorMatchBuildingTooltip)}>
+               <legend>{$t(L.ResourceColor)}</legend>
+               <Tippy content={$t(L.BuildingColorMatchBuildingTooltip)}>
                   <button
                      onClick={() => {
                         copyBuildingColorToResource(gameOptions);
@@ -447,7 +447,7 @@ export function ThemePage(): React.ReactNode {
                      }}
                      className="w100 text-strong"
                   >
-                     {t(L.BuildingColorMatchBuilding)}
+                     {$t(L.BuildingColorMatchBuilding)}
                   </button>
                </Tippy>
                <div
@@ -457,7 +457,7 @@ export function ThemePage(): React.ReactNode {
                      resetThemeResourceColors();
                   }}
                >
-                  {t(L.ThemeColorResetResourceColors)}
+                  {$t(L.ThemeColorResetResourceColors)}
                </div>
                {keysOf(gameOptions.resourceColors)
                   .sort((a, b) => Config.Material[a].name().localeCompare(Config.Material[b].name()))

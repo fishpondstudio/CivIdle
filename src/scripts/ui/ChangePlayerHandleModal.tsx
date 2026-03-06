@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import { useState } from "react";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { CountryCode, getCountryName } from "../utilities/CountryCode";
 import { jsxMapOf } from "../utilities/Helper";
@@ -19,13 +19,13 @@ export function ChangePlayerHandleModal(): React.ReactNode {
    return (
       <div className="window">
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.PlayerHandle)}</div>
+            <div className="title-bar-text">{$t(L.PlayerHandle)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
          </div>
          <div className="window-body">
-            <div className="text-small">{t(L.ChangePlayerHandledDesc)}</div>
+            <div className="text-small">{$t(L.ChangePlayerHandledDesc)}</div>
             <div className="sep10"></div>
             <div className="row">
                <div className="f1">
@@ -72,10 +72,10 @@ export function ChangePlayerHandleModal(): React.ReactNode {
                      }
                   }}
                >
-                  {t(L.ChangePlayerHandle)}
+                  {$t(L.ChangePlayerHandle)}
                </button>
                <div style={{ width: "10px" }}></div>
-               <button onClick={hideModal}>{t(L.ChangePlayerHandleCancel)}</button>
+               <button onClick={hideModal}>{$t(L.ChangePlayerHandleCancel)}</button>
             </div>
          </div>
       </div>

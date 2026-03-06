@@ -1,0 +1,31 @@
+.idea-tree-node {
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   width: 200px;
+   height: 60px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+}
+
+.idea-tree-node-title {
+   font-family: "Platypi";
+   font-size: 14px;
+   color: #333;
+}
+
+.idea-tree-node-desc {
+   font-family: "Cabin";
+   font-size: 10px;
+   color: #333;
+}
+
+.idea-tree-node-handle {
+   background: #999;
+}
+
+.react-flow {
+   --xy-controls-button-background-color-default: silver;
+   --xy-controls-button-background-color-hover: silver;
+}

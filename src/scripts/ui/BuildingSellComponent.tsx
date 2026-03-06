@@ -7,7 +7,7 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getCitySize, getGrid } from "../../../shared/logic/IntraTickCache";
 import { clearTransportSourceCache } from "../../../shared/logic/Update";
 import { pointToTile, setFlag, tileToPoint } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
@@ -36,11 +36,11 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
       <fieldset className="row">
          <button className="row jcc f1" onClick={demolishBuilding}>
             <div className="m-icon small">delete</div>
-            <div>{t(L.DemolishBuilding)}</div>
+            <div>{$t(L.DemolishBuilding)}</div>
          </button>
          {[1, 2, 3, 4, 5, getCitySize(gameState) * 2].map((range) => {
             return (
-               <Tippy key={range} content={t(L.DemolishAllBuilding, { building: def.name(), tile: range })}>
+               <Tippy key={range} content={$t(L.DemolishAllBuilding, { building: def.name(), tile: range })}>
                   <button
                      style={{ width: 27, padding: 0 }}
                      onMouseEnter={() => {
@@ -69,7 +69,7 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
                            });
                         showModal(
                            <ConfirmModal
-                              title={t(L.DemolishAllBuildingConfirmTitle, { count: count })}
+                              title={$t(L.DemolishAllBuildingConfirmTitle, { count: count })}
                               onConfirm={() => {
                                  playSuccess();
                                  let count = 0;
@@ -93,10 +93,10 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
                                  }
                                  clearTransportSourceCache();
                                  notifyGameStateUpdate();
-                                 showToast(t(L.ApplyToBuildingsToastHTML, { count, building: def.name() }));
+                                 showToast($t(L.ApplyToBuildingsToastHTML, { count, building: def.name() }));
                               }}
                            >
-                              {t(L.DemolishAllBuildingConfirmContent, { count: count, name: def.name() })}
+                              {$t(L.DemolishAllBuildingConfirmContent, { count: count, name: def.name() })}
                            </ConfirmModal>,
                         );
                      }}

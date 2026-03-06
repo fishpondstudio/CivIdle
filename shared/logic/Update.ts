@@ -26,7 +26,7 @@ import {
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
 import { TypedEvent } from "../utilities/TypedEvent";
-import { L, t } from "../utilities/i18n";
+import { $t, L } from "../utilities/i18n";
 import {
    IOFlags,
    addTransportation,
@@ -413,7 +413,7 @@ export function transportAndConsumeResources(
    if (gs.unlockedTech.Banking && building.level >= 10) {
       mapSafePush(Tick.next.tileMultipliers, xy, {
          storage: 1,
-         source: t(L.SourceResearch, { tech: t(L.Banking) }),
+         source: $t(L.SourceResearch, { tech: $t(L.Banking) }),
       });
    }
 
@@ -680,7 +680,7 @@ export function transportAndConsumeResources(
          Tick.next.notEnoughPower.add(xy);
       }
       if (Config.Building[building.type].power) {
-         mapSafePush(Tick.next.levelBoost, xy, { value: 5, source: t(L.PoweredBuilding) });
+         mapSafePush(Tick.next.levelBoost, xy, { value: 5, source: $t(L.PoweredBuilding) });
       }
       if (gs.unlockedUpgrades.Liberalism5) {
          mapSafePush(Tick.next.levelBoost, xy, { value: 5, source: Config.Upgrade.Liberalism5.name() });

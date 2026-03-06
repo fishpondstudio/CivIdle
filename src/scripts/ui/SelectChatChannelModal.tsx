@@ -3,7 +3,7 @@ import type React from "react";
 import { useTransition } from "react";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { ChatChannels } from "../../../shared/utilities/Database";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
 import { playError } from "../visuals/Sound";
@@ -25,7 +25,7 @@ export function SelectChatChannelModal({
    return (
       <div className="window" style={style}>
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.ChatChannel)}</div>
+            <div className="title-bar-text">{$t(L.ChatChannel)}</div>
             <div className="title-bar-controls">
                <button aria-label="Close" onClick={() => onClose()}></button>
             </div>
@@ -35,7 +35,7 @@ export function SelectChatChannelModal({
                <table>
                   <tbody>
                      <tr>
-                        <th>{t(L.ChatChannelLanguage)}</th>
+                        <th>{$t(L.ChatChannelLanguage)}</th>
                         <th style={{ width: 0 }}></th>
                      </tr>
                      {jsxMapOf(ChatChannels, (channel, value) => {

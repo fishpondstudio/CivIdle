@@ -17,7 +17,7 @@ import {
    mathSign,
    toggleFlag,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { ApplyToAllComponent, ApplyToAllFlag } from "./ApplyToAllComponent";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -58,7 +58,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
          <BuildingUpgradeComponent gameState={gameState} xy={xy} key={xy} />
          <fieldset>
             <div className="row">
-               <div className="f1">{t(L.NextMarketUpdateIn)}</div>
+               <div className="f1">{$t(L.NextMarketUpdateIn)}</div>
                <div className="text-strong">
                   {formatHMS(convertPriceIdToTime(gameState.lastPriceUpdated + 1) - Date.now())}
                </div>
@@ -67,11 +67,11 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
          <fieldset>
             <TableView
                header={[
-                  { name: t(L.MarketYouPay), sortable: true },
-                  { name: t(L.MarketYouGet), sortable: true },
+                  { name: $t(L.MarketYouPay), sortable: true },
+                  { name: $t(L.MarketYouGet), sortable: true },
                   { name: "", sortable: true },
-                  { name: t(L.Storage), sortable: true },
-                  { name: t(L.MarketSell), sortable: false },
+                  { name: $t(L.Storage), sortable: true },
+                  { name: $t(L.MarketSell), sortable: false },
                ]}
                sortingState={marketSortingState}
                data={keysOf(market.availableResources)}
@@ -125,7 +125,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                            })}
                         >
                            <TextWithHelp
-                              content={t(L.MarketValueDesc, { value: formatPercent(tradeValue, 0) })}
+                              content={$t(L.MarketValueDesc, { value: formatPercent(tradeValue, 0) })}
                               noStyle
                            >
                               {mathSign(tradeValue, CURRENCY_PERCENT_EPSILON)}
@@ -175,9 +175,9 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
          <BuildingStockpileComponent gameState={gameState} xy={xy} />
          <BuildingInputModeComponent gameState={gameState} xy={xy} />
          <fieldset>
-            <legend>{t(L.MarketSettings)}</legend>
+            <legend>{$t(L.MarketSettings)}</legend>
             <div className="row">
-               <div className="f1">{t(L.ClearAfterUpdate)}</div>
+               <div className="f1">{$t(L.ClearAfterUpdate)}</div>
                <div
                   className="pointer"
                   onClick={() => {

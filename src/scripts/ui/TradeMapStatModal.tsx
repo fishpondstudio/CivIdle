@@ -2,7 +2,7 @@ import type { City } from "../../../shared/definitions/CityDefinitions";
 import type { TechAge } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { mapSafeAdd } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { getPlayerMap } from "../rpc/RPCClient";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { getCountryName } from "../utilities/CountryCode";
@@ -46,7 +46,7 @@ export function TradeMapStatModal(): React.ReactNode {
    return (
       <div className="window" style={{ width: 700, maxWidth: "80vw" }}>
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.TradeMapStatistics)}</div>
+            <div className="title-bar-text">{$t(L.TradeMapStatistics)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
@@ -56,7 +56,7 @@ export function TradeMapStatModal(): React.ReactNode {
             style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}
          >
             <div className="inset-shallow white p10">
-               <div className="text-desc mb10">{t(L.PlayerFlag)}</div>
+               <div className="text-desc mb10">{$t(L.PlayerFlag)}</div>
                {Array.from(flagRanking.entries())
                   .sort((a, b) => b[1] - a[1])
                   .slice(0, 15)
@@ -72,7 +72,7 @@ export function TradeMapStatModal(): React.ReactNode {
                   ))}
             </div>
             <div className="inset-shallow white p10">
-               <div className="text-desc mb10">{t(L.Civilization)}</div>
+               <div className="text-desc mb10">{$t(L.Civilization)}</div>
                {Array.from(cityRanking.entries())
                   .sort((a, b) => b[1] - a[1])
                   .map(([city, count], i) => (
@@ -86,7 +86,7 @@ export function TradeMapStatModal(): React.ReactNode {
                   ))}
             </div>
             <div className="inset-shallow white p10">
-               <div className="text-desc mb10">{t(L.TechAge)}</div>
+               <div className="text-desc mb10">{$t(L.TechAge)}</div>
                {Array.from(techAgeRanking.entries())
                   .sort((a, b) => b[1] - a[1])
                   .map(([techAge, count], i) => (

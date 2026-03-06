@@ -20,7 +20,7 @@ import {
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import { Transports } from "../../../shared/logic/Transports";
 import { formatNumber, formatPercent, isEmpty } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
 import { useShortcut } from "../utilities/Hook";
 import { playSuccess } from "../visuals/Sound";
@@ -54,14 +54,14 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
    useShortcut("BuildingPageToggleBuildingSetAllSimilar", toggleBuildingSetAllSimilar, [xy]);
    return (
       <fieldset>
-         <legend>{t(L.Workers)}</legend>
+         <legend>{$t(L.Workers)}</legend>
          <ul className="tree-view">
             {isEmpty(input) ? null : (
                <>
                   <li>
                      <details>
                         <summary className="row">
-                           <div className="f1">{t(L.WorkersRequiredInput)}</div>
+                           <div className="f1">{$t(L.WorkersRequiredInput)}</div>
                            <div className="text-strong">{getFuelByTarget().get(xy) ?? 0}</div>
                         </summary>
                         <ul>
@@ -70,7 +70,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                               return (
                                  <li className="row" key={v.id}>
                                     <div className="f1">
-                                       {t(L.ResourceFromBuilding, {
+                                       {$t(L.ResourceFromBuilding, {
                                           resource: `${formatNumber(v.amount)} ${getResourceName(
                                              v.resource,
                                           )}`,
@@ -88,7 +88,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                   <li>
                      <details>
                         <summary className="row">
-                           <div className="f1">{t(L.WorkersRequiredForTransportationMultiplier)}</div>
+                           <div className="f1">{$t(L.WorkersRequiredForTransportationMultiplier)}</div>
                            <div className="text-strong">
                               {formatNumber(
                                  workersRequired.multiplier +
@@ -101,7 +101,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                         </summary>
                         <ul>
                            <li className="row">
-                              <div className="f1">{t(L.BaseMultiplier)}</div>
+                              <div className="f1">{$t(L.BaseMultiplier)}</div>
                               <div>1</div>
                            </li>
                            {getMultipliersFor(xy, false, gameState).map((m, i) => {
@@ -116,7 +116,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                               );
                            })}
                            <li className="row">
-                              <div className="f1">{t(L.TransportCapacityMultiplier)}</div>
+                              <div className="f1">{$t(L.TransportCapacityMultiplier)}</div>
                               <div>
                                  {formatNumber(
                                     Tick.current.globalMultipliers.transportCapacity.reduce(
@@ -153,7 +153,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                                  "production-warning": showWarning,
                               })}
                            >
-                              {t(L.WorkersRequiredOutput)}
+                              {$t(L.WorkersRequiredOutput)}
                            </div>
                            <div className="text-strong">
                               <FormatNumber value={Tick.current.workersAssignment.get(xy) ?? 0} />
@@ -161,15 +161,15 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                         </summary>
                         <ul>
                            <li className="row">
-                              <div className="f1">{t(L.WorkersRequiredBeforeMultiplier)}</div>
+                              <div className="f1">{$t(L.WorkersRequiredBeforeMultiplier)}</div>
                               <div>
-                                 <TextWithHelp content={t(L.RequiredWorkersTooltipV2)}>
+                                 <TextWithHelp content={$t(L.RequiredWorkersTooltipV2)}>
                                     <FormatNumber value={workersRequired.rawOutput} />
                                  </TextWithHelp>
                               </div>
                            </li>
                            <li className="row">
-                              <div className="f1">{t(L.WorkersRequiredAfterMultiplier)}</div>
+                              <div className="f1">{$t(L.WorkersRequiredAfterMultiplier)}</div>
                               <div>
                                  <FormatNumber value={workersRequired.output} />
                               </div>
@@ -180,12 +180,12 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                   <li>
                      <details>
                         <summary className="row">
-                           <div className="f1">{t(L.WorkersRequiredForProductionMultiplier)}</div>
+                           <div className="f1">{$t(L.WorkersRequiredForProductionMultiplier)}</div>
                            <div className="text-strong">{workersRequired.multiplier}</div>
                         </summary>
                         <ul>
                            <li className="row">
-                              <div className="f1">{t(L.BaseMultiplier)}</div>
+                              <div className="f1">{$t(L.BaseMultiplier)}</div>
                               <div>1</div>
                            </li>
                            {getMultipliersFor(xy, false, gameState).map((m, idx) => {
@@ -211,7 +211,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                <div className="sep10"></div>
                <div className="separator has-title">
                   <div>
-                     {t(L.AdjustBuildingCapacity)}: {formatPercent(building.capacity)}
+                     {$t(L.AdjustBuildingCapacity)}: {formatPercent(building.capacity)}
                   </div>
                </div>
                <input
@@ -235,7 +235,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                      />
                   </div>
                   <Tippy
-                     content={t(L.TurnOffFullBuildings, { building: Config.Building[building.type].name() })}
+                     content={$t(L.TurnOffFullBuildings, { building: Config.Building[building.type].name() })}
                   >
                      <button
                         style={{ width: 27, padding: 0 }}

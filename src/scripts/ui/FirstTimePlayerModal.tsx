@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import { useState } from "react";
 import { GameOptionsChanged } from "../../../shared/logic/GameStateLogic";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import "../../css/Tutorial.css";
 import TitleImage from "../../images/TitleImage.png";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
@@ -26,7 +26,7 @@ export function FirstTimePlayerModal(): React.ReactNode {
    return (
       <div className="window" style={{ width: "600px", maxWidth: "50vw" }}>
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.FirstTimeTutorialWelcome)}</div>
+            <div className="title-bar-text">{$t(L.FirstTimeTutorialWelcome)}</div>
          </div>
          <div className="window-body">
             <img src={TitleImage} className="w100" />
@@ -38,7 +38,7 @@ export function FirstTimePlayerModal(): React.ReactNode {
             <div className="row">
                <div className="f1" />
                <button onClick={() => showModal(<FirstTimePlayerSettingsModal />)}>
-                  {t(L.FirstTimeGuideNext)}
+                  {$t(L.FirstTimeGuideNext)}
                </button>
             </div>
          </div>
@@ -50,10 +50,10 @@ export function FirstTimePlayerSettingsModal(): React.ReactNode {
    return (
       <div className="window" style={{ width: "600px", maxWidth: "50vw" }}>
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.FirstTimeTutorialWelcome)}</div>
+            <div className="title-bar-text">{$t(L.FirstTimeTutorialWelcome)}</div>
          </div>
          <div className="window-body" style={{ maxHeight: "80vh", overflowY: "auto" }}>
-            <WarningComponent icon="info">{html(t(L.FirstTimeGuideIntroHTML))}</WarningComponent>
+            <WarningComponent icon="info">{html($t(L.FirstTimeGuideIntroHTML))}</WarningComponent>
             <div className="sep5" />
             <FirstTimePlayerSettings submitEvent={SubmitEvent} />
             <div className="sep10" />
@@ -65,7 +65,7 @@ export function FirstTimePlayerSettingsModal(): React.ReactNode {
                      showModal(<TutorialModal />);
                   }}
                >
-                  {t(L.FirstTimeGuideNext)}
+                  {$t(L.FirstTimeGuideNext)}
                </button>
             </div>
          </div>
@@ -88,7 +88,7 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
             OnUserChanged.emit({ ...user });
          } else {
             playError();
-            showToast(t(L.OfflineErrorMessage));
+            showToast($t(L.OfflineErrorMessage));
          }
       } catch (error) {
          playError();
@@ -97,7 +97,7 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
    });
    return (
       <div>
-         <div className="text-strong">{t(L.TutorialPlayerHandle)}</div>
+         <div className="text-strong">{$t(L.TutorialPlayerHandle)}</div>
          <div className="sep5" />
          <div className="row">
             <div className="f1">
@@ -107,7 +107,7 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
                      if (user) {
                         setHandle(e.target.value);
                      } else {
-                        showToast(t(L.OfflineErrorMessage));
+                        showToast($t(L.OfflineErrorMessage));
                      }
                   }}
                   type="text"
@@ -121,9 +121,9 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
             </div>
          </div>
          <div className="sep5" />
-         <div className="text-small text-desc">{t(L.ChangePlayerHandledDesc)}</div>
+         <div className="text-small text-desc">{$t(L.ChangePlayerHandledDesc)}</div>
          <div className="sep10" />
-         <div className="text-strong">{t(L.TutorialPlayerFlag)}</div>
+         <div className="text-strong">{$t(L.TutorialPlayerFlag)}</div>
          <div className="sep5" />
          <div className="inset-deep-2 white" style={{ padding: "10px", height: "100px", overflowY: "auto" }}>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
@@ -135,7 +135,7 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
                            onClick={async () => {
                               if (!user) {
                                  playError();
-                                 showToast(t(L.OfflineErrorMessage));
+                                 showToast($t(L.OfflineErrorMessage));
                                  return;
                               }
                               setFlag(c);

@@ -1,15 +1,15 @@
 import { forEach } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
-import { L, t } from "../utilities/i18n";
+import { $t, L } from "../utilities/i18n";
 import { getGameOptions } from "./GameStateLogic";
 
 export const ShortcutScopes = {
-   BuildingPage: () => t(L.ShortcutScopeBuildingPage),
-   TechPage: () => t(L.ShortcutScopeTechPage),
-   EmptyTilePage: () => t(L.ShortcutScopeEmptyTilePage),
-   ConstructionPage: () => t(L.ShortcutScopeConstructionPage),
-   UnexploredPage: () => t(L.ShortcutScopeUnexploredPage),
-   PlayerMapPage: () => t(L.ShortcutScopePlayerMapPage),
+   BuildingPage: () => $t(L.ShortcutScopeBuildingPage),
+   TechPage: () => $t(L.ShortcutScopeTechPage),
+   EmptyTilePage: () => $t(L.ShortcutScopeEmptyTilePage),
+   ConstructionPage: () => $t(L.ShortcutScopeConstructionPage),
+   UnexploredPage: () => $t(L.ShortcutScopeUnexploredPage),
+   PlayerMapPage: () => $t(L.ShortcutScopePlayerMapPage),
 } as const;
 
 export type ShortcutScope = keyof typeof ShortcutScopes;
@@ -17,54 +17,63 @@ export type ShortcutScope = keyof typeof ShortcutScopes;
 export const ShortcutActions = {
    BuildingPageSellBuilding: {
       scope: "BuildingPage",
-      name: () => t(L.ShortcutBuildingPageSellBuildingV2),
+      name: () => $t(L.ShortcutBuildingPageSellBuildingV2),
    },
-   BuildingPageUpgrade1: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgrade1) },
-   BuildingPageUpgrade2: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgrade2) },
+   BuildingPageUpgrade1: { scope: "BuildingPage", name: () => $t(L.ShortcutBuildingPageUpgrade1) },
+   BuildingPageUpgrade2: { scope: "BuildingPage", name: () => $t(L.ShortcutBuildingPageUpgrade2) },
    BuildingPageUpgrade3: {
       scope: "BuildingPage",
-      name: () => t(L.ShortcutBuildingPageUpgrade3),
+      name: () => $t(L.ShortcutBuildingPageUpgrade3),
    },
    BuildingPageUpgrade4: {
       scope: "BuildingPage",
-      name: () => t(L.ShortcutBuildingPageUpgrade4),
+      name: () => $t(L.ShortcutBuildingPageUpgrade4),
    },
    BuildingPageUpgrade5: {
       scope: "BuildingPage",
-      name: () => t(L.ShortcutBuildingPageUpgrade5),
+      name: () => $t(L.ShortcutBuildingPageUpgrade5),
    },
    BuildingPageToggleBuilding: {
       scope: "BuildingPage",
-      name: () => t(L.ShortcutBuildingPageToggleBuilding),
+      name: () => $t(L.ShortcutBuildingPageToggleBuilding),
    },
    BuildingPageToggleBuildingSetAllSimilar: {
       scope: "BuildingPage",
-      name: () => t(L.ShortcutBuildingPageToggleBuildingSetAllSimilar),
+      name: () => $t(L.ShortcutBuildingPageToggleBuildingSetAllSimilar),
    },
-   UpgradePageIncreaseLevel: { scope: "ConstructionPage", name: () => t(L.ShortcutUpgradePageIncreaseLevel) },
-   UpgradePageDecreaseLevel: { scope: "ConstructionPage", name: () => t(L.ShortcutUpgradePageDecreaseLevel) },
+   UpgradePageIncreaseLevel: {
+      scope: "ConstructionPage",
+      name: () => $t(L.ShortcutUpgradePageIncreaseLevel),
+   },
+   UpgradePageDecreaseLevel: {
+      scope: "ConstructionPage",
+      name: () => $t(L.ShortcutUpgradePageDecreaseLevel),
+   },
    UpgradePageEndConstruction: {
       scope: "ConstructionPage",
-      name: () => t(L.ShortcutUpgradePageEndConstruction),
+      name: () => $t(L.ShortcutUpgradePageEndConstruction),
    },
-   UpgradePageCancelUpgrade: { scope: "ConstructionPage", name: () => t(L.ShortcutUpgradePageCancelUpgrade) },
+   UpgradePageCancelUpgrade: {
+      scope: "ConstructionPage",
+      name: () => $t(L.ShortcutUpgradePageCancelUpgrade),
+   },
    UpgradePageCancelAllUpgrades: {
       scope: "ConstructionPage",
-      name: () => t(L.ShortcutUpgradePageCancelAllUpgrades),
+      name: () => $t(L.ShortcutUpgradePageCancelAllUpgrades),
    },
-   TechPageGoBackToCity: { scope: "TechPage", name: () => t(L.ShortcutTechPageGoBackToCity) },
-   TechPageUnlockTech: { scope: "TechPage", name: () => t(L.ShortcutTechPageUnlockTech) },
+   TechPageGoBackToCity: { scope: "TechPage", name: () => $t(L.ShortcutTechPageGoBackToCity) },
+   TechPageUnlockTech: { scope: "TechPage", name: () => $t(L.ShortcutTechPageUnlockTech) },
    EmptyTilePageBuildLastBuilding: {
       scope: "EmptyTilePage",
-      name: () => t(L.EmptyTilePageBuildLastBuilding),
+      name: () => $t(L.EmptyTilePageBuildLastBuilding),
    },
    SendAnExplorer: {
       scope: "UnexploredPage",
-      name: () => t(L.SendExplorer),
+      name: () => $t(L.SendExplorer),
    },
    PlayerMapPageGoBackToCity: {
       scope: "PlayerMapPage",
-      name: () => t(L.PlayerMapPageGoBackToCity),
+      name: () => $t(L.PlayerMapPageGoBackToCity),
    },
 } satisfies Record<string, IShortcutNameAndScope>;
 

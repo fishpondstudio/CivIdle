@@ -4,7 +4,7 @@ import { clearIntraTickCache } from "../../../shared/logic/IntraTickCache";
 import { RequestResetTile } from "../../../shared/logic/TechLogic";
 import { clearTransportSourceCache } from "../../../shared/logic/Update";
 import { pointToTile } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { playClick, playError, playSuccess } from "../visuals/Sound";
@@ -31,7 +31,7 @@ export function AkademikLomonosovBuildingBody({ gameState, xy }: IBuildingCompon
             disabled={moving}
             onClick={async () => {
                playClick();
-               showToast(t(L.MoveBuildingSelectTileToastHTML), Number.POSITIVE_INFINITY);
+               showToast($t(L.MoveBuildingSelectTileToastHTML), Number.POSITIVE_INFINITY);
                setMoving(true);
                const point = await Singleton().sceneManager.getCurrent(WorldScene)?.hijackSelectGrid();
                hideToast();
@@ -59,7 +59,7 @@ export function AkademikLomonosovBuildingBody({ gameState, xy }: IBuildingCompon
             }}
          >
             <div className="m-icon small">zoom_out_map</div>
-            <div className="f1">{moving ? t(L.MoveBuildingSelectTile) : t(L.MoveBuilding)}</div>
+            <div className="f1">{moving ? $t(L.MoveBuildingSelectTile) : $t(L.MoveBuilding)}</div>
          </button>
          <UpgradeableWonderComponent gameState={gameState} xy={xy} />
          <BuildingValueComponent gameState={gameState} xy={xy} />

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { LanguageToSteamLanguage } from "../../../shared/logic/GameState";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { Achievement } from "../../../shared/utilities/SteamAchievement";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { client } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
@@ -22,7 +22,7 @@ export function SteamAchievementPage(): React.ReactNode {
 
    return (
       <div className="window">
-         <TitleBarComponent>{t(L.SteamAchievement)}</TitleBarComponent>
+         <TitleBarComponent>{$t(L.SteamAchievement)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <button
@@ -36,7 +36,7 @@ export function SteamAchievementPage(): React.ReactNode {
                <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                   arrow_back
                </div>
-               <div className="f1">{t(L.GoBack)}</div>
+               <div className="f1">{$t(L.GoBack)}</div>
             </button>
             {jsxMapOf(allAchievements, (key, achievement) => {
                const hasAchieved = achieved.has(key);

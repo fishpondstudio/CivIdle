@@ -13,7 +13,7 @@ import {
    unlockTech,
 } from "../../../shared/logic/TechLogic";
 import { forEach, formatHMS, SECOND } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { checkAgeAchievements } from "../logic/Achievement";
 import { TimeSeries } from "../logic/TimeSeries";
@@ -116,7 +116,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
    return (
       <div className="window">
          <TitleBarComponent>
-            {t(L.UnlockBuilding)}: {tech.name()}
+            {$t(L.UnlockBuilding)}: {tech.name()}
          </TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
@@ -124,14 +124,14 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                   arrow_back
                </div>
-               <div className="f1">{t(L.BackToCity)}</div>
+               <div className="f1">{$t(L.BackToCity)}</div>
             </button>
             <fieldset>
-               <legend>{t(L.Science)}</legend>
+               <legend>{$t(L.Science)}</legend>
                {gs.unlockedTech[id] ? (
                   <div className="row">
                      <div className="m-icon small mr5 text-green">check_circle</div>
-                     <div className="f1 text-strong">{t(L.TechHasBeenUnlocked, { tech: tech.name() })}</div>
+                     <div className="f1 text-strong">{$t(L.TechHasBeenUnlocked, { tech: tech.name() })}</div>
                      <div className="text-desc">
                         <FormatNumber value={unlockScienceCost} />
                      </div>
@@ -158,7 +158,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                            })}
                         </ul>
                         <li className="row text-strong">
-                           <div className="f1">{t(L.TotalScienceRequired)}</div>
+                           <div className="f1">{$t(L.TotalScienceRequired)}</div>
                            {availableScience >= totalScience ? (
                               <div className="m-icon small ml20 mr5 text-green">check_circle</div>
                            ) : (
@@ -172,7 +172,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                         </li>
                         <ul>
                            <li className="row text-small">
-                              <div className="f1">{t(L.EstimatedTimeLeft)}</div>
+                              <div className="f1">{$t(L.EstimatedTimeLeft)}</div>
                               {availableScience < totalScience && scienceDelta > 0 ? (
                                  <div>
                                     {formatHMS(((totalScience - availableScience) * SECOND) / scienceDelta)}
@@ -188,7 +188,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                         </div>
                         <div style={{ width: "10px" }} />
                         <button disabled={!canUnlock()} onClick={() => unlock()}>
-                           {t(L.UnlockBuilding)}
+                           {$t(L.UnlockBuilding)}
                         </button>
                      </div>
                   </>

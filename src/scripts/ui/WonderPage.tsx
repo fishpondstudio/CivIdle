@@ -5,7 +5,7 @@ import { getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { cls, keysOf } from "../../../shared/utilities/Helper";
 import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
 import { MenuComponent } from "./MenuComponent";
@@ -23,7 +23,7 @@ export function WonderPage(): React.ReactNode {
    });
    return (
       <div className="window">
-         <TitleBarComponent>{t(L.Wonder)}</TitleBarComponent>
+         <TitleBarComponent>{$t(L.Wonder)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body" style={{ display: "flex", flexDirection: "column" }}>
             <div className="mb10">
@@ -38,15 +38,15 @@ export function WonderPage(): React.ReactNode {
                   <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                      arrow_back
                   </div>
-                  <div className="f1">{t(L.GoBack)}</div>
+                  <div className="f1">{$t(L.GoBack)}</div>
                </button>
             </div>
             <div className="table-view sticky-header f1">
                <table>
                   <thead>
                      <tr>
-                        <th>{t(L.GreatPeopleName)}</th>
-                        <th>{t(L.GreatPeopleEffect)}</th>
+                        <th>{$t(L.GreatPeopleName)}</th>
+                        <th>{$t(L.GreatPeopleEffect)}</th>
                      </tr>
                   </thead>
                   <tbody>

@@ -1,6 +1,6 @@
 import { Config } from "../../../shared/logic/Config";
 import type { IIdeologyBuildingData } from "../../../shared/logic/Tile";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -20,7 +20,7 @@ export function IdeologyBuildingBody({ gameState, xy }: IBuildingComponentProps)
       <div className="window-body">
          {!building.ideology ? (
             <WarningComponent icon="info" className="text-small mb10">
-               <RenderHTML html={t(L.IdeologyDescHTML)} />
+               <RenderHTML html={$t(L.IdeologyDescHTML)} />
             </WarningComponent>
          ) : null}
          {jsxMapOf(Config.Ideology, (ideology, def) => {

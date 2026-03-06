@@ -4,7 +4,7 @@ import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import { clamp, formatNumber, safeAdd, safeParseInt } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playClick, playError } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { WarningComponent } from "./WarningComponent";
@@ -24,14 +24,14 @@ export function DeleteResourceModal({
          </div>
          <div className="window-body">
             <WarningComponent icon="warning">
-               {t(L.ConfirmDestroyResourceContent, {
+               {$t(L.ConfirmDestroyResourceContent, {
                   resource: Config.Material[resource].name(),
                   amount: formatNumber(amount),
                })}
             </WarningComponent>
             <div className="sep10" />
             <div className="row">
-               <div className="mr10">{t(L.ResourceAmount)}</div>
+               <div className="mr10">{$t(L.ResourceAmount)}</div>
                <input
                   type="text"
                   className="f1 text-right"
@@ -59,7 +59,7 @@ export function DeleteResourceModal({
                      hideModal();
                   }}
                >
-                  {t(L.ConfirmYes)}
+                  {$t(L.ConfirmYes)}
                </button>
                <div style={{ width: "10px" }}></div>
                <button
@@ -69,7 +69,7 @@ export function DeleteResourceModal({
                      hideModal();
                   }}
                >
-                  {t(L.ConfirmNo)}
+                  {$t(L.ConfirmNo)}
                </button>
             </div>
          </div>

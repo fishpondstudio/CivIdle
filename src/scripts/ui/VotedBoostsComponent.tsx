@@ -5,7 +5,7 @@ import { Config } from "../../../shared/logic/Config";
 import { getVotingTime } from "../../../shared/logic/PlayerTradeLogic";
 import type { IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import { formatHMS, isNullOrUndefined } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { isSteam, SteamClient } from "../rpc/SteamClient";
 import { playError, playUpgrade } from "../visuals/Sound";
@@ -113,7 +113,7 @@ export function VotedBoostsComponent({
             })}
             <RenderHTML
                className="text-small text-desc"
-               html={t(L.UNGeneralAssemblyVoteEndIn, { time: formatHMS(getVotingTime()) })}
+               html={$t(L.UNGeneralAssemblyVoteEndIn, { time: formatHMS(getVotingTime()) })}
             />
          </fieldset>
       </>

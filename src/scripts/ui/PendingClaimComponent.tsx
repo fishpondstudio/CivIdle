@@ -15,7 +15,7 @@ import {
    safeAdd,
    sizeOf,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { PendingClaims, PendingClaimUpdated, RequestPendingClaimUpdate } from "../logic/PendingClaim";
 import { client } from "../rpc/RPCClient";
 import { refreshOnTypedEvent } from "../utilities/Hook";
@@ -50,7 +50,7 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
          if (sizeOf(resources) > 0) {
             playKaching();
             showToast(
-               t(L.PlayerTradeClaimAllMessageV2, {
+               $t(L.PlayerTradeClaimAllMessageV2, {
                   resources: mapOf(
                      resources,
                      (res, amount) => `${Config.Material[res].name()}: ${formatNumber(amount)}`,
@@ -67,7 +67,7 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
             });
          } else {
             playError();
-            showToast(t(L.PlayerTradeClaimAllFailedMessageV2));
+            showToast($t(L.PlayerTradeClaimAllFailedMessageV2));
          }
       } catch (error) {
          playError();
@@ -89,7 +89,7 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
             }}
          >
             <div className="m-icon small">local_shipping</div>
-            <div className="f1 text-strong">{t(L.PlayerTradeClaimAll)}</div>
+            <div className="f1 text-strong">{$t(L.PlayerTradeClaimAll)}</div>
          </button>
          <div className="table-view">
             {pendingClaims.length === 0 ? (
@@ -97,7 +97,7 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
                   <div className="m-icon" style={{ fontSize: "4rem" }}>
                      info
                   </div>
-                  <div style={{ fontSize: "2rem" }}>{t(L.NothingHere)}</div>
+                  <div style={{ fontSize: "2rem" }}>{$t(L.NothingHere)}</div>
                </div>
             ) : (
                <TableVirtuoso
@@ -107,9 +107,9 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
                      return (
                         <tr>
                            <th style={{ width: "30px" }}></th>
-                           <th>{t(L.PlayerTradeResource)}</th>
-                           <th>{t(L.PlayerTradeFillBy)}</th>
-                           <th className="text-right">{t(L.PlayerTradeAmount)}</th>
+                           <th>{$t(L.PlayerTradeResource)}</th>
+                           <th>{$t(L.PlayerTradeFillBy)}</th>
+                           <th className="text-right">{$t(L.PlayerTradeAmount)}</th>
                            <th></th>
                         </tr>
                      );
@@ -119,7 +119,7 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
                         <>
                            <td>
                               {hasFlag(trade.flag, PendingClaimFlag.Tariff) ? (
-                                 <Tippy content={t(L.PlayerTradeTariffTooltip)}>
+                                 <Tippy content={$t(L.PlayerTradeTariffTooltip)}>
                                     <div className="m-icon small text-center text-orange">
                                        currency_exchange
                                     </div>
@@ -139,7 +139,7 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
                            </td>
                            <td className="text-right">
                               <div className="text-link text-strong" onClick={() => claimTrades([trade])}>
-                                 {t(L.PlayerTradeClaim)}
+                                 {$t(L.PlayerTradeClaim)}
                               </div>
                            </td>
                         </>

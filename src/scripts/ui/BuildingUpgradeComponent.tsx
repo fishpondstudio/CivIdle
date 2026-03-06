@@ -24,7 +24,7 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
@@ -113,7 +113,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
 
       return (
          <span>
-            {idx === 0 ? `${t(L.Upgrade)} +1: ` : `${t(L.UpgradeTo, { level })}: `}
+            {idx === 0 ? `${$t(L.Upgrade)} +1: ` : `${$t(L.UpgradeTo, { level })}: `}
             {keysOf(resCost).map((item, idx) => {
                return (
                   <Fragment key={item}>
@@ -212,28 +212,28 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             <div className="row">
                <div className="f1 text-center">
                   <div className="text-strong text-large">{building.level}</div>
-                  <div className="text-small text-desc">{t(L.Level)}</div>
+                  <div className="text-small text-desc">{$t(L.Level)}</div>
                </div>
                <div className="f1 text-center">
                   <div className="text-strong text-large">
                      {numberToRoman(Config.BuildingTier[building.type]!)}
                   </div>
-                  <div className="text-small text-desc">{t(L.BuildingTier)}</div>
+                  <div className="text-small text-desc">{$t(L.BuildingTier)}</div>
                </div>
                <Tippy content={Config.TechAge[age].name()}>
                   <div className="f1 text-center">
                      <div className="text-strong text-large">
                         {numberToRoman(Config.TechAge[age].idx + 1)}
                      </div>
-                     <div className="text-small text-desc">{t(L.TechAge)}</div>
+                     <div className="text-small text-desc">{$t(L.TechAge)}</div>
                   </div>
                </Tippy>
             </div>
             <div className="separator" />
             <div className="row text-small text-strong">
-               <Tippy content={t(L.BatchModeTooltip, { count: selected.size })}>
+               <Tippy content={$t(L.BatchModeTooltip, { count: selected.size })}>
                   <div>
-                     {t(L.BatchUpgrade)}: {selected.size}
+                     {$t(L.BatchUpgrade)}: {selected.size}
                   </div>
                </Tippy>
                <div className="f1"></div>
@@ -244,10 +244,10 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                      setUpgradeState(e.target.value);
                   }}
                >
-                  <option value={0}>{t(L.BatchStateSelectAll)}</option>
-                  <option value={1}>{t(L.BatchStateSelectActive)}</option>
-                  <option value={2}>{t(L.BatchStateSelectTurnedOff)}</option>
-                  <option value={3}>{t(L.BatchStateSelectTurnedFullStorage)}</option>
+                  <option value={0}>{$t(L.BatchStateSelectAll)}</option>
+                  <option value={1}>{$t(L.BatchStateSelectActive)}</option>
+                  <option value={2}>{$t(L.BatchStateSelectTurnedOff)}</option>
+                  <option value={3}>{$t(L.BatchStateSelectTurnedFullStorage)}</option>
                </select>
                <select
                   style={{ margin: "-10px 0" }}
@@ -257,15 +257,15 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                      setUpgradeRange(e.target.value);
                   }}
                >
-                  <option value={0}>{t(L.BatchSelectThisBuilding)}</option>
-                  <option value={1}>{t(L.BatchSelectAllSameType)}</option>
-                  <option value={2}>{t(L.BatchSelectSameTypeSameLevel)}</option>
-                  <option value={3}>{t(L.BatchSelectSameType1Tile)}</option>
-                  <option value={4}>{t(L.BatchSelectSameType2Tile)}</option>
-                  <option value={5}>{t(L.BatchSelectSameType3Tile)}</option>
-                  <option value={6}>{t(L.BatchSelectAnyType1Tile)}</option>
-                  <option value={7}>{t(L.BatchSelectAnyType2Tile)}</option>
-                  <option value={8}>{t(L.BatchSelectAnyType3Tile)}</option>
+                  <option value={0}>{$t(L.BatchSelectThisBuilding)}</option>
+                  <option value={1}>{$t(L.BatchSelectAllSameType)}</option>
+                  <option value={2}>{$t(L.BatchSelectSameTypeSameLevel)}</option>
+                  <option value={3}>{$t(L.BatchSelectSameType1Tile)}</option>
+                  <option value={4}>{$t(L.BatchSelectSameType2Tile)}</option>
+                  <option value={5}>{$t(L.BatchSelectSameType3Tile)}</option>
+                  <option value={6}>{$t(L.BatchSelectAnyType1Tile)}</option>
+                  <option value={7}>{$t(L.BatchSelectAnyType2Tile)}</option>
+                  <option value={8}>{$t(L.BatchSelectAnyType3Tile)}</option>
                </select>
             </div>
             <div className="separator" />
@@ -284,7 +284,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                   disabled={moving || (theMet.building.resources.Teleport ?? 0) <= 0}
                   onClick={async () => {
                      playClick();
-                     showToast(t(L.MoveBuildingSelectTileToastHTML), Number.POSITIVE_INFINITY);
+                     showToast($t(L.MoveBuildingSelectTileToastHTML), Number.POSITIVE_INFINITY);
                      setMoving(true);
                      const point = await Singleton().sceneManager.getCurrent(WorldScene)?.hijackSelectGrid();
                      hideToast();
@@ -314,10 +314,10 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                >
                   <div className="m-icon small">zoom_out_map</div>
                   <Tippy
-                     content={t(L.MoveBuildingNoTeleport)}
+                     content={$t(L.MoveBuildingNoTeleport)}
                      disabled={(theMet.building.resources.Teleport ?? 0) > 0}
                   >
-                     <div className="f1">{moving ? t(L.MoveBuildingSelectTile) : t(L.MoveBuilding)}</div>
+                     <div className="f1">{moving ? $t(L.MoveBuildingSelectTile) : $t(L.MoveBuilding)}</div>
                   </Tippy>
                </button>
             ) : null}

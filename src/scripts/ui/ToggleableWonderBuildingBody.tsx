@@ -1,5 +1,5 @@
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -17,7 +17,7 @@ export function ToggleWonderBuildingBody({ gameState, xy }: IBuildingComponentPr
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
             <div className="row">
-               <div className="f1">{t(L.ToggleWonderEffect)}</div>
+               <div className="f1">{$t(L.ToggleWonderEffect)}</div>
                <div
                   className="pointer"
                   onClick={() => {

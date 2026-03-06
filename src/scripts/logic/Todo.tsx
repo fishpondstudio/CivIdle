@@ -24,7 +24,7 @@ import {
    mathSign,
    tileToPoint,
 } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { isConnected } from "../rpc/RPCClient";
 import { isSteam, SteamClient } from "../rpc/SteamClient";
@@ -58,10 +58,10 @@ export interface ITodo {
 
 export const _Todos = {
    E1: {
-      name: () => t(L.HappinessTooLow),
+      name: () => $t(L.HappinessTooLow),
       icon: "sentiment_dissatisfied",
       className: "text-red",
-      desc: (gs, options) => html(t(L.HappinessTooLowHTML)),
+      desc: (gs, options) => html($t(L.HappinessTooLowHTML)),
       condition: (gs) => (Tick.current.happiness?.value ?? 0) < -25,
       onClick: (gs, options) => {
          const xy = Tick.current.specialBuildings.get("Headquarter")?.tile;
@@ -72,12 +72,12 @@ export const _Todos = {
       },
    },
    E2: {
-      name: () => t(L.MoreWorkersNeeded),
+      name: () => $t(L.MoreWorkersNeeded),
       icon: "engineering",
       className: "text-red",
       desc: (gs, options) =>
          html(
-            t(L.MoreWorkersNeededHTML, {
+            $t(L.MoreWorkersNeededHTML, {
                count: mapCount(
                   Tick.current.notProducingReasons,
                   (v) => v === NotProducingReason.NotEnoughWorkers,
@@ -107,12 +107,12 @@ export const _Todos = {
       },
    },
    E3: {
-      name: () => t(L.MoreResourceNeeded),
+      name: () => $t(L.MoreResourceNeeded),
       icon: "production_quantity_limits",
       className: "text-red",
       desc: (gs, options) =>
          html(
-            t(L.MoreResourceNeededHTML, {
+            $t(L.MoreResourceNeededHTML, {
                count: mapCount(
                   Tick.current.notProducingReasons,
                   (v) => v === NotProducingReason.NotEnoughResources,
@@ -145,12 +145,12 @@ export const _Todos = {
       },
    },
    E4: {
-      name: () => t(L.TileNotPowered),
+      name: () => $t(L.TileNotPowered),
       icon: "electrical_services",
       className: "text-red",
       desc: (gs, options) =>
          html(
-            t(L.TileNotPoweredHTML, {
+            $t(L.TileNotPoweredHTML, {
                count: mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.NoPower),
             }),
          ),
@@ -177,22 +177,22 @@ export const _Todos = {
       },
    },
    E5: {
-      name: () => t(L.YouAreOffline),
+      name: () => $t(L.YouAreOffline),
       icon: "wifi_off",
       className: "text-red",
-      desc: (gs, options) => html(t(L.YouAreOfflineHTML)),
+      desc: (gs, options) => html($t(L.YouAreOfflineHTML)),
       condition: (gs) => !isConnected(),
       onClick: (gs, options) => {
          saveGame().then(() => window.location.reload());
       },
    },
    W1: {
-      name: () => t(L.BuildingsStorageFull),
+      name: () => $t(L.BuildingsStorageFull),
       icon: "storage",
       className: "text-orange",
       desc: (gs, options) =>
          html(
-            t(L.BuildingsStorageFullHTML, {
+            $t(L.BuildingsStorageFullHTML, {
                count: mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.StorageFull),
             }),
          ),
@@ -219,12 +219,12 @@ export const _Todos = {
       },
    },
    W2: {
-      name: () => t(L.BuildingsTurnedOff),
+      name: () => $t(L.BuildingsTurnedOff),
       icon: "motion_photos_off",
       className: "text-orange",
       desc: (gs, options) =>
          html(
-            t(L.BuildingsTurnedOffHTML, {
+            $t(L.BuildingsTurnedOffHTML, {
                count: mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.TurnedOff),
             }),
          ),
@@ -251,12 +251,12 @@ export const _Todos = {
       },
    },
    W4: {
-      name: () => t(L.NotEnoughPower),
+      name: () => $t(L.NotEnoughPower),
       icon: "power_off",
       className: "text-orange",
       desc: (gs, options) =>
          html(
-            t(L.NotEnoughPowerHTML, {
+            $t(L.NotEnoughPowerHTML, {
                count: Tick.current.notEnoughPower.size,
             }),
          ),
@@ -273,12 +273,12 @@ export const _Todos = {
       },
    },
    W3: {
-      name: () => t(L.TradeTileBonusWillRefresh),
+      name: () => $t(L.TradeTileBonusWillRefresh),
       icon: "access_time",
       className: "text-orange",
       desc: (gs, options) =>
          html(
-            t(L.TradeTileBonusWillRefreshHTML, {
+            $t(L.TradeTileBonusWillRefreshHTML, {
                time: formatHMS(getVotingTime()),
             }),
          ),
@@ -290,12 +290,12 @@ export const _Todos = {
          if (getOwnedTradeTile()) {
             Singleton().sceneManager.loadScene(PlayerMapScene);
          } else {
-            showToast(t(L.PlayerTradeClaimTileFirstWarning));
+            showToast($t(L.PlayerTradeClaimTileFirstWarning));
          }
       },
    },
    I1: {
-      name: () => t(L.UnlockableTech),
+      name: () => $t(L.UnlockableTech),
       icon: "tips_and_updates",
       className: "text-green",
       desc: (gs) => {
@@ -303,7 +303,7 @@ export const _Todos = {
          const techs = unlockableTechs(gs)
             .flatMap((tech) => (science >= getTechUnlockCost(tech) ? [Config.Tech[tech].name()] : []))
             .join(", ");
-         return html(t(L.UnlockableTechHTML, { techs }));
+         return html($t(L.UnlockableTechHTML, { techs }));
       },
       condition: (gs) => {
          const techs = unlockableTechs(gs);
@@ -315,7 +315,7 @@ export const _Todos = {
       },
    },
    I2: {
-      name: () => t(L.UpgradeablePermanentGreatPeople),
+      name: () => $t(L.UpgradeablePermanentGreatPeople),
       icon: "person_celebrate",
       className: "text-green",
       desc: (gs, options) => {
@@ -327,7 +327,7 @@ export const _Todos = {
                   : [],
             )
             .join(", ");
-         return html(t(L.UpgradeablePermanentGreatPeopleHTML, { gps }));
+         return html($t(L.UpgradeablePermanentGreatPeopleHTML, { gps }));
       },
       condition: (gs, options) =>
          entriesOf(options.greatPeople).some(
@@ -340,11 +340,11 @@ export const _Todos = {
       },
    },
    I3: {
-      name: () => t(L.UnclaimedGreatPeopleThisRun),
+      name: () => $t(L.UnclaimedGreatPeopleThisRun),
       icon: "person_4",
       className: "text-green",
       desc: (gs, options) => {
-         return html(t(L.UnclaimedGreatPeopleThisRunHTML, { count: gs.greatPeopleChoicesV2.length }));
+         return html($t(L.UnclaimedGreatPeopleThisRunHTML, { count: gs.greatPeopleChoicesV2.length }));
       },
       condition: (gs, options) => gs.greatPeopleChoicesV2.length > 0,
       onClick: (gs, options) => {
@@ -354,11 +354,11 @@ export const _Todos = {
       },
    },
    I4: {
-      name: () => t(L.UnclaimedPermanentGreatPeople),
+      name: () => $t(L.UnclaimedPermanentGreatPeople),
       icon: "supervisor_account",
       className: "text-green",
       desc: (gs, options) => {
-         return html(t(L.UnclaimedPermanentGreatPeopleHTML, { count: options.greatPeopleChoicesV2.length }));
+         return html($t(L.UnclaimedPermanentGreatPeopleHTML, { count: options.greatPeopleChoicesV2.length }));
       },
       condition: (gs, options) => options.greatPeopleChoicesV2.length > 0,
       onClick: (gs, options) => {
@@ -368,11 +368,11 @@ export const _Todos = {
       },
    },
    I5: {
-      name: () => t(L.UpgradeableAgeWisdom),
+      name: () => $t(L.UpgradeableAgeWisdom),
       icon: "emoji_objects",
       className: "text-green",
       desc: (gs, options) => {
-         return html(t(L.UpgradeableAgeWisdomHTML, { count: gs.greatPeopleChoicesV2.length }));
+         return html($t(L.UpgradeableAgeWisdomHTML, { count: gs.greatPeopleChoicesV2.length }));
       },
       condition: (gs, options) => {
          for (const [age] of entriesOf(Config.TechAge)) {
@@ -392,11 +392,11 @@ export const _Todos = {
       },
    },
    I6: {
-      name: () => t(L.TradeSCanBeClaimed),
+      name: () => $t(L.TradeSCanBeClaimed),
       icon: "currency_exchange",
       className: "text-green",
       desc: (gs, options) => {
-         return html(t(L.TradesCanBeClaimedHTML, { count: PendingClaims.length }));
+         return html($t(L.TradesCanBeClaimedHTML, { count: PendingClaims.length }));
       },
       value: (gs, options) => {
          return PendingClaims.length;
@@ -409,7 +409,7 @@ export const _Todos = {
       },
    },
    I7: {
-      name: () => t(L.WatchedResources),
+      name: () => $t(L.WatchedResources),
       icon: "visibility",
       className: "text-green",
       maxWidth: "50vw",
@@ -423,12 +423,12 @@ export const _Todos = {
                <table className="date-table">
                   <thead>
                      <tr>
-                        <th className="text-left">{t(L.Resource)}</th>
-                        <th className="text-right">{t(L.ResourceAmount)}</th>
-                        <th className="text-right">{t(L.Produced)}</th>
-                        <th className="text-right">{t(L.Consumed)}</th>
-                        <th className="text-right">{t(L.Surplus)}</th>
-                        <th className="text-right">{t(L.StatisticsResourcesRunOut)}</th>
+                        <th className="text-left">{$t(L.Resource)}</th>
+                        <th className="text-right">{$t(L.ResourceAmount)}</th>
+                        <th className="text-right">{$t(L.Produced)}</th>
+                        <th className="text-right">{$t(L.Consumed)}</th>
+                        <th className="text-right">{$t(L.Surplus)}</th>
+                        <th className="text-right">{$t(L.StatisticsResourcesRunOut)}</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -473,10 +473,10 @@ export const _Todos = {
       },
    },
    I8: {
-      name: () => t(L.SelectAdaptiveGreatPeopleBoost),
+      name: () => $t(L.SelectAdaptiveGreatPeopleBoost),
       icon: "checklist_rtl",
       className: "text-green",
-      desc: (gs, options) => t(L.YouHaveAdaptiveGreatPeopleWithBoostToSelect),
+      desc: (gs, options) => $t(L.YouHaveAdaptiveGreatPeopleWithBoostToSelect),
       condition: (gs, options) => {
          for (const [gp, amount] of entriesOf(gs.greatPeople)) {
             if (
@@ -503,11 +503,11 @@ export const _Todos = {
       },
    },
    S1: {
-      name: () => t(L.ReadFullPatchNotes),
+      name: () => $t(L.ReadFullPatchNotes),
       icon: "browser_updated",
       className: "text-blue",
       desc: (gs, options) => {
-         return html(t(L.ReadPatchNotesHTMLV2, { version: getVersion(), build: getBuildNumber() }));
+         return html($t(L.ReadPatchNotesHTMLV2, { version: getVersion(), build: getBuildNumber() }));
       },
       condition: (gs, options) => options.buildNumber !== getBuildNumber(),
       onClick: (gs, options) => {

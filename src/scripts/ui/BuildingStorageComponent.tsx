@@ -4,7 +4,7 @@ import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent, keysOf } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
 import { playClick } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -27,7 +27,7 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
          <legend className="row">
             {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
             <div className={classNames({ f1: true, "production-warning": showWarning })}>
-               {t(L.Storage)}: {formatPercent(percentage)}
+               {$t(L.Storage)}: {formatPercent(percentage)}
             </div>
          </legend>
          <ProgressBarComponent progress={percentage} />
@@ -36,20 +36,20 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
             <li>
                <details>
                   <summary className="row">
-                     <div className="f1">{t(L.TotalStorage)}</div>
+                     <div className="f1">{$t(L.TotalStorage)}</div>
                      <div className="text-strong">
                         <FormatNumber value={storage.total} />
                      </div>
                   </summary>
                   <ul>
                      <li className="row">
-                        <div className="f1">{t(L.StorageBaseCapacity)}</div>
+                        <div className="f1">{$t(L.StorageBaseCapacity)}</div>
                         <div>
                            <FormatNumber value={storage.base} />
                         </div>
                      </li>
                      <li className="row">
-                        <div className="f1">{t(L.StorageMultiplier)}</div>
+                        <div className="f1">{$t(L.StorageMultiplier)}</div>
                         <div>
                            x
                            <FormatNumber value={storage.multiplier} />
@@ -57,7 +57,7 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                      </li>
                      <ul className="text-small">
                         <li className="row">
-                           <div className="f1">{t(L.BaseMultiplier)}</div>
+                           <div className="f1">{$t(L.BaseMultiplier)}</div>
                            <div>1</div>
                         </li>
                         {storage.multiplier === 1
@@ -83,7 +83,7 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
             <li>
                <details>
                   <summary className="row">
-                     <div className="f1">{t(L.StorageUsed)}</div>
+                     <div className="f1">{$t(L.StorageUsed)}</div>
                      <div className="text-strong">
                         <FormatNumber value={storage.used} />
                      </div>
@@ -94,20 +94,20 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                         onClick={() => {
                            showModal(
                               <ConfirmModal
-                                 title={t(L.DestroyAllResources)}
+                                 title={$t(L.DestroyAllResources)}
                                  onConfirm={() => {
                                     playClick();
                                     building.resources = {};
                                     notifyGameStateUpdate();
                                  }}
                               >
-                                 {t(L.DestroyAllResourcesContent)}
+                                 {$t(L.DestroyAllResourcesContent)}
                               </ConfirmModal>,
                            );
                         }}
                      >
                         <div className="m-icon text-red small mr5 pointer">delete</div>
-                        <div className="text-strong">{t(L.DestroyAllResources)}</div>
+                        <div className="text-strong">{$t(L.DestroyAllResources)}</div>
                      </li>
                      {keysOf(building.resources)
                         .sort((a, b) => {

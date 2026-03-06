@@ -1,4 +1,4 @@
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 
@@ -21,7 +21,7 @@ export function AlertModal({
                      hideModal();
                   }}
                >
-                  {t(L.Ok)}
+                  {$t(L.Ok)}
                </button>
             </div>
          </div>

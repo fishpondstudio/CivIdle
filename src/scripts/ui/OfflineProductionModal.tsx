@@ -5,7 +5,7 @@ import { MAX_OFFLINE_PRODUCTION_SEC } from "../../../shared/logic/Constants";
 import type { GameState } from "../../../shared/logic/GameState";
 import { forEach, formatHM, formatHMS, isEmpty, SECOND } from "../../../shared/utilities/Helper";
 import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { jsxMapOf, jsxMMapOf } from "../utilities/Helper";
 import { hideModal } from "./GlobalModal";
@@ -30,7 +30,7 @@ export function OfflineProductionModal({
    return (
       <div className="window" style={{ width: "500px" }}>
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.OfflineProduction)}</div>
+            <div className="title-bar-text">{$t(L.OfflineProduction)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
@@ -38,19 +38,19 @@ export function OfflineProductionModal({
          <div className="window-body">
             {warpFull ? (
                <WarningComponent icon="info" className="mb10">
-                  <RenderHTML html={t(L.WarpStorageFullHTML)} />
+                  <RenderHTML html={$t(L.WarpStorageFullHTML)} />
                </WarningComponent>
             ) : null}
             <ul className="tree-view">
                <li className="row">
-                  <div className="f1">{t(L.TotalOfflineTime)}</div>
+                  <div className="f1">{$t(L.TotalOfflineTime)}</div>
                   <div className="text-strong">{formatHMS(totalOfflineTime * SECOND)}</div>
                </li>
                <li className="row">
                   <div className="f1">
-                     {t(L.OfflineProductionTime)}{" "}
+                     {$t(L.OfflineProductionTime)}{" "}
                      <div className="text-small text-desc">
-                        {t(L.MaxOfflineProductionTimeDesc, {
+                        {$t(L.MaxOfflineProductionTimeDesc, {
                            time: formatHM(
                               (options.offlineProductionPercent ?? 0) * MAX_OFFLINE_PRODUCTION_SEC,
                            ),
@@ -65,8 +65,8 @@ export function OfflineProductionModal({
                <table>
                   <tbody>
                      <tr>
-                        <th>{t(L.BuildingName)}</th>
-                        <th>{t(L.Level)}</th>
+                        <th>{$t(L.BuildingName)}</th>
+                        <th>{$t(L.Level)}</th>
                         <th></th>
                      </tr>
                      {jsxMMapOf(after.tiles, (xy, tile) => {

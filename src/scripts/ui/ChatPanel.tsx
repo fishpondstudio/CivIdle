@@ -20,7 +20,7 @@ import {
 import { firstKeyOf, hasFlag, pointToTile } from "../../../shared/utilities/Helper";
 import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { ToggleChatWindow, useFloatingMode, useGameOptions, useGameState } from "../Global";
@@ -130,7 +130,7 @@ export function ChatPanel(): React.ReactNode {
                style={{ left: showChatWindow ? `${35 * options.chatChannels.size}rem` : 0 }}
             >
                <div className="title-bar">
-                  <div className="title-bar-text">{t(L.StatisticsOffice)}</div>
+                  <div className="title-bar-text">{$t(L.StatisticsOffice)}</div>
                   <div className="title-bar-controls">
                      <button
                         aria-label="Close"
@@ -225,7 +225,7 @@ function _ChatWindow({
                return <ChatMessage key={c.id} user={user} chat={c} onImageLoaded={onImageLoaded} />;
             })}
             {user !== null ? null : (
-               <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>
+               <div className="text-desc text-center text-small mv10">{$t(L.ChatReconnect)}</div>
             )}
          </div>
          <ChatInput
@@ -313,7 +313,7 @@ function ChatInput({
                }
             }}
          />
-         <button onClick={sendChat}>{t(L.ChatSend)}</button>
+         <button onClick={sendChat}>{$t(L.ChatSend)}</button>
       </div>
    );
 }
@@ -354,12 +354,12 @@ function _ChatMessage({
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
-                  <Tippy content={t(L.AccountSupporter)}>
+                  <Tippy content={$t(L.AccountSupporter)}>
                      <MiscTextureComponent name="Supporter" scale={0.15} />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
-                  <Tippy content={t(L.AccountLevelMod)}>
+                  <Tippy content={$t(L.AccountLevelMod)}>
                      <MiscTextureComponent name="AccountLevelMod" scale={0.15} />
                   </Tippy>
                ) : null}
@@ -394,17 +394,17 @@ function _ChatMessage({
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
-                  <Tippy content={t(L.AccountSupporter)}>
+                  <Tippy content={$t(L.AccountSupporter)}>
                      <MiscTextureComponent name="Supporter" scale={0.15} />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
-                  <Tippy content={t(L.AccountLevelMod)}>
+                  <Tippy content={$t(L.AccountLevelMod)}>
                      <MiscTextureComponent name="AccountLevelMod" scale={0.15} />
                   </Tippy>
                ) : null}
                <div className="f1"></div>
-               <Tippy content={t(L.ShowTradesFrom, { name: chat.name })}>
+               <Tippy content={$t(L.ShowTradesFrom, { name: chat.name })}>
                   <div
                      className="m-icon show-trade"
                      onClick={() => {
@@ -448,7 +448,7 @@ function LatestMessage({ messages }: { messages: LocalChat[] }): React.ReactNode
       }
    }
    if (latestMessage === null) {
-      latestMessage = t(L.ChatNoMessage);
+      latestMessage = $t(L.ChatNoMessage);
    }
    return latestMessage;
 }

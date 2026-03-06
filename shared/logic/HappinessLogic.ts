@@ -1,6 +1,6 @@
 import { clamp, isEmpty, mFilterOf, mReduceOf, reduceOf, sizeOf, sum } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
-import { L, t } from "../utilities/i18n";
+import { $t, L } from "../utilities/i18n";
 import {
    findSpecialBuilding,
    isBuildingWellStocked,
@@ -15,12 +15,12 @@ import { getCurrentAge } from "./TechLogic";
 import { Tick } from "./TickLogic";
 
 export const HappinessNames = {
-   fromUnlockedTech: () => t(L.HappinessFromUnlockedTech),
-   fromUnlockedAge: () => t(L.HappinessFromUnlockedAge),
-   fromBuildingTypes: () => t(L.HappinessFromBuildingTypes),
-   fromBuildings: () => t(L.HappinessFromBuilding),
-   fromWonders: () => t(L.HappinessFromWonders),
-   fromHighestTierBuilding: () => t(L.HappinessFromHighestTierBuilding),
+   fromUnlockedTech: () => $t(L.HappinessFromUnlockedTech),
+   fromUnlockedAge: () => $t(L.HappinessFromUnlockedAge),
+   fromBuildingTypes: () => $t(L.HappinessFromBuildingTypes),
+   fromBuildings: () => $t(L.HappinessFromBuilding),
+   fromWonders: () => $t(L.HappinessFromWonders),
+   fromHighestTierBuilding: () => $t(L.HappinessFromHighestTierBuilding),
 } as const;
 
 type HappinessType = keyof typeof HappinessNames;

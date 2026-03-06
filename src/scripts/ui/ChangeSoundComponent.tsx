@@ -1,5 +1,5 @@
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 
@@ -7,7 +7,7 @@ export function ChangeSoundComponent(): React.ReactNode {
    const options = useGameOptions();
    return (
       <div className="row">
-         <div className="f1">{t(L.SoundEffect)}</div>
+         <div className="f1">{$t(L.SoundEffect)}</div>
          <div
             onClick={() => {
                options.soundEffect = !options.soundEffect;

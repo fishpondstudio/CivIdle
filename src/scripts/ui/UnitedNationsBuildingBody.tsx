@@ -1,4 +1,4 @@
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { client } from "../rpc/RPCClient";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -19,9 +19,9 @@ export function UnitedNationsBuildingBody({ gameState, xy }: IBuildingComponentP
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <UpgradeableWonderComponent gameState={gameState} xy={xy} />
          <VotedBoostsComponent
-            currentVoteTitle={(id) => t(L.UNGeneralAssemblyCurrent, { id })}
-            nextVoteTitle={(id) => t(L.UNGeneralAssemblyNext, { id })}
-            description={html(t(L.UNVoteDescriptionHTML))}
+            currentVoteTitle={(id) => $t(L.UNGeneralAssemblyCurrent, { id })}
+            nextVoteTitle={(id) => $t(L.UNGeneralAssemblyNext, { id })}
+            description={html($t(L.UNVoteDescriptionHTML))}
             getVotedBoosts={client.getVotedBoosts}
             voteBoosts={client.voteBoosts}
          />

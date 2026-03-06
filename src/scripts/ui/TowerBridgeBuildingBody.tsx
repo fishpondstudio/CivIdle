@@ -1,7 +1,7 @@
 import type React from "react";
 import { TOWER_BRIDGE_GP_PER_CYCLE } from "../../../shared/logic/Constants";
 import { formatPercent } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -18,7 +18,7 @@ export function TowerBridgeBuildingBody({ gameState, xy }: IBuildingComponentPro
    return (
       <div className="window-body">
          <fieldset>
-            <legend>{t(L.ProgressTowardsTheNextGreatPerson)}</legend>
+            <legend>{$t(L.ProgressTowardsTheNextGreatPerson)}</legend>
             <ProgressBarComponent
                progress={(building.resources.Cycle ?? 0) / TOWER_BRIDGE_GP_PER_CYCLE}
             ></ProgressBarComponent>

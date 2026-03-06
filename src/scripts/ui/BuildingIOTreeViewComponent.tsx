@@ -7,7 +7,7 @@ import { getBuildingIO, getCloneLabScienceOutput } from "../../../shared/logic/I
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import type { ICloneBuildingData } from "../../../shared/logic/Tile";
 import { formatNumber, type Tile } from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
+import { $t, L } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
 import { jsxMapOf } from "../utilities/Helper";
 import { FormatNumber } from "./HelperComponents";
@@ -61,8 +61,8 @@ export function BuildingIOTreeViewComponent({
                      <ul>
                         {isCloneOutput ? (
                            <li className="row text-strong">
-                              <TextWithHelp content={t(L.ResourceCloneTooltip)}>
-                                 <div>{t(L.InputResourceForCloning)}</div>
+                              <TextWithHelp content={$t(L.ResourceCloneTooltip)}>
+                                 <div>{$t(L.InputResourceForCloning)}</div>
                               </TextWithHelp>
                               <div className="f1 text-right">
                                  <FormatNumber value={v / (1 + totalMultiplier)} />
@@ -70,12 +70,12 @@ export function BuildingIOTreeViewComponent({
                            </li>
                         ) : null}
                         <li className="row">
-                           <div className="f1">{t(L.IntrinsicRatio)}</div>
+                           <div className="f1">{$t(L.IntrinsicRatio)}</div>
                            <div className="text-strong">x{formatNumber(baseValue)}</div>
                         </li>
                         <li className="row">
                            <div className="f1">
-                              {type === "input" ? t(L.BaseConsumption) : t(L.BaseProduction)}
+                              {type === "input" ? $t(L.BaseConsumption) : $t(L.BaseProduction)}
                            </div>
                            <div className="text-strong">
                               <FormatNumber
@@ -87,12 +87,12 @@ export function BuildingIOTreeViewComponent({
                         </li>
                         <ul className="text-small">
                            <li className="row">
-                              <div className="f1">{t(L.BuildingLevel)}</div>
+                              <div className="f1">{$t(L.BuildingLevel)}</div>
                               <FormatNumber value={building?.level ?? 0} />
                            </li>
                            {building && electrificationLevel > 0 ? (
                               <li className="row">
-                                 <div className="f1">{t(L.ElectrificationLevel)}</div>
+                                 <div className="f1">{$t(L.ElectrificationLevel)}</div>
                                  <FormatNumber value={electrificationLevel} />
                               </li>
                            ) : null}
@@ -108,7 +108,7 @@ export function BuildingIOTreeViewComponent({
                         {type === "output" ? (
                            <>
                               <li className="row">
-                                 <div className="f1">{t(L.ProductionMultiplier)}</div>
+                                 <div className="f1">{$t(L.ProductionMultiplier)}</div>
                                  <div className="text-strong">
                                     x
                                     <FormatNumber value={totalMultiplier} />
@@ -116,7 +116,7 @@ export function BuildingIOTreeViewComponent({
                               </li>
                               <ul className="text-small">
                                  <li className="row">
-                                    <div className="f1">{t(L.BaseMultiplier)}</div>
+                                    <div className="f1">{$t(L.BaseMultiplier)}</div>
                                     <div>1</div>
                                  </li>
                                  {getMultipliersFor(xy, false, gameState).map((m, idx) => {
@@ -127,7 +127,7 @@ export function BuildingIOTreeViewComponent({
                                        <li key={idx} className="row">
                                           <div>{m.source}</div>
                                           {m.unstable ? (
-                                             <Tippy content={t(L.DynamicMultiplierTooltip)}>
+                                             <Tippy content={$t(L.DynamicMultiplierTooltip)}>
                                                 <div className="m-icon small ml5 text-desc">whatshot</div>
                                              </Tippy>
                                           ) : null}
