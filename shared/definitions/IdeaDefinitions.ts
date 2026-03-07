@@ -1,3 +1,6 @@
+import { Config } from "../logic/Config";
+import { GlobalMultiplierNames } from "../logic/TickLogic";
+import { forEach } from "../utilities/Helper";
 import type { Upgrade } from "./UpgradeDefinitions";
 
 export interface IdeaConfig {
@@ -133,3 +136,15 @@ export class CarthaginianIdeasDefinitions {
 
 export type CarthaginianIdea = keyof CarthaginianIdeasDefinitions;
 export const CarthaginianIdeas = new CarthaginianIdeasDefinitions();
+
+export function getIdeaDesc(upgrade: Upgrade): string {
+   const result: string[] = [];
+   const config = Config.Upgrade[upgrade];
+   forEach(config.globalMultiplier, (key, value) => {
+      result.push(`+${value} ${GlobalMultiplierNames[key]()}`);
+   });
+   config.additionalUpgrades?.().forEach((upgrade) => {
+      result.push(upgrade);
+   });
+   return result.join(", ");
+}
