@@ -1,4 +1,4 @@
-import { findSpecialBuilding } from "../logic/BuildingLogic";
+import { addPetraOfflineTime, findSpecialBuilding, getMaxWarpStorage } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { getGrid } from "../logic/IntraTickCache";
 import {
@@ -6,9 +6,9 @@ import {
    getGreatPersonTotalLevel,
    rollGreatPeopleThisRun,
 } from "../logic/RebirthLogic";
-import { getTechUnlockCost, getTechUnlockCostInAge } from "../logic/TechLogic";
+import { getCurrentAge, getTechUnlockCost, getTechUnlockCostInAge } from "../logic/TechLogic";
 import { RequestChooseGreatPerson, addMultiplier } from "../logic/Update";
-import { deepFreeze, forEach, pointToTile, safeAdd, tileToPoint } from "../utilities/Helper";
+import { deepFreeze, forEach, formatPercent, pointToTile, safeAdd, tileToPoint } from "../utilities/Helper";
 import { $t, L } from "../utilities/i18n";
 import { BuildingDefinitions } from "./BuildingDefinitions";
 import { GreatPersonTickFlag } from "./GreatPersonDefinitions";
@@ -660,6 +660,281 @@ export class UpgradeDefinitions {
       buildingMultiplier: {
          SpaceCenter: { output: 1, storage: 1 },
          SpacecraftFactory: { output: 1, storage: 1 },
+      },
+   };
+
+   RiseOfPunic: IUpgradeDefinition = {
+      name: () => $t(L.RiseOfPunic),
+      requireResources: {},
+      globalMultiplier: {
+         sciencePerBusyWorker: 1,
+      },
+   };
+
+   PhoenicianAlphabet: IUpgradeDefinition = {
+      name: () => $t(L.PhoenicianAlphabet),
+      requireResources: {},
+      globalMultiplier: {
+         output: 1,
+      },
+   };
+
+   HillfortSettlements: IUpgradeDefinition = {
+      name: () => $t(L.HillfortSettlements),
+      requireResources: {},
+      globalMultiplier: {
+         storage: 5,
+      },
+   };
+
+   PunicCoinage: IUpgradeDefinition = {
+      name: () => $t(L.PunicCoinage),
+      requireResources: {},
+      globalMultiplier: {
+         // @TODO: Implement BLB
+      },
+   };
+
+   RitualSanctuaries: IUpgradeDefinition = {
+      name: () => $t(L.RitualSanctuaries),
+      requireResources: {},
+      globalMultiplier: {
+         happiness: 5,
+      },
+   };
+
+   IrrigatedEstate: IUpgradeDefinition = {
+      name: () => $t(L.IrrigatedEstate),
+      requireResources: {},
+      additionalUpgrades: () => [$t(L.GenerateOneTimeScienceEqualToTheCheapestTechnologyOfTheCurrentAge)],
+      onUnlocked: (gs) => {
+         const hq = findSpecialBuilding("Headquarter", gs);
+         if (hq) {
+            const [science, _] = getTechUnlockCostInAge(getCurrentAge(gs));
+            safeAdd(hq.building.resources, "Science", science);
+         }
+      },
+   };
+
+   HarborWarehouse: IUpgradeDefinition = {
+      name: () => $t(L.HarborWarehouse),
+      requireResources: {},
+      additionalUpgrades: () => [
+         $t(L.PlusXBaseStorageForMarketWarehouseAndCaravansary, { percent: formatPercent(1) }),
+      ],
+   };
+
+   PunicLegalCodex: IUpgradeDefinition = {
+      name: () => $t(L.PunicLegalCodex),
+      requireResources: {},
+      onUnlocked: (gs) => {
+         for (let i = 0; i < 2; i++) {
+            const candidates = rollGreatPeopleThisRun(
+               new Set([getCurrentAge(gs)]),
+               gs.city,
+               getGreatPeopleChoiceCount(gs),
+            );
+            if (candidates) {
+               gs.greatPeopleChoicesV2.push(candidates);
+            }
+         }
+         RequestChooseGreatPerson.emit({ permanent: false });
+      },
+   };
+
+   TreatyDiplomacy: IUpgradeDefinition = {
+      name: () => $t(L.TreatyDiplomacy),
+      requireResources: {},
+      globalMultiplier: {
+         storage: 5,
+      },
+   };
+
+   WarElephants: IUpgradeDefinition = {
+      name: () => $t(L.WarElephants),
+      requireResources: {},
+      globalMultiplier: {
+         builderCapacity: 5,
+      },
+   };
+
+   HannibalStrategy: IUpgradeDefinition = {
+      name: () => $t(L.HannibalSStrategy),
+      requireResources: {},
+      onUnlocked: (gs) => {
+         //@TODO: Implement
+      },
+      additionalUpgrades: () => [$t(L.GenerateOneTimeKotiEqualTo10OfTheTotalBuildingValue)],
+   };
+
+   CaravansaryNetwork: IUpgradeDefinition = {
+      name: () => $t(L.CaravansaryNetwork),
+      requireResources: {},
+      additionalUpgrades: () => [
+         $t(L.PlusXBaseStorageForMarketWarehouseAndCaravansary, { percent: formatPercent(1) }),
+      ],
+   };
+
+   MediterraneanTrades: IUpgradeDefinition = {
+      name: () => $t(L.MediterraneanTrades),
+      requireResources: {},
+      globalMultiplier: {
+         storage: 5,
+      },
+   };
+
+   CouncilOfElders: IUpgradeDefinition = {
+      name: () => $t(L.CouncilOfElders),
+      requireResources: {},
+      globalMultiplier: {
+         sciencePerIdleWorker: 1,
+         sciencePerBusyWorker: 2,
+      },
+   };
+
+   SuffeteAdministration: IUpgradeDefinition = {
+      name: () => $t(L.SuffeteAdministration),
+      requireResources: {},
+      globalMultiplier: {
+         //@TODO: Implement BLB
+      },
+   };
+
+   BerberAlliance: IUpgradeDefinition = {
+      name: () => $t(L.BerberAlliance),
+      requireResources: {},
+      onUnlocked: (gs) => {
+         for (let i = 0; i < 5; i++) {
+            const candidates = rollGreatPeopleThisRun(
+               new Set([getCurrentAge(gs)]),
+               gs.city,
+               getGreatPeopleChoiceCount(gs),
+            );
+            if (candidates) {
+               gs.greatPeopleChoicesV2.push(candidates);
+            }
+         }
+         RequestChooseGreatPerson.emit({ permanent: false });
+      },
+   };
+
+   SacredBand: IUpgradeDefinition = {
+      name: () => $t(L.SacredBand),
+      requireResources: {},
+      // @TODO: Implement
+      additionalUpgrades: () => [$t(L.MinusXResearchCost, { percent: formatPercent(5) })],
+   };
+
+   CothonDockyards: IUpgradeDefinition = {
+      name: () => $t(L.CothonDockyards),
+      requireResources: {},
+      globalMultiplier: {
+         worker: 5,
+      },
+   };
+
+   PurpleDyeMonopoly: IUpgradeDefinition = {
+      name: () => $t(L.PurpleDyeMonopoly),
+      requireResources: {},
+      globalMultiplier: {
+         happiness: 10,
+      },
+   };
+
+   PunicGoldenAge: IUpgradeDefinition = {
+      name: () => $t(L.PunicGoldenAge),
+      requireResources: {},
+      // @TODO: Implement
+      additionalUpgrades: () => [$t(L.MinusXResearchCost, { percent: formatPercent(10) })],
+   };
+
+   IberianColonies: IUpgradeDefinition = {
+      name: () => $t(L.IberianColonies),
+      requireResources: {},
+      onUnlocked: (gs) => {
+         addPetraOfflineTime(getMaxWarpStorage(gs), gs);
+      },
+   };
+
+   AlpineLogistics: IUpgradeDefinition = {
+      name: () => $t(L.AlpineLogistics),
+      requireResources: {},
+      globalMultiplier: {
+         transportCapacity: 5,
+      },
+   };
+
+   MercenaryCommand: IUpgradeDefinition = {
+      name: () => $t(L.MercenaryCommand),
+      requireResources: {},
+      globalMultiplier: {
+         output: 2,
+      },
+   };
+
+   ExarchateOfAfrica: IUpgradeDefinition = {
+      name: () => $t(L.ExarchateOfAfrica),
+      requireResources: {},
+      globalMultiplier: {
+         storage: 10,
+      },
+   };
+
+   ChurchOfCarthage: IUpgradeDefinition = {
+      name: () => $t(L.ChurchOfCarthage),
+      requireResources: {},
+      globalMultiplier: {
+         happiness: 20,
+      },
+   };
+
+   MedinaOfTunis: IUpgradeDefinition = {
+      name: () => $t(L.MedinaOfTunis),
+      requireResources: {},
+      onUnlocked: (gs) => {
+         const hq = findSpecialBuilding("Headquarter", gs);
+         if (hq) {
+            const [_, science] = getTechUnlockCostInAge(getCurrentAge(gs));
+            safeAdd(hq.building.resources, "Science", science);
+         }
+      },
+      additionalUpgrades: () => [
+         $t(L.GenerateOneTimeScienceEqualToTheCostOfTheMostExpensiveTechnologyOfTheCurrentAge),
+      ],
+   };
+
+   ProvinceOfIfriqiya: IUpgradeDefinition = {
+      name: () => $t(L.ProvinceOfIfriqiya),
+      requireResources: {},
+      globalMultiplier: {
+         builderCapacity: 10,
+         transportCapacity: 10,
+      },
+   };
+
+   HafsidDynasty: IUpgradeDefinition = {
+      name: () => $t(L.HafsidDynasty),
+      requireResources: {},
+      globalMultiplier: {
+         sciencePerIdleWorker: 4,
+         sciencePerBusyWorker: 5,
+      },
+   };
+
+   AcropoliumOfCarthage: IUpgradeDefinition = {
+      name: () => $t(L.AcropoliumOfCarthage),
+      requireResources: {},
+      onUnlocked: (gs) => {
+         // @TODO: Implement
+      },
+      additionalUpgrades: () => [$t(L.GenerateOneTimeKotiEqualTo5OfTheTotalEmpireValue)],
+   };
+
+   HusainidDynasty: IUpgradeDefinition = {
+      name: () => $t(L.HusainidDynasty),
+      requireResources: {},
+      globalMultiplier: {
+         // @TODO: Implement BLB
       },
    };
 }
