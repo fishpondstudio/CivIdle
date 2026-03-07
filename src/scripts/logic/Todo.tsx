@@ -301,14 +301,14 @@ export const _Todos = {
       desc: (gs) => {
          const science = getScienceAmount(gs);
          const techs = unlockableTechs(gs)
-            .flatMap((tech) => (science >= getTechUnlockCost(tech) ? [Config.Tech[tech].name()] : []))
+            .flatMap((tech) => (science >= getTechUnlockCost(tech, gs) ? [Config.Tech[tech].name()] : []))
             .join(", ");
          return html($t(L.UnlockableTechHTML, { techs }));
       },
       condition: (gs) => {
          const techs = unlockableTechs(gs);
          const science = getScienceAmount(gs);
-         return techs.some((tech) => science >= getTechUnlockCost(tech));
+         return techs.some((tech) => science >= getTechUnlockCost(tech, gs));
       },
       onClick: (gs, options) => {
          Singleton().sceneManager.loadScene(TechTreeScene);

@@ -102,7 +102,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       return <InDevelopmentPage />;
    }
 
-   const unlockScienceCost = getTechUnlockCost(id);
+   const unlockScienceCost = getTechUnlockCost(id, gs);
    const availableScience = getScienceAmount(gs);
    const { prerequisites, totalScience } = getTotalTechUnlockCost(id, gs);
    const canUnlock = () => availableScience >= totalScience;
@@ -142,7 +142,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                         <li className="row text-strong">
                            <div className="f1">{tech.name()}</div>
                            <div className="ml20">
-                              <FormatNumber value={getTechUnlockCost(id)} />
+                              <FormatNumber value={getTechUnlockCost(id, gs)} />
                            </div>
                         </li>
                         <ul>
@@ -151,7 +151,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                                  <li key={tech} className="row text-small">
                                     <div className="f1">{Config.Tech[tech].name()}</div>
                                     <div>
-                                       <FormatNumber value={getTechUnlockCost(tech)} />
+                                       <FormatNumber value={getTechUnlockCost(tech, gs)} />
                                     </div>
                                  </li>
                               );

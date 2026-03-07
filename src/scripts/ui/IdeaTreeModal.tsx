@@ -56,7 +56,7 @@ function getNodesAndEdges<K extends string, V>(
       nodes.push({
          id: key,
          position: { x: 0, y: 0 },
-         data: { upgrade: idea.upgrade },
+         data: { upgrade: idea.upgrade, requires: idea.requires },
          type: "IdeaNode",
       });
       idea.requires.forEach((parent) => {

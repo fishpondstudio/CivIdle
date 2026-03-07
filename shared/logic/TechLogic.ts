@@ -20,23 +20,30 @@ import { Tick } from "./TickLogic";
 import { getDepositTileCount } from "./Tile";
 import { OnTechUnlocked } from "./Update";
 
-export function getTechUnlockCost(tech: Tech): number {
+export function getTechUnlockCost(tech: Tech, gs: GameState): number {
    const a = getAgeForTech(tech);
    let ageIdx = 0;
    if (a) {
       const age = Config.TechAge[a];
       ageIdx = age.idx;
    }
-   return Math.pow(5, ageIdx) * Math.pow(1.5, Config.Tech[tech].column) * 5000;
+   let discount = 0;
+   if (gs.unlockedUpgrades.SacredBand) {
+      discount += 0.05;
+   }
+   if (gs.unlockedUpgrades.PunicGoldenAge) {
+      discount += 0.1;
+   }
+   return Math.pow(5, ageIdx) * Math.pow(1.5, Config.Tech[tech].column) * 5000 * (1 - discount);
 }
 
 export function getTotalTechUnlockCost(tech: Tech, gs: GameState) {
    const prerequisites: Tech[] = [];
-   let totalScience = getTechUnlockCost(tech);
+   let totalScience = getTechUnlockCost(tech, gs);
    getAllPrerequisites(tech).forEach((tech) => {
       if (!gs.unlockedTech[tech]) {
          prerequisites.push(tech);
-         totalScience += getTechUnlockCost(tech);
+         totalScience += getTechUnlockCost(tech, gs);
       }
    });
    prerequisites.sort((a, b) => Config.Tech[a].column - Config.Tech[b].column);
@@ -244,14 +251,14 @@ export function getAllPrerequisites(tech: Tech): Set<Tech> {
    return result;
 }
 
-export function getTechUnlockCostInAge(age: TechAge): [number, number] {
+export function getTechUnlockCostInAge(age: TechAge, gs: GameState): [number, number] {
    let min = Number.POSITIVE_INFINITY;
    let max = 0;
    const from = Config.TechAge[age].from;
    const to = Config.TechAge[age].to;
    forEach(Config.Tech, (tech, def) => {
       if (def.column >= from && def.column <= to) {
-         const cost = getTechUnlockCost(tech);
+         const cost = getTechUnlockCost(tech, gs);
          max = Math.max(cost, max);
          min = Math.min(cost, min);
       }
@@ -271,7 +278,7 @@ export function checkItsukushimaShrine(tech: Tech, gs: GameState): void {
    if (!nextAge) {
       return;
    }
-   const [science, _] = getTechUnlockCostInAge(nextAge);
+   const [science, _] = getTechUnlockCostInAge(nextAge, gs);
    const hq = Tick.current.specialBuildings.get("Headquarter");
    if (hq) {
       // console.log(`ItsukushimaShrine: +${science} Science`);

@@ -118,13 +118,13 @@ export function onBuildingComplete(xy: Tile): void {
          const tech = getMostAdvancedTech(gs);
          const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
          if (tech && hq) {
-            safeAdd(hq, "Science", getTechUnlockCost(tech));
+            safeAdd(hq, "Science", getTechUnlockCost(tech, gs));
          }
          break;
       }
       case "CologneCathedral": {
          const age = getCurrentAge(gs);
-         const [_, max] = getTechUnlockCostInAge(age);
+         const [_, max] = getTechUnlockCostInAge(age, gs);
          const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
          if (hq) {
             safeAdd(hq, "Science", max);

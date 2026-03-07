@@ -67,7 +67,7 @@ export function onTileExplored(xy: Tile): void {
             const tech = getMostAdvancedTech(gs);
             const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
             if (tech && hq) {
-               safeAdd(hq, "Science", getTechUnlockCost(tech));
+               safeAdd(hq, "Science", getTechUnlockCost(tech, gs));
             }
             break;
          }

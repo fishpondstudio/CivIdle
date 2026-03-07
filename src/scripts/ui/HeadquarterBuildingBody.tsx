@@ -221,7 +221,7 @@ export function HeadquarterBuildingBody({
                   </thead>
                   <tbody>
                      {unlockableTechs(gameState).map((k) => {
-                        const unlockCost = getTechUnlockCost(k);
+                        const unlockCost = getTechUnlockCost(k, gameState);
                         return (
                            <tr key={k}>
                               <td>{Config.Tech[k].name()}</td>

@@ -53,7 +53,7 @@ export function UnexploredTilePage({ xy, gameState }: IBuildingComponentProps): 
    };
    useShortcut("SendAnExplorer", explore, [xy]);
 
-   const cartographerCost = getTechUnlockCost("Exploration");
+   const cartographerCost = getTechUnlockCost("Exploration", gameState);
    return (
       <div className="window">
          <TitleBarComponent>{$t(L.UnexploredTile)}</TitleBarComponent>
@@ -121,6 +121,7 @@ export function UnexploredTilePage({ xy, gameState }: IBuildingComponentProps): 
 
 function canSendCartographer(gameState: GameState) {
    return (
-      gameState.unlockedTech.Exploration && getScienceAmount(gameState) >= getTechUnlockCost("Exploration")
+      gameState.unlockedTech.Exploration &&
+      getScienceAmount(gameState) >= getTechUnlockCost("Exploration", gameState)
    );
 }

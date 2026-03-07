@@ -295,7 +295,7 @@ export class UpgradeDefinitions {
             if (Config.Tech[tech].column === column) {
                const hq = findSpecialBuilding("Headquarter", gs);
                if (hq) {
-                  safeAdd(hq.building.resources, "Science", getTechUnlockCost(tech));
+                  safeAdd(hq.building.resources, "Science", getTechUnlockCost(tech, gs));
                }
                return;
             }
@@ -543,7 +543,7 @@ export class UpgradeDefinitions {
          ResearchLab: { output: 1 },
       },
       onUnlocked: (gs) => {
-         const [science, _] = getTechUnlockCostInAge("WorldWarAge");
+         const [science, _] = getTechUnlockCostInAge("WorldWarAge", gs);
          const hq = findSpecialBuilding("Headquarter", gs);
          if (hq) {
             safeAdd(hq.building.resources, "Science", science);
@@ -561,7 +561,7 @@ export class UpgradeDefinitions {
          ResearchLab: { output: 1 },
       },
       onUnlocked: (gs) => {
-         const [science, _] = getTechUnlockCostInAge("ColdWarAge");
+         const [science, _] = getTechUnlockCostInAge("ColdWarAge", gs);
          const hq = findSpecialBuilding("Headquarter", gs);
          if (hq) {
             safeAdd(hq.building.resources, "Science", science);
@@ -691,7 +691,7 @@ export class UpgradeDefinitions {
       name: () => $t(L.PunicCoinage),
       requireResources: {},
       globalMultiplier: {
-         // @TODO: Implement BLB
+         levelBoost: 1,
       },
    };
 
@@ -710,7 +710,7 @@ export class UpgradeDefinitions {
       onUnlocked: (gs) => {
          const hq = findSpecialBuilding("Headquarter", gs);
          if (hq) {
-            const [science, _] = getTechUnlockCostInAge(getCurrentAge(gs));
+            const [science, _] = getTechUnlockCostInAge(getCurrentAge(gs), gs);
             safeAdd(hq.building.resources, "Science", science);
          }
       },
@@ -740,6 +740,7 @@ export class UpgradeDefinitions {
          }
          RequestChooseGreatPerson.emit({ permanent: false });
       },
+      additionalUpgrades: () => [$t(L.PlusXGreatPersonFromTheCurrentAge, { count: 2 })],
    };
 
    TreatyDiplomacy: IUpgradeDefinition = {
@@ -796,7 +797,7 @@ export class UpgradeDefinitions {
       name: () => $t(L.SuffeteAdministration),
       requireResources: {},
       globalMultiplier: {
-         //@TODO: Implement BLB
+         levelBoost: 2,
       },
    };
 
@@ -816,12 +817,12 @@ export class UpgradeDefinitions {
          }
          RequestChooseGreatPerson.emit({ permanent: false });
       },
+      additionalUpgrades: () => [$t(L.PlusXGreatPersonFromTheCurrentAge, { count: 5 })],
    };
 
    SacredBand: IUpgradeDefinition = {
       name: () => $t(L.SacredBand),
       requireResources: {},
-      // @TODO: Implement
       additionalUpgrades: () => [$t(L.MinusXResearchCost, { percent: formatPercent(5) })],
    };
 
@@ -844,7 +845,6 @@ export class UpgradeDefinitions {
    PunicGoldenAge: IUpgradeDefinition = {
       name: () => $t(L.PunicGoldenAge),
       requireResources: {},
-      // @TODO: Implement
       additionalUpgrades: () => [$t(L.MinusXResearchCost, { percent: formatPercent(10) })],
    };
 
@@ -854,6 +854,7 @@ export class UpgradeDefinitions {
       onUnlocked: (gs) => {
          addPetraOfflineTime(getMaxWarpStorage(gs), gs);
       },
+      additionalUpgrades: () => [$t(L.GenerateOneTimeWarpThatRefillsAllAvailableWarpStorage)],
    };
 
    AlpineLogistics: IUpgradeDefinition = {
@@ -894,7 +895,7 @@ export class UpgradeDefinitions {
       onUnlocked: (gs) => {
          const hq = findSpecialBuilding("Headquarter", gs);
          if (hq) {
-            const [_, science] = getTechUnlockCostInAge(getCurrentAge(gs));
+            const [_, science] = getTechUnlockCostInAge(getCurrentAge(gs), gs);
             safeAdd(hq.building.resources, "Science", science);
          }
       },
@@ -934,7 +935,7 @@ export class UpgradeDefinitions {
       name: () => $t(L.HusainidDynasty),
       requireResources: {},
       globalMultiplier: {
-         // @TODO: Implement BLB
+         levelBoost: 5,
       },
    };
 }

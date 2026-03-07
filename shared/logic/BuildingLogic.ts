@@ -109,13 +109,6 @@ export function forEachMultiplier(
       if (stableOnly && m.unstable) return;
       func(m);
    });
-   const b = gs.tiles.get(xy)?.building;
-   if (b) {
-      Tick.current.buildingMultipliers.get(b.type)?.forEach((m) => {
-         if (stableOnly && m.unstable) return;
-         func(m);
-      });
-   }
    AllMultiplierTypes.forEach((type) => {
       getGlobalMultipliers(type).forEach((m) => {
          if (stableOnly && m.unstable) return;

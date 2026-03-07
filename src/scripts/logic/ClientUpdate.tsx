@@ -9,7 +9,13 @@ import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getBuildingsByType } from "../../../shared/logic/IntraTickCache";
 import { getGreatPeopleForWisdom, getGreatPersonThisRunLevel } from "../../../shared/logic/RebirthLogic";
 import { RequestResetTile, getCurrentAge } from "../../../shared/logic/TechLogic";
-import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
+import {
+   CurrentTickChanged,
+   EmptyTickData,
+   Tick,
+   calculateCurrentTick,
+   freezeTickData,
+} from "../../../shared/logic/TickLogic";
 import {
    OnBuildingComplete,
    OnBuildingOrUpgradeComplete,
@@ -108,6 +114,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 
    Tick.next.tick = ++currentSessionTick;
    Tick.current = freezeTickData(Tick.next);
+   calculateCurrentTick(Tick.current, gs);
    Tick.next = EmptyTickData();
    clearIntraTickCache();
 
