@@ -12,13 +12,13 @@
 }
 
 .idea-tree-node-title {
-   font-family: "Platypi";
+   font-family: "Platypi", serif;
    font-size: 14px;
    color: #333;
 }
 
 .idea-tree-node-desc {
-   font-family: "Cabin";
+   font-family: "Cabin", sans-serif;
    font-size: 10px;
    color: #666;
    line-height: 1.2;

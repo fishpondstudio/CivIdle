@@ -41,6 +41,7 @@
       "cordova-plugin-purchase": "^13.12.1",
       "fflate": "^0.8.2",
       "gameanalytics": "file:./packages/gameanalytics",
+      "html-to-image": "1.11.11",
       "install": "^0.13.0",
       "npm": "^10.9.0",
       "pixi.js": "7.4.2",

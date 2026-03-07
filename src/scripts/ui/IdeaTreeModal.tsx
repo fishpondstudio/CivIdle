@@ -1,6 +1,17 @@
 import dagre from "@dagrejs/dagre";
-import { Controls, Position, ReactFlow, SmoothStepEdge, type Edge, type Node } from "@xyflow/react";
+import {
+   Controls,
+   getViewportForBounds,
+   Panel,
+   Position,
+   ReactFlow,
+   SmoothStepEdge,
+   useReactFlow,
+   type Edge,
+   type Node,
+} from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import { toPng } from "html-to-image";
 import { CarthaginianIdeas, type IdeaDefinition } from "../../../shared/definitions/IdeaDefinitions";
 import { entriesOf } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
@@ -72,6 +83,9 @@ function getNodesAndEdges<K extends string, V>(
 
 const { nodes, edges } = getLayoutElements(getNodesAndEdges(CarthaginianIdeas));
 
+const imageWidth = 1024 * 3;
+const imageHeight = 768 * 3;
+
 export function IdeaTreeModal(): React.ReactNode {
    return (
       <div className="window" style={{ width: "unset" }}>
@@ -82,6 +96,7 @@ export function IdeaTreeModal(): React.ReactNode {
             </div>
          </div>
          <div className="window-body">
+            <div className="sep10" />
             <div
                className="inset-shallow white"
                style={{ width: "1024px", height: "768px", maxWidth: "90vw", maxHeight: "90vh" }}
@@ -99,9 +114,44 @@ export function IdeaTreeModal(): React.ReactNode {
                   fitView
                >
                   <Controls showInteractive={false} showZoom={false} showFitView={true} />
+                  <DownloadButton />
                </ReactFlow>
             </div>
          </div>
       </div>
+   );
+}
+
+function DownloadButton() {
+   if (!import.meta.env.DEV) {
+      return null;
+   }
+   const { getNodes, getNodesBounds } = useReactFlow();
+   return (
+      <Panel>
+         <button
+            onClick={() => {
+               const nodesBounds = getNodesBounds(getNodes());
+               const viewport = getViewportForBounds(nodesBounds, imageWidth, imageHeight, 2, 10, 100);
+               toPng(document.querySelector(".react-flow__viewport") as HTMLElement, {
+                  backgroundColor: "#ffffff",
+                  width: imageWidth,
+                  height: imageHeight,
+                  style: {
+                     width: `${imageWidth}px`,
+                     height: `${imageHeight}px`,
+                     transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
+                  },
+               }).then((dataUrl) => {
+                  const a = document.createElement("a");
+                  a.setAttribute("download", "reactflow.png");
+                  a.setAttribute("href", dataUrl);
+                  a.click();
+               });
+            }}
+         >
+            Download
+         </button>
+      </Panel>
    );
 }
