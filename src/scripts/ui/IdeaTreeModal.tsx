@@ -96,7 +96,6 @@ export function IdeaTreeModal(): React.ReactNode {
             </div>
          </div>
          <div className="window-body">
-            <div className="sep10" />
             <div
                className="inset-shallow white"
                style={{ width: "1024px", height: "768px", maxWidth: "90vw", maxHeight: "90vh" }}
@@ -114,7 +113,7 @@ export function IdeaTreeModal(): React.ReactNode {
                   fitView
                >
                   <Controls showInteractive={false} showZoom={false} showFitView={true} />
-                  <DownloadButton />
+                  {/* <DownloadButton /> */}
                </ReactFlow>
             </div>
          </div>
@@ -123,9 +122,6 @@ export function IdeaTreeModal(): React.ReactNode {
 }
 
 function DownloadButton() {
-   if (!import.meta.env.DEV) {
-      return null;
-   }
    const { getNodes, getNodesBounds } = useReactFlow();
    return (
       <Panel>
