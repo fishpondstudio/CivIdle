@@ -443,6 +443,7 @@ export class UpgradeDefinitions {
             }
          });
       },
+      additionalUpgrades: () => [$t(L.LiberalismLevel4DescHTML)],
    };
 
    Liberalism5: IUpgradeDefinition = {

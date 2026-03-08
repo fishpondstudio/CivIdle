@@ -1927,4 +1927,5 @@ export const EN = {
    LevelBoost: "Building Level Boost",
    PlusXGreatPersonFromTheCurrentAge: "+%{count} Great Person from the current age",
    GenerateOneTimeWarpThatRefillsAllAvailableWarpStorage: "Generate one-time warp that refills all available warp storage",
+   LiberalismLevel4DescHTML: "All power plants get +1 Production Multiplier",
 };
