@@ -7,7 +7,7 @@ import { useGameState } from "../Global";
 
 type IdeaNode = Node<{ upgrade: Upgrade; requires: Upgrade[] }, "IdeaNode">;
 
-export default function IdeaNode({ data }: NodeProps<IdeaNode>) {
+export function IdeaNode({ data }: NodeProps<IdeaNode>) {
    const { upgrade, requires } = data;
    const gs = useGameState();
    return (

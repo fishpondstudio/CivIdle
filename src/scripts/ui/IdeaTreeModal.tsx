@@ -16,7 +16,7 @@ import { CarthaginianIdeas, type IdeaDefinition } from "../../../shared/definiti
 import { entriesOf } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { hideModal } from "./GlobalModal";
-import IdeaNode from "./IdeaNode";
+import { IdeaNode } from "./IdeaNode";
 import "./IdeaTreeModal.css";
 
 const nodeWidth = 200;
