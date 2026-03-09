@@ -382,8 +382,9 @@ test("getNextAge", () => {
 });
 
 test("getTechUnlockCostInAge", () => {
+   const gs = new GameState();
    forEach(Config.TechAge, (age, def) => {
-      const [min, max] = getTechUnlockCostInAge(age);
+      const [min, max] = getTechUnlockCostInAge(age, gs);
       assert.isTrue(Number.isFinite(min), age);
       assert.isTrue(Number.isFinite(max), age);
       assert.isTrue(max > min, age);
@@ -411,8 +412,8 @@ test("getEligibleRank", () => {
       color: UserColors.Default,
       lastHeartbeatAt: Date.now(),
       level: AccountLevel.Tribune,
-      empireValues: [],
       tradeValues: [],
+      lastTradedAt: 0,
       attr: UserAttributes.None,
    };
    assert.equal(getEligibleRank(user), AccountLevel.Tribune);
