@@ -17,7 +17,7 @@ export const KR = {
    AccountLevelTribune: "평민",
    AccountLevelUpgradeConditionAnyHTML: "계정을 업그레이드하려면 <b>다음 중 하나</b>의 기준만 충족하면 됩니다.",
    AccountRankUp: "계정 랭크 업글",
-   AccountRankUpDesc: "모든 진행 상황이 새로운 랭크로 이월 됩니다.",
+   AccountRankUpDesc: "모든 진행 상황이 새로운 랭크로 이월됩니다.",
    AccountRankUpTip: "축하합니다, 귀하의 계정은 더 높은 랭크로 업그레이드 할 수 있는 자격이 생겼습니다. 업그레이드 할려면 클릭하세요!",
    AccountSupporter: "Supporter Pack 구매자",
    AccountTradePriceRange: "거래 가격 범위",
