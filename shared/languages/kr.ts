@@ -143,7 +143,7 @@ export const KR = {
    Bitcoin: "비트코인",
    BitcoinMiner: "비트코인 채굴기",
    BlackForest: "검은 숲",
-   BlackForestDesc: "발견되면 지도에 있는 모든 나무 타일이 발견됩니다. 그리고 인접한 타일에 나무가 생성됩니다. 나무나 목제를 소비하는 건물은 생산 배수 +5를 얻습니다.",
+   BlackForestDesc: "발견되면 지도에 있는 모든 나무 타일이 발견됩니다. 그리고 인접한 타일에 나무가 생성됩니다. 나무나 목재를 소비하는 건물은 생산 배수 +5를 얻습니다.",
    Blacksmith: "대장장이",
    Blockchain: "블록체인",
    BobHope: "밥 호프",
