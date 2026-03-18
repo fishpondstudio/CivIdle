@@ -668,7 +668,8 @@ export class UpgradeDefinitions {
       name: () => $t(L.RiseOfPunic),
       requireResources: {},
       globalMultiplier: {
-         sciencePerBusyWorker: 1,
+         sciencePerBusyWorker: 2,
+         sciencePerIdleWorker: 1,
       },
    };
 
@@ -728,20 +729,9 @@ export class UpgradeDefinitions {
    PunicLegalCodex: IUpgradeDefinition = {
       name: () => $t(L.PunicLegalCodex),
       requireResources: {},
-      onUnlocked: (gs) => {
-         for (let i = 0; i < 2; i++) {
-            const candidates = rollGreatPeopleThisRun(
-               new Set([getCurrentAge(gs)]),
-               gs.city,
-               getGreatPeopleChoiceCount(gs),
-            );
-            if (candidates) {
-               gs.greatPeopleChoicesV2.push(candidates);
-            }
-         }
-         RequestChooseGreatPerson.emit({ permanent: false });
+      globalMultiplier: {
+         levelBoost: 5,
       },
-      additionalUpgrades: () => [$t(L.PlusXGreatPersonFromTheCurrentAge, { count: 2 })],
    };
 
    TreatyDiplomacy: IUpgradeDefinition = {
@@ -749,6 +739,7 @@ export class UpgradeDefinitions {
       requireResources: {},
       globalMultiplier: {
          storage: 5,
+         builderCapacity: 5,
       },
    };
 
@@ -772,25 +763,25 @@ export class UpgradeDefinitions {
    CaravansaryNetwork: IUpgradeDefinition = {
       name: () => $t(L.CaravansaryNetwork),
       requireResources: {},
-      additionalUpgrades: () => [
-         $t(L.PlusXBaseStorageForMarketWarehouseAndCaravansary, { percent: formatPercent(1) }),
-      ],
+      globalMultiplier: {
+         storage: 5,
+      },
    };
 
    MediterraneanTrades: IUpgradeDefinition = {
       name: () => $t(L.MediterraneanTrades),
       requireResources: {},
-      globalMultiplier: {
-         storage: 5,
-      },
+      additionalUpgrades: () => [
+         $t(L.PlusXBaseStorageForMarketWarehouseAndCaravansary, { percent: formatPercent(1) }),
+      ],
    };
 
    CouncilOfElders: IUpgradeDefinition = {
       name: () => $t(L.CouncilOfElders),
       requireResources: {},
       globalMultiplier: {
-         sciencePerIdleWorker: 1,
-         sciencePerBusyWorker: 2,
+         sciencePerIdleWorker: 2,
+         sciencePerBusyWorker: 3,
       },
    };
 
@@ -806,7 +797,7 @@ export class UpgradeDefinitions {
       name: () => $t(L.BerberAlliance),
       requireResources: {},
       onUnlocked: (gs) => {
-         for (let i = 0; i < 5; i++) {
+         for (let i = 0; i < 10; i++) {
             const candidates = rollGreatPeopleThisRun(
                new Set([getCurrentAge(gs)]),
                gs.city,
@@ -818,7 +809,7 @@ export class UpgradeDefinitions {
          }
          RequestChooseGreatPerson.emit({ permanent: false });
       },
-      additionalUpgrades: () => [$t(L.PlusXGreatPersonFromTheCurrentAge, { count: 5 })],
+      additionalUpgrades: () => [$t(L.PlusXGreatPersonFromTheCurrentAge, { count: 10 })],
    };
 
    SacredBand: IUpgradeDefinition = {
@@ -878,7 +869,7 @@ export class UpgradeDefinitions {
       name: () => $t(L.ExarchateOfAfrica),
       requireResources: {},
       globalMultiplier: {
-         storage: 10,
+         output: 5,
       },
    };
 
@@ -886,7 +877,7 @@ export class UpgradeDefinitions {
       name: () => $t(L.ChurchOfCarthage),
       requireResources: {},
       globalMultiplier: {
-         happiness: 20,
+         happiness: 10,
       },
    };
 
@@ -917,10 +908,7 @@ export class UpgradeDefinitions {
    HafsidDynasty: IUpgradeDefinition = {
       name: () => $t(L.HafsidDynasty),
       requireResources: {},
-      globalMultiplier: {
-         sciencePerIdleWorker: 4,
-         sciencePerBusyWorker: 5,
-      },
+      additionalUpgrades: () => ["All transports with distance <= 3 tile are immediate"],
    };
 
    AcropoliumOfCarthage: IUpgradeDefinition = {
@@ -928,9 +916,6 @@ export class UpgradeDefinitions {
       requireResources: {},
       onUnlocked: (gs) => {
          // @TODO: Implement
-      },
-      globalMultiplier: {
-         levelBoost: 5,
       },
       additionalUpgrades: () => [$t(L.GenerateOneTimeKotiEqualTo5OfTheTotalEmpireValue)],
    };

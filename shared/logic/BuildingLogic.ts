@@ -541,8 +541,7 @@ export function getBuildingCost(building: BuildingCostInput): PartialTabulate<Ma
       }
       keysOf(cost).forEach((res) => {
          const price = Config.MaterialPrice[res] ?? 1;
-         cost[res] =
-            (Math.pow(WonderCostBase[type] ?? 1.5, building.level) * multiplier * cost[res]!) / price;
+         cost[res] = ((WonderCostBase[type] ?? 1.5) ** building.level * multiplier * cost[res]!) / price;
       });
    } else {
       const multiplier = 10;
@@ -1432,7 +1431,7 @@ export function getResourceImportBuildingBaseStorageMultiplier(gs: GameState): n
    if (gs.unlockedUpgrades.HarborWarehouse) {
       ++result;
    }
-   if (gs.unlockedUpgrades.CaravansaryNetwork) {
+   if (gs.unlockedUpgrades.MediterraneanTrades) {
       ++result;
    }
    return result;
