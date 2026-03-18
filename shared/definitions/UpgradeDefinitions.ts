@@ -757,7 +757,9 @@ export class UpgradeDefinitions {
       onUnlocked: (gs) => {
          //@TODO: Implement
       },
-      additionalUpgrades: () => [$t(L.GenerateOneTimeKotiEqualTo10OfTheTotalBuildingValue)],
+      additionalUpgrades: () => [
+         $t(L.GenerateOneTimeKotiEqualToXOfTheTotalBuildingValue, { percent: formatPercent(0.05) }),
+      ],
    };
 
    CaravansaryNetwork: IUpgradeDefinition = {
@@ -788,9 +790,8 @@ export class UpgradeDefinitions {
    SuffeteAdministration: IUpgradeDefinition = {
       name: () => $t(L.SuffeteAdministration),
       requireResources: {},
-      globalMultiplier: {
-         levelBoost: 2,
-      },
+      // @TODO: Implement
+      additionalUpgrades: () => [$t(L.PlusAtlasMountainsRange, { range: 2 })],
    };
 
    BerberAlliance: IUpgradeDefinition = {
@@ -830,7 +831,7 @@ export class UpgradeDefinitions {
       name: () => $t(L.PurpleDyeMonopoly),
       requireResources: {},
       globalMultiplier: {
-         happiness: 10,
+         levelBoost: 2,
       },
    };
 
