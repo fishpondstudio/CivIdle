@@ -236,9 +236,11 @@ export function getMaxWarpSpeed(gs: GameState): number {
    return status === "completed" || status === "upgrading" ? MAX_PETRA_SPEED_UP : 2;
 }
 
+export const BASE_WARP_HOUR = 4;
+
 export function getMaxWarpStorage(gs: GameState): number {
    const HOUR = 60 * 60;
-   let storage = 4 * HOUR;
+   let storage = BASE_WARP_HOUR * HOUR;
    const petra = findSpecialBuilding("Petra", gs);
    if (petra) {
       // Petra level based warp
@@ -1154,8 +1156,7 @@ export function addPetraOfflineTime(time: number, gs: GameState): number {
       hq.building.resources.Warp = 0;
    }
    const before = hq.building.resources.Warp;
-   hq.building.resources.Warp += time;
-   hq.building.resources.Warp = clamp(hq.building.resources.Warp, 0, storage);
+   hq.building.resources.Warp = clamp(before + time, 0, storage);
    const after = hq.building.resources.Warp;
    console.log("[addPetraOfflineTime]: Before:", before, "After:", after);
    return after - before;

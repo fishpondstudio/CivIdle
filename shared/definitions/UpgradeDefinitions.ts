@@ -824,7 +824,7 @@ export class UpgradeDefinitions {
    SacredBand: IUpgradeDefinition = {
       name: () => $t(L.SacredBand),
       requireResources: {},
-      additionalUpgrades: () => [$t(L.MinusXResearchCost, { percent: formatPercent(5) })],
+      additionalUpgrades: () => [$t(L.MinusXResearchCost, { percent: formatPercent(0.05) })],
    };
 
    CothonDockyards: IUpgradeDefinition = {
@@ -846,7 +846,7 @@ export class UpgradeDefinitions {
    PunicGoldenAge: IUpgradeDefinition = {
       name: () => $t(L.PunicGoldenAge),
       requireResources: {},
-      additionalUpgrades: () => [$t(L.MinusXResearchCost, { percent: formatPercent(10) })],
+      additionalUpgrades: () => [$t(L.MinusXResearchCost, { percent: formatPercent(0.1) })],
    };
 
    IberianColonies: IUpgradeDefinition = {
@@ -929,15 +929,10 @@ export class UpgradeDefinitions {
       onUnlocked: (gs) => {
          // @TODO: Implement
       },
-      additionalUpgrades: () => [$t(L.GenerateOneTimeKotiEqualTo5OfTheTotalEmpireValue)],
-   };
-
-   HusainidDynasty: IUpgradeDefinition = {
-      name: () => $t(L.HusainidDynasty),
-      requireResources: {},
       globalMultiplier: {
          levelBoost: 5,
       },
+      additionalUpgrades: () => [$t(L.GenerateOneTimeKotiEqualTo5OfTheTotalEmpireValue)],
    };
 }
 

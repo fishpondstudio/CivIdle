@@ -26,7 +26,7 @@ export class CarthaginianIdeasDefinitions {
    };
    PunicCoinage: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "PunicCoinage",
-      requires: ["PhoenicianAlphabet"],
+      requires: ["RitualSanctuaries"],
    };
    RitualSanctuaries: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "RitualSanctuaries",
@@ -42,11 +42,11 @@ export class CarthaginianIdeasDefinitions {
    };
    PunicLegalCodex: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "PunicLegalCodex",
-      requires: ["HarborWarehouse"],
+      requires: ["CouncilOfElders"],
    };
    TreatyDiplomacy: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "TreatyDiplomacy",
-      requires: ["PunicLegalCodex"],
+      requires: ["AlpineLogistics"],
    };
    WarElephants: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "WarElephants",
@@ -62,27 +62,27 @@ export class CarthaginianIdeasDefinitions {
    };
    MediterraneanTrades: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "MediterraneanTrades",
-      requires: ["PunicCoinage"],
+      requires: ["CaravansaryNetwork"],
    };
    CouncilOfElders: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "CouncilOfElders",
-      requires: ["MediterraneanTrades"],
+      requires: ["HarborWarehouse"],
    };
    SuffeteAdministration: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "SuffeteAdministration",
-      requires: ["CouncilOfElders"],
+      requires: ["CothonDockyards"],
    };
    BerberAlliance: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "BerberAlliance",
-      requires: ["SuffeteAdministration"],
+      requires: ["TreatyDiplomacy"],
    };
    SacredBand: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "SacredBand",
-      requires: ["HannibalStrategy"],
+      requires: ["WarElephants"],
    };
    CothonDockyards: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "CothonDockyards",
-      requires: ["HannibalStrategy"],
+      requires: ["SacredBand"],
    };
    PurpleDyeMonopoly: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "PurpleDyeMonopoly",
@@ -94,31 +94,31 @@ export class CarthaginianIdeasDefinitions {
    };
    IberianColonies: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "IberianColonies",
-      requires: ["PunicGoldenAge"],
+      requires: ["MediterraneanTrades"],
    };
    AlpineLogistics: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "AlpineLogistics",
-      requires: ["SacredBand"],
+      requires: ["HannibalStrategy"],
    };
    MercenaryCommand: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "MercenaryCommand",
-      requires: ["CothonDockyards"],
+      requires: ["AlpineLogistics"],
    };
    ExarchateOfAfrica: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "ExarchateOfAfrica",
-      requires: ["IberianColonies", "BerberAlliance"],
+      requires: ["SuffeteAdministration"],
    };
    ChurchOfCarthage: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "ChurchOfCarthage",
-      requires: ["TreatyDiplomacy"],
+      requires: ["HarborWarehouse"],
    };
    MedinaOfTunis: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "MedinaOfTunis",
-      requires: ["MercenaryCommand", "AlpineLogistics"],
+      requires: ["CothonDockyards"],
    };
    ProvinceOfIfriqiya: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "ProvinceOfIfriqiya",
-      requires: ["MedinaOfTunis"],
+      requires: ["MercenaryCommand"],
    };
    HafsidDynasty: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "HafsidDynasty",
@@ -126,11 +126,7 @@ export class CarthaginianIdeasDefinitions {
    };
    AcropoliumOfCarthage: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "AcropoliumOfCarthage",
-      requires: ["ChurchOfCarthage", "ExarchateOfAfrica"],
-   };
-   HusainidDynasty: IdeaDefinition<CarthaginianIdea> = {
-      upgrade: "HusainidDynasty",
-      requires: ["HafsidDynasty"],
+      requires: ["ChurchOfCarthage"],
    };
 }
 

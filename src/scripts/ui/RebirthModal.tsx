@@ -2,6 +2,8 @@ import Tippy from "@tippyjs/react";
 import { useEffect, useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
 import {
+   addPetraOfflineTime,
+   BASE_WARP_HOUR,
    findSpecialBuilding,
    getBuildingDescription,
    getMultipliersDescription,
@@ -29,6 +31,7 @@ import {
    entriesOf,
    formatPercent,
    hasFlag,
+   HOUR,
    isEmpty,
    mapOf,
    range,
@@ -491,6 +494,13 @@ export function RebirthModal(): React.ReactNode {
                         gs.rebirthed = true;
                      }
 
+                     let carryOverWarp = 0;
+                     const hq = findSpecialBuilding("Headquarter", getGameState());
+                     const petra = findSpecialBuilding("Petra", getGameState());
+                     if (hq && petra) {
+                        carryOverWarp = clamp(hq.building.resources.Warp ?? 0, 0, BASE_WARP_HOUR * HOUR);
+                     }
+
                      checkRebirthAchievements(greatPeopleCount, gs);
 
                      let flags = RebirthFlags.None;
@@ -524,6 +534,10 @@ export function RebirthModal(): React.ReactNode {
                               pompidou.cities.add(currentCity);
                            }
                         });
+                     }
+
+                     if (carryOverWarp > 0) {
+                        addPetraOfflineTime(carryOverWarp, getGameState());
                      }
 
                      try {

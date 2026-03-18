@@ -899,7 +899,7 @@ export class BuildingDefinitions {
    };
    Petra: IBuildingDefinition = {
       name: () => $t(L.Petra),
-      desc: () => $t(L.PetraDescV2),
+      desc: () => $t(L.PetraDescV3),
       input: {},
       output: {},
       max: 1,

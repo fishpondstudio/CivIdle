@@ -1085,7 +1085,7 @@ export const EN = {
    PeterHiggs: "Peter Higgs",
    PeterHiggsDesc: "+%{value} Science From Busy Workers",
    Petra: "Petra",
-   PetraDescV2: "Unlock higher Warp Speed. This wonder can be upgraded and each level provides 1h of Warp Storage",
+   PetraDescV3: "Unlock higher Warp Speed. This wonder can be upgraded and each level provides 1h of Warp Storage. Warp from this run (max. 4h) can be carried over to the next run",
    PetraOfflineTimeReconciliation: "You have been credited %{count} warp after server offline time reconciliation",
    Petrol: "Petrol",
    PhiloFarnsworth: "Philo Farnsworth",
