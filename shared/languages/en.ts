@@ -1923,7 +1923,7 @@ export const EN = {
    GenerateOneTimeScienceEqualToTheCheapestTechnologyOfTheCurrentAge: "Generate one-time science equal to the cheapest technology of the current age",
    GenerateOneTimeScienceEqualToTheCostOfTheMostExpensiveTechnologyOfTheCurrentAge: "Generate one-time science equal to the cost of the most expensive technology of the current age",
    GenerateOneTimeKotiEqualTo5OfTheTotalEmpireValue: "Generate one-time Koti equal to 5% of the total empire value",
-   GenerateOneTimeKotiEqualTo10OfTheTotalBuildingValue: "Generate one-time Koti equal to 10% of the total building value",
+   GenerateOneTimeKotiEqualToXOfTheTotalBuildingValue: "Generate one-time Koti equal to ${percent}% of the total building value",
    LevelBoost: "Building Level Boost",
    PlusXGreatPersonFromTheCurrentAge: "+%{count} Great Person from the current age",
    GenerateOneTimeWarpThatRefillsAllAvailableWarpStorage: "Generate one-time warp that refills all available warp storage",
@@ -1937,4 +1937,5 @@ export const EN = {
    TransportPlanCacheTimeout: "Transport Plan Cache Timeout",
    TransportPlanCacheTimeoutDescHTML: "Sometimes transport plan cache can become stale. This will force clear the cache after the specified number of seconds. <b>Must be between %{min} and %{max} seconds</b>",
    FestivalOfTanit: "Festival of Tanit: Atlas Mountains get +3 range and also provide Building Level Boost",
+   PlusAtlasMountainsRange: "+%{range} Atlas Mountains range",
 };
