@@ -29,7 +29,7 @@ import {
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { makeBuilding, type IBuildingData } from "../../../shared/logic/Tile";
-import { OnBuildingComplete } from "../../../shared/logic/Update";
+import { clearTransportSourceCache, OnBuildingComplete } from "../../../shared/logic/Update";
 import {
    clamp,
    filterOf,
@@ -59,6 +59,8 @@ export function onBuildingComplete(xy: Tile): void {
    if (!building) {
       return;
    }
+
+   clearTransportSourceCache();
 
    const grid = getGrid(gs);
    switch (building.type) {

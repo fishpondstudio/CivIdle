@@ -237,6 +237,9 @@ export const CursorOptions = {
 export type ExtraTileInfoType = keyof typeof ExtraTileInfoTypes;
 export type CursorOption = keyof typeof CursorOptions;
 
+export const TransportSourceCacheTimeoutMin = 10;
+export const TransportSourceCacheTimeoutMax = 60 * 5;
+
 export class GameOptions {
    useModernUI = true;
    useMonospaceNumbers = true;
@@ -263,6 +266,7 @@ export class GameOptions {
    chatHideLatestMessage = false;
    chatChannels: Set<ChatChannel> = new Set(["en"]);
    enableTransportSourceCache = false;
+   transportSourceCacheTimeout = 60;
    resourceBarShowUncappedHappiness = false;
    extraTileInfoType: ExtraTileInfoType = "StoragePercentage";
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};

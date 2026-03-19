@@ -1928,4 +1928,13 @@ export const EN = {
    PlusXGreatPersonFromTheCurrentAge: "+%{count} Great Person from the current age",
    GenerateOneTimeWarpThatRefillsAllAvailableWarpStorage: "Generate one-time warp that refills all available warp storage",
    LiberalismLevel4DescHTML: "All power plants get +1 Production Multiplier",
+   Carthaginian: "Carthaginian",
+   Carthage: "Carthage",
+   CothonOfCarthage: "Cothon of Carthage",
+   CothonOfCarthageDesc: "Unlock Carthaginian civilization ideas",
+   AtlasMountains: "Atlas Mountains",
+   AtlasMountainsDesc: "+5 Carthaginian civilization ideas. All buildings within 3 tile range get +X Production Multiplier. X = number of different resources produced but not consumed within the range",
+   TransportPlanCacheTimeout: "Transport Plan Cache Timeout",
+   TransportPlanCacheTimeoutDescHTML: "Sometimes transport plan cache can become stale. This will force clear the cache after the specified number of seconds. <b>Must be between %{min} and %{max} seconds</b>",
+   FestivalOfTanit: "Festival of Tanit: Atlas Mountains get +3 range and also provide Building Level Boost",
 };

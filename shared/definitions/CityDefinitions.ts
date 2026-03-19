@@ -534,6 +534,38 @@ export class CityDefinitions {
       festivalDesc: () => $t(L.WinterCarnival),
       uniqueEffects: () => [],
    };
+
+   Carthaginian: ICityDefinition = {
+      name: () => $t(L.Carthaginian),
+      deposits: {
+         Water: 0.025,
+         Copper: 0.015,
+         Iron: 0.025,
+         Wood: 0.015,
+         Stone: 0.025,
+         Gold: 0.015,
+         Coal: 0.025,
+         Oil: 0.015,
+         Aluminum: 0.025,
+         NaturalGas: 0.015,
+         Uranium: 0.02,
+      },
+      size: 40,
+      buildingNames: {
+         Headquarter: () => $t(L.Carthage),
+      },
+      uniqueBuildings: {
+         CothonOfCarthage: "Architecture",
+      },
+      uniqueMultipliers: {},
+      naturalWonders: {
+         AtlasMountains: true,
+      },
+      requireGreatPeopleLevel: 130,
+      requireSupporterPack: true,
+      festivalDesc: () => $t(L.FestivalOfTanit),
+      uniqueEffects: () => [],
+   };
 }
 
 export type City = keyof CityDefinitions;

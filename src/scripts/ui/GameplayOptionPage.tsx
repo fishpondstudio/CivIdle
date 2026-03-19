@@ -7,6 +7,8 @@ import {
    getTranslatedPercentage,
    ResourcePanelSectionLabels,
    ResourcePanelSections,
+   TransportSourceCacheTimeoutMax,
+   TransportSourceCacheTimeoutMin,
    type ExtraTileInfoType,
 } from "../../../shared/logic/GameState";
 import { getGameOptions, notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
@@ -489,6 +491,34 @@ export function GameplayOptionPage(): React.ReactNode {
                      notifyGameOptionsUpdate(options);
                   }}
                />
+               <div className="separator"></div>
+               <div className="row">
+                  <div className="f1">
+                     <div>{$t(L.TransportPlanCacheTimeout)}</div>
+                     {html(
+                        $t(L.TransportPlanCacheTimeoutDescHTML, {
+                           min: TransportSourceCacheTimeoutMin,
+                           max: TransportSourceCacheTimeoutMax,
+                        }),
+                        "text-desc text-small",
+                     )}
+                  </div>
+                  <input
+                     className="text-right"
+                     style={{ width: 60 }}
+                     type="text"
+                     defaultValue={options.transportSourceCacheTimeout}
+                     onBlur={(e) => {
+                        options.transportSourceCacheTimeout = clamp(
+                           safeParseInt(e.target.value, 10),
+                           TransportSourceCacheTimeoutMin,
+                           TransportSourceCacheTimeoutMax,
+                        );
+                        e.target.value = String(options.transportSourceCacheTimeout);
+                        notifyGameOptionsUpdate(options);
+                     }}
+                  />
+               </div>
                <button
                   className="jcc w100 mt10"
                   onClick={() => {

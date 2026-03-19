@@ -3,7 +3,12 @@ import { Advisors } from "../../../shared/definitions/AdvisorDefinitions";
 import { GreatPersonTickFlag } from "../../../shared/definitions/GreatPersonDefinitions";
 import { OnTileExplored, getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { ValueToTrack, type GameState } from "../../../shared/logic/GameState";
+import {
+   TransportSourceCacheTimeoutMax,
+   TransportSourceCacheTimeoutMin,
+   ValueToTrack,
+   type GameState,
+} from "../../../shared/logic/GameState";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getBuildingsByType } from "../../../shared/logic/IntraTickCache";
@@ -24,6 +29,7 @@ import {
    OnPriceUpdated,
    RequestChooseGreatPerson,
    RequestFloater,
+   clearTransportSourceCache,
    getSortedTiles,
    tickPower,
    tickPrice,
@@ -117,6 +123,15 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    calculateCurrentTick(Tick.current, gs);
    Tick.next = EmptyTickData();
    clearIntraTickCache();
+   const options = getGameOptions();
+   options.transportSourceCacheTimeout = clamp(
+      options.transportSourceCacheTimeout,
+      TransportSourceCacheTimeoutMin,
+      TransportSourceCacheTimeoutMax,
+   );
+   if (currentSessionTick % options.transportSourceCacheTimeout === 0) {
+      clearTransportSourceCache();
+   }
 
    forEach(gs.unlockedTech, (tech) => {
       const td = Config.Tech[tech];
@@ -134,8 +149,6 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    });
 
    gs.lastClientTickAt = Date.now();
-
-   const options = getGameOptions();
 
    forEach(options.greatPeople, (person, v) => {
       const greatPerson = Config.GreatPerson[person];

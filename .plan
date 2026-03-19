@@ -1,3 +1,5 @@
 - Petra: Warp from this run (max. 4h) can be carried over to the next run
+- Transport Plan Cache Timeout: Sometimes transport plan cache can become stale. This will force clear the cache after the specified number of seconds
+
 - Atlas Mountains: +5 civilization idea point. All buildings within 3 tile range get +X Production Multiplier. X = number of different resources produced but not consumed within the range
 - Festival of Tanit: Atlas Mountains get +3 range and also provide Building Level Boost

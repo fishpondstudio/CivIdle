@@ -1,13 +1,5 @@
 {
-   "cSpell.words": [
-      "Cooldown",
-      "Gameplay",
-      "hitmap",
-      "Koffi",
-      "lerp",
-      "rebirthed",
-      "unlockable"
-   ],
+   "cSpell.words": ["Cooldown", "Cothon", "Gameplay", "hitmap", "Koffi", "lerp", "rebirthed", "unlockable"],
    "task.allowAutomaticTasks": "on",
    "typescript.tsdk": "node_modules\\typescript\\lib",
    "editor.formatOnSave": true,
@@ -21,5 +13,5 @@
       "source.organizeImports": "never",
       "source.organizeImports.biome": "explicit",
       "source.removeUnusedImports": "explicit"
-   },
+   }
 }

@@ -2415,6 +2415,28 @@ export class BuildingDefinitions {
       wikipedia: "World_Trade_Organization",
    };
 
+   CothonOfCarthage: IBuildingDefinition = {
+      name: () => $t(L.CothonOfCarthage),
+      desc: () => $t(L.CothonOfCarthageDesc),
+      input: {},
+      output: {},
+      construction: { MutualFund: 100, Koti: 100, TV: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Cothon",
+   };
+
+   AtlasMountains: IBuildingDefinition = {
+      name: () => $t(L.AtlasMountains),
+      desc: () => $t(L.AtlasMountainsDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Atlas_Mountains",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

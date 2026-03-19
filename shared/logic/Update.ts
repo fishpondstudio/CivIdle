@@ -238,7 +238,7 @@ export function transportAndConsumeResources(
 
    const transportSourceCache = offline || getGameOptions().enableTransportSourceCache;
 
-   if (!transportResource) {
+   if (!transportSourceCache) {
       clearTransportSourceCache();
    }
 
