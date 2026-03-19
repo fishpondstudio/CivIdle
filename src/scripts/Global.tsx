@@ -43,7 +43,6 @@ import {
    keysOf,
    resolveIn,
    safeAdd,
-   sizeOf,
    uuid4,
 } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
@@ -297,7 +296,7 @@ if (import.meta.env.DEV) {
       });
    };
    // @ts-expect-error
-   window.saveGame = () => {
+   window.save = () => {
       saveGame().then(() => window.location.reload());
    };
    // @ts-expect-error
@@ -305,7 +304,7 @@ if (import.meta.env.DEV) {
       const gs = getGameState();
       rollPermanentGreatPeople(
          rollCount,
-         clamp(Math.floor(rollCount / sizeOf(Config.GreatPerson)), 1, Number.POSITIVE_INFINITY),
+         clamp(Math.floor(rollCount / 10), 1, Number.POSITIVE_INFINITY),
          getGreatPeopleChoiceCount(gs),
          age,
          gs.city,

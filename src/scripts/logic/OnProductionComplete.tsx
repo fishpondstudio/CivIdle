@@ -1,11 +1,13 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { GreatPersonTickFlag, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import {
    IOFlags,
    addWorkers,
    saviorOnSpilledBloodProductionMultiplier as auroraBorealisProductionMultiplier,
    forEachMultiplier,
    generateScienceFromFaith,
+   getAtlasMountainsRange,
    getAvailableWorkers,
    getBranCastleRequiredWorkers,
    getBuildingCost,
@@ -2210,6 +2212,49 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          if (levelBoost > 0) {
             addLevelBoost("AILab", levelBoost, buildingName, gs);
          }
+         break;
+      }
+      case "AtlasMountains": {
+         const range = getAtlasMountainsRange(gs);
+         const resourcesProduced = new Set<Material>();
+         const resourcesConsumed = new Set<Material>();
+         const targets = new Set<Tile>();
+         for (const point of grid.getRange(tileToPoint(xy), range)) {
+            const targetXy = pointToTile(point);
+            if (targetXy === xy) {
+               continue;
+            }
+            const targetBuilding = getWorkingBuilding(targetXy, gs);
+            if (targetBuilding) {
+               targets.add(targetXy);
+               forEach(Config.Building[targetBuilding.type].input, (res, amount) => {
+                  resourcesConsumed.add(res);
+               });
+               forEach(Config.Building[targetBuilding.type].output, (res, amount) => {
+                  resourcesProduced.add(res);
+               });
+            }
+         }
+         let multiplier = 0;
+         for (const produced of resourcesProduced) {
+            if (!resourcesConsumed.has(produced)) {
+               multiplier++;
+            }
+         }
+         const festival = isFestival(building.type, gs);
+         for (const target of targets) {
+            mapSafePush(Tick.next.tileMultipliers, target, {
+               output: multiplier,
+               source: buildingName,
+            });
+            if (festival) {
+               mapSafePush(Tick.next.levelBoost, target, {
+                  value: multiplier,
+                  source: buildingName,
+               });
+            }
+         }
+
          break;
       }
    }

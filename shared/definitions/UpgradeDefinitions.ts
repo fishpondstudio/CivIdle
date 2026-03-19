@@ -7,6 +7,7 @@ import {
    rollGreatPeopleThisRun,
 } from "../logic/RebirthLogic";
 import { getCurrentAge, getTechUnlockCost, getTechUnlockCostInAge } from "../logic/TechLogic";
+import { Tick } from "../logic/TickLogic";
 import { RequestChooseGreatPerson, addMultiplier } from "../logic/Update";
 import { deepFreeze, forEach, formatPercent, pointToTile, safeAdd, tileToPoint } from "../utilities/Helper";
 import { $t, L } from "../utilities/i18n";
@@ -755,7 +756,12 @@ export class UpgradeDefinitions {
       name: () => $t(L.HannibalSStrategy),
       requireResources: {},
       onUnlocked: (gs) => {
-         //@TODO: Implement
+         const cothon = Tick.current.specialBuildings.get("CothonOfCarthage")?.building;
+         if (cothon) {
+            const bv = Tick.current.totalBuildingValue;
+            const koti = (bv * 0.05) / (Config.MaterialPrice.Koti ?? 1);
+            safeAdd(cothon.resources, "Koti", koti);
+         }
       },
       additionalUpgrades: () => [
          $t(L.GenerateOneTimeKotiEqualToXOfTheTotalBuildingValue, { percent: formatPercent(0.05) }),
@@ -790,7 +796,6 @@ export class UpgradeDefinitions {
    SuffeteAdministration: IUpgradeDefinition = {
       name: () => $t(L.SuffeteAdministration),
       requireResources: {},
-      // @TODO: Implement
       additionalUpgrades: () => [$t(L.PlusAtlasMountainsRange, { range: 2 })],
    };
 
@@ -909,16 +914,23 @@ export class UpgradeDefinitions {
    HafsidDynasty: IUpgradeDefinition = {
       name: () => $t(L.HafsidDynasty),
       requireResources: {},
-      additionalUpgrades: () => ["All transports with distance <= 3 tile are immediate"],
+      additionalUpgrades: () => [$t(L.AllTransportsWithDistance3TileAreImmediate)],
    };
 
    AcropoliumOfCarthage: IUpgradeDefinition = {
       name: () => $t(L.AcropoliumOfCarthage),
       requireResources: {},
       onUnlocked: (gs) => {
-         // @TODO: Implement
+         const cothon = Tick.current.specialBuildings.get("CothonOfCarthage")?.building;
+         if (cothon) {
+            const bv = Tick.current.totalValue;
+            const koti = (bv * 0.05) / (Config.MaterialPrice.Koti ?? 1);
+            safeAdd(cothon.resources, "Koti", koti);
+         }
       },
-      additionalUpgrades: () => [$t(L.GenerateOneTimeKotiEqualTo5OfTheTotalEmpireValue)],
+      additionalUpgrades: () => [
+         $t(L.GenerateOneTimeKotiEqualToXOfTheTotalEmpireValue, { percent: formatPercent(0.05) }),
+      ],
    };
 }
 

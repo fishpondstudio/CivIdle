@@ -2420,7 +2420,7 @@ export class BuildingDefinitions {
       desc: () => $t(L.CothonOfCarthageDesc),
       input: {},
       output: {},
-      construction: { MutualFund: 100, Koti: 100, TV: 100 },
+      construction: { SiegeRam: 100, Sword: 100, Furniture: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Cothon",
@@ -2546,6 +2546,7 @@ export const BuildingShowLevel = new Set<Building>([
    "ChateauFrontenac",
    "Habitat67",
    "WorldTradeOrganization",
+   "CothonOfCarthage",
 ] satisfies Building[]);
 
 // This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!
@@ -2575,6 +2576,7 @@ export const UpgradableWorldWonders = new Set<Building>([
    "ChateauFrontenac",
    "Habitat67",
    "WorldTradeOrganization",
+   "CothonOfCarthage",
 ] satisfies Building[]);
 
 // Include buildings here that does not really cost construction resources to upgrade

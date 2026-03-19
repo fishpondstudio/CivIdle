@@ -9,6 +9,7 @@ import {
 import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { IUnlockableMultipliers } from "../definitions/ITechDefinition";
+import { CarthaginianIdeas } from "../definitions/IdeaDefinitions";
 import { NoPrice, NoStorage, type Deposit, type Material } from "../definitions/MaterialDefinitions";
 import type { Religion } from "../definitions/ReligionDefinitions";
 import type { Tradition } from "../definitions/TraditionDefinitions";
@@ -1467,4 +1468,32 @@ export function hasNotUsedDinosaurProvincialPark(): boolean {
    }
    const building = dino as IDinosaurProvincialParkBuildingData;
    return !building.used;
+}
+
+export function getCarthageCivilizationIdeas(gs: GameState): {
+   total: number;
+   used: number;
+} {
+   const result = { total: 0, used: 0 };
+   const cothon = Tick.current.specialBuildings.get("CothonOfCarthage");
+   if (cothon?.building) {
+      result.total += cothon.building.level;
+   }
+   forEach(CarthaginianIdeas, (idea, def) => {
+      if (gs.unlockedUpgrades[def.upgrade]) {
+         result.used++;
+      }
+   });
+   return result;
+}
+
+export function getAtlasMountainsRange(gs: GameState): number {
+   let result = 2;
+   if (gs.unlockedUpgrades.SuffeteAdministration) {
+      result += 2;
+   }
+   if (isFestival("AtlasMountains", gs)) {
+      result += 2;
+   }
+   return result;
 }

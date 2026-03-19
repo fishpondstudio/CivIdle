@@ -255,12 +255,12 @@ export function transportAndConsumeResources(
    //    building.desiredLevel = clamp(building.desiredLevel, 0, 1);
    // }
 
-   const bev = getBuildingValue(building);
-   mapSafeAdd(Tick.next.buildingValueByTile, xy, bev);
-   mapSafeAdd(Tick.next.buildingValues, building.type, bev);
-
    if (building.type !== "CentrePompidou") {
+      const bev = getBuildingValue(building);
+      mapSafeAdd(Tick.next.buildingValueByTile, xy, bev);
+      mapSafeAdd(Tick.next.buildingValues, building.type, bev);
       Tick.next.totalValue += bev;
+      Tick.next.totalBuildingValue += bev;
    }
 
    // Tabulate resources before we early return
@@ -948,6 +948,11 @@ export function transportResource(
          (grid.distanceTile(from, sanchiStupa.tile) <= range ||
             grid.distanceTile(targetXy, sanchiStupa.tile) <= range)
       ) {
+         immediate = true;
+      }
+
+      const hafsid = gs.unlockedUpgrades.HafsidDynasty;
+      if (hafsid && grid.distanceTile(from, targetXy) <= 3) {
          immediate = true;
       }
 

@@ -15,6 +15,7 @@ import {
    applyBuildingDefaults,
    checkBuildingMax,
    findSpecialBuilding,
+   getAtlasMountainsRange,
    getGreatWallRange,
    getYellowCraneTowerRange,
    isFestival,
@@ -493,6 +494,10 @@ export class WorldScene extends Scene {
             }
             case "AuroraBorealis": {
                this.highlightRange(grid, isFestival(building.type, gs) ? 4 : 2);
+               break;
+            }
+            case "AtlasMountains": {
+               this.highlightRange(grid, getAtlasMountainsRange(gs));
                break;
             }
             // #endregion

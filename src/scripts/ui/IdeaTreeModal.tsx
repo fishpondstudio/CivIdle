@@ -83,8 +83,8 @@ function getNodesAndEdges<K extends string, V>(
 
 const { nodes, edges } = getLayoutElements(getNodesAndEdges(CarthaginianIdeas));
 
-const imageWidth = 1024 * 3;
-const imageHeight = 768 * 3;
+const imageWidth = 2500 * 2;
+const imageHeight = 1000 * 2;
 
 export function IdeaTreeModal(): React.ReactNode {
    return (

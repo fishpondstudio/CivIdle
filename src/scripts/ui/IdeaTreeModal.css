@@ -24,6 +24,15 @@
    line-height: 1.2;
 }
 
+.idea-tree-node.unlocked {
+   border-color: #047e00;
+}
+
+.idea-tree-node.unlocked .idea-tree-node-title,
+.idea-tree-node.unlocked .idea-tree-node-desc {
+   color: #047e00;
+}
+
 .idea-tree-node-handle {
    background: #999;
 }
