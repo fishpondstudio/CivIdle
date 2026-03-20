@@ -138,6 +138,11 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       tickUnlockable(td, $t(L.SourceResearch, { tech: td.name() }), gs);
    });
 
+   forEach(gs.unlockedUpgrades, (upgrade) => {
+      const ud = Config.Upgrade[upgrade];
+      tickUnlockable(ud, ud.name(), gs);
+   });
+
    forEach(gs.greatPeople, (person, level) => {
       const greatPerson = Config.GreatPerson[person];
       greatPerson.tick(

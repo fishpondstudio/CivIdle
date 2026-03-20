@@ -24,26 +24,26 @@ export function CothonOfCarthageBuildingBody({ gameState, xy }: IBuildingCompone
             <legend>{$t(L.CivilizationIdeas)}</legend>
             <ul className="tree-view">
                <li className="row">
-                  <div className="f1">Cothon of Carthage Level</div>
+                  <div className="f1">{$t(L.CothonOfCarthageLevel)}</div>
                   <div className="text-strong text-green">
                      +<FormatNumber value={total} />
                   </div>
                </li>
                <li className="row">
-                  <div className="f1">Unlocked Ideas</div>
+                  <div className="f1">{$t(L.UnlockedIdeas)}</div>
                   <div className="text-strong text-red">
                      -<FormatNumber value={used} />
                   </div>
                </li>
                <li className="row">
-                  <div className="f1">Available Idea Points</div>
+                  <div className="f1">{$t(L.AvailableIdeaPoints)}</div>
                   <div className="text-strong">
                      <FormatNumber value={total - used} />
                   </div>
                </li>
             </ul>
             <div className="text-small text-desc mt10">
-               Each level of Cothon of Carthage provides 1 idea point
+               {$t(L.EachLevelOfCothonOfCarthageProvides1IdeaPoint)}
             </div>
             <div className="separator" />
             <button

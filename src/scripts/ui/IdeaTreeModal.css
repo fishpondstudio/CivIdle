@@ -28,6 +28,15 @@
    border-color: #047e00;
 }
 
+.idea-tree-node.unlockable:hover {
+   border-color: #047e00;
+}
+
+.idea-tree-node.unlockable,
+.idea-tree-node.unlockable * {
+   cursor: pointer;
+}
+
 .idea-tree-node.unlocked .idea-tree-node-title,
 .idea-tree-node.unlocked .idea-tree-node-desc {
    color: #047e00;

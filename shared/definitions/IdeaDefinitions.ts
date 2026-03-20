@@ -36,9 +36,13 @@ export class CarthaginianIdeasDefinitions {
       upgrade: "IrrigatedEstate",
       requires: ["RitualSanctuaries"],
    };
+   GranaryAdministration: IdeaDefinition<CarthaginianIdea> = {
+      upgrade: "GranaryAdministration",
+      requires: ["IrrigatedEstate"],
+   };
    HarborWarehouse: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "HarborWarehouse",
-      requires: ["IrrigatedEstate"],
+      requires: ["GranaryAdministration"],
    };
    PunicLegalCodex: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "PunicLegalCodex",
@@ -56,9 +60,13 @@ export class CarthaginianIdeasDefinitions {
       upgrade: "HannibalStrategy",
       requires: ["WarElephants"],
    };
+   MerchantFleet: IdeaDefinition<CarthaginianIdea> = {
+      upgrade: "MerchantFleet",
+      requires: ["PunicCoinage"],
+   };
    CaravansaryNetwork: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "CaravansaryNetwork",
-      requires: ["PunicCoinage"],
+      requires: ["MerchantFleet"],
    };
    MediterraneanTrades: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "MediterraneanTrades",
@@ -80,9 +88,13 @@ export class CarthaginianIdeasDefinitions {
       upgrade: "SacredBand",
       requires: ["WarElephants"],
    };
+   NavalSiegecraft: IdeaDefinition<CarthaginianIdea> = {
+      upgrade: "NavalSiegecraft",
+      requires: ["SacredBand"],
+   };
    CothonDockyards: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "CothonDockyards",
-      requires: ["SacredBand"],
+      requires: ["NavalSiegecraft"],
    };
    PurpleDyeMonopoly: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "PurpleDyeMonopoly",
@@ -98,6 +110,10 @@ export class CarthaginianIdeasDefinitions {
    };
    AlpineLogistics: IdeaDefinition<CarthaginianIdea> = {
       upgrade: "AlpineLogistics",
+      requires: ["PincerMovement"],
+   };
+   PincerMovement: IdeaDefinition<CarthaginianIdea> = {
+      upgrade: "PincerMovement",
       requires: ["HannibalStrategy"],
    };
    MercenaryCommand: IdeaDefinition<CarthaginianIdea> = {

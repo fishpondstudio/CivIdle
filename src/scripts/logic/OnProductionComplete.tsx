@@ -11,6 +11,7 @@ import {
    getAvailableWorkers,
    getBranCastleRequiredWorkers,
    getBuildingCost,
+   getBuildingRange,
    getCathedralOfBrasiliaResources,
    getGreatWallRange,
    getMaxWarpStorage,
@@ -83,7 +84,7 @@ import type {
    ITraditionBuildingData,
    IZugspitzeBuildingData,
 } from "../../../shared/logic/Tile";
-import { addLevelBoost, addMultiplier, tickUnlockable } from "../../../shared/logic/Update";
+import { addLevelBoost, addMultiplier } from "../../../shared/logic/Update";
 import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import {
    MINUTE,
@@ -136,9 +137,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             output: round(getPermanentGreatPeopleLevel(getGameOptions()) * 0.1, 1),
             source: $t(L.PermanentGreatPeople),
          });
-         if (gs.unlockedUpgrades.SpaceshipIdle) {
-            tickUnlockable(Config.Upgrade.SpaceshipIdle, $t(L.WishlistSpaceshipIdle), gs);
-         }
          if (hasFeature(GameFeature.Festival, gs)) {
             if (gs.festival) {
                if ((building.resources.Festival ?? 0) >= FESTIVAL_CONVERSION_RATE) {
@@ -813,7 +811,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "CristoRedentor": {
-         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+         for (const point of grid.getRange(tileToPoint(xy), getBuildingRange(xy, building, gs))) {
             Tick.next.happinessExemptions.add(pointToTile(point));
          }
          break;
@@ -833,7 +831,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          const diff = maxTier - minTier;
          if (diff > 0) {
-            for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            for (const point of grid.getRange(tileToPoint(xy), getBuildingRange(xy, building, gs))) {
                mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
                   output: diff,
                   storage: diff,
@@ -993,7 +991,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "Atomium": {
          let science = 0;
-         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+         for (const point of grid.getRange(tileToPoint(xy), getBuildingRange(xy, building, gs))) {
             const nxy = pointToTile(point);
             if (nxy !== xy) {
                science += Tick.current.scienceProduced.get(nxy) ?? 0;
@@ -1071,7 +1069,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   gs.unlockedUpgrades[trad] = true;
                   def.onUnlocked?.(gs);
                }
-               tickUnlockable(def, $t(L.SourceTradition, { tradition: def.name() }), gs);
             }
          }
          break;
@@ -1091,7 +1088,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   gs.unlockedUpgrades[rel] = true;
                   def.onUnlocked?.(gs);
                }
-               tickUnlockable(def, $t(L.SourceReligion, { religion: def.name() }), gs);
             }
          }
          break;
@@ -1111,7 +1107,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   gs.unlockedUpgrades[ideo] = true;
                   def.onUnlocked?.(gs);
                }
-               tickUnlockable(def, $t(L.SourceIdeology, { ideology: def.name() }), gs);
             }
          }
          break;
@@ -2255,6 +2250,51 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          }
 
+         break;
+      }
+      case "CothonOfCarthage": {
+         if (gs.unlockedUpgrades.BerberAlliance) {
+            const age = options.ageWisdom.InformationAge ?? 0;
+            if (age > 0) {
+               getGreatPeopleForWisdom("InformationAge").forEach((gp) => {
+                  const greatPerson = Config.GreatPerson[gp];
+                  greatPerson.tick(
+                     gp,
+                     age * 0.5,
+                     `${Config.Upgrade.BerberAlliance.name()} (${Config.TechAge.InformationAge.name()})`,
+                     GreatPersonTickFlag.None,
+                  );
+               });
+            }
+         }
+         if (gs.unlockedUpgrades.PincerMovement) {
+            const age = options.ageWisdom.IndustrialAge ?? 0;
+            if (age > 0) {
+               getGreatPeopleForWisdom("IndustrialAge").forEach((gp) => {
+                  const greatPerson = Config.GreatPerson[gp];
+                  greatPerson.tick(
+                     gp,
+                     age * 0.5,
+                     `${Config.Upgrade.PincerMovement.name()} (${Config.TechAge.IndustrialAge.name()})`,
+                     GreatPersonTickFlag.None,
+                  );
+               });
+            }
+         }
+         if (gs.unlockedUpgrades.MediterraneanTrades) {
+            const age = options.ageWisdom.WorldWarAge ?? 0;
+            if (age > 0) {
+               getGreatPeopleForWisdom("WorldWarAge").forEach((gp) => {
+                  const greatPerson = Config.GreatPerson[gp];
+                  greatPerson.tick(
+                     gp,
+                     age * 0.5,
+                     `${Config.Upgrade.MediterraneanTrades.name()} (${Config.TechAge.WorldWarAge.name()})`,
+                     GreatPersonTickFlag.None,
+                  );
+               });
+            }
+         }
          break;
       }
    }

@@ -6,8 +6,9 @@ import { getCarthageCivilizationIdeas } from "../../../shared/logic/BuildingLogi
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { cls } from "../../../shared/utilities/Helper";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
-import { playClick, playError } from "../visuals/Sound";
+import { playError, playUpgrade } from "../visuals/Sound";
 
 type IdeaNode = Node<{ upgrade: Upgrade; requires: Upgrade[] }, "IdeaNode">;
 
@@ -19,6 +20,7 @@ export function IdeaNode({ data }: NodeProps<IdeaNode>) {
    const canUnlock = requires.every((u) => gs.unlockedUpgrades[u]) && available > 0;
    return (
       <Tippy
+         disabled={gs.unlockedUpgrades[upgrade]}
          content={
             <>
                {requires.map((u) => {
@@ -34,24 +36,30 @@ export function IdeaNode({ data }: NodeProps<IdeaNode>) {
                   );
                })}
                <div className="row g20">
-                  <div className="f1">1 Idea Point</div>
+                  <div className="f1">{$t(L.OneIdeaPoint)}</div>
                   {available > 0 ? (
                      <div className="m-icon small text-green">check_circle</div>
                   ) : (
                      <div className="m-icon small text-red">cancel</div>
                   )}
                </div>
-               {canUnlock && <div className="mt5 text-strong">Click to unlock this idea</div>}
+               {canUnlock && !gs.unlockedUpgrades[upgrade] && (
+                  <div className="mt5 text-strong">{$t(L.ClickToUnlockThisIdea)}</div>
+               )}
             </>
          }
       >
          <div
-            className={cls("idea-tree-node pointer", gs.unlockedUpgrades[upgrade] ? "unlocked" : "")}
+            className={cls(
+               "idea-tree-node",
+               gs.unlockedUpgrades[upgrade] ? "unlocked" : "",
+               canUnlock && !gs.unlockedUpgrades[upgrade] ? "unlockable" : "",
+            )}
             onClick={() => {
-               if (canUnlock) {
-                  playClick();
+               if (canUnlock && !gs.unlockedUpgrades[upgrade]) {
+                  Config.Upgrade[upgrade].onUnlocked?.(gs);
                   gs.unlockedUpgrades[upgrade] = true;
-                  console.log(gs.unlockedUpgrades);
+                  playUpgrade();
                   notifyGameStateUpdate();
                } else {
                   playError();

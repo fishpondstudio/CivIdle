@@ -709,6 +709,20 @@ export class UpgradeDefinitions {
    IrrigatedEstate: IUpgradeDefinition = {
       name: () => $t(L.IrrigatedEstate),
       requireResources: {},
+      additionalUpgrades: () => [$t(L.XhWarpStorageThisRun, { hour: 4 })],
+   };
+
+   HarborWarehouse: IUpgradeDefinition = {
+      name: () => $t(L.HarborWarehouse),
+      requireResources: {},
+      additionalUpgrades: () => [
+         $t(L.PlusXBaseStorageForMarketWarehouseAndCaravansary, { percent: formatPercent(1) }),
+      ],
+   };
+
+   GranaryAdministration: IUpgradeDefinition = {
+      name: () => $t(L.GranaryAdministration),
+      requireResources: {},
       additionalUpgrades: () => [$t(L.GenerateOneTimeScienceEqualToTheCheapestTechnologyOfTheCurrentAge)],
       onUnlocked: (gs) => {
          const hq = findSpecialBuilding("Headquarter", gs);
@@ -719,11 +733,11 @@ export class UpgradeDefinitions {
       },
    };
 
-   HarborWarehouse: IUpgradeDefinition = {
-      name: () => $t(L.HarborWarehouse),
+   PincerMovement: IUpgradeDefinition = {
+      name: () => $t(L.PincerMovement),
       requireResources: {},
       additionalUpgrades: () => [
-         $t(L.PlusXBaseStorageForMarketWarehouseAndCaravansary, { percent: formatPercent(1) }),
+         $t(L.PlusXAgeWisdom, { percent: formatPercent(0.5), age: Config.TechAge.IndustrialAge.name() }),
       ],
    };
 
@@ -738,10 +752,20 @@ export class UpgradeDefinitions {
    TreatyDiplomacy: IUpgradeDefinition = {
       name: () => $t(L.TreatyDiplomacy),
       requireResources: {},
-      globalMultiplier: {
-         storage: 5,
-         builderCapacity: 5,
+      onUnlocked: (gs) => {
+         for (let i = 0; i < 5; i++) {
+            const candidates = rollGreatPeopleThisRun(
+               new Set([getCurrentAge(gs)]),
+               gs.city,
+               getGreatPeopleChoiceCount(gs),
+            );
+            if (candidates) {
+               gs.greatPeopleChoicesV2.push(candidates);
+            }
+         }
+         RequestChooseGreatPerson.emit({ permanent: false });
       },
+      additionalUpgrades: () => [$t(L.PlusXGreatPeopleFromTheCurrentAge, { count: 5 })],
    };
 
    WarElephants: IUpgradeDefinition = {
@@ -780,7 +804,7 @@ export class UpgradeDefinitions {
       name: () => $t(L.MediterraneanTrades),
       requireResources: {},
       additionalUpgrades: () => [
-         $t(L.PlusXBaseStorageForMarketWarehouseAndCaravansary, { percent: formatPercent(1) }),
+         $t(L.PlusXAgeWisdom, { percent: formatPercent(0.5), age: Config.TechAge.WorldWarAge.name() }),
       ],
    };
 
@@ -802,8 +826,16 @@ export class UpgradeDefinitions {
    BerberAlliance: IUpgradeDefinition = {
       name: () => $t(L.BerberAlliance),
       requireResources: {},
+      additionalUpgrades: () => [
+         $t(L.PlusXAgeWisdom, { percent: formatPercent(0.5), age: Config.TechAge.InformationAge.name() }),
+      ],
+   };
+
+   MerchantFleet: IUpgradeDefinition = {
+      name: () => $t(L.MerchantFleet),
+      requireResources: {},
       onUnlocked: (gs) => {
-         for (let i = 0; i < 10; i++) {
+         for (let i = 0; i < 2; i++) {
             const candidates = rollGreatPeopleThisRun(
                new Set([getCurrentAge(gs)]),
                gs.city,
@@ -815,7 +847,7 @@ export class UpgradeDefinitions {
          }
          RequestChooseGreatPerson.emit({ permanent: false });
       },
-      additionalUpgrades: () => [$t(L.PlusXGreatPersonFromTheCurrentAge, { count: 10 })],
+      additionalUpgrades: () => [$t(L.PlusXGreatPeopleFromTheCurrentAge, { count: 2 })],
    };
 
    SacredBand: IUpgradeDefinition = {
@@ -826,6 +858,20 @@ export class UpgradeDefinitions {
 
    CothonDockyards: IUpgradeDefinition = {
       name: () => $t(L.CothonDockyards),
+      requireResources: {},
+      additionalUpgrades: () => [
+         $t(L.Plus2RangeForBuildings, {
+            buildings: [
+               Config.Building.SagradaFamilia.name(),
+               Config.Building.CristoRedentor.name(),
+               Config.Building.Atomium.name(),
+            ].join(", "),
+         }),
+      ],
+   };
+
+   NavalSiegecraft: IUpgradeDefinition = {
+      name: () => $t(L.NavalSiegecraft),
       requireResources: {},
       globalMultiplier: {
          worker: 5,

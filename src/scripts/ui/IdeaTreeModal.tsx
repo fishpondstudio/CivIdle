@@ -101,6 +101,7 @@ export function IdeaTreeModal(): React.ReactNode {
                style={{ width: "1024px", height: "768px", maxWidth: "90vw", maxHeight: "90vh" }}
             >
                <ReactFlow
+                  zoomOnDoubleClick={false}
                   nodesConnectable={false}
                   nodesDraggable={false}
                   nodesFocusable={false}

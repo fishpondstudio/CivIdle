@@ -254,6 +254,9 @@ export function getMaxWarpStorage(gs: GameState): number {
          storage += HOUR * 8;
       }
    }
+   if (gs.unlockedUpgrades.IrrigatedEstate) {
+      storage += HOUR * 4;
+   }
    return storage;
 }
 
@@ -1496,4 +1499,120 @@ export function getAtlasMountainsRange(gs: GameState): number {
       result += 2;
    }
    return result;
+}
+
+export function getBuildingRange(xy: Tile, building: IBuildingData, gs: GameState): number {
+   switch (building.type) {
+      case "Caravansary": {
+         const ri = building as IResourceImportBuildingData;
+         if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
+            return MANAGED_IMPORT_RANGE;
+         }
+         return 0;
+      }
+      case "Warehouse": {
+         const ri = building as IResourceImportBuildingData;
+         if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
+            return 2;
+         }
+         if (hasFeature(GameFeature.WarehouseUpgrade, gs)) {
+            return 1;
+         }
+         return 0;
+      }
+      case "ColossusOfRhodes":
+      case "LighthouseOfAlexandria":
+      case "GrandBazaar":
+      case "HangingGarden":
+      case "ChichenItza":
+      case "AngkorWat":
+      case "StatueOfZeus":
+      case "Poseidon":
+      case "EiffelTower":
+      case "SummerPalace":
+      case "MogaoCaves":
+      case "SaintBasilsCathedral":
+      case "NileRiver":
+      case "ZagrosMountains":
+      case "TowerOfBabel":
+      case "StatueOfLiberty": {
+         return 1;
+      }
+      case "GreatSphinx":
+      case "Hollywood":
+      case "Pantheon":
+      case "TheMet":
+      case "WallStreet":
+      case "OsakaCastle":
+      case "RhineGorge":
+      case "Lapland":
+      case "YearOfTheSnake":
+      case "MontSaintMichel":
+      case "MountArarat":
+      case "TopkapiPalace":
+      case "MausoleumAtHalicarnassus":
+      case "ItaipuDam":
+      case "CathedralOfBrasilia":
+      case "Hermitage":
+      case "GoldenGateBridge": {
+         return 2;
+      }
+      case "Elbphilharmonie":
+      case "Cappadocia":
+      case "BranCastle":
+      case "GlassFrog":
+      case "PygmyMarmoset":
+      case "GoldenPavilion": {
+         return 3;
+      }
+      // #region Buildings with dynamic range
+      case "YellowCraneTower": {
+         return getYellowCraneTowerRange(xy, gs);
+      }
+      case "GreatWall": {
+         return getGreatWallRange(xy, gs);
+      }
+      case "Capybara":
+      case "GiantOtter":
+      case "Hoatzin":
+      case "RoyalFlycatcher": {
+         return isFestival(building.type, gs) ? 3 : 2;
+      }
+      case "RedFort": {
+         return isFestival(building.type, gs) ? 5 : 3;
+      }
+      case "SanchiStupa": {
+         return isFestival(building.type, gs) ? 3 : 2;
+      }
+      case "GangesRiver": {
+         return isFestival(building.type, gs) ? 2 : 1;
+      }
+      case "Uluru": {
+         return isFestival(building.type, gs) ? 3 : 2;
+      }
+      case "KizhiPogost": {
+         return isFestival(building.type, gs) ? 6 : 3;
+      }
+      case "LakeBaikal": {
+         return isFestival(building.type, gs) ? 4 : 2;
+      }
+      case "AuroraBorealis": {
+         return isFestival(building.type, gs) ? 4 : 2;
+      }
+      case "AtlasMountains": {
+         return getAtlasMountainsRange(gs);
+      }
+      case "SagradaFamilia":
+      case "CristoRedentor":
+      case "Atomium": {
+         let result = 2;
+         if (gs.unlockedUpgrades.CothonDockyards) {
+            result += 2;
+         }
+         return result;
+      }
+      default: {
+         return 0;
+      }
+   }
 }
