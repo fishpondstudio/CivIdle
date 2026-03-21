@@ -1,6 +1,7 @@
 import { memo, useEffect, useRef } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { Config } from "../../../shared/logic/Config";
+import Restitutor from "../../images/Restitutor.png";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
 const WikipediaCache: Map<Building, string> = new Map();
@@ -46,10 +47,15 @@ function _BuildingWikipediaComponent({ gameState, xy }: IBuildingComponentProps)
       };
    }, [type, wikipedia]);
    return (
-      <iframe
-         ref={iframeEl}
-         style={{ width: "100%", height: "400px", background: "#fff", marginBottom: "10px" }}
-      />
+      <>
+         <div className="inset-shallow mb10">
+            <img src={Restitutor} style={{ width: "100%", display: "block" }} />
+         </div>
+         <iframe
+            ref={iframeEl}
+            style={{ width: "100%", height: "400px", background: "#fff", marginBottom: "10px" }}
+         />
+      </>
    );
 }
 
