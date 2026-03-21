@@ -2241,6 +2241,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             mapSafePush(Tick.next.tileMultipliers, target, {
                output: multiplier,
                source: buildingName,
+               unstable: true,
             });
             if (festival) {
                mapSafePush(Tick.next.levelBoost, target, {

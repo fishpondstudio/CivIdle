@@ -291,6 +291,36 @@ export class GreatPersonDefinitions {
       age: "ClassicalAge",
    });
 
+   HannoTheNavigator: IGreatPersonDefinition = {
+      name: () => $t(L.HannoTheNavigator),
+      desc: (self, level) => $t(L.WuZetianDesc, { value: formatNumber(self.value(level)) }),
+      time: "c. 500s BC",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ClassicalAge",
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.transportCapacity.push({
+            value: Config.GreatPerson[self].value(level),
+            source,
+         });
+      },
+      type: GreatPersonType.Normal,
+      city: "Carthaginian",
+   };
+
+   Hannibal: IGreatPersonDefinition = boostOf({
+      name: () => $t(L.Hannibal),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["SiegeWorkshop", "SwordForge"],
+      },
+      time: "246 ~ 183 BC",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ClassicalAge",
+      city: "Carthaginian",
+   });
+
    Aristotle: IGreatPersonDefinition = boostOf({
       name: () => $t(L.Aristotle),
       boost: {

@@ -1952,4 +1952,6 @@ export const EN = {
    UnlockedIdeas: "Unlocked Ideas",
    AvailableIdeaPoints: "Available Idea Points",
    PlusXAgeWisdom: "+%{percent} %{age} Wisdom",
+   HannoTheNavigator: "Hanno the Navigator",
+   Hannibal: "Hannibal",
 };
