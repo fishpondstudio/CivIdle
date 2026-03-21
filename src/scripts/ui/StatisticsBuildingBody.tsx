@@ -1,11 +1,14 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
+import type React from "react";
 import { useState } from "react";
 import { TableVirtuoso } from "react-virtuoso";
 import { BuildingSpecial, type IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import { NoPrice, NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
 import {
+   ElectrificationStatus,
    IOFlags,
+   canBeElectrified,
    getElectrificationStatus,
    getScienceFromBuildings,
    getScienceFromWorkers,
@@ -393,6 +396,11 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                            <Tippy content={$t(L.ProductionWorkers)}>
                               <div className="m-icon small">settings</div>
                            </Tippy>
+                        </th>{" "}
+                        <th className="right">
+                           <Tippy content={$t(L.ProductionWorkers)}>
+                              <div className="m-icon small">bolt</div>
+                           </Tippy>
                         </th>
                      </tr>
                   );
@@ -409,14 +417,10 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                         icon = <div className="m-icon small text-red">error</div>;
                      }
                   }
+                  const electrificationStatus = getElectrificationStatus(xy, gameState);
                   return (
                      <>
-                        <td>
-                           {icon}
-                           {getElectrificationStatus(xy, gameState) === "Active" ? (
-                              <div className="m-icon small text-orange">bolt</div>
-                           ) : null}
-                        </td>
+                        <td>{icon}</td>
                         <td>
                            <div
                               className="pointer"
@@ -453,6 +457,15 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                         >
                            <FormatNumber value={Tick.current.workersAssignment.get(xy) ?? 0} />
                         </td>
+                        <td>
+                           <Tippy content={ElectrificationStatus[electrificationStatus]()}>
+                              <div className="row">
+                                 <div className="f1" />
+                                 <ElectrificationIcon status={electrificationStatus} />
+                                 {canBeElectrified(building.type) ? building.electrification : null}
+                              </div>
+                           </Tippy>
+                        </td>
                      </>
                   );
                }}
@@ -460,6 +473,17 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
          </div>
       </article>
    );
+}
+
+function ElectrificationIcon({ status }: { status: ElectrificationStatus }): React.ReactNode {
+   switch (status) {
+      case "Active":
+         return <div className="m-icon small text-green">power</div>;
+      case "NoPower":
+         return <div className="m-icon small text-red">power_off</div>;
+      case "NotActive":
+         return null;
+   }
 }
 
 const resourceTabSortingState = { column: 0, asc: true };
