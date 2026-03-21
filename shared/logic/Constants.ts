@@ -46,6 +46,7 @@ export const STEAM_PATCH_NOTES_URL = "https://store.steampowered.com/news/app/21
 export const SUPPORTER_PACK_URL = "https://store.steampowered.com/app/2788080/";
 export const CROSS_PLATFORM_SAVE_URL = "https://store.steampowered.com/app/3399010/";
 export const STEAM_GUIDE_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id=3196523559";
+export const RESTITUTOR_STEAM_URL = "https://store.steampowered.com/app/4431750/Restitutor_Empire_Restored/";
 export const MAX_TARIFF_RATE = 0.1;
 export const OXFORD_SCIENCE_PER_UPGRADE = 5;
 export const MARKET_DEFAULT_TRADE_COUNT = 5;

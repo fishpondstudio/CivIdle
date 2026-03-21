@@ -664,7 +664,13 @@ export class UpgradeDefinitions {
          SpacecraftFactory: { output: 1, storage: 1 },
       },
    };
-
+   Restitutor: IUpgradeDefinition = {
+      name: () => $t(L.WishlistRestitutor),
+      requireResources: {},
+      globalMultiplier: {
+         happiness: 5,
+      },
+   };
    RiseOfPunic: IUpgradeDefinition = {
       name: () => $t(L.RiseOfPunic),
       requireResources: {},
