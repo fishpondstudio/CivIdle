@@ -177,6 +177,10 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("Mir");
             break;
          }
+         case "Carthaginian": {
+            SteamClient.unlockAchievement("RiseOfPunic");
+            break;
+         }
       }
    }
 
