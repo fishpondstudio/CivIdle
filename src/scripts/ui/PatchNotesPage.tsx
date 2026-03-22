@@ -1,5 +1,6 @@
 import { PatchNotes } from "../../../shared/definitions/PatchNotes";
 import { $t, L } from "../../../shared/utilities/i18n";
+import { isSteam, SteamClient } from "../rpc/SteamClient";
 import { openUrl } from "../utilities/Platform";
 import { MenuComponent } from "./MenuComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
@@ -22,7 +23,17 @@ export function PatchNotesPage(): React.ReactNode {
                         );
                      })}
                      {note.link ? (
-                        <div className="text-link text-strong" onClick={() => openUrl(note.link!)}>
+                        <div
+                           className="text-link text-strong"
+                           onClick={() => {
+                              if (note.link) {
+                                 openUrl(note.link);
+                              }
+                              if (isSteam()) {
+                                 SteamClient.unlockAchievement("PatchNotesReader");
+                              }
+                           }}
+                        >
                            {$t(L.ReadFullPatchNotes)}
                         </div>
                      ) : null}
