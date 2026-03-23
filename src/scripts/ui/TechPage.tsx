@@ -12,7 +12,7 @@ import {
    tryDeductScience,
    unlockTech,
 } from "../../../shared/logic/TechLogic";
-import { forEach, formatHMS, HOUR, SECOND } from "../../../shared/utilities/Helper";
+import { forEach, formatHMS, SECOND } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { checkAgeAchievements } from "../logic/Achievement";
@@ -80,7 +80,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                }
             }
             if (gs.unlockedUpgrades.IberianColonies) {
-               addPetraOfflineTime(HOUR, gs);
+               addPetraOfflineTime(60 * 60 * 1, gs);
             }
             checkAgeAchievements(newAge);
          }
