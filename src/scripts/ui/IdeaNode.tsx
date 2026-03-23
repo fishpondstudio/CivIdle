@@ -1,13 +1,15 @@
 import Tippy from "@tippyjs/react";
 import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
-import { getIdeaDesc } from "../../../shared/definitions/IdeaDefinitions";
+import { CarthaginianIdeas, getIdeaDesc } from "../../../shared/definitions/IdeaDefinitions";
 import type { Upgrade } from "../../../shared/definitions/UpgradeDefinitions";
 import { getCarthageCivilizationIdeas } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import type { GameState } from "../../../shared/logic/GameState";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { cls } from "../../../shared/utilities/Helper";
+import { cls, forEach } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
+import { isSteam, SteamClient } from "../rpc/SteamClient";
 import { playError, playUpgrade } from "../visuals/Sound";
 
 type IdeaNode = Node<{ upgrade: Upgrade; requires: Upgrade[] }, "IdeaNode">;
@@ -59,6 +61,7 @@ export function IdeaNode({ data }: NodeProps<IdeaNode>) {
                if (canUnlock && !gs.unlockedUpgrades[upgrade]) {
                   Config.Upgrade[upgrade].onUnlocked?.(gs);
                   gs.unlockedUpgrades[upgrade] = true;
+                  checkAchievement(gs);
                   playUpgrade();
                   notifyGameStateUpdate();
                } else {
@@ -83,4 +86,17 @@ export function IdeaNode({ data }: NodeProps<IdeaNode>) {
          </div>
       </Tippy>
    );
+}
+
+function checkAchievement(gs: GameState) {
+   let allIdeasUnlocked = false;
+   forEach(CarthaginianIdeas, (idea, def) => {
+      if (!gs.unlockedUpgrades[def.upgrade]) {
+         allIdeasUnlocked = false;
+         return;
+      }
+   });
+   if (allIdeasUnlocked && isSteam()) {
+      SteamClient.unlockAchievement("AFullCothon");
+   }
 }
