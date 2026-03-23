@@ -2,7 +2,7 @@ import { clamp, isEmpty, mFilterOf, mReduceOf, reduceOf, sizeOf, sum } from "../
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { $t, L } from "../utilities/i18n";
 import {
-   findSpecialBuilding,
+   findSpecialBuildingCached,
    isBuildingWellStocked,
    isNaturalWonder,
    isSpecialBuilding,
@@ -50,7 +50,7 @@ export function calculateHappiness(gs: GameState) {
                fromHighestTierBuilding = tier;
             }
          }
-         const hs = findSpecialBuilding("HagiaSophia", gs);
+         const hs = findSpecialBuildingCached("HagiaSophia", gs);
          if (building.capacity <= 0 && hs && hs.building.status === "completed") {
             // Do nothing
          } else if (Tick.current.happinessExemptions.has(xy)) {

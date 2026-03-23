@@ -1,5 +1,5 @@
 import type { GreatPerson } from "../../shared/definitions/GreatPersonDefinitions";
-import { findSpecialBuilding } from "../../shared/logic/BuildingLogic";
+import { findSpecialBuildingCached } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
 import { MigrationFlags, RankUpFlags, ThemeColorNames, type SavedGame } from "../../shared/logic/GameState";
 import { getGrid } from "../../shared/logic/IntraTickCache";
@@ -70,7 +70,7 @@ export function migrateSavedGame(save: SavedGame) {
                delete tile.building.offlineProductionPercent;
             }
             if (Number.isFinite(tile.building.resources.Warp)) {
-               const hq = findSpecialBuilding("Headquarter", save.current);
+               const hq = findSpecialBuildingCached("Headquarter", save.current);
                if (hq) {
                   safeAdd(hq.building.resources, "Warp", tile.building.resources.Warp ?? 0);
                }

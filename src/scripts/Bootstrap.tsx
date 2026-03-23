@@ -2,7 +2,7 @@ import type { Application, Texture } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
 import { IsDeposit } from "../../shared/definitions/MaterialDefinitions";
 import { TimedBuildingUnlock } from "../../shared/definitions/TimedBuildingUnlock";
-import { addPetraOfflineTime, findSpecialBuilding } from "../../shared/logic/BuildingLogic";
+import { addPetraOfflineTime, findSpecialBuildingCached } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "../../shared/logic/Constants";
 import { Languages, syncLanguage, type GameState } from "../../shared/logic/GameState";
@@ -74,7 +74,7 @@ export async function startGame(
    let isNewPlayer = false;
    const data = await loadGame();
    if (data) {
-      if (!findSpecialBuilding("Headquarter", data.current)) {
+      if (!findSpecialBuildingCached("Headquarter", data.current)) {
          playError();
          routeTo(SaveCorruptedPage, {});
          return;

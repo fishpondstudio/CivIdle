@@ -31,7 +31,6 @@ import {
    entriesOf,
    formatPercent,
    hasFlag,
-   HOUR,
    isEmpty,
    mapOf,
    range,
@@ -498,7 +497,7 @@ export function RebirthModal(): React.ReactNode {
                      const hq = findSpecialBuilding("Headquarter", getGameState());
                      const petra = findSpecialBuilding("Petra", getGameState());
                      if (hq && petra) {
-                        carryOverWarp = clamp(hq.building.resources.Warp ?? 0, 0, BASE_WARP_HOUR * HOUR);
+                        carryOverWarp = clamp(hq.building.resources.Warp ?? 0, 0, BASE_WARP_HOUR * 60 * 60);
                      }
 
                      checkRebirthAchievements(greatPeopleCount, gs);

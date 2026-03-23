@@ -1,4 +1,4 @@
-import { addPetraOfflineTime, findSpecialBuilding, getMaxWarpStorage } from "../logic/BuildingLogic";
+import { findSpecialBuildingCached } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { getGrid } from "../logic/IntraTickCache";
 import {
@@ -101,7 +101,7 @@ export class UpgradeDefinitions {
       },
       additionalUpgrades: () => [$t(L.Commerce4UpgradeHTMLV2)],
       onUnlocked: (gs) => {
-         const cz = findSpecialBuilding("ChoghaZanbil", gs);
+         const cz = findSpecialBuildingCached("ChoghaZanbil", gs);
          if (!cz) return;
          for (const point of getGrid(gs).getNeighbors(tileToPoint(cz.tile))) {
             const building = gs.tiles.get(pointToTile(point))?.building;
@@ -294,7 +294,7 @@ export class UpgradeDefinitions {
          let tech: Tech;
          for (tech in Config.Tech) {
             if (Config.Tech[tech].column === column) {
-               const hq = findSpecialBuilding("Headquarter", gs);
+               const hq = findSpecialBuildingCached("Headquarter", gs);
                if (hq) {
                   safeAdd(hq.building.resources, "Science", getTechUnlockCost(tech, gs));
                }
@@ -546,7 +546,7 @@ export class UpgradeDefinitions {
       },
       onUnlocked: (gs) => {
          const [science, _] = getTechUnlockCostInAge("WorldWarAge", gs);
-         const hq = findSpecialBuilding("Headquarter", gs);
+         const hq = findSpecialBuildingCached("Headquarter", gs);
          if (hq) {
             safeAdd(hq.building.resources, "Science", science);
          }
@@ -564,7 +564,7 @@ export class UpgradeDefinitions {
       },
       onUnlocked: (gs) => {
          const [science, _] = getTechUnlockCostInAge("ColdWarAge", gs);
-         const hq = findSpecialBuilding("Headquarter", gs);
+         const hq = findSpecialBuildingCached("Headquarter", gs);
          if (hq) {
             safeAdd(hq.building.resources, "Science", science);
          }
@@ -731,7 +731,7 @@ export class UpgradeDefinitions {
       requireResources: {},
       additionalUpgrades: () => [$t(L.GenerateOneTimeScienceEqualToTheCheapestTechnologyOfTheCurrentAge)],
       onUnlocked: (gs) => {
-         const hq = findSpecialBuilding("Headquarter", gs);
+         const hq = findSpecialBuildingCached("Headquarter", gs);
          if (hq) {
             const [science, _] = getTechUnlockCostInAge(getCurrentAge(gs), gs);
             safeAdd(hq.building.resources, "Science", science);
@@ -901,10 +901,7 @@ export class UpgradeDefinitions {
    IberianColonies: IUpgradeDefinition = {
       name: () => $t(L.IberianColonies),
       requireResources: {},
-      onUnlocked: (gs) => {
-         addPetraOfflineTime(getMaxWarpStorage(gs), gs);
-      },
-      additionalUpgrades: () => [$t(L.GenerateOneTimeWarpThatRefillsAllAvailableWarpStorage)],
+      additionalUpgrades: () => [$t(L.Generate1hTimeWarpWhenEnteringANewAge)],
    };
 
    AlpineLogistics: IUpgradeDefinition = {
@@ -943,7 +940,7 @@ export class UpgradeDefinitions {
       name: () => $t(L.MedinaOfTunis),
       requireResources: {},
       onUnlocked: (gs) => {
-         const hq = findSpecialBuilding("Headquarter", gs);
+         const hq = findSpecialBuildingCached("Headquarter", gs);
          if (hq) {
             const [_, science] = getTechUnlockCostInAge(getCurrentAge(gs), gs);
             safeAdd(hq.building.resources, "Science", science);

@@ -6,7 +6,7 @@ import { NoPrice, NoStorage } from "../../shared/definitions/MaterialDefinitions
 import type { TechAge } from "../../shared/definitions/TechDefinitions";
 import {
    exploreTile,
-   findSpecialBuilding,
+   findSpecialBuildingCached,
    getBuildingCost,
    getTotalBuildingCost,
    isWorldOrNaturalWonder,
@@ -452,7 +452,7 @@ if (import.meta.env.DEV) {
    window.Config = Config;
 
    // @ts-expect-error
-   window.hq = () => findSpecialBuilding("Headquarter", getGameState());
+   window.hq = () => findSpecialBuildingCached("Headquarter", getGameState());
 
    // @ts-expect-error
    window.ideaTree = () => {

@@ -1926,7 +1926,7 @@ export const EN = {
    GenerateOneTimeKotiEqualToXOfTheTotalBuildingValue: "Generate one-time Koti equal to %{percent} of the total building value",
    LevelBoost: "Building Level Boost",
    PlusXGreatPeopleFromTheCurrentAge: "+%{count} Great People from the current age",
-   GenerateOneTimeWarpThatRefillsAllAvailableWarpStorage: "Generate one-time warp that refills all available warp storage",
+   Generate1hTimeWarpWhenEnteringANewAge: "Generate 1h time warp when entering a new age (subject to storage limit)",
    LiberalismLevel4DescHTML: "All power plants get +1 Production Multiplier",
    Carthaginian: "Carthaginian",
    Carthage: "Carthage",

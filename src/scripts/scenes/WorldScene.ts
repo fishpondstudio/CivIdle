@@ -14,7 +14,7 @@ import {
 import {
    applyBuildingDefaults,
    checkBuildingMax,
-   findSpecialBuilding,
+   findSpecialBuildingCached,
    getBuildingRange,
 } from "../../../shared/logic/BuildingLogic";
 import {
@@ -163,7 +163,7 @@ export class WorldScene extends Scene {
 
    override onEnable(): void {
       this.restoreViewport();
-      const hq = findSpecialBuilding("Headquarter", getGameState());
+      const hq = findSpecialBuildingCached("Headquarter", getGameState());
       if (hq) {
          this.selectGrid(tileToPoint(hq.tile));
       }

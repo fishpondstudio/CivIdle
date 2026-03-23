@@ -233,7 +233,7 @@ export function getPetraBaseStorage(petra: IBuildingData): number {
 }
 
 export function getMaxWarpSpeed(gs: GameState): number {
-   const status = findSpecialBuilding("Petra", gs)?.building.status;
+   const status = findSpecialBuildingCached("Petra", gs)?.building.status;
    return status === "completed" || status === "upgrading" ? MAX_PETRA_SPEED_UP : 2;
 }
 
@@ -242,14 +242,14 @@ export const BASE_WARP_HOUR = 4;
 export function getMaxWarpStorage(gs: GameState): number {
    const HOUR = 60 * 60;
    let storage = BASE_WARP_HOUR * HOUR;
-   const petra = findSpecialBuilding("Petra", gs);
+   const petra = findSpecialBuildingCached("Petra", gs);
    if (petra) {
       // Petra level based warp
       storage += getPetraBaseStorage(petra.building);
       // Zenobia level based warp
       storage += HOUR * getWonderExtraLevel("Petra");
       // Fuji warp
-      const fuji = findSpecialBuilding("MountFuji", gs);
+      const fuji = findSpecialBuildingCached("MountFuji", gs);
       if (fuji && getGrid(gs).distanceTile(fuji.tile, petra.tile) <= 1) {
          storage += HOUR * 8;
       }
@@ -295,7 +295,7 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
          break;
       }
       case "Petra": {
-         const hq = findSpecialBuilding("Headquarter", gs);
+         const hq = findSpecialBuildingCached("Headquarter", gs);
          if (hq) {
             base = getMaxWarpStorage(gs);
             used = hq.building.resources.Warp ?? 0;
@@ -1135,12 +1135,16 @@ export function isBuildingWellStocked(xy: Tile, gs: GameState): boolean {
    );
 }
 
-export function findSpecialBuilding(type: Building, gs: GameState): Required<ITileData> | null {
+export function findSpecialBuildingCached(type: Building, gs: GameState): Required<ITileData> | null {
    if (!isSpecialBuilding(type)) return null;
 
    const result = Tick.current.specialBuildings.get(type);
    if (result) return result;
 
+   return findSpecialBuilding(type, gs);
+}
+
+export function findSpecialBuilding(type: Building, gs: GameState): Required<ITileData> | null {
    for (const tile of gs.tiles.values()) {
       if (tile.building?.type === type) {
          return tile as Required<ITileData>;
@@ -1265,7 +1269,7 @@ export function getEastIndiaCompanyUpgradeCost(level: number): number {
 }
 
 export function getPompidou(gs: GameState): ICentrePompidouBuildingData | null {
-   const pompidou = findSpecialBuilding("CentrePompidou", gs);
+   const pompidou = findSpecialBuildingCached("CentrePompidou", gs);
    if (pompidou && getCurrentAge(gs) === "InformationAge") {
       return pompidou.building as ICentrePompidouBuildingData;
    }
