@@ -8,7 +8,7 @@ import {
    getBuildingDescription,
    getMultipliersDescription,
    getPompidou,
-   getRandomEmptyTiles,
+   getRandomEmptyTile,
    hasNotUsedDinosaurProvincialPark,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -525,14 +525,13 @@ export function RebirthModal(): React.ReactNode {
 
                      const pompidou = getPompidou(gs);
                      if (currentCity !== nextCity && pompidou) {
-                        getRandomEmptyTiles(1, getGameState()).forEach((xy) => {
-                           const tile = getGameState().tiles.get(xy);
-                           if (tile) {
-                              tile.explored = true;
-                              tile.building = pompidou;
-                              pompidou.cities.add(currentCity);
-                           }
-                        });
+                        const result = getRandomEmptyTile(1, getGameState());
+                        if (result) {
+                           const [xy, tile] = result;
+                           tile.explored = true;
+                           tile.building = pompidou;
+                           pompidou.cities.add(currentCity);
+                        }
                      }
 
                      if (carryOverWarp > 0) {

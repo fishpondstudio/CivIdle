@@ -1,8 +1,8 @@
-import type { Building } from "../definitions/BuildingDefinitions";
+import { NaturalWonderMaxRange, type Building } from "../definitions/BuildingDefinitions";
 import { isChristmas } from "../definitions/TimedBuildingUnlock";
 import { forEach, keysOf, pointToTile, shuffle } from "../utilities/Helper";
 import { getServerNow } from "../utilities/ServerNow";
-import { applyBuildingDefaults, getRandomEmptyTiles } from "./BuildingLogic";
+import { applyBuildingDefaults, getRandomEmptyTile } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameOptions, GameState } from "./GameState";
 import { getGrid } from "./IntraTickCache";
@@ -125,11 +125,13 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
       }
    }
 
-   getRandomEmptyTiles(naturalWonders.length, gameState).forEach((xy, i) => {
-      const tile = gameState.tiles.get(xy);
-      if (tile) {
+   naturalWonders.forEach((nw) => {
+      const maxRange = NaturalWonderMaxRange[nw] ?? 1;
+      const result = getRandomEmptyTile(maxRange, gameState);
+      if (result) {
+         const [xy, tile] = result;
          tile.building = makeBuilding({
-            type: naturalWonders[i],
+            type: nw,
             level: 1,
             status: "completed",
          });

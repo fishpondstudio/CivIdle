@@ -14,6 +14,7 @@ import {
    keysOf,
    mapSafeAdd,
    numberToRoman,
+   pointToTile,
    reduceOf,
    round,
    sizeOf,
@@ -22,14 +23,18 @@ import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import {
    getBuildingCost,
    getBuildingDescription,
+   getBuildingRange,
    getWonderBaseBuilderCapacity,
+   isNaturalWonder,
    isSpecialBuilding,
    isWorldOrNaturalWonder,
    isWorldWonder,
 } from "./BuildingLogic";
 import { Config } from "./Config";
+import { GameState } from "./GameState";
 import { getBuildingsThatProduce } from "./ResourceLogic";
 import { getAgeForTech } from "./TechLogic";
+import { makeBuilding } from "./Tile";
 
 export const SAVE_FILE_VERSION = 1;
 export const SAVE_KEY = "CivIdle";
@@ -481,6 +486,17 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
             );
          }
       });
+
+   forEach(Config.Building, (b, def) => {
+      if (isNaturalWonder(b)) {
+         const range = getBuildingRange(
+            pointToTile({ x: 25, y: 25 }),
+            makeBuilding({ type: b, level: 1 }),
+            new GameState(),
+         );
+         console.log(b, range);
+      }
+   });
 
    notBoostedBuildings.sort((a, b) => Config.Tech[a.tech].column - Config.Tech[b.tech].column);
 
