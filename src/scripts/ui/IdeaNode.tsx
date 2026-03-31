@@ -6,7 +6,7 @@ import { getCarthageCivilizationIdeas } from "../../../shared/logic/BuildingLogi
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { cls, forEach } from "../../../shared/utilities/Helper";
+import { cls, entriesOf } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { isSteam, SteamClient } from "../rpc/SteamClient";
@@ -89,14 +89,13 @@ export function IdeaNode({ data }: NodeProps<IdeaNode>) {
 }
 
 function checkAchievement(gs: GameState) {
-   let allIdeasUnlocked = false;
-   forEach(CarthaginianIdeas, (idea, def) => {
+   for (const [idea, def] of entriesOf(CarthaginianIdeas)) {
       if (!gs.unlockedUpgrades[def.upgrade]) {
-         allIdeasUnlocked = false;
          return;
       }
-   });
-   if (allIdeasUnlocked && isSteam()) {
+   }
+
+   if (isSteam()) {
       SteamClient.unlockAchievement("AFullCothon");
    }
 }
