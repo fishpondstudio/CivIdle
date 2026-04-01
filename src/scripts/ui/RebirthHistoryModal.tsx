@@ -73,6 +73,10 @@ export function RebirthHistoryModal(): React.ReactNode {
                               <FormatNumber value={rebirth.totalEmpireValue / rebirth.totalSeconds} />
                            </td>
                         </tr>
+                        <tr>
+                           <td>{$t(L.EasterBunnyConstructed)}</td>
+                           <td className="text-right text-strong">{hasFlag(rebirth.flags, RebirthFlags.EasterBunny) ? $t(L.ConfirmYes) : $t(L.ConfirmNo)}</td>
+                        </tr>
                      </tbody>
                   </table>
                </div>
