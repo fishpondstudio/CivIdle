@@ -806,7 +806,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          });
          for (const point of grid.getRange(tileToPoint(xy), 1)) {
-            Tick.next.powerPlants.add(pointToTile(point));
+            Tick.next.powerGrid.add(pointToTile(point));
          }
          break;
       }
@@ -1433,7 +1433,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "OsakaCastle": {
          for (const point of grid.getRange(tileToPoint(xy), 1)) {
-            Tick.next.powerPlants.add(pointToTile(point));
+            Tick.next.powerGrid.add(pointToTile(point));
          }
          break;
       }
