@@ -1562,6 +1562,7 @@ export function getBuildingRange(xy: Tile, building: IBuildingData, gs: GameStat
       case "ItaipuDam":
       case "CathedralOfBrasilia":
       case "Hermitage":
+      case "AkademikLomonosov":
       case "GoldenGateBridge": {
          return 2;
       }
