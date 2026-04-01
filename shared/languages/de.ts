@@ -1383,6 +1383,7 @@ export const DE = {
    DuneOfPilat: "Dune du Pilat",
    DuneOfPilatDesc: "Verdoppele in jedem Zeitalter die Altersweisheit des vorherigen Zeitalters",
    EasterBunny: "Osterhase",
+   EasterBunnyConstructed: "Osterhase errichtet",
    EasterBunnyDesc: "Nach der Errichtung werden 10 % der zusätzlichen Großen Persönlichkeiten aus diesem Durchgang in den nächsten Durchgang übernommen und dort nach dem Bau des Osterhasen geboren. Dieses Weltwunder kann nur im April errichtet werden",
    EastIndiaCompany: "Ostindien Kompanie",
    EastIndiaCompanyDescV2:
