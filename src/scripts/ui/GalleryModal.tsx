@@ -7,15 +7,18 @@ import CafeTerraceAtNight from "../../images/Paintings/CafeTerraceAtNight.webp";
 import GirlWithAPearlEarring from "../../images/Paintings/GirlWithAPearlEarring.webp";
 import TheNightWatch from "../../images/Paintings/TheNightWatch.webp";
 import TheStarryNight from "../../images/Paintings/TheStarryNight.webp";
-import { useForceUpdate, useTypedEvent } from "../utilities/Hook";
+import { refreshOnTypedEvent, useTypedEvent } from "../utilities/Hook";
 import "./GalleryModal.css";
+import { hideModal } from "./GlobalModal";
 
 export function GalleryModal(): React.ReactNode {
-   const forceUpdate = useForceUpdate();
    return (
       <div className="window" style={{ width: "min(80vw, 1000px)" }}>
          <div className="title-bar">
             <div className="title-bar-text">Gallery</div>
+            <div className="title-bar-controls">
+               <button onClick={hideModal} aria-label="Close"></button>
+            </div>
          </div>
          <div className="window-body gallery-modal">
             <DragDropProvider
@@ -42,9 +45,9 @@ export function GalleryModal(): React.ReactNode {
                               ids.add(createTile(targetPoint.x + x, targetPoint.y + y));
                            }
                         }
-                        relicMoved.emit({ relicId: sourceId, tiles: ids });
+                        paintingMoved.emit({ id: sourceId, tiles: ids });
                      } else {
-                        relicMoved.emit({ relicId: sourceId, tiles: new Set<Tile>() });
+                        paintingMoved.emit({ id: sourceId, tiles: new Set<Tile>() });
                      }
                   }
                }}
@@ -69,15 +72,15 @@ export function GalleryModal(): React.ReactNode {
                            width: source.data.width,
                            height: source.data.height,
                         });
-                        relicUpdated.emit();
-                        forceUpdate();
+                        paintingUpdated.emit();
+                        paintingMoved.emit({ id: undefined, tiles: new Set<Tile>() });
                      }
                   }
                   if (source && !target) {
                      placedPaintings.delete(source.id as string);
-                     forceUpdate();
+                     paintingUpdated.emit();
+                     paintingMoved.emit({ id: undefined, tiles: new Set<Tile>() });
                   }
-                  relicMoved.emit({ relicId: source?.id as string | undefined, tiles: new Set<Tile>() });
                }}
             >
                <div className="row g5">
@@ -88,45 +91,12 @@ export function GalleryModal(): React.ReactNode {
                            gridTemplateColumns: `repeat(${GridSize}, var(--grid-size))`,
                         }}
                      >
-                        {range(0, GridSize * GridSize).map((i) => {
-                           const x = i % GridSize;
-                           const y = Math.floor(i / GridSize);
-                           const id = createTile(x, y);
-                           return <GridItem key={id} id={id} />;
-                        })}
+                        <Grid />
                      </div>
-                     {Array.from(placedPaintings.entries()).map(([id, { x, y, width, height }]) => {
-                        return (
-                           <RelicItem
-                              key={id}
-                              id={id}
-                              style={{
-                                 position: "absolute",
-                                 top: `calc(var(--grid-size) * ${y})`,
-                                 left: `calc(var(--grid-size) * ${x})`,
-                              }}
-                           />
-                        );
-                     })}
+                     <PlacedPaintings />
                   </div>
                   <div className="divider vertical" />
-                  <div
-                     style={{
-                        alignSelf: "flex-start",
-                        display: "flex",
-                        flexDirection: "row",
-                        flexWrap: "wrap",
-                        placeItems: "flex-start",
-                        gap: 5,
-                     }}
-                  >
-                     {Array.from(Object.entries(Paintings)).map(([key, size]) => {
-                        if (placedPaintings.has(key)) {
-                           return null;
-                        }
-                        return <RelicItem key={key} id={key} />;
-                     })}
-                  </div>
+                  <PendingPaintings />
                </div>
             </DragDropProvider>
          </div>
@@ -134,28 +104,88 @@ export function GalleryModal(): React.ReactNode {
    );
 }
 
-function GridItem({ id }: { id: number }): React.ReactNode {
-   const [isHighlighted, setIsHighlighted] = useState(false);
-   const [isUsed, setIsUsed] = useState(false);
+const GridSize = 30;
 
-   useTypedEvent(relicMoved, ({ relicId, tiles }) => {
-      const shouldHighlight = tiles.has(id);
-      if (shouldHighlight !== isHighlighted) {
-         setIsHighlighted(shouldHighlight);
-      }
-      const shouldUsed = isTileUsed(id, placedPaintings, relicId);
-      if (shouldUsed !== isUsed) {
-         setIsUsed(shouldUsed);
-      }
+const grid = range(0, GridSize * GridSize);
+
+function Grid(): React.ReactNode {
+   const [data, setData] = useState<IPaintingMoved>({
+      id: undefined as string | undefined,
+      tiles: new Set<Tile>(),
    });
-
-   useTypedEvent(relicUpdated, () => {
-      const shouldUsed = isTileUsed(id, placedPaintings);
-      if (shouldUsed !== isUsed) {
-         setIsUsed(shouldUsed);
-      }
+   useTypedEvent(paintingMoved, (event) => {
+      setData(event);
    });
+   refreshOnTypedEvent(paintingUpdated);
+   return (
+      <div
+         style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${GridSize}, var(--grid-size))`,
+         }}
+      >
+         {grid.map((i) => {
+            const x = i % GridSize;
+            const y = Math.floor(i / GridSize);
+            const id = createTile(x, y);
+            return (
+               <GridItem
+                  key={id}
+                  id={id}
+                  isUsed={isTileUsed(id, placedPaintings, data.id)}
+                  isHighlighted={data.tiles.has(id)}
+               />
+            );
+         })}
+      </div>
+   );
+}
 
+function PlacedPaintings(): React.ReactNode {
+   refreshOnTypedEvent(paintingUpdated);
+   return Array.from(placedPaintings.entries()).map(([id, { x, y, width, height }]) => {
+      return (
+         <RelicItem
+            key={id}
+            id={id}
+            style={{
+               position: "absolute",
+               top: `calc(var(--grid-size) * ${y})`,
+               left: `calc(var(--grid-size) * ${x})`,
+            }}
+         />
+      );
+   });
+}
+
+function PendingPaintings(): React.ReactNode {
+   refreshOnTypedEvent(paintingUpdated);
+   return (
+      <div
+         style={{
+            alignSelf: "flex-start",
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            placeItems: "flex-start",
+            gap: 5,
+         }}
+      >
+         {Array.from(Object.entries(Paintings)).map(([key, size]) => {
+            if (placedPaintings.has(key)) {
+               return null;
+            }
+            return <RelicItem key={key} id={key} />;
+         })}
+      </div>
+   );
+}
+
+function GridItem({
+   id,
+   isUsed,
+   isHighlighted,
+}: { id: number; isUsed: boolean; isHighlighted: boolean }): React.ReactNode {
    const { ref } = useDroppable({
       id,
       collisionDetector: collisionDetectorTopLeftCorner,
@@ -214,8 +244,13 @@ function RelicItem({ id, style }: { id: string; style?: React.CSSProperties }): 
    );
 }
 
-const relicMoved = new TypedEvent<{ relicId: string | undefined; tiles: Set<Tile> }>();
-const relicUpdated = new TypedEvent<void>();
+interface IPaintingMoved {
+   id: string | undefined;
+   tiles: Set<Tile>;
+}
+
+const paintingMoved = new TypedEvent<IPaintingMoved>();
+const paintingUpdated = new TypedEvent<void>();
 const placedPaintings = new Map<string, { x: number; y: number; width: number; height: number }>();
 
 interface IPainting {
@@ -230,8 +265,6 @@ const Paintings = {
    GirlWithAPearlEarring: { width: 5, height: 6, image: GirlWithAPearlEarring },
    TheNightWatch: { width: 10, height: 8, image: TheNightWatch },
 } as const satisfies Record<string, IPainting>;
-
-const GridSize = 30;
 
 interface IRect {
    x: number;
