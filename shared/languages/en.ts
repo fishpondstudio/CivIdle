@@ -506,7 +506,7 @@ export const EN = {
    DysonSphere: "Dyson Sphere",
    DysonSphereDesc: "All buildings get +5 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to all buildings",
    EasterBunny: "Easter Bunny",
-   EasterBunnyConstructed: "Easter Bunny constructed in that run",
+   EasterBunnyConstructed: "Easter Bunny Constructed",
    EasterBunnyDesc: "Once constructed, 10% of the extra Great People at Rebirth from this run will carry forward to the next run and are born after building the Easter Bunny in the new run. This wonder can only be constructed during April",
    EastIndiaCompany: "East India Company",
    EastIndiaCompanyDescV2:

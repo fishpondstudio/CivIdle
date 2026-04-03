@@ -1,10 +1,11 @@
 import classNames from "classnames";
 import { Config } from "../../../shared/logic/Config";
-import { formatHMS, reverseMap } from "../../../shared/utilities/Helper";
+import { formatHMS, hasFlag, reverseMap } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { RebirthFlags } from "../../../shared/logic/GameState";
 
 export function RebirthHistoryModal(): React.ReactNode {
    const options = useGameOptions();
