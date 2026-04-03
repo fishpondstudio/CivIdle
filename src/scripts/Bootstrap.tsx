@@ -59,6 +59,7 @@ import { initIAP } from "./utilities/IAP";
 import { SceneManager } from "./utilities/SceneManager";
 import { Singleton, initializeSingletons, type RouteTo } from "./utilities/Singleton";
 import { playError } from "./visuals/Sound";
+import { GalleryModal } from "./ui/GalleryModal";
 
 export async function startGame(
    app: Application,
@@ -224,6 +225,10 @@ export async function startGame(
    Singleton().ticker.start();
    clientHeartbeat();
    initIAP();
+
+   if (import.meta.env.DEV) {
+      showModal(<GalleryModal />);
+   }
 }
 
 // This method is called after server time is synced!

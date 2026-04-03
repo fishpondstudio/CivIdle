@@ -317,7 +317,11 @@ export function pointToXy(point: IPointData): string {
 }
 
 export function pointToTile(point: IPointData): Tile {
-   return (point.x << 16) + point.y;
+   return createTile(point.x, point.y);
+}
+
+export function createTile(x: number, y: number): Tile {
+   return (x << 16) + (y << 0);
 }
 
 export function tileToPoint(tile: Tile): IPointData {
