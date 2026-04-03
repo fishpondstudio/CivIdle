@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import { Config } from "../../../shared/logic/Config";
+import { RebirthFlags } from "../../../shared/logic/GameState";
 import { formatHMS, hasFlag, reverseMap } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import { RebirthFlags } from "../../../shared/logic/GameState";
 
 export function RebirthHistoryModal(): React.ReactNode {
    const options = useGameOptions();
@@ -77,7 +77,9 @@ export function RebirthHistoryModal(): React.ReactNode {
                         {hasFlag(rebirth.flags, RebirthFlags.EasterBunny) ? (
                            <tr>
                               <td>{$t(L.EasterBunnyConstructed)}</td>
-                              <td className="text-right text-strong">{$t(L.ConfirmYes)}</td>
+                              <td className="text-right text-strong">
+                                 <div className="m-icon small text-green">check_circle</div>
+                              </td>
                            </tr>
                         ) : null}
                      </tbody>
