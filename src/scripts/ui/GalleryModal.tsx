@@ -1,7 +1,7 @@
 import { type CollisionDetector, CollisionPriority, CollisionType } from "@dnd-kit/abstract";
 import { DragDropProvider, useDraggable, useDroppable } from "@dnd-kit/react";
-import { useState } from "react";
-import { type Tile, createTile, range, tileToPoint } from "../../../shared/utilities/Helper";
+import { memo, useState } from "react";
+import { type Tile, cls, createTile, range, tileToPoint } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import CafeTerraceAtNight from "../../images/Paintings/CafeTerraceAtNight.webp";
 import GirlWithAPearlEarring from "../../images/Paintings/GirlWithAPearlEarring.webp";
@@ -85,14 +85,7 @@ export function GalleryModal(): React.ReactNode {
             >
                <div className="row g5">
                   <div style={{ position: "relative" }}>
-                     <div
-                        style={{
-                           display: "grid",
-                           gridTemplateColumns: `repeat(${GridSize}, var(--grid-size))`,
-                        }}
-                     >
-                        <Grid />
-                     </div>
+                     <Grid />
                      <PlacedPaintings />
                   </div>
                   <div className="divider vertical" />
@@ -181,7 +174,7 @@ function PendingPaintings(): React.ReactNode {
    );
 }
 
-function GridItem({
+function _GridItem({
    id,
    isUsed,
    isHighlighted,
@@ -191,23 +184,14 @@ function GridItem({
       collisionDetector: collisionDetectorTopLeftCorner,
    });
    return (
-      <div ref={ref}>
-         <div
-            style={{
-               margin: 1,
-               borderRadius: 3,
-               aspectRatio: "1 / 1",
-               border: isHighlighted ? "2px solid yellow" : "1px solid gray",
-               color: isHighlighted ? "yellow" : "gray",
-               display: "flex",
-               justifyContent: "center",
-               alignItems: "center",
-               visibility: isUsed ? "hidden" : "visible",
-            }}
-         ></div>
-      </div>
+      <div
+         ref={ref}
+         className={cls("grid-item", isHighlighted ? "highlight" : null, isUsed ? "used" : null)}
+      ></div>
    );
 }
+
+const GridItem = memo(_GridItem);
 
 function RelicItem({ id, style }: { id: string; style?: React.CSSProperties }): React.ReactNode {
    const relic = Paintings[id as keyof typeof Paintings];
