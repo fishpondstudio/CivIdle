@@ -6,7 +6,7 @@ import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 
 import { refreshOnTypedEvent, useTypedEvent } from "../utilities/Hook";
 import "./GalleryModal.css";
-import { Paintings } from "./GalleryPaintings";
+import { type Painting, Paintings } from "./GalleryPaintings";
 import { hideModal } from "./GlobalModal";
 
 export function GalleryModal(): React.ReactNode {
@@ -189,7 +189,7 @@ function _GridItem({
 const GridItem = memo(_GridItem);
 
 function PaintingItem({ id, style }: { id: string; style?: React.CSSProperties }): React.ReactNode {
-   const painting = Paintings[id as keyof typeof Paintings];
+   const painting = Paintings[id as Painting];
    const { ref } = useDraggable({
       id: id,
       data: {
