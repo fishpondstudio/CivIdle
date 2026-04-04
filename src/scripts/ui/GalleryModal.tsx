@@ -3,17 +3,15 @@ import { DragDropProvider, useDraggable, useDroppable } from "@dnd-kit/react";
 import { memo, useState } from "react";
 import { type Tile, cls, createTile, range, tileToPoint } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
-import CafeTerraceAtNight from "../../images/Paintings/CafeTerraceAtNight.webp";
-import GirlWithAPearlEarring from "../../images/Paintings/GirlWithAPearlEarring.webp";
-import TheNightWatch from "../../images/Paintings/TheNightWatch.webp";
-import TheStarryNight from "../../images/Paintings/TheStarryNight.webp";
+
 import { refreshOnTypedEvent, useTypedEvent } from "../utilities/Hook";
 import "./GalleryModal.css";
+import { Paintings } from "./GalleryPaintings";
 import { hideModal } from "./GlobalModal";
 
 export function GalleryModal(): React.ReactNode {
    return (
-      <div className="window" style={{ width: "min(80vw, 1000px)" }}>
+      <div className="window" style={{ width: "min(80vw, 1200px)" }}>
          <div className="title-bar">
             <div className="title-bar-text">Gallery</div>
             <div className="title-bar-controls">
@@ -83,12 +81,11 @@ export function GalleryModal(): React.ReactNode {
                   }
                }}
             >
-               <div className="row g5">
+               <div className="row g10">
                   <div style={{ position: "relative" }}>
                      <Grid />
                      <PlacedPaintings />
                   </div>
-                  <div className="divider vertical" />
                   <PendingPaintings />
                </div>
             </DragDropProvider>
@@ -97,7 +94,7 @@ export function GalleryModal(): React.ReactNode {
    );
 }
 
-const GridSize = 30;
+const GridSize = 20;
 
 const grid = range(0, GridSize * GridSize);
 
@@ -138,7 +135,7 @@ function PlacedPaintings(): React.ReactNode {
    refreshOnTypedEvent(paintingUpdated);
    return Array.from(placedPaintings.entries()).map(([id, { x, y, width, height }]) => {
       return (
-         <RelicItem
+         <PaintingItem
             key={id}
             id={id}
             style={{
@@ -155,20 +152,18 @@ function PendingPaintings(): React.ReactNode {
    refreshOnTypedEvent(paintingUpdated);
    return (
       <div
+         className="inset-shallow white f1"
          style={{
-            alignSelf: "flex-start",
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            placeItems: "flex-start",
-            gap: 5,
+            height: "var(--grid-height)",
+            overflowY: "auto",
+            padding: 2,
          }}
       >
          {Array.from(Object.entries(Paintings)).map(([key, size]) => {
             if (placedPaintings.has(key)) {
                return null;
             }
-            return <RelicItem key={key} id={key} />;
+            return <PaintingItem key={key} id={key} />;
          })}
       </div>
    );
@@ -193,13 +188,13 @@ function _GridItem({
 
 const GridItem = memo(_GridItem);
 
-function RelicItem({ id, style }: { id: string; style?: React.CSSProperties }): React.ReactNode {
-   const relic = Paintings[id as keyof typeof Paintings];
+function PaintingItem({ id, style }: { id: string; style?: React.CSSProperties }): React.ReactNode {
+   const painting = Paintings[id as keyof typeof Paintings];
    const { ref } = useDraggable({
       id: id,
       data: {
-         width: relic.width,
-         height: relic.height,
+         width: painting.width,
+         height: painting.height,
       },
    });
 
@@ -214,15 +209,17 @@ function RelicItem({ id, style }: { id: string; style?: React.CSSProperties }): 
          }}
          ref={ref}
          style={{
-            width: `calc(var(--grid-size) * ${relic.width})`,
-            height: `calc(var(--grid-size) * ${relic.height})`,
+            width: `calc(var(--grid-size) * ${painting.width})`,
+            height: `calc(var(--grid-size) * ${painting.height})`,
             borderRadius: 4,
             border: "2px solid rgba(255, 255, 255, 0.5)",
             overflow: "hidden",
             objectFit: "cover",
+            display: "block",
+            float: "left",
             ...style,
          }}
-         src={relic.image}
+         src={painting.image}
          alt={id}
       />
    );
@@ -236,19 +233,6 @@ interface IPaintingMoved {
 const paintingMoved = new TypedEvent<IPaintingMoved>();
 const paintingUpdated = new TypedEvent<void>();
 const placedPaintings = new Map<string, { x: number; y: number; width: number; height: number }>();
-
-interface IPainting {
-   width: number;
-   height: number;
-   image: string;
-}
-
-const Paintings = {
-   TheStarryNight: { width: 5, height: 4, image: TheStarryNight },
-   CafeTerraceAtNight: { width: 5, height: 6, image: CafeTerraceAtNight },
-   GirlWithAPearlEarring: { width: 5, height: 6, image: GirlWithAPearlEarring },
-   TheNightWatch: { width: 10, height: 8, image: TheNightWatch },
-} as const satisfies Record<string, IPainting>;
 
 interface IRect {
    x: number;

@@ -1,5 +1,7 @@
 .gallery-modal {
-   --grid-size: min(calc((100vh - 60px) / 30), 20px);
+   --grid-size: min(calc((100vh - 60px) / 20), 30px);
+   --grid-height: calc(var(--grid-size) * 20);
+   overflow: hidden;
 }
 
 .gallery-modal .grid-item {
