@@ -147,55 +147,82 @@ function PaintingEffects(): React.ReactNode {
    refreshOnTypedEvent(paintingUpdated);
    const effects = calculateEffects(placedPaintings);
    return (
-      <div
-         className="inset-shallow white p5"
+      <ul
+         className="tree-view"
          style={{
             overflowY: "auto",
             height: "calc(var(--grid-height) * 0.25 - 8px)",
             marginBottom: 8,
          }}
       >
-         <div className="row">
-            <div className="f1">Same Painter</div>
-            <div>{effects.samePainterPairs.size}</div>
-         </div>
-         <div className="row">
-            <div className="f1">Same Century</div>
-            <div>{effects.sameCenturyPairs.size}</div>
-         </div>
-         <div className="row">
-            <div className="f1">Same Theme</div>
-            <div>{effects.sameThemePairs.size}</div>
-         </div>
-         <div className="row">
-            <div className="f1">Same Size</div>
-            <div>{effects.sameSizePairs.size}</div>
-         </div>
-         <div className="row">
-            <div className="f1">{Painters.RembrandtVanRijn()}</div>
-            <div>{effects.byPainters.get("RembrandtVanRijn") ?? 0}</div>
-         </div>
-         <div className="row">
-            <div className="f1">{Painters.JohannesVermeer()}</div>
-            <div>{effects.byPainters.get("JohannesVermeer") ?? 0}</div>
-         </div>
-         <div className="row">
-            <div className="f1">{Painters.VincentVanGogh()}</div>
-            <div>{effects.byPainters.get("VincentVanGogh") ?? 0}</div>
-         </div>
-         <div className="row">
-            <div className="f1">Painters</div>
-            <div>{effects.byPainters.size}</div>
-         </div>
-         <div className="row">
-            <div className="f1">Themes</div>
-            <div>{effects.byThemes.size}</div>
-         </div>
-         <div className="row">
-            <div className="f1">Masterpieces</div>
-            <div>{effects.masterpieces}</div>
-         </div>
-      </div>
+         <li>
+            <details open>
+               <summary className="row text-strong">
+                  <div>Adjacency Bonus</div>
+               </summary>
+               <ul>
+                  <li className="row">
+                     <div className="f1">Painter Adjacency</div>
+                     <div>{effects.samePainterPairs.size}</div>
+                  </li>
+                  <li className="row">
+                     <div className="f1">Painting Time Adjacency</div>
+                     <div>{effects.sameCenturyPairs.size}</div>
+                  </li>
+                  <li className="row">
+                     <div className="f1">Theme Adjacency</div>
+                     <div>{effects.sameThemePairs.size}</div>
+                  </li>
+                  <li className="row">
+                     <div className="f1">Size Adjacency</div>
+                     <div>{effects.sameSizePairs.size}</div>
+                  </li>
+               </ul>
+            </details>
+         </li>
+         <li>
+            <details open>
+               <summary className="row text-strong">
+                  <div>Painters Collection Bonus</div>
+               </summary>
+               <ul>
+                  <li className="row">
+                     <div className="f1">3 {Painters.RembrandtVanRijn()}</div>
+                     <div>{effects.byPainters.get("RembrandtVanRijn") ?? 0}/3</div>
+                  </li>
+                  <li className="row">
+                     <div className="f1">3 {Painters.JohannesVermeer()}</div>
+                     <div>{effects.byPainters.get("JohannesVermeer") ?? 0}/3</div>
+                  </li>
+                  <li className="row">
+                     <div className="f1">3 {Painters.VincentVanGogh()}</div>
+                     <div>{effects.byPainters.get("VincentVanGogh") ?? 0}/3</div>
+                  </li>
+               </ul>
+            </details>
+         </li>
+         <li>
+            <details open>
+               <summary className="row text-strong">
+                  <div>Diversification Bonus</div>
+               </summary>
+            </details>
+            <ul>
+               <li className="row">
+                  <div className="f1">5 Painters</div>
+                  <div>{effects.byPainters.size}/5</div>
+               </li>
+               <li className="row">
+                  <div className="f1">5 Themes</div>
+                  <div>{effects.byThemes.size}/5</div>
+               </li>
+               <li className="row">
+                  <div className="f1">5 Masterpieces</div>
+                  <div>{effects.masterpieces}/5</div>
+               </li>
+            </ul>
+         </li>
+      </ul>
    );
 }
 
