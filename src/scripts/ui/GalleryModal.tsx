@@ -1,17 +1,26 @@
 import { type CollisionDetector, CollisionPriority, CollisionType } from "@dnd-kit/abstract";
 import { DragDropProvider, useDraggable, useDroppable } from "@dnd-kit/react";
+import Tippy from "@tippyjs/react";
 import { memo, useState } from "react";
-import { type Tile, cls, createTile, range, tileToPoint } from "../../../shared/utilities/Helper";
+import { cls, createTile, mapSafeAdd, range, type Tile, tileToPoint } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
-
 import { refreshOnTypedEvent, useTypedEvent } from "../utilities/Hook";
 import "./GalleryModal.css";
-import { type Painting, Paintings } from "./GalleryPaintings";
+import {
+   makePaintingPair,
+   type Painter,
+   Painters,
+   type Painting,
+   type PaintingPair,
+   Paintings,
+   type Theme,
+   Themes,
+} from "./GalleryPaintings";
 import { hideModal } from "./GlobalModal";
 
 export function GalleryModal(): React.ReactNode {
    return (
-      <div className="window" style={{ width: "min(80vw, 1200px)" }}>
+      <div className="window" style={{ width: "min(90vw, 1200px)" }}>
          <div className="title-bar">
             <div className="title-bar-text">Gallery</div>
             <div className="title-bar-controls">
@@ -64,7 +73,7 @@ export function GalleryModal(): React.ReactNode {
                            source.id as string,
                         )
                      ) {
-                        placedPaintings.set(source.id as string, {
+                        placedPaintings.set(source.id as Painting, {
                            x: targetPoint.x,
                            y: targetPoint.y,
                            width: source.data.width,
@@ -75,18 +84,21 @@ export function GalleryModal(): React.ReactNode {
                      }
                   }
                   if (source && !target) {
-                     placedPaintings.delete(source.id as string);
+                     placedPaintings.delete(source.id as Painting);
                      paintingUpdated.emit();
                      paintingMoved.emit({ id: undefined, tiles: new Set<Tile>() });
                   }
                }}
             >
-               <div className="row g10">
+               <div className="row" style={{ gap: 8 }}>
                   <div style={{ position: "relative" }}>
                      <Grid />
                      <PlacedPaintings />
                   </div>
-                  <PendingPaintings />
+                  <div className="col f1" style={{ alignSelf: "stretch" }}>
+                     <PaintingEffects />
+                     <PendingPaintings />
+                  </div>
                </div>
             </DragDropProvider>
          </div>
@@ -131,6 +143,62 @@ function Grid(): React.ReactNode {
    );
 }
 
+function PaintingEffects(): React.ReactNode {
+   refreshOnTypedEvent(paintingUpdated);
+   const effects = calculateEffects(placedPaintings);
+   return (
+      <div
+         className="inset-shallow white p5"
+         style={{
+            overflowY: "auto",
+            height: "calc(var(--grid-height) * 0.25 - 8px)",
+            marginBottom: 8,
+         }}
+      >
+         <div className="row">
+            <div className="f1">Same Painter</div>
+            <div>{effects.samePainterPairs.size}</div>
+         </div>
+         <div className="row">
+            <div className="f1">Same Century</div>
+            <div>{effects.sameCenturyPairs.size}</div>
+         </div>
+         <div className="row">
+            <div className="f1">Same Theme</div>
+            <div>{effects.sameThemePairs.size}</div>
+         </div>
+         <div className="row">
+            <div className="f1">Same Size</div>
+            <div>{effects.sameSizePairs.size}</div>
+         </div>
+         <div className="row">
+            <div className="f1">{Painters.RembrandtVanRijn()}</div>
+            <div>{effects.byPainters.get("RembrandtVanRijn") ?? 0}</div>
+         </div>
+         <div className="row">
+            <div className="f1">{Painters.JohannesVermeer()}</div>
+            <div>{effects.byPainters.get("JohannesVermeer") ?? 0}</div>
+         </div>
+         <div className="row">
+            <div className="f1">{Painters.VincentVanGogh()}</div>
+            <div>{effects.byPainters.get("VincentVanGogh") ?? 0}</div>
+         </div>
+         <div className="row">
+            <div className="f1">Painters</div>
+            <div>{effects.byPainters.size}</div>
+         </div>
+         <div className="row">
+            <div className="f1">Themes</div>
+            <div>{effects.byThemes.size}</div>
+         </div>
+         <div className="row">
+            <div className="f1">Masterpieces</div>
+            <div>{effects.masterpieces}</div>
+         </div>
+      </div>
+   );
+}
+
 function PlacedPaintings(): React.ReactNode {
    refreshOnTypedEvent(paintingUpdated);
    return Array.from(placedPaintings.entries()).map(([id, { x, y, width, height }]) => {
@@ -152,15 +220,15 @@ function PendingPaintings(): React.ReactNode {
    refreshOnTypedEvent(paintingUpdated);
    return (
       <div
-         className="inset-shallow white f1"
+         className="inset-shallow white"
          style={{
-            height: "var(--grid-height)",
+            height: "calc(var(--grid-height) * 0.75)",
             overflowY: "auto",
             padding: 2,
          }}
       >
          {Array.from(Object.entries(Paintings)).map(([key, size]) => {
-            if (placedPaintings.has(key)) {
+            if (placedPaintings.has(key as Painting)) {
                return null;
             }
             return <PaintingItem key={key} id={key} />;
@@ -189,7 +257,7 @@ function _GridItem({
 const GridItem = memo(_GridItem);
 
 function PaintingItem({ id, style }: { id: string; style?: React.CSSProperties }): React.ReactNode {
-   const painting = Paintings[id as Painting];
+   const painting = Paintings[id as keyof typeof Paintings];
    const { ref } = useDraggable({
       id: id,
       data: {
@@ -199,29 +267,60 @@ function PaintingItem({ id, style }: { id: string; style?: React.CSSProperties }
    });
 
    return (
-      <img
-         onClick={() => {
-            const placed = placedPaintings.get(id);
-            if (placed) {
-               const adjacentRects = getAdjacentRects([id, placed], placedPaintings);
-               console.log(adjacentRects);
-            }
-         }}
-         ref={ref}
-         style={{
-            width: `calc(var(--grid-size) * ${painting.width})`,
-            height: `calc(var(--grid-size) * ${painting.height})`,
-            borderRadius: 4,
-            border: "2px solid rgba(255, 255, 255, 0.5)",
-            overflow: "hidden",
-            objectFit: "cover",
-            display: "block",
-            float: "left",
-            ...style,
-         }}
-         src={painting.image}
-         alt={id}
-      />
+      <Tippy
+         content={
+            <div>
+               <div className="row g20">
+                  <div className="dimmed">Name</div>
+                  <div className="f1 text-right">{painting.name()}</div>
+               </div>
+               <div className="row g20">
+                  <div className="dimmed">Painter</div>
+                  <div className="f1 text-right">{Painters[painting.painter]()}</div>
+               </div>
+               <div className="row g20">
+                  <div className="dimmed">Theme</div>
+                  <div className="f1 text-right">{Themes[painting.theme]()}</div>
+               </div>
+               <div className="row g20">
+                  <div className="dimmed">Year</div>
+                  <div className="f1 text-right">{painting.year}</div>
+               </div>
+               {painting.masterpiece && (
+                  <div className="row g20">
+                     <div className="dimmed">Masterpiece</div>
+                     <div className="f1 text-right">
+                        <div className="m-icon small text-green">check_circle</div>
+                     </div>
+                  </div>
+               )}
+            </div>
+         }
+      >
+         <img
+            onClick={() => {
+               const placed = placedPaintings.get(id as Painting);
+               if (placed) {
+                  const adjacentRects = getAdjacentRects([id, placed], placedPaintings);
+                  console.log(adjacentRects);
+               }
+            }}
+            ref={ref}
+            style={{
+               width: `calc(var(--grid-size) * ${painting.width})`,
+               height: `calc(var(--grid-size) * ${painting.height})`,
+               borderRadius: 4,
+               border: "2px solid rgba(255, 255, 255, 0.5)",
+               overflow: "hidden",
+               objectFit: "cover",
+               display: "block",
+               float: "left",
+               ...style,
+            }}
+            src={painting.image}
+            alt={id}
+         />
+      </Tippy>
    );
 }
 
@@ -230,9 +329,61 @@ interface IPaintingMoved {
    tiles: Set<Tile>;
 }
 
+interface IPaintingPlacement {
+   x: number;
+   y: number;
+   width: number;
+   height: number;
+}
+
 const paintingMoved = new TypedEvent<IPaintingMoved>();
 const paintingUpdated = new TypedEvent<void>();
-const placedPaintings = new Map<string, { x: number; y: number; width: number; height: number }>();
+const placedPaintings = new Map<Painting, IPaintingPlacement>();
+
+function calculateEffects(placedPaintings: Map<Painting, IPaintingPlacement>) {
+   const samePainterPairs = new Set<PaintingPair>();
+   const sameCenturyPairs = new Set<PaintingPair>();
+   const sameThemePairs = new Set<PaintingPair>();
+   const sameSizePairs = new Set<PaintingPair>();
+   const byPainters = new Map<Painter, number>();
+   const byThemes = new Map<Theme, number>();
+   let masterpieces = 0;
+   placedPaintings.forEach(({ x, y, width, height }, _id) => {
+      const id = _id as Painting;
+      const me = Paintings[id];
+      mapSafeAdd(byPainters, me.painter, 1);
+      mapSafeAdd(byThemes, me.theme, 1);
+      if (me.masterpiece) {
+         ++masterpieces;
+      }
+      const adjacentRects = getAdjacentRects([id, { x, y, width, height }], placedPaintings);
+      for (const [_otherId, otherRect] of adjacentRects) {
+         const otherId = _otherId as Painting;
+         const other = Paintings[otherId];
+         if (me.painter === other.painter) {
+            samePainterPairs.add(makePaintingPair(id, otherId));
+         }
+         if (Math.floor(me.year / 100) === Math.floor(other.year / 100)) {
+            sameCenturyPairs.add(makePaintingPair(id, otherId));
+         }
+         if (me.theme === other.theme) {
+            sameThemePairs.add(makePaintingPair(id, otherId));
+         }
+         if (me.width === other.width && me.height === other.height) {
+            sameSizePairs.add(makePaintingPair(id, otherId));
+         }
+      }
+   });
+   return {
+      samePainterPairs,
+      sameCenturyPairs,
+      sameThemePairs,
+      sameSizePairs,
+      byPainters,
+      byThemes,
+      masterpieces,
+   };
+}
 
 interface IRect {
    x: number;

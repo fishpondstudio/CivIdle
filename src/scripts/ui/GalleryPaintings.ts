@@ -29,7 +29,7 @@ import WheatFieldWithCrows from "../../images/Paintings/WheatFieldWithCrows.webp
 import WindmillAtWijkBijDuurstede from "../../images/Paintings/WindmillAtWijkBijDuurstede.webp";
 import WomanHoldingABalance from "../../images/Paintings/WomanHoldingABalance.webp";
 
-interface IPainting {
+export interface IPainting {
    width: number;
    height: number;
    image: string;
@@ -37,6 +37,7 @@ interface IPainting {
    painter: Painter;
    theme: Theme;
    year: number;
+   masterpiece: boolean;
 }
 
 export const Painters = {
@@ -75,6 +76,7 @@ export const _Paintings = {
       painter: "VincentVanGogh",
       theme: "StillLife",
       year: 1888,
+      masterpiece: false,
    },
    CafeTerraceAtNight: {
       name: () => "Cafe Terrace at Night",
@@ -84,6 +86,7 @@ export const _Paintings = {
       painter: "VincentVanGogh",
       theme: "LandscapeCityscape",
       year: 1888,
+      masterpiece: false,
    },
    TheStarryNight: {
       name: () => "The Starry Night",
@@ -93,6 +96,7 @@ export const _Paintings = {
       painter: "VincentVanGogh",
       theme: "LandscapeCityscape",
       year: 1889,
+      masterpiece: true,
    },
    WheatFieldWithCrows: {
       name: () => "Wheat Field with Crows",
@@ -102,6 +106,7 @@ export const _Paintings = {
       painter: "VincentVanGogh",
       theme: "LandscapeCityscape",
       year: 1890,
+      masterpiece: false,
    },
    GirlWithAPearlEarring: {
       name: () => "Girl with a Pearl Earring",
@@ -111,6 +116,7 @@ export const _Paintings = {
       painter: "JohannesVermeer",
       theme: "Portrait",
       year: 1665,
+      masterpiece: true,
    },
    TheMilkmaid: {
       name: () => "The Milkmaid",
@@ -120,6 +126,7 @@ export const _Paintings = {
       painter: "JohannesVermeer",
       theme: "DomesticScene",
       year: 1658,
+      masterpiece: false,
    },
    TheArtOfPainting: {
       name: () => "The Art of Painting",
@@ -129,6 +136,7 @@ export const _Paintings = {
       painter: "JohannesVermeer",
       theme: "DomesticScene",
       year: 1666,
+      masterpiece: false,
    },
    TheAnatomyLessonOfDrNicolaesTulp: {
       name: () => "The Anatomy Lesson of Dr Nicolaes Tulp",
@@ -138,6 +146,7 @@ export const _Paintings = {
       painter: "RembrandtVanRijn",
       theme: "Portrait",
       year: 1632,
+      masterpiece: false,
    },
    TheJewishBride: {
       name: () => "The Jewish Bride",
@@ -147,6 +156,7 @@ export const _Paintings = {
       painter: "RembrandtVanRijn",
       theme: "Portrait",
       year: 1667,
+      masterpiece: false,
    },
    TheNightWatch: {
       name: () => "The Night Watch",
@@ -156,6 +166,7 @@ export const _Paintings = {
       painter: "RembrandtVanRijn",
       theme: "Portrait",
       year: 1642,
+      masterpiece: true,
    },
    TheFeastOfSaintNicholas: {
       name: () => "The Feast of Saint Nicholas",
@@ -165,6 +176,7 @@ export const _Paintings = {
       painter: "JanSteen",
       theme: "DomesticScene",
       year: 1665,
+      masterpiece: true,
    },
    TheMerryFamily: {
       name: () => "The Merry Family",
@@ -174,6 +186,7 @@ export const _Paintings = {
       painter: "JanSteen",
       theme: "DomesticScene",
       year: 1668,
+      masterpiece: false,
    },
    CompositionWithRedBlueAndYellow: {
       name: () => "Composition with Red, Blue, and Yellow",
@@ -183,6 +196,7 @@ export const _Paintings = {
       painter: "PietMondrian",
       theme: "Abstract",
       year: 1930,
+      masterpiece: true,
    },
    BroadwayBoogieWoogie: {
       name: () => "Broadway Boogie Woogie",
@@ -192,6 +206,7 @@ export const _Paintings = {
       painter: "PietMondrian",
       theme: "Abstract",
       year: 1943,
+      masterpiece: false,
    },
    GrayTree: {
       name: () => "Gray Tree",
@@ -201,6 +216,7 @@ export const _Paintings = {
       painter: "PietMondrian",
       theme: "Abstract",
       year: 1911,
+      masterpiece: false,
    },
    TheLaughingCavalier: {
       name: () => "The Laughing Cavalier",
@@ -210,6 +226,7 @@ export const _Paintings = {
       painter: "FransHals",
       theme: "Portrait",
       year: 1624,
+      masterpiece: true,
    },
    TheBanquetOfTheOfficersOfTheStGeorgeMilitiaCompany: {
       name: () => "The Banquet of the Officers of the St George Militia Company",
@@ -219,6 +236,7 @@ export const _Paintings = {
       painter: "FransHals",
       theme: "Portrait",
       year: 1616,
+      masterpiece: false,
    },
    ViewOfHaarlemWithBleachingFields: {
       name: () => "View of Haarlem with Bleaching Fields",
@@ -228,6 +246,7 @@ export const _Paintings = {
       painter: "JacobVanRuisdael",
       theme: "LandscapeCityscape",
       year: 1670,
+      masterpiece: false,
    },
    WindmillAtWijkBijDuurstede: {
       name: () => "Windmill at Wijk bij Duurstede",
@@ -237,6 +256,7 @@ export const _Paintings = {
       painter: "JacobVanRuisdael",
       theme: "LandscapeCityscape",
       year: 1670,
+      masterpiece: false,
    },
    TheHuntersInTheSnow: {
       name: () => "The Hunters in the Snow",
@@ -246,6 +266,7 @@ export const _Paintings = {
       painter: "PieterBruegelTheElder",
       theme: "LandscapeCityscape",
       year: 1565,
+      masterpiece: false,
    },
    TheLittleStreet: {
       name: () => "The Little Street",
@@ -255,6 +276,7 @@ export const _Paintings = {
       painter: "JohannesVermeer",
       theme: "LandscapeCityscape",
       year: 1657,
+      masterpiece: false,
    },
    SelfPortrait: {
       name: () => "Self Portrait (1889)",
@@ -264,6 +286,7 @@ export const _Paintings = {
       painter: "VincentVanGogh",
       theme: "Portrait",
       year: 1889,
+      masterpiece: false,
    },
    ThePotatoEaters: {
       name: () => "The Potato Eaters",
@@ -273,6 +296,7 @@ export const _Paintings = {
       painter: "VincentVanGogh",
       theme: "DomesticScene",
       year: 1885,
+      masterpiece: false,
    },
    GirlInAWhiteKimono: {
       name: () => "Girl in a White Kimono",
@@ -282,6 +306,7 @@ export const _Paintings = {
       painter: "GeorgeHendrikBreitner",
       theme: "DomesticScene",
       year: 1894,
+      masterpiece: true,
    },
    StillLifeWithFlowersOnAMarbleSlab: {
       name: () => "Still Life with Flowers on a Marble Slab",
@@ -291,6 +316,7 @@ export const _Paintings = {
       painter: "RachelRuysch",
       theme: "StillLife",
       year: 1716,
+      masterpiece: false,
    },
    TheCourtyardOfAHouseInDelft: {
       name: () => "The Courtyard of a House in Delft",
@@ -300,6 +326,7 @@ export const _Paintings = {
       painter: "PieterDeHooch",
       theme: "DomesticScene",
       year: 1658,
+      masterpiece: true,
    },
    AMothersDuty: {
       name: () => "A Mother's Duty",
@@ -309,6 +336,7 @@ export const _Paintings = {
       painter: "PieterDeHooch",
       theme: "DomesticScene",
       year: 1658,
+      masterpiece: false,
    },
    TheCryingCrocodileTriesToCatchTheSun: {
       name: () => "The Crying Crocodile Tries to Catch the Sun",
@@ -318,6 +346,7 @@ export const _Paintings = {
       painter: "KarelAppel",
       theme: "Abstract",
       year: 1956,
+      masterpiece: false,
    },
    TheSingelBridgeAtThePaleisstraatInAmsterdam: {
       name: () => "The Singel Bridge at the Paleisstraat in Amsterdam",
@@ -327,6 +356,7 @@ export const _Paintings = {
       painter: "GeorgeHendrikBreitner",
       theme: "LandscapeCityscape",
       year: 1898,
+      masterpiece: false,
    },
    WomanHoldingABalance: {
       name: () => "Woman Holding a Balance",
@@ -336,10 +366,21 @@ export const _Paintings = {
       painter: "JohannesVermeer",
       theme: "DomesticScene",
       year: 1664,
+      masterpiece: false,
    },
 } as const satisfies Record<string, IPainting>;
 
 export type Painting = keyof typeof _Paintings;
+
+export type PaintingPair = string;
+
+export function makePaintingPair(a: Painting, b: Painting): PaintingPair {
+   return [a, b].sort().join(":");
+}
+
+export function splitPaintingPair(pair: PaintingPair): [Painting, Painting] {
+   return pair.split(":").map((id) => id as Painting) as [Painting, Painting];
+}
 
 export const Paintings = Object.fromEntries(
    Object.entries(_Paintings).sort((a, b) => a[1].height - b[1].height),
