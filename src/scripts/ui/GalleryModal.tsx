@@ -162,20 +162,32 @@ function PaintingEffects(): React.ReactNode {
                </summary>
                <ul>
                   <li className="row">
-                     <div className="f1">Painter Adjacency</div>
+                     <Tippy content="Each pair of adjacent paintings by the same painter grants +1 Production Multipliers">
+                        <div>Painter Adjacency</div>
+                     </Tippy>
+                     <div className="f1" />
                      <div>{effects.samePainterPairs.size}</div>
                   </li>
                   <li className="row">
-                     <div className="f1">Painting Time Adjacency</div>
+                     <Tippy content="Each pair of adjacent paintings of the same size grants +1 Building Level Boost">
+                        <div>Size Adjacency</div>
+                     </Tippy>
+                     <div className="f1" />
+                     <div>{effects.sameSizePairs.size}</div>
+                  </li>
+                  <li className="row">
+                     <Tippy content="Each pair of adjacent paintings painted in the same century (100 years) grants +1 Storage Multiplier">
+                        <div>Painting Time Adjacency</div>
+                     </Tippy>
+                     <div className="f1" />
                      <div>{effects.sameCenturyPairs.size}</div>
                   </li>
                   <li className="row">
-                     <div className="f1">Theme Adjacency</div>
+                     <Tippy content="Each pair of adjacent paintings with the same theme grants +1 Worker Capacity Multiplier">
+                        <div>Theme Adjacency</div>
+                     </Tippy>
+                     <div className="f1" />
                      <div>{effects.sameThemePairs.size}</div>
-                  </li>
-                  <li className="row">
-                     <div className="f1">Size Adjacency</div>
-                     <div>{effects.sameSizePairs.size}</div>
                   </li>
                </ul>
             </details>
@@ -187,15 +199,24 @@ function PaintingEffects(): React.ReactNode {
                </summary>
                <ul>
                   <li className="row">
-                     <div className="f1">3 {Painters.RembrandtVanRijn()}</div>
+                     <Tippy content="Display 3 paintings by Rembrandt Van Rijn to unlock +1 Production Multiplier">
+                        <div>3 {Painters.RembrandtVanRijn()}</div>
+                     </Tippy>
+                     <div className="f1" />
                      <div>{effects.byPainters.get("RembrandtVanRijn") ?? 0}/3</div>
                   </li>
                   <li className="row">
-                     <div className="f1">3 {Painters.JohannesVermeer()}</div>
+                     <Tippy content="Display 3 paintings by Johannes Vermeer to unlock +1 Production Multiplier">
+                        <div>3 {Painters.JohannesVermeer()}</div>
+                     </Tippy>
+                     <div className="f1" />
                      <div>{effects.byPainters.get("JohannesVermeer") ?? 0}/3</div>
                   </li>
                   <li className="row">
-                     <div className="f1">3 {Painters.VincentVanGogh()}</div>
+                     <Tippy content="Display 3 paintings by Vincent van Gogh to unlock +1 Production Multiplier">
+                        <div>3 {Painters.VincentVanGogh()}</div>
+                     </Tippy>
+                     <div className="f1" />
                      <div>{effects.byPainters.get("VincentVanGogh") ?? 0}/3</div>
                   </li>
                </ul>
@@ -209,15 +230,24 @@ function PaintingEffects(): React.ReactNode {
             </details>
             <ul>
                <li className="row">
-                  <div className="f1">5 Painters</div>
+                  <Tippy content="Display paintings by 5 different painters to unlock +1 Building Level Boost">
+                     <div>5 Painters</div>
+                  </Tippy>
+                  <div className="f1" />
                   <div>{effects.byPainters.size}/5</div>
                </li>
                <li className="row">
-                  <div className="f1">5 Themes</div>
+                  <Tippy content="Display paintings with 5 different themes to unlock +1 Building Level Boost">
+                     <div>5 Themes</div>
+                  </Tippy>
+                  <div className="f1" />
                   <div>{effects.byThemes.size}/5</div>
                </li>
                <li className="row">
-                  <div className="f1">5 Masterpieces</div>
+                  <Tippy content="Display 5 masterpieces to unlock +1 Building Level Boost">
+                     <div>5 Masterpieces</div>
+                  </Tippy>
+                  <div className="f1" />
                   <div>{effects.masterpieces}/5</div>
                </li>
             </ul>
