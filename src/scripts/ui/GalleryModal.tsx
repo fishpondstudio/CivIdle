@@ -23,7 +23,7 @@ export function GalleryModal(): React.ReactNode {
    return (
       <div className="window" style={{ width: "min(90vw, 1200px)" }}>
          <div className="title-bar">
-            <div className="title-bar-text">National Gallery</div>
+            <div className="title-bar-text">{$t(L.NationalGallery)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
@@ -159,33 +159,43 @@ function PaintingEffects(): React.ReactNode {
          <li>
             <details open>
                <summary className="row text-strong">
-                  <div>Adjacency Bonus</div>
+                  <div>{$t(L.AdjacencyBonus)}</div>
                </summary>
                <ul>
                   <li className="row">
-                     <Tippy content="Each pair of adjacent paintings by the same painter grants +1 Production Multipliers">
-                        <div>Painter Adjacency</div>
+                     <Tippy
+                        content={$t(L.EachPairOfAdjacentPaintingsByTheSamePainterGrants1ProductionMultiplier)}
+                     >
+                        <div>{$t(L.PainterAdjacency)}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.samePainterPairs.size}</div>
                   </li>
                   <li className="row">
-                     <Tippy content="Each pair of adjacent paintings of the same size grants +1 Building Level Boost">
-                        <div>Size Adjacency</div>
+                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsOfTheSameSizeGrants1BuildingLevelBoost)}>
+                        <div>{$t(L.SizeAdjacency)}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.sameSizePairs.size}</div>
                   </li>
                   <li className="row">
-                     <Tippy content="Each pair of adjacent paintings painted in the same century (100 years) grants +1 Storage Multiplier">
-                        <div>Time Adjacency</div>
+                     <Tippy
+                        content={$t(
+                           L.EachPairOfAdjacentPaintingsPaintedInTheSameCenturyGrants1StorageMultiplier,
+                        )}
+                     >
+                        <div>{$t(L.TimeAdjacency)}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.sameCenturyPairs.size}</div>
                   </li>
                   <li className="row">
-                     <Tippy content="Each pair of adjacent paintings with the same theme grants +1 Worker Capacity Multiplier">
-                        <div>Theme Adjacency</div>
+                     <Tippy
+                        content={$t(
+                           L.EachPairOfAdjacentPaintingsWithTheSameThemeGrants1WorkerCapacityMultiplier,
+                        )}
+                     >
+                        <div>{$t(L.ThemeAdjacency)}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.sameThemePairs.size}</div>
@@ -196,7 +206,7 @@ function PaintingEffects(): React.ReactNode {
          <li>
             <details open>
                <summary className="row text-strong">
-                  <div>Painters Collection Bonus</div>
+                  <div>{$t(L.PaintersCollectionBonus)}</div>
                </summary>
                <ul>
                   <li className="row">
@@ -207,15 +217,15 @@ function PaintingEffects(): React.ReactNode {
                      <div>{effects.byPainters.get("RembrandtVanRijn") ?? 0}/3</div>
                   </li>
                   <li className="row">
-                     <Tippy content="Display 3 paintings by Johannes Vermeer to unlock +1 Production Multiplier">
-                        <div>3 Paintings by {Painters.JohannesVermeer()}</div>
+                     <Tippy content={$t(L.Display3PaintingsByJohannesVermeerToUnlock1ProductionMultiplier)}>
+                        <div>{$t(L.XPaintingsBy, { painter: Painters.JohannesVermeer(), count: 3 })}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.byPainters.get("JohannesVermeer") ?? 0}/3</div>
                   </li>
                   <li className="row">
-                     <Tippy content="Display 3 paintings by Vincent van Gogh to unlock +1 Production Multiplier">
-                        <div>3 Paintings by {Painters.VincentVanGogh()}</div>
+                     <Tippy content={$t(L.Display3PaintingsByVincentVanGoghToUnlock1ProductionMultiplier)}>
+                        <div>{$t(L.XPaintingsBy, { painter: Painters.VincentVanGogh(), count: 3 })}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.byPainters.get("VincentVanGogh") ?? 0}/3</div>
@@ -226,27 +236,27 @@ function PaintingEffects(): React.ReactNode {
          <li>
             <details open>
                <summary className="row text-strong">
-                  <div>Diversification Bonus</div>
+                  <div>{$t(L.DiversificationBonus)}</div>
                </summary>
             </details>
             <ul>
                <li className="row">
-                  <Tippy content="Display paintings by 5 different painters to unlock +1 Building Level Boost">
-                     <div>5 Different Painters</div>
+                  <Tippy content={$t(L.DisplayPaintingsBy5DifferentPaintersToUnlock1BuildingLevelBoost)}>
+                     <div>{$t(L.XDifferentPainters, { count: 5 })}</div>
                   </Tippy>
                   <div className="f1" />
                   <div>{effects.byPainters.size}/5</div>
                </li>
                <li className="row">
-                  <Tippy content="Display paintings with 5 different themes to unlock +1 Building Level Boost">
-                     <div>5 Different Themes</div>
+                  <Tippy content={$t(L.DisplayPaintingsWith5DifferentThemesToUnlock1BuildingLevelBoost)}>
+                     <div>{$t(L.XDifferentThemes, { count: 5 })}</div>
                   </Tippy>
                   <div className="f1" />
                   <div>{effects.byThemes.size}/5</div>
                </li>
                <li className="row">
-                  <Tippy content="Display 5 masterpieces to unlock +1 Building Level Boost">
-                     <div>5 Different Masterpieces</div>
+                  <Tippy content={$t(L.Display5MasterpiecesToUnlock1BuildingLevelBoost)}>
+                     <div>{$t(L.XDifferentMasterpieces, { count: 5 })}</div>
                   </Tippy>
                   <div className="f1" />
                   <div>{effects.masterpieces}/5</div>
@@ -329,24 +339,24 @@ function PaintingItem({ id, style }: { id: string; style?: React.CSSProperties }
          content={
             <div>
                <div className="row g20">
-                  <div className="dimmed">Name</div>
+                  <div className="dimmed">{$t(L.Name)}</div>
                   <div className="f1 text-right">{painting.name()}</div>
                </div>
                <div className="row g20">
-                  <div className="dimmed">Painter</div>
+                  <div className="dimmed">{$t(L.Painter)}</div>
                   <div className="f1 text-right">{Painters[painting.painter]()}</div>
                </div>
                <div className="row g20">
-                  <div className="dimmed">Theme</div>
+                  <div className="dimmed">{$t(L.Theme)}</div>
                   <div className="f1 text-right">{Themes[painting.theme]()}</div>
                </div>
                <div className="row g20">
-                  <div className="dimmed">Year</div>
+                  <div className="dimmed">{$t(L.Year)}</div>
                   <div className="f1 text-right">{painting.year}</div>
                </div>
                {painting.masterpiece && (
                   <div className="row g20">
-                     <div className="dimmed">Masterpiece</div>
+                     <div className="dimmed">{$t(L.Masterpiece)}</div>
                      <div className="f1 text-right">
                         <div className="m-icon small text-green">check_circle</div>
                      </div>

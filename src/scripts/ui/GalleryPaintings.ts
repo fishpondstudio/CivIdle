@@ -28,6 +28,7 @@ import ViewOfHaarlemWithBleachingFields from "../../images/Paintings/ViewOfHaarl
 import WheatFieldWithCrows from "../../images/Paintings/WheatFieldWithCrows.webp";
 import WindmillAtWijkBijDuurstede from "../../images/Paintings/WindmillAtWijkBijDuurstede.webp";
 import WomanHoldingABalance from "../../images/Paintings/WomanHoldingABalance.webp";
+import { $t, L } from "../../../shared/utilities/i18n";
 
 export interface IPainting {
    width: number;
@@ -41,35 +42,35 @@ export interface IPainting {
 }
 
 export const Painters = {
-   RembrandtVanRijn: () => "Rembrandt van Rijn",
-   JohannesVermeer: () => "Johannes Vermeer",
-   VincentVanGogh: () => "Vincent van Gogh",
-   JanSteen: () => "Jan Steen",
-   PietMondrian: () => "Piet Mondrian",
-   FransHals: () => "Frans Hals",
-   JacobVanRuisdael: () => "Jacob van Ruisdael",
-   PieterBruegelTheElder: () => "Pieter Bruegel the Elder",
-   GeorgeHendrikBreitner: () => "George Hendrik Breitner",
-   RachelRuysch: () => "Rachel Ruysch",
-   PieterDeHooch: () => "Pieter de Hooch",
-   KarelAppel: () => "Karel Appel",
+   RembrandtVanRijn: () => $t(L.GalleryPainterRembrandtVanRijn),
+   JohannesVermeer: () => $t(L.GalleryPainterJohannesVermeer),
+   VincentVanGogh: () => $t(L.GalleryPainterVincentVanGogh),
+   JanSteen: () => $t(L.GalleryPainterJanSteen),
+   PietMondrian: () => $t(L.GalleryPainterPietMondrian),
+   FransHals: () => $t(L.GalleryPainterFransHals),
+   JacobVanRuisdael: () => $t(L.GalleryPainterJacobVanRuisdael),
+   PieterBruegelTheElder: () => $t(L.GalleryPainterPieterBruegelTheElder),
+   GeorgeHendrikBreitner: () => $t(L.GalleryPainterGeorgeHendrikBreitner),
+   RachelRuysch: () => $t(L.GalleryPainterRachelRuysch),
+   PieterDeHooch: () => $t(L.GalleryPainterPieterDeHooch),
+   KarelAppel: () => $t(L.GalleryPainterKarelAppel),
 } as const satisfies Record<string, () => string>;
 
 export type Painter = keyof typeof Painters;
 
 export const Themes = {
-   Portrait: () => "Portrait",
-   LandscapeCityscape: () => "Landscape/Cityscape",
-   DomesticScene: () => "Domestic Scene",
-   StillLife: () => "Still Life",
-   Abstract: () => "Abstract",
+   Portrait: () => $t(L.GalleryThemePortrait),
+   LandscapeCityscape: () => $t(L.GalleryThemeLandscapeCityscape),
+   DomesticScene: () => $t(L.GalleryThemeDomesticScene),
+   StillLife: () => $t(L.GalleryThemeStillLife),
+   Abstract: () => $t(L.GalleryThemeAbstract),
 } as const satisfies Record<string, () => string>;
 
 export type Theme = keyof typeof Themes;
 
 export const _Paintings = {
    Sunflowers: {
-      name: () => "Sunflowers",
+      name: () => $t(L.GalleryPaintingSunflowers),
       width: 3,
       height: 4,
       image: Sunflowers,
@@ -79,7 +80,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    CafeTerraceAtNight: {
-      name: () => "Cafe Terrace at Night",
+      name: () => $t(L.GalleryPaintingCafeTerraceAtNight),
       width: 4,
       height: 5,
       image: CafeTerraceAtNight,
@@ -89,7 +90,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    TheStarryNight: {
-      name: () => "The Starry Night",
+      name: () => $t(L.GalleryPaintingTheStarryNight),
       width: 5,
       height: 4,
       image: TheStarryNight,
@@ -99,7 +100,7 @@ export const _Paintings = {
       masterpiece: true,
    },
    WheatFieldWithCrows: {
-      name: () => "Wheat Field with Crows",
+      name: () => $t(L.GalleryPaintingWheatFieldWithCrows),
       width: 8,
       height: 4,
       image: WheatFieldWithCrows,
@@ -109,7 +110,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    GirlWithAPearlEarring: {
-      name: () => "Girl with a Pearl Earring",
+      name: () => $t(L.GalleryPaintingGirlWithAPearlEarring),
       width: 5,
       height: 6,
       image: GirlWithAPearlEarring,
@@ -119,7 +120,7 @@ export const _Paintings = {
       masterpiece: true,
    },
    TheMilkmaid: {
-      name: () => "The Milkmaid",
+      name: () => $t(L.GalleryPaintingTheMilkmaid),
       width: 5,
       height: 6,
       image: TheMilkmaid,
@@ -129,7 +130,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    TheArtOfPainting: {
-      name: () => "The Art of Painting",
+      name: () => $t(L.GalleryPaintingTheArtOfPainting),
       width: 4,
       height: 5,
       image: TheArtOfPainting,
@@ -139,7 +140,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    TheAnatomyLessonOfDrNicolaesTulp: {
-      name: () => "The Anatomy Lesson of Dr Nicolaes Tulp",
+      name: () => $t(L.GalleryPaintingTheAnatomyLessonOfDrNicolaesTulp),
       width: 6,
       height: 4,
       image: TheAnatomyLessonOfDrNicolaesTulp,
@@ -149,7 +150,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    TheJewishBride: {
-      name: () => "The Jewish Bride",
+      name: () => $t(L.GalleryPaintingTheJewishBride),
       width: 7,
       height: 5,
       image: TheJewishBride,
@@ -159,7 +160,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    TheNightWatch: {
-      name: () => "The Night Watch",
+      name: () => $t(L.GalleryPaintingTheNightWatch),
       width: 8,
       height: 6,
       image: TheNightWatch,
@@ -169,7 +170,7 @@ export const _Paintings = {
       masterpiece: true,
    },
    TheFeastOfSaintNicholas: {
-      name: () => "The Feast of Saint Nicholas",
+      name: () => $t(L.GalleryPaintingTheFeastOfSaintNicholas),
       width: 5,
       height: 6,
       image: TheFeastOfSaintNicholas,
@@ -179,7 +180,7 @@ export const _Paintings = {
       masterpiece: true,
    },
    TheMerryFamily: {
-      name: () => "The Merry Family",
+      name: () => $t(L.GalleryPaintingTheMerryFamily),
       width: 5,
       height: 4,
       image: TheMerryFamily,
@@ -189,7 +190,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    CompositionWithRedBlueAndYellow: {
-      name: () => "Composition with Red, Blue, and Yellow",
+      name: () => $t(L.GalleryPaintingCompositionWithRedBlueAndYellow),
       width: 4,
       height: 4,
       image: CompositionWithRedBlueAndYellow,
@@ -199,7 +200,7 @@ export const _Paintings = {
       masterpiece: true,
    },
    BroadwayBoogieWoogie: {
-      name: () => "Broadway Boogie Woogie",
+      name: () => $t(L.GalleryPaintingBroadwayBoogieWoogie),
       width: 4,
       height: 4,
       image: BroadwayBoogieWoogie,
@@ -209,7 +210,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    GrayTree: {
-      name: () => "Gray Tree",
+      name: () => $t(L.GalleryPaintingGrayTree),
       width: 4,
       height: 3,
       image: GrayTree,
@@ -219,7 +220,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    TheLaughingCavalier: {
-      name: () => "The Laughing Cavalier",
+      name: () => $t(L.GalleryPaintingTheLaughingCavalier),
       width: 4,
       height: 5,
       image: TheLaughingCavalier,
@@ -229,7 +230,7 @@ export const _Paintings = {
       masterpiece: true,
    },
    TheBanquetOfTheOfficersOfTheStGeorgeMilitiaCompany: {
-      name: () => "The Banquet of the Officers of the St George Militia Company",
+      name: () => $t(L.GalleryPaintingTheBanquetOfTheOfficersOfTheStGeorgeMilitiaCompany),
       width: 8,
       height: 4,
       image: TheBanquetOfTheOfficersOfTheStGeorgeMilitiaCompany,
@@ -239,7 +240,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    ViewOfHaarlemWithBleachingFields: {
-      name: () => "View of Haarlem with Bleaching Fields",
+      name: () => $t(L.GalleryPaintingViewOfHaarlemWithBleachingFields),
       width: 4,
       height: 5,
       image: ViewOfHaarlemWithBleachingFields,
@@ -249,7 +250,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    WindmillAtWijkBijDuurstede: {
-      name: () => "Windmill at Wijk bij Duurstede",
+      name: () => $t(L.GalleryPaintingWindmillAtWijkBijDuurstede),
       width: 5,
       height: 4,
       image: WindmillAtWijkBijDuurstede,
@@ -259,7 +260,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    TheHuntersInTheSnow: {
-      name: () => "The Hunters in the Snow",
+      name: () => $t(L.GalleryPaintingTheHuntersInTheSnow),
       width: 6,
       height: 4,
       image: TheHuntersInTheSnow,
@@ -269,7 +270,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    TheLittleStreet: {
-      name: () => "The Little Street",
+      name: () => $t(L.GalleryPaintingTheLittleStreet),
       width: 4,
       height: 5,
       image: TheLittleStreet,
@@ -279,7 +280,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    SelfPortrait: {
-      name: () => "Self Portrait (1889)",
+      name: () => $t(L.GalleryPaintingSelfPortrait1889),
       width: 5,
       height: 6,
       image: SelfPortrait,
@@ -289,7 +290,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    ThePotatoEaters: {
-      name: () => "The Potato Eaters",
+      name: () => $t(L.GalleryPaintingThePotatoEaters),
       width: 6,
       height: 4,
       image: ThePotatoEaters,
@@ -299,7 +300,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    GirlInAWhiteKimono: {
-      name: () => "Girl in a White Kimono",
+      name: () => $t(L.GalleryPaintingGirlInAWhiteKimono),
       width: 4,
       height: 4,
       image: GirlInAWhiteKimono,
@@ -309,7 +310,7 @@ export const _Paintings = {
       masterpiece: true,
    },
    StillLifeWithFlowersOnAMarbleSlab: {
-      name: () => "Still Life with Flowers on a Marble Slab",
+      name: () => $t(L.GalleryPaintingStillLifeWithFlowersOnAMarbleSlab),
       width: 4,
       height: 5,
       image: StillLifeWithFlowersOnAMarbleSlab,
@@ -319,7 +320,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    TheCourtyardOfAHouseInDelft: {
-      name: () => "The Courtyard of a House in Delft",
+      name: () => $t(L.GalleryPaintingTheCourtyardOfAHouseInDelft),
       width: 4,
       height: 5,
       image: TheCourtyardOfAHouseInDelft,
@@ -329,7 +330,7 @@ export const _Paintings = {
       masterpiece: true,
    },
    AMothersDuty: {
-      name: () => "A Mother's Duty",
+      name: () => $t(L.GalleryPaintingAMothersDuty),
       width: 6,
       height: 5,
       image: AMothersDuty,
@@ -339,7 +340,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    TheCryingCrocodileTriesToCatchTheSun: {
-      name: () => "The Crying Crocodile Tries to Catch the Sun",
+      name: () => $t(L.GalleryPaintingTheCryingCrocodileTriesToCatchTheSun),
       width: 3,
       height: 4,
       image: TheCryingCrocodileTriesToCatchTheSun,
@@ -349,7 +350,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    TheSingelBridgeAtThePaleisstraatInAmsterdam: {
-      name: () => "The Singel Bridge at the Paleisstraat in Amsterdam",
+      name: () => $t(L.GalleryPaintingTheSingelBridgeAtThePaleisstraatInAmsterdam),
       width: 6,
       height: 4,
       image: TheSingelBridgeAtThePaleisstraatInAmsterdam,
@@ -359,7 +360,7 @@ export const _Paintings = {
       masterpiece: false,
    },
    WomanHoldingABalance: {
-      name: () => "Woman Holding a Balance",
+      name: () => $t(L.GalleryPaintingWomanHoldingABalance),
       width: 5,
       height: 6,
       image: WomanHoldingABalance,
