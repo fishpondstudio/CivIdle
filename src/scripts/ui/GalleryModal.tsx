@@ -3,6 +3,7 @@ import { DragDropProvider, useDraggable, useDroppable } from "@dnd-kit/react";
 import Tippy from "@tippyjs/react";
 import { memo, useState } from "react";
 import { cls, createTile, mapSafeAdd, range, type Tile, tileToPoint } from "../../../shared/utilities/Helper";
+import { $t, L } from "../../../shared/utilities/i18n";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { refreshOnTypedEvent, useTypedEvent } from "../utilities/Hook";
 import "./GalleryModal.css";
@@ -22,7 +23,7 @@ export function GalleryModal(): React.ReactNode {
    return (
       <div className="window" style={{ width: "min(90vw, 1200px)" }}>
          <div className="title-bar">
-            <div className="title-bar-text">Gallery</div>
+            <div className="title-bar-text">National Gallery</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
@@ -199,22 +200,22 @@ function PaintingEffects(): React.ReactNode {
                </summary>
                <ul>
                   <li className="row">
-                     <Tippy content="Display 3 paintings by Rembrandt Van Rijn to unlock +1 Production Multiplier">
-                        <div>3 {Painters.RembrandtVanRijn()} Paintings</div>
+                     <Tippy content={$t(L.Display3PaintingsByRembrandtVanRijnToUnlock1ProductionMultiplier)}>
+                        <div>{$t(L.XPaintingsBy, { painter: Painters.RembrandtVanRijn(), count: 3 })}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.byPainters.get("RembrandtVanRijn") ?? 0}/3</div>
                   </li>
                   <li className="row">
                      <Tippy content="Display 3 paintings by Johannes Vermeer to unlock +1 Production Multiplier">
-                        <div>3 {Painters.JohannesVermeer()} Paintings</div>
+                        <div>3 Paintings by {Painters.JohannesVermeer()}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.byPainters.get("JohannesVermeer") ?? 0}/3</div>
                   </li>
                   <li className="row">
                      <Tippy content="Display 3 paintings by Vincent van Gogh to unlock +1 Production Multiplier">
-                        <div>3 {Painters.VincentVanGogh()} Paintings</div>
+                        <div>3 Paintings by {Painters.VincentVanGogh()}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.byPainters.get("VincentVanGogh") ?? 0}/3</div>

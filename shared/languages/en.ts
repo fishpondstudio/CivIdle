@@ -1957,4 +1957,6 @@ export const EN = {
    Hannibal: "Hannibal",
    RestitutorDescHTML: "Wishlist my upcoming game - <b>Restitutor: Empire Restored</b>. It is a historical incremental grand strategy game focused on <i>statecraft, diplomacy, and calculated warfare</i>. Set in the Roman Empire after the death of Commodus in 192 AD, when the empire fractures into rival provinces. As a governor, lead a province of your choice and restore the empire.",
    WishlistRestitutor: "Wishlist Restitutor",
+   XPaintingsBy: "%{count} Paintings by %{painter}",
+   Display3PaintingsByRembrandtVanRijnToUnlock1ProductionMultiplier: "Display 3 paintings by Rembrandt Van Rijn to unlock +1 Production Multiplier",
 };
