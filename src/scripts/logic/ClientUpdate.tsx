@@ -4,6 +4,7 @@ import { GreatPersonTickFlag } from "../../../shared/definitions/GreatPersonDefi
 import { OnTileExplored, getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import {
+   GameStateFlags,
    TransportSourceCacheTimeoutMax,
    TransportSourceCacheTimeoutMin,
    ValueToTrack,
@@ -14,6 +15,7 @@ import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getBuildingsByType } from "../../../shared/logic/IntraTickCache";
 import { getGreatPeopleForWisdom, getGreatPersonThisRunLevel } from "../../../shared/logic/RebirthLogic";
 import { RequestResetTile, getCurrentAge } from "../../../shared/logic/TechLogic";
+import { BuildingOptions } from "../../../shared/logic/Tile";
 import {
    CurrentTickChanged,
    EmptyTickData,
@@ -28,6 +30,7 @@ import {
    OnEligibleAccountRankUpdated,
    OnPriceUpdated,
    RequestChooseGreatPerson,
+   RequestDemolishBuilding,
    RequestFloater,
    clearTransportSourceCache,
    getSortedTiles,
@@ -39,7 +42,7 @@ import {
    type IProduceResource,
 } from "../../../shared/logic/Update";
 import { AccountLevel } from "../../../shared/utilities/Database";
-import { clamp, forEach, safeAdd, type Tile } from "../../../shared/utilities/Helper";
+import { clamp, forEach, hasFlag, safeAdd, setFlag, type Tile } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { client, disconnectWebSocket, getUser, reconnectWebSocket } from "../rpc/RPCClient";
@@ -216,7 +219,29 @@ let lastTickTime = Date.now();
 let hasShownAccountRankUpModal = false;
 let eligibleRank = AccountLevel.Tribune;
 
+// Buildings that emitted RequestDemolishBuilding this tick; processed after all tiles tick.
+const pendingDemolitions: Tile[] = [];
+
+function processPendingDemolitions(gs: GameState) {
+   if (pendingDemolitions.length === 0) return;
+   let demolished = 0;
+   for (const xy of pendingDemolitions) {
+      const tile = gs.tiles.get(xy);
+      if (tile?.building && hasFlag(tile.building.options, BuildingOptions.ScheduledForDemolition)) {
+         delete tile.building;
+         Singleton().sceneManager.enqueue(WorldScene, (s) => s.resetTile(tile.tile));
+         ++demolished;
+      }
+   }
+   pendingDemolitions.length = 0;
+   if (demolished > 0) {
+      gs.flags = setFlag(gs.flags, GameStateFlags.HasDemolishedBuilding);
+      clearTransportSourceCache();
+   }
+}
+
 function postTickTiles(gs: GameState, offline: boolean) {
+   processPendingDemolitions(gs);
    produceResources(gs);
    tickPower(gs);
    Tick.next.happiness = calculateHappiness(gs);
@@ -294,6 +319,11 @@ RequestFloater.on(({ xy, amount }) => {
 });
 RequestResetTile.on((xy) => {
    Singleton().sceneManager.enqueue(WorldScene, (s) => s.resetTile(xy));
+});
+// Queue tile for demolition; the actual deletion happens in processPendingDemolitions
+// after all tiles for the current tick have been processed.
+RequestDemolishBuilding.on((xy) => {
+   pendingDemolitions.push(xy);
 });
 OnTileExplored.on(onTileExplored);
 OnBuildingComplete.on(onBuildingComplete);

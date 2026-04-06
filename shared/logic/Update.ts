@@ -87,6 +87,7 @@ import type { MultiplierWithStability } from "./TickLogic";
 import { NotProducingReason, Tick } from "./TickLogic";
 import {
    BuildingInputMode,
+   BuildingOptions,
    MarketOptions,
    ResourceImportOptions,
    SuspendedInput,
@@ -103,6 +104,7 @@ import {
 import { Transports, type ITransportationDataV2 } from "./Transports";
 
 export const OnPriceUpdated = new TypedEvent<GameState>();
+export const RequestDemolishBuilding = new TypedEvent<Tile>();
 export const OnBuildingComplete = new TypedEvent<Tile>();
 export const OnBuildingOrUpgradeComplete = new TypedEvent<Tile>();
 export const OnTechUnlocked = new TypedEvent<Tech>();
@@ -324,6 +326,11 @@ export function transportAndConsumeResources(
          tile: xy,
          usedStoragePercentage: used / total,
       });
+   }
+
+   // Handle buildings scheduled for demolition before any further processing
+   if (tickScheduledDemolition(xy, building, gs)) {
+      return;
    }
 
    if (
@@ -732,6 +739,97 @@ export function transportAndConsumeResources(
       mapSafeAdd(Tick.next.workersAvailable, res, v);
    });
    OnBuildingProductionComplete.emit({ xy, offline });
+}
+
+/**
+ * Handles the "scheduled for demolition" lifecycle for a building.
+ * - Stops production by forcing capacity to 0.
+ * - Each tick, uses the normal worker-based transport system to drain inventory
+ *   into every warehouse / caravansary that has available space.
+ * - Once the inventory is fully empty (all transports have arrived), emits
+ *   RequestDemolishBuilding so the client removes the tile and resets the visual.
+ * Returns true if the building is scheduled for demolition (caller should skip
+ * all further processing for this tile).
+ */
+function tickScheduledDemolition(xy: Tile, building: IBuildingData, gs: GameState): boolean {
+   if (!hasFlag(building.options, BuildingOptions.ScheduledForDemolition)) {
+      return false;
+   }
+
+   // Ensure production is halted. With capacity = 0, getBuildingIO returns 0
+   // for all inputs, so getAvailableResource sees no reserved stockpile and
+   // will offer the full stored amount for transport.
+   building.capacity = 0;
+   Tick.next.notProducingReasons.set(xy, NotProducingReason.TurnedOff);
+
+   // Remove any zero-value resource entries left over from previous tick's deductions
+   keysOf(building.resources).forEach((res) => {
+      if ((building.resources[res] ?? 0) <= 0) {
+         delete building.resources[res];
+      }
+   });
+
+   // If inventory is already empty, request demolition
+   if (isEmpty(building.resources)) {
+      RequestDemolishBuilding.emit(xy);
+      return true;
+   }
+
+   // Use the game's standard worker-based transport system to drain inventory
+   // into every warehouse / caravansary that has available space. This mirrors
+   // how warehouse autopilot works: transportResource with a sourcesOverride
+   // deducts resources immediately and queues a timed transport that uses workers.
+   // Warehouses are prioritised over caravansaries; within each type, prefer
+   // the building with the most available space (lowest used percentage).
+   const workerCapacity = totalMultiplierFor(xy, "worker", 1, false, gs);
+
+   const sortedImportBuildings = Array.from(Tick.current.resourceImportBuildings.entries()).sort(
+      ([, a], [, b]) => {
+         const aIsWarehouse = a.building.type === "Warehouse" ? 0 : 1;
+         const bIsWarehouse = b.building.type === "Warehouse" ? 0 : 1;
+         if (aIsWarehouse !== bIsWarehouse) return aIsWarehouse - bIsWarehouse;
+         return a.usedStoragePercentage - b.usedStoragePercentage;
+      },
+   );
+
+   for (const [warehouseXy, _rb] of sortedImportBuildings) {
+      if (warehouseXy === xy || isEmpty(building.resources)) break;
+      const { total, used } = getStorageFor(warehouseXy, gs);
+      let remainingSpace = total - used;
+      if (remainingSpace <= 0) continue;
+
+      keysOf(building.resources).forEach((res) => {
+         if (remainingSpace <= 0) return;
+         const amount = building.resources[res] ?? 0;
+         if (amount <= 0) return;
+         const toRequest = Math.min(amount, remainingSpace);
+         const leftover = transportResource(
+            res,
+            toRequest,
+            workerCapacity,
+            warehouseXy,
+            gs,
+            BuildingInputMode.Distance,
+            false, // never use cache for demolition transports
+            [xy],  // pull only from the building being demolished
+         );
+         remainingSpace -= toRequest - leftover;
+      });
+   }
+
+   // Clean up any entries that were fully deducted by the transport calls above
+   keysOf(building.resources).forEach((res) => {
+      if ((building.resources[res] ?? 0) <= 0) {
+         delete building.resources[res];
+      }
+   });
+
+   // Re-check after the transport pass
+   if (isEmpty(building.resources)) {
+      RequestDemolishBuilding.emit(xy);
+   }
+
+   return true;
 }
 
 function tickWarehouseAutopilot(

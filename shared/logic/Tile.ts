@@ -24,6 +24,7 @@ export type BuildingStatus = "building" | "upgrading" | "completed";
 
 export enum BuildingOptions {
    None = 0,
+   ScheduledForDemolition = 1 << 0,
 }
 
 export enum BuildingInputMode {
