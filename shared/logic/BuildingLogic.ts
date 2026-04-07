@@ -1275,11 +1275,11 @@ export function getPompidou(gs: GameState): ICentrePompidouBuildingData | null {
    }
    return null;
 }
-export function getRandomEmptyTiles(count: number, gameState: GameState): Tile[] {
+export function getRandomEmptyTile(range: number, gameState: GameState): [Tile, ITileData] | null {
    const grid = getGrid(gameState);
    const xys = shuffle(Array.from(gameState.tiles.keys()));
    const result: Tile[] = [];
-   for (let i = 0; i < xys.length; i++) {
+   outer: for (let i = 0; i < xys.length; i++) {
       const xy = xys[i];
       const tile = gameState.tiles.get(xy);
       if (
@@ -1287,16 +1287,20 @@ export function getRandomEmptyTiles(count: number, gameState: GameState): Tile[]
          tile.building ||
          !isEmpty(tile.deposit) ||
          tile.explored ||
-         grid.isEdge(tileToPoint(xy), 3)
+         grid.isEdge(tileToPoint(xy), range)
       ) {
          continue;
       }
-      result.push(xy);
-      if (result.length >= count) {
-         break;
+      for (const point of grid.getRange(tileToPoint(xy), range)) {
+         const neighbor = pointToTile(point);
+         const neighborTile = gameState.tiles.get(neighbor);
+         if (!neighborTile || neighborTile.building) {
+            continue outer;
+         }
       }
+      return [xy, tile];
    }
-   return result;
+   return null;
 }
 
 export function getBuildingCity(building: Building): City | null {
@@ -1558,6 +1562,7 @@ export function getBuildingRange(xy: Tile, building: IBuildingData, gs: GameStat
       case "ItaipuDam":
       case "CathedralOfBrasilia":
       case "Hermitage":
+      case "AkademikLomonosov":
       case "GoldenGateBridge": {
          return 2;
       }

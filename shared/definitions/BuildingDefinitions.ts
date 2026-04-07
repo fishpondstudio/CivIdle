@@ -2592,3 +2592,27 @@ export const WonderCostBase: Partial<Record<Building, number>> = {
    GreatOceanRoad: 1.7,
    WorldTradeOrganization: 2,
 };
+
+// This is used for the initial placement of natural wonders.
+export const NaturalWonderMaxRange: Partial<Record<Building, number>> = {
+   Poseidon: 1,
+   NileRiver: 1,
+   ZagrosMountains: 1,
+   RhineGorge: 2,
+   Lapland: 2,
+   Cappadocia: 3,
+   MountArarat: 2,
+
+   Capybara: 6,
+   GiantOtter: 6,
+   Hoatzin: 6,
+   RoyalFlycatcher: 6,
+   GlassFrog: 6,
+   PygmyMarmoset: 6,
+
+   GangesRiver: 2,
+   Uluru: 3,
+   LakeBaikal: 4,
+   AuroraBorealis: 4,
+   AtlasMountains: 6,
+};

@@ -181,7 +181,9 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                      <details>
                         <summary className="row">
                            <div className="f1">{$t(L.WorkersRequiredForProductionMultiplier)}</div>
-                           <div className="text-strong">{workersRequired.multiplier}</div>
+                           <div className="text-strong">
+                              <FormatNumber value={workersRequired.multiplier} />
+                           </div>
                         </summary>
                         <ul>
                            <li className="row">

@@ -282,10 +282,10 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.savedGame = savedGame;
    // @ts-expect-error
-   window.reset = async () => {
-      hardReset().then(() => {
-         window.location.reload();
-      });
+   window.reset = (city: City = "Rome") => {
+      resetToCity(uuid4(), city, 0)
+         .then(() => saveGame())
+         .then(() => window.location.reload());
    };
    // @ts-expect-error
    window.clearAllResources = () => {

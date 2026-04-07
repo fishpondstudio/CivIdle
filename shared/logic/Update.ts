@@ -434,6 +434,23 @@ export function transportAndConsumeResources(
 
    if ("resourceImports" in building) {
       const ri = building as IResourceImportBuildingData;
+      if (getGameOptions().warehouseQuickMode) {
+         const storage = getStorageFor(xy, gs);
+         const totalCapacity = getResourceImportCapacity(
+            ri,
+            totalLevelBoostFor(xy),
+            totalMultiplierFor(xy, "output", 1, false, gs),
+         );
+         const selected = sizeOf(ri.resourceImports);
+         if (selected > 0) {
+            const perCycle = Math.floor(totalCapacity / selected);
+            const cap = Math.floor(storage.total / selected);
+            forEach(ri.resourceImports, (res, v) => {
+               v.perCycle = perCycle;
+               v.cap = cap;
+            });
+         }
+      }
       if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
          const storage = getStorageFor(xy, gs);
          const totalCapacity = getResourceImportCapacity(
