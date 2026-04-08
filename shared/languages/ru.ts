@@ -424,7 +424,7 @@ export const RU = {
    CosimoDeMedici: "Козимо Медичи",
    Cosmodrome: "Космодром",
    Cotton: "Хлопок",
-   CottonMill: "Хлопчатобумажная фабрика",
+   CottonMill: "Ткацкая фабрика",
    CottonPlantation: "Хлопковая Плантация",
    Counting: "Счет",
    Courthouse: "Суд",
