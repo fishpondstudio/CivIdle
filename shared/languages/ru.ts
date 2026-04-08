@@ -1468,7 +1468,7 @@ export const RU = {
    SpaceCenter: "Космический Центр",
    Spacecraft: "Космический Корабль",
    SpacecraftFactory: "Завод Космических Кораблей",
-   SpaceNeedle: "Космическая Игла",
+   SpaceNeedle: "Спейс-Нидл",
    SpaceNeedleDesc: "+1 Счастья за каждое построенное чудо.",
    SpaceProgram: "Космическая Программа",
    Spinner: "Индикатор",
