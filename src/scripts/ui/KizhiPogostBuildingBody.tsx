@@ -1,4 +1,5 @@
 import { getMultipliersFor } from "../../../shared/logic/BuildingLogic";
+import { formatNumber } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -11,6 +12,7 @@ export function KizhiPogostBuildingBody({ gameState, xy }: IBuildingComponentPro
    if (!building) {
       return null;
    }
+   let count = 0;
    return (
       <div className="window-body">
          <fieldset>
@@ -20,10 +22,11 @@ export function KizhiPogostBuildingBody({ gameState, xy }: IBuildingComponentPro
                   if (!m.output) {
                      return null;
                   }
+                  count++;
                   return (
-                     <li className="row" key={m.source}>
+                     <li className="row" key={`${m.source},${count}`}>
                         <div className="f1">{m.source}</div>
-                        <div className="text-strong">{m.output}</div>
+                        <div className="text-strong">{formatNumber(m.output)}</div>
                      </li>
                   );
                })}
