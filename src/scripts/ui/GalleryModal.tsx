@@ -41,7 +41,12 @@ export function GalleryModal(): React.ReactNode {
                      const targetPoint = tileToPoint(e.operation.target.id as number);
                      if (
                         canFit(
-                           { x: targetPoint.x, y: targetPoint.y, width: sourceWidth, height: sourceHeight },
+                           {
+                              x: targetPoint.x,
+                              y: targetPoint.y,
+                              width: sourceWidth,
+                              height: sourceHeight,
+                           },
                            placedPaintings,
                            GridSize,
                            sourceId,
@@ -68,7 +73,12 @@ export function GalleryModal(): React.ReactNode {
                      const targetPoint = tileToPoint(target.id as number);
                      if (
                         canFit(
-                           { x: targetPoint.x, y: targetPoint.y, width: targetWidth, height: targetHeight },
+                           {
+                              x: targetPoint.x,
+                              y: targetPoint.y,
+                              width: targetWidth,
+                              height: targetHeight,
+                           },
                            placedPaintings,
                            GridSize,
                            source.id as string,
@@ -211,21 +221,36 @@ function PaintingEffects(): React.ReactNode {
                <ul>
                   <li className="row">
                      <Tippy content={$t(L.Display3PaintingsByRembrandtVanRijnToUnlock1ProductionMultiplier)}>
-                        <div>{$t(L.XPaintingsBy, { painter: Painters.RembrandtVanRijn(), count: 3 })}</div>
+                        <div>
+                           {$t(L.XPaintingsBy, {
+                              painter: Painters.RembrandtVanRijn(),
+                              count: 3,
+                           })}
+                        </div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.byPainters.get("RembrandtVanRijn") ?? 0}/3</div>
                   </li>
                   <li className="row">
                      <Tippy content={$t(L.Display3PaintingsByJohannesVermeerToUnlock1ProductionMultiplier)}>
-                        <div>{$t(L.XPaintingsBy, { painter: Painters.JohannesVermeer(), count: 3 })}</div>
+                        <div>
+                           {$t(L.XPaintingsBy, {
+                              painter: Painters.JohannesVermeer(),
+                              count: 3,
+                           })}
+                        </div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.byPainters.get("JohannesVermeer") ?? 0}/3</div>
                   </li>
                   <li className="row">
                      <Tippy content={$t(L.Display3PaintingsByVincentVanGoghToUnlock1ProductionMultiplier)}>
-                        <div>{$t(L.XPaintingsBy, { painter: Painters.VincentVanGogh(), count: 3 })}</div>
+                        <div>
+                           {$t(L.XPaintingsBy, {
+                              painter: Painters.VincentVanGogh(),
+                              count: 3,
+                           })}
+                        </div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.byPainters.get("VincentVanGogh") ?? 0}/3</div>
@@ -309,7 +334,11 @@ function _GridItem({
    id,
    isUsed,
    isHighlighted,
-}: { id: number; isUsed: boolean; isHighlighted: boolean }): React.ReactNode {
+}: {
+   id: number;
+   isUsed: boolean;
+   isHighlighted: boolean;
+}): React.ReactNode {
    const { ref } = useDroppable({
       id,
       collisionDetector: collisionDetectorTopLeftCorner,
@@ -324,7 +353,13 @@ function _GridItem({
 
 const GridItem = memo(_GridItem);
 
-function PaintingItem({ id, style }: { id: string; style?: React.CSSProperties }): React.ReactNode {
+function PaintingItem({
+   id,
+   style,
+}: {
+   id: string;
+   style?: React.CSSProperties;
+}): React.ReactNode {
    const painting = Paintings[id as keyof typeof Paintings];
    const { ref } = useDraggable({
       id: id,
@@ -560,9 +595,15 @@ const collisionDetectorTopLeftCorner: CollisionDetector = (input) => {
    }
    let p1 = position.current;
    if (shape) {
-      p1 = { x: shape.current.boundingRectangle.top, y: shape.current.boundingRectangle.left };
+      p1 = {
+         x: shape.current.boundingRectangle.top,
+         y: shape.current.boundingRectangle.left,
+      };
    }
-   const p2 = { x: droppable.shape.boundingRectangle.top, y: droppable.shape.boundingRectangle.left };
+   const p2 = {
+      x: droppable.shape.boundingRectangle.top,
+      y: droppable.shape.boundingRectangle.left,
+   };
    const distanceX = Math.abs(p1.x - p2.x);
    const distanceY = Math.abs(p1.y - p2.y);
    if (
