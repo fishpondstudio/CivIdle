@@ -443,8 +443,8 @@ export function transportAndConsumeResources(
          );
          const selected = sizeOf(ri.resourceImports);
          if (selected > 0) {
-            const perCycle = totalCapacity / selected;
-            const cap = storage.total / selected;
+            const perCycle = Math.floor(totalCapacity / selected);
+            const cap = Math.floor(storage.total / selected);
             forEach(ri.resourceImports, (res, v) => {
                v.perCycle = perCycle;
                v.cap = cap;
