@@ -1381,7 +1381,7 @@ export const EN = {
    Saladin: "Saladin",
    Samsuiluna: "Samsu-iluna",
    SanchiStupa: "Sanchi Stupa",
-   SanchiStupaDesc: "Transports from or to buildings within 2-tile range of Snachi Stupa are immediate",
+   SanchiStupaDesc: "Transports from or to buildings within 2-tile range of Sanchi Stupa are immediate",
    Sand: "Sand",
    Sandpit: "Sandpit",
    SantaClausVillage: "Santa Claus Village",
