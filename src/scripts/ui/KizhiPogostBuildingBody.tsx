@@ -1,4 +1,5 @@
 import { getMultipliersFor } from "../../../shared/logic/BuildingLogic";
+import { formatNumber } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -16,14 +17,14 @@ export function KizhiPogostBuildingBody({ gameState, xy }: IBuildingComponentPro
          <fieldset>
             <legend>{$t(L.ProductionMultiplier)}</legend>
             <ul className="tree-view">
-               {getMultipliersFor(xy, false, gameState).map((m) => {
+               {getMultipliersFor(xy, false, gameState).map((m, idx) => {
                   if (!m.output) {
                      return null;
                   }
                   return (
-                     <li className="row" key={m.source}>
+                     <li className="row" key={idx}>
                         <div className="f1">{m.source}</div>
-                        <div className="text-strong">{m.output}</div>
+                        <div className="text-strong">{formatNumber(m.output)}</div>
                      </li>
                   );
                })}

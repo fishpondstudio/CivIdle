@@ -1297,7 +1297,7 @@ export const KR = {
    WarehouseAutopilotSettingsRespectCapSettingTooltip: "자동 관리 옵션은 저장 용량이 한도 미만인 리소스만 운송합니다.",
    WarehouseDesc: "특정 자원을 운송하고 추가 저장소를 제공합니다.",
    WarehouseExtension: "창고와 상인 숙소 확장 모드 잠금 해제. 상인 숙소에 인접한 창고가 플레이어 거래에 포함되도록 허용합니다.",
-   WarehouseSettingsAutopilotDesc: "이 창고는 유휴용량을 사용하여 저장소가 가득한 건물로부터 자원을 수송받습니다. 현재 유휴 용량: %{capacity}",
+   WarehouseSettingsAutopilotDesc: "이 창고는 유휴 수송 용량을 사용하여 저장소가 가득한 건물로부터 자원을 수송받습니다. 현재 유휴 수송 용량: %{capacity}",
    WarehouseUpgrade: "창고 오토파일럿 모드 해금. 창고와 인접한 건물간에 무료 운송",
    WarehouseUpgradeDesc: "이 창고와 인접한 건물간은 무료 운송이 적용됩니다",
    Warp: "워프",

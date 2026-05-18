@@ -17,6 +17,7 @@ import { GameState } from "../../shared/logic/GameState";
 import {
    GameOptionsChanged,
    GameStateChanged,
+   checksum,
    deserializeSave,
    getGameOptions,
    getGameState,
@@ -446,6 +447,15 @@ if (import.meta.env.DEV) {
       overwriteSaveGame(save);
       await saveGame();
       window.location.reload();
+   };
+
+   // @ts-expect-error
+   window.validateSave = async () => {
+      const [handle] = await window.showOpenFilePicker();
+      const file = await handle.getFile();
+      const bytes = await file.arrayBuffer();
+      await decompressSave(new Uint8Array(bytes));
+      console.log(checksum);
    };
 
    // @ts-expect-error
