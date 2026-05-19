@@ -1437,13 +1437,7 @@ export function getResourceImportBuildingBaseStorageMultiplier(gs: GameState): n
    if (gs.unlockedTech.Enlightenment) {
       ++result;
    }
-   if (gs.unlockedUpgrades.IrrigatedEstate) {
-      ++result;
-   }
    if (gs.unlockedUpgrades.HarborWarehouse) {
-      ++result;
-   }
-   if (gs.unlockedUpgrades.MediterraneanTrades) {
       ++result;
    }
    return result;
