@@ -1959,7 +1959,7 @@ export const EN = {
    WishlistRestitutor: "Wishlist Restitutor",
    XPaintingsBy: "%{count} Paintings by %{painter}",
    Display3PaintingsByRembrandtVanRijnToUnlock1ProductionMultiplier: "Display 3 paintings by Rembrandt Van Rijn to unlock +1 Production Multiplier",
-   NationalGallery: "National Gallery",
+   Gallery: "Gallery",
    AdjacencyBonus: "Adjacency Bonus",
    PainterAdjacency: "Painter Adjacency",
    SizeAdjacency: "Size Adjacency",
@@ -2034,6 +2034,6 @@ export const EN = {
    Binnenhof: "Binnenhof",
    Koningsdag: "Koningsdag: <TODO>",
    Mauritshuis: "Mauritshuis",
-   MauritshuisDesc: "For each level of Mauritshuis, a painting by a Dutch painter is discovered. These paintings can be arranged in the gallery to gain various bonuses",
+   MauritshuisDesc: "For each level of Mauritshuis, a painting by a Dutch painter is discovered (30 paintings in total). These paintings can be arranged in the gallery to gain various bonuses",
    OpenGallery: "Open Gallery",
 };

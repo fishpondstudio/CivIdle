@@ -27,7 +27,7 @@ export function GalleryModal({ building }: { building: IMauritshuisBuildingData 
    return (
       <div className="window" style={{ width: "min(90vw, 1200px)" }}>
          <div className="title-bar">
-            <div className="title-bar-text">{$t(L.NationalGallery)}</div>
+            <div className="title-bar-text">{$t(L.Gallery)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
@@ -331,12 +331,14 @@ function PendingPaintings({
             padding: 2,
          }}
       >
-         {Array.from(paintings).map((key) => {
-            if (placedPaintings.has(key)) {
-               return null;
-            }
-            return <PaintingItem key={key} id={key} placedPaintings={placedPaintings} />;
-         })}
+         {Array.from(paintings)
+            .sort((a, b) => Paintings[a].height - Paintings[b].height)
+            .map((key) => {
+               if (placedPaintings.has(key)) {
+                  return null;
+               }
+               return <PaintingItem key={key} id={key} placedPaintings={placedPaintings} />;
+            })}
       </div>
    );
 }

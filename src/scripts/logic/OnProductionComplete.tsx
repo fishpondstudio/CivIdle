@@ -1,5 +1,10 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
-import { Paintings, type Painting } from "../../../shared/definitions/GalleryPaintings";
+import {
+   Paintings,
+   calculateEffects,
+   getPaintingMultipliers,
+   type Painting,
+} from "../../../shared/definitions/GalleryPaintings";
 import { GreatPersonTickFlag, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import {
@@ -113,8 +118,9 @@ import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { getNeighboringPlayers, getOwnedOrOccupiedTiles } from "../scenes/PathFinder";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { hasOpenModal, showModal } from "../ui/GlobalModal";
+import { PaintingModal } from "../ui/PaintingModal";
 import { Singleton } from "../utilities/Singleton";
-import { playAgeUp } from "../visuals/Sound";
+import { playAgeUp, playLevelUp } from "../visuals/Sound";
 
 let votedBoost: IGetVotedBoostResponse | null = null;
 let lastVotedBoostUpdatedAt = 0;
@@ -2303,6 +2309,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "Mauritshuis": {
          const mauritshuis = building as IMauritshuisBuildingData;
          const paintings = mauritshuis.paintings;
+         let newPainting: Painting | undefined;
          while (paintings.size < building.level) {
             const candidates: Painting[] = [];
             forEach(Paintings, (painting, def) => {
@@ -2314,8 +2321,20 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                break;
             }
             const painting = candidates[Math.floor(Math.random() * candidates.length)];
+            newPainting = painting;
             paintings.add(painting);
          }
+         if (newPainting && !hasOpenModal()) {
+            playLevelUp();
+            showModal(<PaintingModal painting={newPainting} />);
+         }
+         const effects = calculateEffects(mauritshuis.placedPaintings);
+         forEach(getPaintingMultipliers(effects), (k, v) => {
+            Tick.next.globalMultipliers[k].push({
+               value: v,
+               source: buildingName,
+            });
+         });
          break;
       }
    }

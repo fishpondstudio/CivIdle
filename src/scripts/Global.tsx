@@ -315,6 +315,13 @@ if (import.meta.env.DEV) {
       });
    };
    // @ts-expect-error
+   window.upgradePermanentGreatPeople = (level = 5) => {
+      const options = getGameOptions();
+      forEach(Config.GreatPerson, (gp, def) => {
+         options.greatPeople[gp] = { level, amount: 0 };
+      });
+   };
+   // @ts-expect-error
    window.cameraPan = (target: number, time: number) => {
       Singleton().sceneManager.getCurrent(WorldScene)?.cameraPan(target, time);
    };

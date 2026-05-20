@@ -1,3 +1,4 @@
+import type { GlobalMultipliers } from "../logic/TickLogic";
 import { createTile, mapSafeAdd, tileToPoint, type Tile } from "../utilities/Helper";
 import { $t, L } from "../utilities/i18n";
 
@@ -476,4 +477,37 @@ export function getAdjacentRects<T extends string | number>(
       }
    }
    return result;
+}
+
+export function getPaintingMultipliers(
+   effects: ReturnType<typeof calculateEffects>,
+): Partial<Record<keyof GlobalMultipliers, number>> {
+   let levelBoost = effects.sameSizePairs.size;
+   let output = effects.samePainterPairs.size;
+   const storage = effects.sameCenturyPairs.size;
+   const worker = effects.sameThemePairs.size;
+   if ((effects.byPainters.get("RembrandtVanRijn") ?? 0) >= 3) {
+      output++;
+   }
+   if ((effects.byPainters.get("JohannesVermeer") ?? 0) >= 3) {
+      output++;
+   }
+   if ((effects.byPainters.get("VincentVanGogh") ?? 0) >= 3) {
+      output++;
+   }
+   if (effects.byPainters.size >= 5) {
+      levelBoost++;
+   }
+   if (effects.byThemes.size >= 5) {
+      levelBoost++;
+   }
+   if (effects.masterpieces >= 5) {
+      levelBoost++;
+   }
+   return {
+      output,
+      levelBoost,
+      storage,
+      worker,
+   };
 }

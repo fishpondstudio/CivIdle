@@ -19,7 +19,7 @@ export function PaintingModal({ painting }: { painting: Painting }): React.React
             <div>
                <div className="title">{def.name()}</div>
                <div>
-                  <div>
+                  <div className="mt5">
                      {Painters[def.painter]()} · {def.year} · {Themes[def.theme]()}
                      {def.masterpiece && " · Masterpiece"}
                   </div>
