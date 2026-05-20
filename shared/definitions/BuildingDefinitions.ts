@@ -2437,6 +2437,17 @@ export class BuildingDefinitions {
       wikipedia: "Atlas_Mountains",
    };
 
+   Mauritshuis: IBuildingDefinition = {
+      name: () => $t(L.Mauritshuis),
+      desc: () => $t(L.MauritshuisDesc),
+      input: {},
+      output: {},
+      construction: { Politics: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Mauritshuis",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {
@@ -2547,6 +2558,7 @@ export const BuildingShowLevel = new Set<Building>([
    "Habitat67",
    "WorldTradeOrganization",
    "CothonOfCarthage",
+   "Mauritshuis",
 ] satisfies Building[]);
 
 // This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!

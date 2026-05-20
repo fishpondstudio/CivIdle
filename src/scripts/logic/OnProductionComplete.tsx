@@ -1,4 +1,5 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import { Paintings, type Painting } from "../../../shared/definitions/GalleryPaintings";
 import { GreatPersonTickFlag, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import {
@@ -78,6 +79,7 @@ import type {
    IIdeologyBuildingData,
    IItaipuDamBuildingData,
    ILouvreBuildingData,
+   IMauritshuisBuildingData,
    IReligionBuildingData,
    ISwissBankBuildingData,
    ITileData,
@@ -2295,6 +2297,24 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   );
                });
             }
+         }
+         break;
+      }
+      case "Mauritshuis": {
+         const mauritshuis = building as IMauritshuisBuildingData;
+         const paintings = mauritshuis.paintings;
+         while (paintings.size < building.level) {
+            const candidates: Painting[] = [];
+            forEach(Paintings, (painting, def) => {
+               if (!paintings.has(painting)) {
+                  candidates.push(painting);
+               }
+            });
+            if (candidates.length === 0) {
+               break;
+            }
+            const painting = candidates[Math.floor(Math.random() * candidates.length)];
+            paintings.add(painting);
          }
          break;
       }

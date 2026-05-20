@@ -1,0 +1,37 @@
+.painting-modal {
+   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+   border-radius: 10px;
+   overflow: hidden;
+   position: relative;
+}
+
+.painting-modal .overlay {
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
+   padding: 10px;
+   color: #fff;
+   text-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+   font-family: "Cabin", sans-serif;
+}
+
+.painting-modal .title {
+   font-family: "Platypi", serif;
+   font-size: 20px;
+}
+
+.painting-modal .button {
+   border: 1px solid #fff;
+   padding: 2px 5px;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   text-transform: uppercase;
+   letter-spacing: 0.05em;
+}
+
+.painting-modal .button:hover {
+   background-color: rgba(255, 255, 255, 0.25);
+}

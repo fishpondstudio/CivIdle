@@ -2,24 +2,28 @@ import { type CollisionDetector, CollisionPriority, CollisionType } from "@dnd-k
 import { DragDropProvider, useDraggable, useDroppable } from "@dnd-kit/react";
 import Tippy from "@tippyjs/react";
 import { memo, useState } from "react";
-import { cls, createTile, mapSafeAdd, range, type Tile, tileToPoint } from "../../../shared/utilities/Helper";
+import {
+   calculateEffects,
+   canFit,
+   getAdjacentRects,
+   type IPaintingPlacement,
+   isTileUsed,
+   Painters,
+   type Painting,
+   Paintings,
+   Themes,
+} from "../../../shared/definitions/GalleryPaintings";
+import type { IMauritshuisBuildingData } from "../../../shared/logic/Tile";
+import { cls, createTile, range, type Tile, tileToPoint } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { refreshOnTypedEvent, useTypedEvent } from "../utilities/Hook";
 import "./GalleryModal.css";
-import {
-   makePaintingPair,
-   type Painter,
-   Painters,
-   type Painting,
-   type PaintingPair,
-   Paintings,
-   type Theme,
-   Themes,
-} from "./GalleryPaintings";
+import { PaintingImages } from "./GalleryPaintingImages";
 import { hideModal } from "./GlobalModal";
 
-export function GalleryModal(): React.ReactNode {
+export function GalleryModal({ building }: { building: IMauritshuisBuildingData }): React.ReactNode {
+   const { paintings, placedPaintings } = building;
    return (
       <div className="window" style={{ width: "min(90vw, 1200px)" }}>
          <div className="title-bar">
@@ -103,12 +107,12 @@ export function GalleryModal(): React.ReactNode {
             >
                <div className="row" style={{ gap: 8 }}>
                   <div style={{ position: "relative" }}>
-                     <Grid />
-                     <PlacedPaintings />
+                     <Grid placedPaintings={placedPaintings} />
+                     <PlacedPaintings placedPaintings={placedPaintings} />
                   </div>
                   <div className="col f1" style={{ alignSelf: "stretch" }}>
-                     <PaintingEffects />
-                     <PendingPaintings />
+                     <PaintingEffects placedPaintings={placedPaintings} />
+                     <PendingPaintings placedPaintings={placedPaintings} paintings={paintings} />
                   </div>
                </div>
             </DragDropProvider>
@@ -118,10 +122,9 @@ export function GalleryModal(): React.ReactNode {
 }
 
 const GridSize = 20;
-
 const grid = range(0, GridSize * GridSize);
 
-function Grid(): React.ReactNode {
+function Grid({ placedPaintings }: { placedPaintings: Map<Painting, IPaintingPlacement> }): React.ReactNode {
    const [data, setData] = useState<IPaintingMoved>({
       id: undefined as string | undefined,
       tiles: new Set<Tile>(),
@@ -154,7 +157,9 @@ function Grid(): React.ReactNode {
    );
 }
 
-function PaintingEffects(): React.ReactNode {
+function PaintingEffects({
+   placedPaintings,
+}: { placedPaintings: Map<Painting, IPaintingPlacement> }): React.ReactNode {
    refreshOnTypedEvent(paintingUpdated);
    const effects = calculateEffects(placedPaintings);
    return (
@@ -292,7 +297,9 @@ function PaintingEffects(): React.ReactNode {
    );
 }
 
-function PlacedPaintings(): React.ReactNode {
+function PlacedPaintings({
+   placedPaintings,
+}: { placedPaintings: Map<Painting, IPaintingPlacement> }): React.ReactNode {
    refreshOnTypedEvent(paintingUpdated);
    return Array.from(placedPaintings.entries()).map(([id, { x, y, width, height }]) => {
       return (
@@ -304,12 +311,16 @@ function PlacedPaintings(): React.ReactNode {
                top: `calc(var(--grid-size) * ${y})`,
                left: `calc(var(--grid-size) * ${x})`,
             }}
+            placedPaintings={placedPaintings}
          />
       );
    });
 }
 
-function PendingPaintings(): React.ReactNode {
+function PendingPaintings({
+   placedPaintings,
+   paintings,
+}: { placedPaintings: Map<Painting, IPaintingPlacement>; paintings: Set<Painting> }): React.ReactNode {
    refreshOnTypedEvent(paintingUpdated);
    return (
       <div
@@ -320,11 +331,11 @@ function PendingPaintings(): React.ReactNode {
             padding: 2,
          }}
       >
-         {Array.from(Object.entries(Paintings)).map(([key, size]) => {
-            if (placedPaintings.has(key as Painting)) {
+         {Array.from(paintings).map((key) => {
+            if (placedPaintings.has(key)) {
                return null;
             }
-            return <PaintingItem key={key} id={key} />;
+            return <PaintingItem key={key} id={key} placedPaintings={placedPaintings} />;
          })}
       </div>
    );
@@ -355,9 +366,11 @@ const GridItem = memo(_GridItem);
 
 function PaintingItem({
    id,
+   placedPaintings,
    style,
 }: {
-   id: string;
+   id: Painting;
+   placedPaintings: Map<Painting, IPaintingPlacement>;
    style?: React.CSSProperties;
 }): React.ReactNode {
    const painting = Paintings[id as keyof typeof Paintings];
@@ -402,7 +415,7 @@ function PaintingItem({
       >
          <img
             onClick={() => {
-               const placed = placedPaintings.get(id as Painting);
+               const placed = placedPaintings.get(id);
                if (placed) {
                   const adjacentRects = getAdjacentRects([id, placed], placedPaintings);
                   console.log(adjacentRects);
@@ -420,7 +433,7 @@ function PaintingItem({
                float: "left",
                ...style,
             }}
-            src={painting.image}
+            src={PaintingImages[id]}
             alt={id}
          />
       </Tippy>
@@ -432,160 +445,8 @@ interface IPaintingMoved {
    tiles: Set<Tile>;
 }
 
-interface IPaintingPlacement {
-   x: number;
-   y: number;
-   width: number;
-   height: number;
-}
-
 const paintingMoved = new TypedEvent<IPaintingMoved>();
 const paintingUpdated = new TypedEvent<void>();
-const placedPaintings = new Map<Painting, IPaintingPlacement>();
-
-function calculateEffects(placedPaintings: Map<Painting, IPaintingPlacement>) {
-   const samePainterPairs = new Set<PaintingPair>();
-   const sameCenturyPairs = new Set<PaintingPair>();
-   const sameThemePairs = new Set<PaintingPair>();
-   const sameSizePairs = new Set<PaintingPair>();
-   const byPainters = new Map<Painter, number>();
-   const byThemes = new Map<Theme, number>();
-   let masterpieces = 0;
-   placedPaintings.forEach(({ x, y, width, height }, _id) => {
-      const id = _id as Painting;
-      const me = Paintings[id];
-      mapSafeAdd(byPainters, me.painter, 1);
-      mapSafeAdd(byThemes, me.theme, 1);
-      if (me.masterpiece) {
-         ++masterpieces;
-      }
-      const adjacentRects = getAdjacentRects([id, { x, y, width, height }], placedPaintings);
-      for (const [_otherId, otherRect] of adjacentRects) {
-         const otherId = _otherId as Painting;
-         const other = Paintings[otherId];
-         if (me.painter === other.painter) {
-            samePainterPairs.add(makePaintingPair(id, otherId));
-         }
-         if (Math.floor(me.year / 100) === Math.floor(other.year / 100)) {
-            sameCenturyPairs.add(makePaintingPair(id, otherId));
-         }
-         if (me.theme === other.theme) {
-            sameThemePairs.add(makePaintingPair(id, otherId));
-         }
-         if (me.width === other.width && me.height === other.height) {
-            sameSizePairs.add(makePaintingPair(id, otherId));
-         }
-      }
-   });
-   return {
-      samePainterPairs,
-      sameCenturyPairs,
-      sameThemePairs,
-      sameSizePairs,
-      byPainters,
-      byThemes,
-      masterpieces,
-   };
-}
-
-interface IRect {
-   x: number;
-   y: number;
-   width: number;
-   height: number;
-}
-
-function canFit<T extends string | number>(
-   rect: IRect,
-   existingRects: Map<T, IRect>,
-   gridSize: number,
-   excludeId?: T,
-): boolean {
-   if (rect.x < 0 || rect.x + rect.width > gridSize || rect.y < 0 || rect.y + rect.height > gridSize) {
-      return false;
-   }
-   for (const [existingId, existingRect] of existingRects) {
-      if (existingId === excludeId) {
-         continue;
-      }
-      if (
-         rect.x < existingRect.x + existingRect.width &&
-         rect.x + rect.width > existingRect.x &&
-         rect.y < existingRect.y + existingRect.height &&
-         rect.y + rect.height > existingRect.y
-      ) {
-         return false;
-      }
-   }
-   return true;
-}
-
-function isTileUsed<T extends string | number>(
-   tile: Tile,
-   existingRects: Map<T, IRect>,
-   excludeId?: T,
-): boolean {
-   const { x, y } = tileToPoint(tile);
-   for (const [existingId, existingRect] of existingRects) {
-      if (existingId === excludeId) {
-         continue;
-      }
-      if (
-         existingRect.x <= x &&
-         existingRect.x + existingRect.width > x &&
-         existingRect.y <= y &&
-         existingRect.y + existingRect.height > y
-      ) {
-         return true;
-      }
-   }
-   return false;
-}
-
-function getAdjacentRects<T extends string | number>(
-   rect: [T, IRect],
-   existingRects: Map<T, IRect>,
-): [T, IRect][] {
-   const [currId, currRect] = rect;
-   const result: [T, IRect][] = [];
-   // Convert current rect to a set of tiles
-   const currTiles = new Set<Tile>();
-   for (let dx = 0; dx < currRect.width; dx++) {
-      for (let dy = 0; dy < currRect.height; dy++) {
-         currTiles.add(createTile(currRect.x + dx, currRect.y + dy));
-      }
-   }
-
-   for (const [otherId, otherRect] of existingRects) {
-      if (otherId === currId) continue;
-
-      // For each edge tile of the other rect, check if it's adjacent
-      let isAdjacent = false;
-      outer: for (let dx = 0; dx < otherRect.width; dx++) {
-         for (let dy = 0; dy < otherRect.height; dy++) {
-            const ox = otherRect.x + dx;
-            const oy = otherRect.y + dy;
-            // Four sides: up, down, left, right
-            const neighbors = [
-               [ox + 1, oy],
-               [ox - 1, oy],
-               [ox, oy + 1],
-               [ox, oy - 1],
-            ];
-            for (const [nx, ny] of neighbors) {
-               if (currTiles.has(createTile(nx, ny))) {
-                  isAdjacent = true;
-                  break outer;
-               }
-            }
-         }
-      }
-      if (isAdjacent) {
-         result.push([otherId, otherRect]);
-      }
-   }
-   return result;
-}
 
 const collisionDetectorTopLeftCorner: CollisionDetector = (input) => {
    const { dragOperation, droppable } = input;

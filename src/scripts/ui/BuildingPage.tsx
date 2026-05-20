@@ -50,6 +50,7 @@ import { UpgradableWonderBuildingBody } from "./UpgradableWonderBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 import { WorldTradeOrganizationBuildingBody } from "./WorldTradeOrganizationBuildingBody";
 import { ZugspitzeBuildingBody } from "./ZugspitzeBuildingBody";
+import { MauritshuisBuildingBody } from "./MauritshuisBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
    Headquarter: HeadquarterBuildingBody,
@@ -111,6 +112,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    Habitat67: UpgradableWonderBuildingBody,
    WorldTradeOrganization: WorldTradeOrganizationBuildingBody,
    CothonOfCarthage: CothonOfCarthageBuildingBody,
+   Mauritshuis: MauritshuisBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

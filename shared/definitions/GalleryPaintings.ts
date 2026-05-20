@@ -1,39 +1,9 @@
-import AMothersDuty from "../../images/Paintings/AMothersDuty.webp";
-import BroadwayBoogieWoogie from "../../images/Paintings/BroadwayBoogieWoogie.webp";
-import CafeTerraceAtNight from "../../images/Paintings/CafeTerraceAtNight.webp";
-import CompositionWithRedBlueAndYellow from "../../images/Paintings/CompositionWithRedBlueAndYellow.webp";
-import GirlInAWhiteKimono from "../../images/Paintings/GirlInAWhiteKimono.webp";
-import GirlWithAPearlEarring from "../../images/Paintings/GirlWithAPearlEarring.webp";
-import GrayTree from "../../images/Paintings/GrayTree.webp";
-import SelfPortrait from "../../images/Paintings/SelfPortrait.webp";
-import StillLifeWithFlowersOnAMarbleSlab from "../../images/Paintings/StillLifeWithFlowersOnAMarbleSlab.webp";
-import Sunflowers from "../../images/Paintings/Sunflowers.webp";
-import TheAnatomyLessonOfDrNicolaesTulp from "../../images/Paintings/TheAnatomyLessonOfDrNicolaesTulp.webp";
-import TheArtOfPainting from "../../images/Paintings/TheArtOfPainting.webp";
-import TheBanquetOfTheOfficersOfTheStGeorgeMilitiaCompany from "../../images/Paintings/TheBanquetOfTheOfficersOfTheStGeorgeMilitiaCompany.webp";
-import TheCourtyardOfAHouseInDelft from "../../images/Paintings/TheCourtyardOfAHouseInDelft.webp";
-import TheCryingCrocodileTriesToCatchTheSun from "../../images/Paintings/TheCryingCrocodileTriesToCatchTheSun.webp";
-import TheFeastOfSaintNicholas from "../../images/Paintings/TheFeastOfSaintNicholas.webp";
-import TheHuntersInTheSnow from "../../images/Paintings/TheHuntersInTheSnow.webp";
-import TheJewishBride from "../../images/Paintings/TheJewishBride.webp";
-import TheLaughingCavalier from "../../images/Paintings/TheLaughingCavalier.webp";
-import TheLittleStreet from "../../images/Paintings/TheLittleStreet.webp";
-import TheMerryFamily from "../../images/Paintings/TheMerryFamily.webp";
-import TheMilkmaid from "../../images/Paintings/TheMilkmaid.webp";
-import TheNightWatch from "../../images/Paintings/TheNightWatch.webp";
-import ThePotatoEaters from "../../images/Paintings/ThePotatoEaters.webp";
-import TheSingelBridgeAtThePaleisstraatInAmsterdam from "../../images/Paintings/TheSingelBridgeAtThePaleisstraatInAmsterdam.webp";
-import TheStarryNight from "../../images/Paintings/TheStarryNight.webp";
-import ViewOfHaarlemWithBleachingFields from "../../images/Paintings/ViewOfHaarlemWithBleachingFields.webp";
-import WheatFieldWithCrows from "../../images/Paintings/WheatFieldWithCrows.webp";
-import WindmillAtWijkBijDuurstede from "../../images/Paintings/WindmillAtWijkBijDuurstede.webp";
-import WomanHoldingABalance from "../../images/Paintings/WomanHoldingABalance.webp";
-import { $t, L } from "../../../shared/utilities/i18n";
+import { createTile, mapSafeAdd, tileToPoint, type Tile } from "../utilities/Helper";
+import { $t, L } from "../utilities/i18n";
 
 export interface IPainting {
    width: number;
    height: number;
-   image: string;
    name: () => string;
    painter: Painter;
    theme: Theme;
@@ -73,7 +43,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingSunflowers),
       width: 3,
       height: 4,
-      image: Sunflowers,
       painter: "VincentVanGogh",
       theme: "StillLife",
       year: 1888,
@@ -83,7 +52,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingCafeTerraceAtNight),
       width: 4,
       height: 5,
-      image: CafeTerraceAtNight,
       painter: "VincentVanGogh",
       theme: "LandscapeCityscape",
       year: 1888,
@@ -93,7 +61,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheStarryNight),
       width: 5,
       height: 4,
-      image: TheStarryNight,
       painter: "VincentVanGogh",
       theme: "LandscapeCityscape",
       year: 1889,
@@ -103,7 +70,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingWheatFieldWithCrows),
       width: 8,
       height: 4,
-      image: WheatFieldWithCrows,
       painter: "VincentVanGogh",
       theme: "LandscapeCityscape",
       year: 1890,
@@ -113,7 +79,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingGirlWithAPearlEarring),
       width: 5,
       height: 6,
-      image: GirlWithAPearlEarring,
       painter: "JohannesVermeer",
       theme: "Portrait",
       year: 1665,
@@ -123,7 +88,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheMilkmaid),
       width: 5,
       height: 6,
-      image: TheMilkmaid,
       painter: "JohannesVermeer",
       theme: "DomesticScene",
       year: 1658,
@@ -133,7 +97,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheArtOfPainting),
       width: 4,
       height: 5,
-      image: TheArtOfPainting,
       painter: "JohannesVermeer",
       theme: "DomesticScene",
       year: 1666,
@@ -143,7 +106,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheAnatomyLessonOfDrNicolaesTulp),
       width: 6,
       height: 4,
-      image: TheAnatomyLessonOfDrNicolaesTulp,
       painter: "RembrandtVanRijn",
       theme: "Portrait",
       year: 1632,
@@ -153,7 +115,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheJewishBride),
       width: 7,
       height: 5,
-      image: TheJewishBride,
       painter: "RembrandtVanRijn",
       theme: "Portrait",
       year: 1667,
@@ -163,7 +124,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheNightWatch),
       width: 8,
       height: 6,
-      image: TheNightWatch,
       painter: "RembrandtVanRijn",
       theme: "Portrait",
       year: 1642,
@@ -173,7 +133,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheFeastOfSaintNicholas),
       width: 5,
       height: 6,
-      image: TheFeastOfSaintNicholas,
       painter: "JanSteen",
       theme: "DomesticScene",
       year: 1665,
@@ -183,7 +142,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheMerryFamily),
       width: 5,
       height: 4,
-      image: TheMerryFamily,
       painter: "JanSteen",
       theme: "DomesticScene",
       year: 1668,
@@ -193,7 +151,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingCompositionWithRedBlueAndYellow),
       width: 4,
       height: 4,
-      image: CompositionWithRedBlueAndYellow,
       painter: "PietMondrian",
       theme: "Abstract",
       year: 1930,
@@ -203,7 +160,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingBroadwayBoogieWoogie),
       width: 4,
       height: 4,
-      image: BroadwayBoogieWoogie,
       painter: "PietMondrian",
       theme: "Abstract",
       year: 1943,
@@ -213,7 +169,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingGrayTree),
       width: 4,
       height: 3,
-      image: GrayTree,
       painter: "PietMondrian",
       theme: "Abstract",
       year: 1911,
@@ -223,7 +178,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheLaughingCavalier),
       width: 4,
       height: 5,
-      image: TheLaughingCavalier,
       painter: "FransHals",
       theme: "Portrait",
       year: 1624,
@@ -233,7 +187,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheBanquetOfTheOfficersOfTheStGeorgeMilitiaCompany),
       width: 8,
       height: 4,
-      image: TheBanquetOfTheOfficersOfTheStGeorgeMilitiaCompany,
       painter: "FransHals",
       theme: "Portrait",
       year: 1616,
@@ -243,7 +196,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingViewOfHaarlemWithBleachingFields),
       width: 4,
       height: 5,
-      image: ViewOfHaarlemWithBleachingFields,
       painter: "JacobVanRuisdael",
       theme: "LandscapeCityscape",
       year: 1670,
@@ -253,7 +205,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingWindmillAtWijkBijDuurstede),
       width: 5,
       height: 4,
-      image: WindmillAtWijkBijDuurstede,
       painter: "JacobVanRuisdael",
       theme: "LandscapeCityscape",
       year: 1670,
@@ -263,7 +214,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheHuntersInTheSnow),
       width: 6,
       height: 4,
-      image: TheHuntersInTheSnow,
       painter: "PieterBruegelTheElder",
       theme: "LandscapeCityscape",
       year: 1565,
@@ -273,7 +223,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheLittleStreet),
       width: 4,
       height: 5,
-      image: TheLittleStreet,
       painter: "JohannesVermeer",
       theme: "LandscapeCityscape",
       year: 1657,
@@ -283,7 +232,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingSelfPortrait1889),
       width: 5,
       height: 6,
-      image: SelfPortrait,
       painter: "VincentVanGogh",
       theme: "Portrait",
       year: 1889,
@@ -293,7 +241,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingThePotatoEaters),
       width: 6,
       height: 4,
-      image: ThePotatoEaters,
       painter: "VincentVanGogh",
       theme: "DomesticScene",
       year: 1885,
@@ -303,7 +250,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingGirlInAWhiteKimono),
       width: 4,
       height: 4,
-      image: GirlInAWhiteKimono,
       painter: "GeorgeHendrikBreitner",
       theme: "DomesticScene",
       year: 1894,
@@ -313,7 +259,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingStillLifeWithFlowersOnAMarbleSlab),
       width: 4,
       height: 5,
-      image: StillLifeWithFlowersOnAMarbleSlab,
       painter: "RachelRuysch",
       theme: "StillLife",
       year: 1716,
@@ -323,7 +268,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheCourtyardOfAHouseInDelft),
       width: 4,
       height: 5,
-      image: TheCourtyardOfAHouseInDelft,
       painter: "PieterDeHooch",
       theme: "DomesticScene",
       year: 1658,
@@ -333,7 +277,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingAMothersDuty),
       width: 6,
       height: 5,
-      image: AMothersDuty,
       painter: "PieterDeHooch",
       theme: "DomesticScene",
       year: 1658,
@@ -343,7 +286,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheCryingCrocodileTriesToCatchTheSun),
       width: 3,
       height: 4,
-      image: TheCryingCrocodileTriesToCatchTheSun,
       painter: "KarelAppel",
       theme: "Abstract",
       year: 1956,
@@ -353,7 +295,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingTheSingelBridgeAtThePaleisstraatInAmsterdam),
       width: 6,
       height: 4,
-      image: TheSingelBridgeAtThePaleisstraatInAmsterdam,
       painter: "GeorgeHendrikBreitner",
       theme: "LandscapeCityscape",
       year: 1898,
@@ -363,7 +304,6 @@ export const _Paintings = {
       name: () => $t(L.GalleryPaintingWomanHoldingABalance),
       width: 5,
       height: 6,
-      image: WomanHoldingABalance,
       painter: "JohannesVermeer",
       theme: "DomesticScene",
       year: 1664,
@@ -386,3 +326,154 @@ export function splitPaintingPair(pair: PaintingPair): [Painting, Painting] {
 export const Paintings = Object.fromEntries(
    Object.entries(_Paintings).sort((a, b) => a[1].height - b[1].height),
 ) as Record<Painting, IPainting>;
+
+export interface IPaintingPlacement {
+   x: number;
+   y: number;
+   width: number;
+   height: number;
+}
+
+export function calculateEffects(placedPaintings: Map<Painting, IPaintingPlacement>) {
+   const samePainterPairs = new Set<PaintingPair>();
+   const sameCenturyPairs = new Set<PaintingPair>();
+   const sameThemePairs = new Set<PaintingPair>();
+   const sameSizePairs = new Set<PaintingPair>();
+   const byPainters = new Map<Painter, number>();
+   const byThemes = new Map<Theme, number>();
+   let masterpieces = 0;
+   placedPaintings.forEach(({ x, y, width, height }, _id) => {
+      const id = _id as Painting;
+      const me = Paintings[id];
+      mapSafeAdd(byPainters, me.painter, 1);
+      mapSafeAdd(byThemes, me.theme, 1);
+      if (me.masterpiece) {
+         ++masterpieces;
+      }
+      const adjacentRects = getAdjacentRects([id, { x, y, width, height }], placedPaintings);
+      for (const [_otherId, otherRect] of adjacentRects) {
+         const otherId = _otherId as Painting;
+         const other = Paintings[otherId];
+         if (me.painter === other.painter) {
+            samePainterPairs.add(makePaintingPair(id, otherId));
+         }
+         if (Math.floor(me.year / 100) === Math.floor(other.year / 100)) {
+            sameCenturyPairs.add(makePaintingPair(id, otherId));
+         }
+         if (me.theme === other.theme) {
+            sameThemePairs.add(makePaintingPair(id, otherId));
+         }
+         if (me.width === other.width && me.height === other.height) {
+            sameSizePairs.add(makePaintingPair(id, otherId));
+         }
+      }
+   });
+   return {
+      samePainterPairs,
+      sameCenturyPairs,
+      sameThemePairs,
+      sameSizePairs,
+      byPainters,
+      byThemes,
+      masterpieces,
+   };
+}
+
+interface IRect {
+   x: number;
+   y: number;
+   width: number;
+   height: number;
+}
+
+export function canFit<T extends string | number>(
+   rect: IRect,
+   existingRects: Map<T, IRect>,
+   gridSize: number,
+   excludeId?: T,
+): boolean {
+   if (rect.x < 0 || rect.x + rect.width > gridSize || rect.y < 0 || rect.y + rect.height > gridSize) {
+      return false;
+   }
+   for (const [existingId, existingRect] of existingRects) {
+      if (existingId === excludeId) {
+         continue;
+      }
+      if (
+         rect.x < existingRect.x + existingRect.width &&
+         rect.x + rect.width > existingRect.x &&
+         rect.y < existingRect.y + existingRect.height &&
+         rect.y + rect.height > existingRect.y
+      ) {
+         return false;
+      }
+   }
+   return true;
+}
+
+export function isTileUsed<T extends string | number>(
+   tile: Tile,
+   existingRects: Map<T, IRect>,
+   excludeId?: T,
+): boolean {
+   const { x, y } = tileToPoint(tile);
+   for (const [existingId, existingRect] of existingRects) {
+      if (existingId === excludeId) {
+         continue;
+      }
+      if (
+         existingRect.x <= x &&
+         existingRect.x + existingRect.width > x &&
+         existingRect.y <= y &&
+         existingRect.y + existingRect.height > y
+      ) {
+         return true;
+      }
+   }
+   return false;
+}
+
+export function getAdjacentRects<T extends string | number>(
+   rect: [T, IRect],
+   existingRects: Map<T, IRect>,
+): [T, IRect][] {
+   const [currId, currRect] = rect;
+   const result: [T, IRect][] = [];
+   // Convert current rect to a set of tiles
+   const currTiles = new Set<Tile>();
+   for (let dx = 0; dx < currRect.width; dx++) {
+      for (let dy = 0; dy < currRect.height; dy++) {
+         currTiles.add(createTile(currRect.x + dx, currRect.y + dy));
+      }
+   }
+
+   for (const [otherId, otherRect] of existingRects) {
+      if (otherId === currId) continue;
+
+      // For each edge tile of the other rect, check if it's adjacent
+      let isAdjacent = false;
+      outer: for (let dx = 0; dx < otherRect.width; dx++) {
+         for (let dy = 0; dy < otherRect.height; dy++) {
+            const ox = otherRect.x + dx;
+            const oy = otherRect.y + dy;
+            // Four sides: up, down, left, right
+            const neighbors = [
+               [ox + 1, oy],
+               [ox - 1, oy],
+               [ox, oy + 1],
+               [ox, oy - 1],
+            ];
+            for (const [nx, ny] of neighbors) {
+               if (currTiles.has(createTile(nx, ny))) {
+                  isAdjacent = true;
+                  break outer;
+               }
+            }
+         }
+      }
+      if (isAdjacent) {
+         result.push([otherId, otherRect]);
+      }
+   }
+   return result;
+}
