@@ -43,7 +43,7 @@
 }
 
 .idea-tree-node-handle {
-   background: #999;
+   visibility: hidden;
 }
 
 .react-flow {

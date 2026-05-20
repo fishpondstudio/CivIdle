@@ -126,14 +126,22 @@ body {
 }
 
 #global-toast .toast {
-   max-width: 50vw;
    position: absolute;
    top: 5.5rem;
    z-index: 201;
-   display: flex;
-   flex-direction: row;
-   align-items: flex-start;
-   gap: 1rem;
+}
+
+#global-toast .toast .toast-content {
+   max-width: 50vw;
+   max-height: 25vh;
+   overflow-y: auto;
+   margin-right: 20px;
+}
+
+#global-toast .toast .close-button {
+   position: absolute;
+   top: 5px;
+   right: 5px;
 }
 
 #global-toast .toast.command {

@@ -236,6 +236,7 @@ export interface IUser {
    connectionRequest?: IConnectionRequest;
    saveOwner?: string;
    lastCheckInAt?: number;
+   lastChangedHandleAt?: number;
    lastTradedAt: number;
    heartbeatData?: IHeartbeatData;
    gameOptions?: GameOptionServer;

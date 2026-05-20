@@ -2,6 +2,7 @@ import dagre from "@dagrejs/dagre";
 import {
    Controls,
    getViewportForBounds,
+   MarkerType,
    Panel,
    Position,
    ReactFlow,
@@ -75,6 +76,10 @@ function getNodesAndEdges<K extends string, V>(
             id: `${key}-${parent}`,
             source: parent as string,
             target: key,
+            markerEnd: { type: MarkerType.ArrowClosed, width: 15, height: 15 },
+            style: {
+               strokeWidth: 1,
+            },
          });
       });
    }
