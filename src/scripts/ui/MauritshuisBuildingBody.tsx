@@ -1,4 +1,5 @@
 import { calculateEffects, getPaintingMultipliers } from "../../../shared/definitions/GalleryPaintings";
+import { isFestival } from "../../../shared/logic/BuildingLogic";
 import { GlobalMultiplierNames } from "../../../shared/logic/TickLogic";
 import type { IMauritshuisBuildingData } from "../../../shared/logic/Tile";
 import { $t, L } from "../../../shared/utilities/i18n";
@@ -19,7 +20,7 @@ export function MauritshuisBuildingBody({ gameState, xy }: IBuildingComponentPro
    }
    const mauritshuis = building as IMauritshuisBuildingData;
    const effects = calculateEffects(mauritshuis.placedPaintings);
-   const multipliers = getPaintingMultipliers(effects);
+   const multipliers = getPaintingMultipliers(effects, isFestival(building.type, gameState));
    return (
       <div className="window-body">
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />

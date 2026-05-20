@@ -57,6 +57,7 @@ import { getAgeForTech, getBuildingUnlockTech, getCurrentAge } from "./TechLogic
 import {
    AllMultiplierTypes,
    GlobalMultiplierNames,
+   MultiplierFlag,
    MultiplierTypeDesc,
    NotProducingReason,
    Tick,
@@ -107,12 +108,12 @@ export function forEachMultiplier(
    gs: GameState,
 ): void {
    Tick.current.tileMultipliers.get(xy)?.forEach((m) => {
-      if (stableOnly && m.unstable) return;
+      if (stableOnly && hasFlag(m.flag ?? MultiplierFlag.None, MultiplierFlag.Unstable)) return;
       func(m);
    });
    AllMultiplierTypes.forEach((type) => {
       getGlobalMultipliers(type).forEach((m) => {
-         if (stableOnly && m.unstable) return;
+         if (stableOnly && hasFlag(m.flag ?? MultiplierFlag.None, MultiplierFlag.Unstable)) return;
          func(m);
       });
    });

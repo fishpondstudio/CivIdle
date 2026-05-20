@@ -160,8 +160,16 @@ interface IMultiplier {
 }
 
 export type Multiplier = RequireAtLeastOne<IMultiplier>;
-export type MultiplierWithStability = Multiplier & { unstable?: boolean };
-export type MultiplierWithSource = Multiplier & { source: string; unstable?: boolean };
+
+export enum MultiplierFlag {
+   None = 0,
+   Unstable = 1 << 0,
+   GreatPerson = 1 << 1,
+   AgeWisdom = 1 << 2,
+}
+
+export type MultiplierWithStability = Multiplier & { flag?: MultiplierFlag };
+export type MultiplierWithSource = Multiplier & { source: string; flag?: MultiplierFlag };
 export type LevelBoost = { value: number; source: string };
 
 export const AllMultiplierTypes = ["output", "worker", "storage"] satisfies (keyof IMultiplier)[];
@@ -176,7 +184,7 @@ export const MultiplierTypeDesc: Record<MultiplierType, () => string> = {
 export interface IValueWithSource {
    value: number;
    source: string;
-   unstable?: boolean;
+   flag?: MultiplierFlag;
 }
 
 export const CurrentTickChanged = new TypedEvent<ITickData>();

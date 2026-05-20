@@ -481,28 +481,29 @@ export function getAdjacentRects<T extends string | number>(
 
 export function getPaintingMultipliers(
    effects: ReturnType<typeof calculateEffects>,
+   isFestival: boolean,
 ): Partial<Record<keyof GlobalMultipliers, number>> {
    let levelBoost = effects.sameSizePairs.size;
    let output = effects.samePainterPairs.size;
    const storage = effects.sameCenturyPairs.size;
    const worker = effects.sameThemePairs.size;
    if ((effects.byPainters.get("RembrandtVanRijn") ?? 0) >= 3) {
-      output++;
+      output += isFestival ? 2 : 1;
    }
    if ((effects.byPainters.get("JohannesVermeer") ?? 0) >= 3) {
-      output++;
+      output += isFestival ? 2 : 1;
    }
    if ((effects.byPainters.get("VincentVanGogh") ?? 0) >= 3) {
-      output++;
+      output += isFestival ? 2 : 1;
    }
    if (effects.byPainters.size >= 5) {
-      levelBoost++;
+      levelBoost += isFestival ? 2 : 1;
    }
    if (effects.byThemes.size >= 5) {
-      levelBoost++;
+      levelBoost += isFestival ? 2 : 1;
    }
    if (effects.masterpieces >= 5) {
-      levelBoost++;
+      levelBoost += isFestival ? 2 : 1;
    }
    return {
       output,

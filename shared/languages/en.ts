@@ -2032,8 +2032,12 @@ export const EN = {
    GalleryPaintingWomanHoldingABalance: "Woman Holding a Balance",
    Dutch: "Dutch",
    Binnenhof: "Binnenhof",
-   Koningsdag: "Koningsdag: <TODO>",
+   Koningsdag: "Koningsdag: Keukenhof gets +2 range. Double Mauritshuis' Painter Collection Bonus and Diversification Bonus",
    Mauritshuis: "Mauritshuis",
    MauritshuisDesc: "For each level of Mauritshuis, a painting by a Dutch painter is discovered (30 paintings in total). These paintings can be arranged in the gallery to gain various bonuses",
    OpenGallery: "Open Gallery",
+   Keukenhof: "Keukenhof",
+   KeukenhofDesc: "+X Happiness. X = number of different resources produced or consumed within 2 tile range",
+   WindTurbine: "Wind Turbine",
+   Every5WindMillsLevelGives1ProductionMultiplierToAdjacentPowerPlants: "Every 5 Wind Turbine level gives +1 Production Multiplier to adjacent power plants",
 };

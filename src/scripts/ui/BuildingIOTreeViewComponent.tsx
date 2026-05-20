@@ -4,9 +4,9 @@ import { IOFlags, getMultipliersFor, totalMultiplierFor } from "../../../shared/
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { getBuildingIO, getCloneLabScienceOutput } from "../../../shared/logic/IntraTickCache";
-import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
+import { MultiplierFlag, NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import type { ICloneBuildingData } from "../../../shared/logic/Tile";
-import { formatNumber, type Tile } from "../../../shared/utilities/Helper";
+import { formatNumber, hasFlag, type Tile } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
 import { jsxMapOf } from "../utilities/Helper";
@@ -126,7 +126,7 @@ export function BuildingIOTreeViewComponent({
                                     return (
                                        <li key={idx} className="row">
                                           <div>{m.source}</div>
-                                          {m.unstable ? (
+                                          {hasFlag(m.flag ?? MultiplierFlag.None, MultiplierFlag.Unstable) ? (
                                              <Tippy content={$t(L.DynamicMultiplierTooltip)}>
                                                 <div className="m-icon small ml5 text-desc">whatshot</div>
                                              </Tippy>

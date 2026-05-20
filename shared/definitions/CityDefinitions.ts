@@ -588,15 +588,16 @@ export class CityDefinitions {
       },
       uniqueBuildings: {
          Mauritshuis: "Capitalism",
+         WindTurbine: "Urbanization",
       },
       uniqueMultipliers: {},
       naturalWonders: {
-         AtlasMountains: true,
+         Keukenhof: true,
       },
       requireGreatPeopleLevel: 140,
       requireSupporterPack: true,
       festivalDesc: () => $t(L.Koningsdag),
-      uniqueEffects: () => [],
+      uniqueEffects: () => [$t(L.Every5WindMillsLevelGives1ProductionMultiplierToAdjacentPowerPlants)],
    };
 }
 

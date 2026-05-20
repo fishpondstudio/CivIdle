@@ -3,9 +3,9 @@ import { Config } from "../logic/Config";
 import { getGameState } from "../logic/GameStateLogic";
 import { getTransportStat } from "../logic/IntraTickCache";
 import type { MultiplierType, MultiplierWithStability } from "../logic/TickLogic";
-import { MultiplierTypeDesc, Tick } from "../logic/TickLogic";
+import { MultiplierFlag, MultiplierTypeDesc, Tick } from "../logic/TickLogic";
 import { addMultiplier } from "../logic/Update";
-import { formatNumber, hasFlag, mapSafePush } from "../utilities/Helper";
+import { formatNumber, hasFlag, mapSafePush, setFlag } from "../utilities/Helper";
 import { $t, L } from "../utilities/i18n";
 import type { Building } from "./BuildingDefinitions";
 import type { City } from "./CityDefinitions";
@@ -2078,8 +2078,11 @@ function tickGreatPersonBoost(self: GreatPerson, level: number, source: string, 
       boost.multipliers.forEach((m) => {
          multiplier[m] = Config.GreatPerson[self].value(level);
       });
+      multiplier.flag = hasFlag(flag, GreatPersonTickFlag.AgeWisdom)
+         ? MultiplierFlag.AgeWisdom
+         : MultiplierFlag.GreatPerson;
       if (hasFlag(flag, GreatPersonTickFlag.Unstable)) {
-         multiplier.unstable = true;
+         multiplier.flag = setFlag(multiplier.flag, MultiplierFlag.Unstable);
       }
       addMultiplier(b, multiplier as MultiplierWithStability, source);
    });
@@ -2088,6 +2091,7 @@ function tickGreatPersonBoost(self: GreatPerson, level: number, source: string, 
 export enum GreatPersonTickFlag {
    None = 0,
    Unstable = 1 << 0,
+   AgeWisdom = 1 << 1,
 }
 
 function boostOf(
@@ -2122,7 +2126,7 @@ export function tickAdaptiveGreatPerson(
    greatPerson: GreatPerson,
    level: number,
    source: string,
-   flag: GreatPersonTickFlag,
+   greatPersonFlag: GreatPersonTickFlag,
 ): void {
    const gs = getGameState();
    const building = gs.adaptiveGreatPeople.get(greatPerson);
@@ -2132,12 +2136,16 @@ export function tickAdaptiveGreatPerson(
    if (Config.Building[building].output.Worker) {
       return;
    }
+   let flag = MultiplierFlag.GreatPerson;
+   if (hasFlag(greatPersonFlag, GreatPersonTickFlag.Unstable)) {
+      flag = setFlag(flag, MultiplierFlag.Unstable);
+   }
    addMultiplier(
       building,
       {
          output: Config.GreatPerson[greatPerson].value(level),
          storage: Config.GreatPerson[greatPerson].value(level),
-         unstable: hasFlag(flag, GreatPersonTickFlag.Unstable),
+         flag,
       },
       source,
    );
