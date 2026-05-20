@@ -88,8 +88,8 @@ export function GlobalToast(): React.ReactNode {
    return (
       <div id="global-toast">
          <div className={cls("toast", className)}>
-            <div className="ml5">{html(content)}</div>
-            <div className="m-icon small pointer" onClick={hideToast}>
+            {html(content, "toast-content")}
+            <div className="m-icon small pointer close-button" onClick={hideToast}>
                close
             </div>
          </div>

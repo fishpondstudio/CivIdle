@@ -419,6 +419,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          const mutedPlayers = await client.getMutedPlayers();
          addSystemMessage(
             `<code>${mutedPlayers
+               .reverse()
                .map((m) => {
                   return `${m.handle} muted until ${new Date(m.time).toLocaleString()}`;
                })
