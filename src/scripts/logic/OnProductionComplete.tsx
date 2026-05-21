@@ -2342,8 +2342,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "Keukenhof": {
-         const range = isFestival(building.type, gs) ? 4 : 2;
          const resources = new Set<Material>();
+         const range = getBuildingRange(xy, building, gs);
          for (const point of grid.getRange(tileToPoint(xy), range)) {
             const targetXy = pointToTile(point);
             if (targetXy === xy) {

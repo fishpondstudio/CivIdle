@@ -2645,4 +2645,5 @@ export const NaturalWonderMaxRange: Partial<Record<Building, number>> = {
    LakeBaikal: 4,
    AuroraBorealis: 4,
    AtlasMountains: 6,
+   Keukenhof: 4,
 };

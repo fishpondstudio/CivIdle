@@ -178,38 +178,28 @@ function PaintingEffects({
                </summary>
                <ul>
                   <li className="row">
-                     <Tippy
-                        content={$t(L.EachPairOfAdjacentPaintingsByTheSamePainterGrants1ProductionMultiplier)}
-                     >
+                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsByTheSamePainter)}>
                         <div>{$t(L.PainterAdjacency)}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.samePainterPairs.size}</div>
                   </li>
                   <li className="row">
-                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsOfTheSameSizeGrants1BuildingLevelBoost)}>
+                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsOfTheSameSize)}>
                         <div>{$t(L.SizeAdjacency)}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.sameSizePairs.size}</div>
                   </li>
                   <li className="row">
-                     <Tippy
-                        content={$t(
-                           L.EachPairOfAdjacentPaintingsPaintedInTheSameCenturyGrants1StorageMultiplier,
-                        )}
-                     >
+                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsPaintedInTheSameCentury)}>
                         <div>{$t(L.TimeAdjacency)}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.sameCenturyPairs.size}</div>
                   </li>
                   <li className="row">
-                     <Tippy
-                        content={$t(
-                           L.EachPairOfAdjacentPaintingsWithTheSameThemeGrants1WorkerCapacityMultiplier,
-                        )}
-                     >
+                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsWithTheSameTheme)}>
                         <div>{$t(L.ThemeAdjacency)}</div>
                      </Tippy>
                      <div className="f1" />
