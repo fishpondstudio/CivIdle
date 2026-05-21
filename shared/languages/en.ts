@@ -1965,10 +1965,10 @@ export const EN = {
    SizeAdjacency: "Size Adjacency",
    TimeAdjacency: "Time Adjacency",
    ThemeAdjacency: "Theme Adjacency",
-   EachPairOfAdjacentPaintingsByTheSamePainter: "Each pair of adjacent paintings by the same painter grants +5 Happiness",
+   EachPairOfAdjacentPaintingsByTheSamePainter: "Each pair of adjacent paintings by the same painter grants +1 Production Multiplier",
    EachPairOfAdjacentPaintingsOfTheSameSize: "Each pair of adjacent paintings of the same size grants +1 Building Level Boost",
    EachPairOfAdjacentPaintingsPaintedInTheSameCentury: "Each pair of adjacent paintings painted in the same century (100 years) grants +5 Happiness",
-   EachPairOfAdjacentPaintingsWithTheSameTheme: "Each pair of adjacent paintings with the same theme grants +1 Builder Capacity Multiplier",
+   EachPairOfAdjacentPaintingsWithTheSameTheme: "Each pair of adjacent paintings with the same theme grants +5 Builder Capacity Multiplier",
    PaintersCollectionBonus: "Painters Collection Bonus",
    Display3PaintingsByJohannesVermeerToUnlock1ProductionMultiplier: "Display 3 paintings by Johannes Vermeer to unlock +1 Production Multiplier",
    Display3PaintingsByVincentVanGoghToUnlock1ProductionMultiplier: "Display 3 paintings by Vincent van Gogh to unlock +1 Production Multiplier",
@@ -2043,4 +2043,5 @@ export const EN = {
    RembrandtVanRijn: "Rembrandt van Rijn",
    VincentVanGogh: "Vincent van Gogh",
    AntonieVanLeeuwenhoek: "Antonie van Leeuwenhoek",
+   Close: "Close",
 };

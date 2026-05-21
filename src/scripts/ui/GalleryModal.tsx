@@ -5,7 +5,6 @@ import { memo, useState } from "react";
 import {
    calculateEffects,
    canFit,
-   getAdjacentRects,
    type IPaintingPlacement,
    isTileUsed,
    Painters,
@@ -29,7 +28,7 @@ export function GalleryModal({ building }: { building: IMauritshuisBuildingData 
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.Gallery)}</div>
             <div className="title-bar-controls">
-               <button onClick={hideModal} aria-label="Close"></button>
+               <button onClick={hideModal} aria-label={$t(L.Close)}></button>
             </div>
          </div>
          <div className="window-body gallery-modal">
@@ -406,13 +405,6 @@ function PaintingItem({
          }
       >
          <img
-            onClick={() => {
-               const placed = placedPaintings.get(id);
-               if (placed) {
-                  const adjacentRects = getAdjacentRects([id, placed], placedPaintings);
-                  console.log(adjacentRects);
-               }
-            }}
             ref={ref}
             style={{
                width: `calc(var(--grid-size) * ${painting.width})`,

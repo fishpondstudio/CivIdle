@@ -22,7 +22,7 @@ export function PaintingModal({ painting }: { painting: Painting }): React.React
                <div>
                   <div className="mt5">
                      {Painters[def.painter]()} · {def.year} · {Themes[def.theme]()}
-                     {def.masterpiece && " · Masterpiece"}
+                     {def.masterpiece && ` · ${$t(L.Masterpiece)}`}
                   </div>
                   <div className="row g10 mt5">
                      <div
@@ -37,7 +37,7 @@ export function PaintingModal({ painting }: { painting: Painting }): React.React
                         {$t(L.OpenGallery)}
                      </div>
                      <div className="button" onClick={hideModal}>
-                        Close
+                        {$t(L.Close)}
                      </div>
                   </div>
                </div>
