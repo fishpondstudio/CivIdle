@@ -1,7 +1,7 @@
 import { app, shell, type BrowserWindow } from "electron";
 import { exists, outputFile, readFile, unlink } from "fs-extra";
 import { rename } from "node:fs/promises";
-import path from "node:path";
+import * as path from "node:path";
 import { promisify } from "node:util";
 import { deflateRaw } from "node:zlib";
 import { MIN_HEIGHT, MIN_WIDTH, getGameSavePath, getLocalGameSavePath, type SteamClient } from ".";
@@ -28,7 +28,7 @@ export class IPCService {
 
    public async fileWriteBytes(name: string, content: Uint8Array): Promise<void> {
       if (content.byteLength <= 0) return;
-      const buffer = Buffer.from(content);
+      const buffer = new Uint8Array(content);
 
       // To make it more reliable, we first write to a temporary file, then copy it over to the main save file
       const tempFile = `${name}.tmp`;
@@ -46,7 +46,7 @@ export class IPCService {
    public async fileWriteCompressed(name: string, content: string): Promise<void> {
       const compress = promisify(deflateRaw);
       const compressed = await compress(content);
-      await this.fileWriteBytes(name, compressed);
+      await this.fileWriteBytes(name, new Uint8Array(compressed));
    }
 
    public async fileRead(name: string): Promise<string> {
@@ -54,9 +54,9 @@ export class IPCService {
       return content.toString("utf-8");
    }
 
-   public async fileReadBytes(name: string): Promise<ArrayBuffer> {
+   public async fileReadBytes(name: string): Promise<Uint8Array> {
       const content = await readFile(path.join(getGameSavePath(), this.getSteamId(), name));
-      return content.buffer;
+      return new Uint8Array(content);
    }
 
    public async fileDelete(name: string): Promise<void> {

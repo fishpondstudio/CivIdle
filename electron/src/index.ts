@@ -1,9 +1,9 @@
 import { init, shutdown, type Client } from "@fishpondstudio/steamworks.js";
 import { BrowserWindow, Menu, app, dialog, ipcMain } from "electron";
-import crypto from "node:crypto";
+import * as crypto from "node:crypto";
 import { existsSync, renameSync } from "node:fs";
-import path from "node:path";
-import originalFs from "original-fs";
+import * as path from "node:path";
+import * as originalFs from "original-fs";
 import { IPCService } from "./IPCService";
 
 export type SteamClient = Omit<Client, "init" | "runCallbacks">;
@@ -61,7 +61,7 @@ const createWindow = async () => {
          const archive = path.join(process.resourcesPath, "app.asar");
          if (originalFs.existsSync(archive)) {
             const content = originalFs.readFileSync(archive);
-            checksum = crypto.createHash("sha256").update(content).digest("hex");
+            checksum = crypto.createHash("sha256").update(new Uint8Array(content)).digest("hex");
          }
          mainWindow.loadFile(path.join(__dirname, "..", "dist", "index.html"));
       } else {
