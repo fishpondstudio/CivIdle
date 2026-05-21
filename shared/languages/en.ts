@@ -2040,4 +2040,7 @@ export const EN = {
    KeukenhofDesc: "+X Happiness. X = number of different resources produced or consumed within 2 tile range",
    WindTurbine: "Wind Turbine",
    Every5WindMillsLevelGives1ProductionMultiplierToAdjacentPowerPlants: "Every 5 Wind Turbine level gives +1 Production Multiplier to adjacent power plants",
+   RembrandtVanRijn: "Rembrandt van Rijn",
+   VincentVanGogh: "Vincent van Gogh",
+   AntonieVanLeeuwenhoek: "Antonie van Leeuwenhoek",
 };

@@ -603,6 +603,19 @@ export class GreatPersonDefinitions {
 
    // Renaissance ////////////////////////////////////////////////////////////////////////////////////////////
 
+   RembrandtVanRijn: IGreatPersonDefinition = boostOf({
+      name: () => $t(L.RembrandtVanRijn),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["PaintersGuild"],
+      },
+      time: "1606 ~ 1669 AD",
+      value: (level) => level * 2,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "RenaissanceAge",
+      city: "Dutch",
+   });
+
    LeonardoDaVinci: IGreatPersonDefinition = boostOf({
       name: () => $t(L.LeonardoDaVinci),
       boost: {
@@ -625,6 +638,19 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+   });
+
+   AntonieVanLeeuwenhoek: IGreatPersonDefinition = boostOf({
+      name: () => $t(L.AntonieVanLeeuwenhoek),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["LensWorkshop"],
+      },
+      time: "1632 ~ 1723 AD",
+      value: (level) => level * 2,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "RenaissanceAge",
+      city: "Dutch",
    });
 
    GalileoGalilei: IGreatPersonDefinition = {
@@ -829,6 +855,19 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+   });
+
+   VincentVanGogh: IGreatPersonDefinition = boostOf({
+      name: () => $t(L.VincentVanGogh),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["WindTurbine"],
+      },
+      time: "1853 ~ 1890 AD",
+      value: (level) => level * 2,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "IndustrialAge",
+      city: "Dutch",
    });
 
    IsambardKingdomBrunel: IGreatPersonDefinition = boostOf({
