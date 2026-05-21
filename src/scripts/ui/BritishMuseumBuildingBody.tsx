@@ -33,7 +33,7 @@ export function BritishMuseumBuildingBody({ gameState, xy }: IBuildingComponentP
                   className="f1 mr10"
                >
                   {buildings
-                     .filter((b) => b !== "CentrePompidou" && b !== "CothonOfCarthage")
+                     .filter((b) => b !== "CentrePompidou" && b !== "CothonOfCarthage" && b !== "Mauritshuis")
                      .map((building) => {
                         return (
                            <option key={building} value={building}>
