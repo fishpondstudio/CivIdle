@@ -172,7 +172,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
             gp,
             level,
             $t(L.AgeWisdomSource, { age: Config.TechAge[age].name(), person: greatPerson.name() }),
-            GreatPersonTickFlag.None,
+            GreatPersonTickFlag.AgeWisdom,
          );
       });
    });

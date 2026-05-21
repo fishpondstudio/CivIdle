@@ -1,4 +1,10 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import {
+   Paintings,
+   calculateEffects,
+   getPaintingMultipliers,
+   type Painting,
+} from "../../../shared/definitions/GalleryPaintings";
 import { GreatPersonTickFlag, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import {
@@ -69,7 +75,7 @@ import {
    getCurrentAge,
    getUnlockedTechAges,
 } from "../../../shared/logic/TechLogic";
-import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
+import { MultiplierFlag, NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import type {
    IAuroraBorealisBuildingData,
    ICentrePompidouBuildingData,
@@ -78,6 +84,7 @@ import type {
    IIdeologyBuildingData,
    IItaipuDamBuildingData,
    ILouvreBuildingData,
+   IMauritshuisBuildingData,
    IReligionBuildingData,
    ISwissBankBuildingData,
    ITileData,
@@ -111,8 +118,9 @@ import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { getNeighboringPlayers, getOwnedOrOccupiedTiles } from "../scenes/PathFinder";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { hasOpenModal, showModal } from "../ui/GlobalModal";
+import { PaintingModal } from "../ui/PaintingModal";
 import { Singleton } from "../utilities/Singleton";
-import { playAgeUp } from "../visuals/Sound";
+import { playAgeUp, playLevelUp } from "../visuals/Sound";
 
 let votedBoost: IGetVotedBoostResponse | null = null;
 let lastVotedBoostUpdatedAt = 0;
@@ -163,13 +171,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (building) {
                addMultiplier(
                   building,
-                  { output: TRADE_TILE_BONUS, unstable: true },
+                  { output: TRADE_TILE_BONUS, flag: MultiplierFlag.Unstable },
                   `${$t(L.PlayerMapMapTileBonus)} (${i + 1})`,
                );
                if (wtoLevel > 0) {
                   addMultiplier(
                      building,
-                     { output: wtoLevel, unstable: true },
+                     { output: wtoLevel, flag: MultiplierFlag.Unstable },
                      `${$t(L.WorldTradeOrganization)} (${i + 1})`,
                   );
                }
@@ -188,7 +196,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                      isAlly = true;
                      addMultiplier(
                         building,
-                        { output: TRADE_TILE_ALLY_BONUS, unstable: true },
+                        { output: TRADE_TILE_ALLY_BONUS, flag: MultiplierFlag.Unstable },
                         `${$t(L.PlayerMapMapAllyTileBonus)} (${tile.handle})`,
                      );
                      if (hasLakeLouise) {
@@ -197,7 +205,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   } else {
                      addMultiplier(
                         building,
-                        { output: TRADE_TILE_NEIGHBOR_BONUS, unstable: true },
+                        { output: TRADE_TILE_NEIGHBOR_BONUS, flag: MultiplierFlag.Unstable },
                         `${$t(L.PlayerMapMapNeighborTileBonus)} (${tile.handle})`,
                      );
                   }
@@ -875,7 +883,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             switch (current.type) {
                case VotedBoostType.Multipliers: {
                   current.buildings.forEach((b) => {
-                     addMultiplier(b, { output: 5 + (building.level - 1), unstable: true }, buildingName);
+                     addMultiplier(
+                        b,
+                        { output: 5 + (building.level - 1), flag: MultiplierFlag.Unstable },
+                        buildingName,
+                     );
                   });
                   break;
                }
@@ -1168,7 +1180,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                      multiplier *= 2;
                   }
                   mapSafePush(Tick.next.tileMultipliers, t, {
-                     unstable: true,
+                     flag: MultiplierFlag.Unstable,
                      output: multiplier,
                      source: buildingName,
                   });
@@ -1195,7 +1207,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const currentAge = getCurrentAge(gs);
          forEach(Config.BuildingTechAge, (building, age) => {
             if (age === currentAge) {
-               addMultiplier(building, { output: 2, unstable: true }, buildingName);
+               addMultiplier(building, { output: 2, flag: MultiplierFlag.Unstable }, buildingName);
             }
          });
          const total = getGreatPersonTotalLevel("JPMorgan", gs, options);
@@ -1271,7 +1283,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                : getBuildingsUnlockedBefore(getCurrentAge(gs));
             candidates.forEach((b) => {
                if (!isSpecialBuilding(b) && !Config.Building[b].output.Worker) {
-                  addMultiplier(b, { output: multiplier, unstable: true }, buildingName);
+                  addMultiplier(b, { output: multiplier, flag: MultiplierFlag.Unstable }, buildingName);
                }
             });
          }
@@ -1287,7 +1299,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          }
          buildings.forEach((b) => {
-            addMultiplier(b, { output: 2, unstable: true }, buildingName);
+            addMultiplier(b, { output: 2, flag: MultiplierFlag.Unstable }, buildingName);
          });
          break;
       }
@@ -1317,7 +1329,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (multiplier < 5) {
                mapSafePush(Tick.next.tileMultipliers, tileXy, {
                   output: 2,
-                  unstable: true,
+                  flag: MultiplierFlag.Unstable,
                   source: buildingName,
                });
             }
@@ -1348,7 +1360,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                : getBuildingsUnlockedBefore(getCurrentAge(gs));
             candidates.forEach((b) => {
                if (!isSpecialBuilding(b) && !Config.Building[b].output.Worker) {
-                  addMultiplier(b, { output: cappedMultiplier, unstable: true }, buildingName);
+                  addMultiplier(b, { output: cappedMultiplier, flag: MultiplierFlag.Unstable }, buildingName);
                }
             });
          }
@@ -1489,7 +1501,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             });
             mapSafePush(Tick.next.tileMultipliers, tile, {
                output: multiplier,
-               unstable: true,
+               flag: MultiplierFlag.Unstable,
                source: buildingName,
             });
          });
@@ -1650,7 +1662,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   mapSafePush(Tick.next.tileMultipliers, pointToTile(p), {
                      output: isFestival("EastIndiaCompany", gs) ? building.level : 0.5 * building.level,
                      source: buildingName,
-                     unstable: true,
+                     flag: MultiplierFlag.Unstable,
                   });
                });
             });
@@ -1914,7 +1926,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   building,
                   {
                      output: multiplier * buildings.size,
-                     unstable: true,
+                     flag: MultiplierFlag.Unstable,
                   },
                   buildingName,
                );
@@ -2041,7 +2053,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
 
          if (isFestival(building.type, gs)) {
             buildings.forEach((b) => {
-               addMultiplier(b, { output: building.level, unstable: true }, buildingName);
+               addMultiplier(b, { output: building.level, flag: MultiplierFlag.Unstable }, buildingName);
             });
          }
          break;
@@ -2163,7 +2175,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                mapSafePush(Tick.next.tileMultipliers, targetXy, {
                   output: multiplier,
                   source: buildingName,
-                  unstable: true,
+                  flag: MultiplierFlag.Unstable,
                });
             }
          }
@@ -2241,7 +2253,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             mapSafePush(Tick.next.tileMultipliers, target, {
                output: multiplier,
                source: buildingName,
-               unstable: true,
+               flag: MultiplierFlag.Unstable,
             });
             if (festival) {
                mapSafePush(Tick.next.levelBoost, target, {
@@ -2297,6 +2309,77 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          }
          break;
+      }
+      case "Mauritshuis": {
+         const mauritshuis = building as IMauritshuisBuildingData;
+         const paintings = mauritshuis.paintings;
+         let newPainting: Painting | undefined;
+         while (paintings.size < building.level) {
+            const candidates: Painting[] = [];
+            forEach(Paintings, (painting, def) => {
+               if (!paintings.has(painting)) {
+                  candidates.push(painting);
+               }
+            });
+            if (candidates.length === 0) {
+               break;
+            }
+            const painting = candidates[Math.floor(Math.random() * candidates.length)];
+            newPainting = painting;
+            paintings.add(painting);
+         }
+         if (newPainting && !hasOpenModal()) {
+            playLevelUp();
+            showModal(<PaintingModal painting={newPainting} />);
+         }
+         const effects = calculateEffects(mauritshuis.placedPaintings);
+         forEach(getPaintingMultipliers(effects, isFestival(building.type, gs)), (k, v) => {
+            Tick.next.globalMultipliers[k].push({
+               value: v,
+               source: buildingName,
+            });
+         });
+         break;
+      }
+      case "Keukenhof": {
+         const resources = new Set<Material>();
+         const range = getBuildingRange(xy, building, gs);
+         for (const point of grid.getRange(tileToPoint(xy), range)) {
+            const targetXy = pointToTile(point);
+            if (targetXy === xy) {
+               continue;
+            }
+            const targetBuilding = getWorkingBuilding(targetXy, gs);
+            if (targetBuilding) {
+               forEach(Config.Building[targetBuilding.type].input, (res, amount) => {
+                  resources.add(res);
+               });
+               forEach(Config.Building[targetBuilding.type].output, (res, amount) => {
+                  resources.add(res);
+               });
+            }
+         }
+         Tick.next.globalMultipliers.happiness.push({
+            value: resources.size,
+            source: buildingName,
+         });
+         break;
+      }
+      case "WindTurbine": {
+         const multiplier = Math.floor(building.level / 5);
+         if (multiplier > 0) {
+            for (const point of grid.getNeighbors(tileToPoint(xy))) {
+               const targetXy = pointToTile(point);
+               const targetBuilding = getWorkingBuilding(targetXy, gs);
+               if (targetBuilding && Config.Building[targetBuilding.type].output.Power) {
+                  mapSafePush(Tick.next.tileMultipliers, targetXy, {
+                     output: multiplier,
+                     source: buildingName,
+                     flag: MultiplierFlag.Unstable,
+                  });
+               }
+            }
+         }
       }
    }
 }

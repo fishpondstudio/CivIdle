@@ -17,7 +17,7 @@
       "noImplicitOverride": true,
       "verbatimModuleSyntax": true
    },
-   "include": ["src", "shared/logic/LogicResult.ts"],
+   "include": ["src", "shared/logic/LogicResult.ts", "shared/definitions/GalleryPaintings.ts"],
    "exclude": ["**/node_modules", "**/.*/"],
    "references": [
       {

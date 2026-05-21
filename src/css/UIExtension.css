@@ -272,6 +272,10 @@ fieldset .separator {
    color: rgba(16, 16, 16, 0.6);
 }
 
+.dimmed {
+   opacity: 0.7;
+}
+
 .text-grey {
    color: #999;
 }

@@ -408,7 +408,7 @@ export function getGlobalMultipliers(type: MultiplierType): MultiplierWithSource
    }
    const result: MultiplierWithSource[] = [];
    Tick.current.globalMultipliers[type].forEach((m) => {
-      result.push({ source: m.source, [type]: m.value, unstable: m.unstable } as MultiplierWithSource);
+      result.push({ source: m.source, [type]: m.value, flag: m.flag } as MultiplierWithSource);
    });
    _cache.globalMultipliers.set(type, result);
    return result;

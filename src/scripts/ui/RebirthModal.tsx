@@ -525,7 +525,7 @@ export function RebirthModal(): React.ReactNode {
 
                      const pompidou = getPompidou(gs);
                      if (currentCity !== nextCity && pompidou) {
-                        const result = getRandomEmptyTile(1, getGameState());
+                        const result = getRandomEmptyTile(1, new Set(), getGameState());
                         if (result) {
                            const [xy, tile] = result;
                            tile.explored = true;

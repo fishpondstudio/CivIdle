@@ -1,6 +1,6 @@
 import { NaturalWonderMaxRange, type Building } from "../definitions/BuildingDefinitions";
 import { isChristmas } from "../definitions/TimedBuildingUnlock";
-import { forEach, keysOf, pointToTile, shuffle } from "../utilities/Helper";
+import { forEach, keysOf, pointToTile, shuffle, tileToPoint, type Tile } from "../utilities/Helper";
 import { getServerNow } from "../utilities/ServerNow";
 import { applyBuildingDefaults, getRandomEmptyTile } from "./BuildingLogic";
 import { Config } from "./Config";
@@ -125,9 +125,11 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
       }
    }
 
+   const excludedTiles = new Set<Tile>();
+
    naturalWonders.forEach((nw) => {
       const maxRange = NaturalWonderMaxRange[nw] ?? 1;
-      const result = getRandomEmptyTile(maxRange, gameState);
+      const result = getRandomEmptyTile(maxRange, excludedTiles, gameState);
       if (result) {
          const [xy, tile] = result;
          tile.building = makeBuilding({
@@ -135,6 +137,9 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
             level: 1,
             status: "completed",
          });
+         for (const point of grid.getRange(tileToPoint(xy), maxRange)) {
+            excludedTiles.add(pointToTile(point));
+         }
       }
    });
 }

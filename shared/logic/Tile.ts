@@ -1,5 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
+import type { IPaintingPlacement, Painting } from "../definitions/GalleryPaintings";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Ideology } from "../definitions/IdeologyDefinitions";
 import type { Deposit, Material } from "../definitions/MaterialDefinitions";
@@ -176,6 +177,11 @@ export interface IDinosaurProvincialParkBuildingData extends IBuildingData {
    used: boolean;
 }
 
+export interface IMauritshuisBuildingData extends IBuildingData {
+   paintings: Set<Painting>;
+   placedPaintings: Map<Painting, IPaintingPlacement>;
+}
+
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
@@ -343,6 +349,16 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const dinosaurProvincialPark = building as IDinosaurProvincialParkBuildingData;
          if (!dinosaurProvincialPark.used) {
             dinosaurProvincialPark.used = false;
+         }
+         break;
+      }
+      case "Mauritshuis": {
+         const mauritshuis = building as IMauritshuisBuildingData;
+         if (!mauritshuis.paintings) {
+            mauritshuis.paintings = new Set();
+         }
+         if (!mauritshuis.placedPaintings) {
+            mauritshuis.placedPaintings = new Map();
          }
          break;
       }

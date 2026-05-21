@@ -59,6 +59,7 @@ import { BuildingCompleteModal } from "./ui/BuildingCompleteModal";
 import { showModal } from "./ui/GlobalModal";
 import { IdeaTreeModal } from "./ui/IdeaTreeModal";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
+import { PaintingModal } from "./ui/PaintingModal";
 import { SupporterPackModal } from "./ui/SupporterPackModal";
 import { idbClear, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { makeObservableHook } from "./utilities/Hook";
@@ -314,6 +315,13 @@ if (import.meta.env.DEV) {
       });
    };
    // @ts-expect-error
+   window.upgradePermanentGreatPeople = (level = 5) => {
+      const options = getGameOptions();
+      forEach(Config.GreatPerson, (gp, def) => {
+         options.greatPeople[gp] = { level, amount: 0 };
+      });
+   };
+   // @ts-expect-error
    window.cameraPan = (target: number, time: number) => {
       Singleton().sceneManager.getCurrent(WorldScene)?.cameraPan(target, time);
    };
@@ -467,6 +475,11 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.ideaTree = () => {
       showModal(<IdeaTreeModal />);
+   };
+
+   // @ts-expect-error
+   window.paintingModal = () => {
+      showModal(<PaintingModal painting="GirlWithAPearlEarring" />);
    };
 
    // @ts-expect-error

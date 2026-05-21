@@ -5,7 +5,7 @@ import { getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/Bui
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { combineResources } from "../../../shared/logic/ResourceLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
+import { MultiplierFlag, Tick } from "../../../shared/logic/TickLogic";
 import { SwissBankFlags, type ISwissBankBuildingData } from "../../../shared/logic/Tile";
 import { formatNumber, hasFlag, keysOf, toggleFlag } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
@@ -148,7 +148,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                            return (
                               <li key={idx} className="row">
                                  <div>{m.source}</div>
-                                 {m.unstable ? (
+                                 {hasFlag(m.flag ?? MultiplierFlag.None, MultiplierFlag.Unstable) ? (
                                     <Tippy content={$t(L.DynamicMultiplierTooltip)}>
                                        <div className="m-icon small ml5 text-desc">whatshot</div>
                                     </Tippy>

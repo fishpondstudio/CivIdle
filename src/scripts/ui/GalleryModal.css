@@ -1,0 +1,21 @@
+.gallery-modal {
+   --grid-size: min(calc((100vh - 60px) / 20), 30px);
+   --grid-height: calc(var(--grid-size) * 20);
+   overflow: hidden;
+}
+
+.gallery-modal .grid-item {
+   margin: 1px;
+   border-radius: 2px;
+   overflow: hidden;
+   aspect-ratio: 1 / 1;
+   border: 1px solid #999;
+}
+
+.gallery-modal .grid-item.highlight {
+   border-color: yellow;
+}
+
+.gallery-modal .grid-item.used {
+   visibility: hidden;
+}

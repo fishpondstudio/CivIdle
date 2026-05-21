@@ -173,6 +173,13 @@ export class BuildingDefinitions {
       construction: { Tool: 1, Brick: 1, Lumber: 1 },
    };
 
+   WindTurbine: IBuildingDefinition = {
+      name: () => $t(L.WindTurbine),
+      input: {},
+      output: { Power: 1 },
+      construction: { ReinforcedConcrete: 1 },
+   };
+
    CoalPowerPlant: IBuildingDefinition = {
       name: () => $t(L.CoalPowerPlant),
       input: { Coal: 1 },
@@ -2437,6 +2444,28 @@ export class BuildingDefinitions {
       wikipedia: "Atlas_Mountains",
    };
 
+   Mauritshuis: IBuildingDefinition = {
+      name: () => $t(L.Mauritshuis),
+      desc: () => $t(L.MauritshuisDesc),
+      input: {},
+      output: {},
+      construction: { Politics: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Mauritshuis",
+   };
+
+   Keukenhof: IBuildingDefinition = {
+      name: () => $t(L.Keukenhof),
+      desc: () => $t(L.KeukenhofDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Keukenhof",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {
@@ -2547,6 +2576,7 @@ export const BuildingShowLevel = new Set<Building>([
    "Habitat67",
    "WorldTradeOrganization",
    "CothonOfCarthage",
+   "Mauritshuis",
 ] satisfies Building[]);
 
 // This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!
@@ -2603,16 +2633,17 @@ export const NaturalWonderMaxRange: Partial<Record<Building, number>> = {
    Cappadocia: 3,
    MountArarat: 2,
 
-   Capybara: 6,
-   GiantOtter: 6,
-   Hoatzin: 6,
-   RoyalFlycatcher: 6,
-   GlassFrog: 6,
-   PygmyMarmoset: 6,
+   Capybara: 3,
+   GiantOtter: 3,
+   Hoatzin: 3,
+   RoyalFlycatcher: 3,
+   GlassFrog: 3,
+   PygmyMarmoset: 3,
 
    GangesRiver: 2,
    Uluru: 3,
    LakeBaikal: 4,
    AuroraBorealis: 4,
    AtlasMountains: 6,
+   Keukenhof: 4,
 };

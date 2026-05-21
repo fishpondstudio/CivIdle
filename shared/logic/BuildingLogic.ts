@@ -57,6 +57,7 @@ import { getAgeForTech, getBuildingUnlockTech, getCurrentAge } from "./TechLogic
 import {
    AllMultiplierTypes,
    GlobalMultiplierNames,
+   MultiplierFlag,
    MultiplierTypeDesc,
    NotProducingReason,
    Tick,
@@ -107,12 +108,12 @@ export function forEachMultiplier(
    gs: GameState,
 ): void {
    Tick.current.tileMultipliers.get(xy)?.forEach((m) => {
-      if (stableOnly && m.unstable) return;
+      if (stableOnly && hasFlag(m.flag ?? MultiplierFlag.None, MultiplierFlag.Unstable)) return;
       func(m);
    });
    AllMultiplierTypes.forEach((type) => {
       getGlobalMultipliers(type).forEach((m) => {
-         if (stableOnly && m.unstable) return;
+         if (stableOnly && hasFlag(m.flag ?? MultiplierFlag.None, MultiplierFlag.Unstable)) return;
          func(m);
       });
    });
@@ -1275,10 +1276,14 @@ export function getPompidou(gs: GameState): ICentrePompidouBuildingData | null {
    }
    return null;
 }
-export function getRandomEmptyTile(range: number, gameState: GameState): [Tile, ITileData] | null {
+
+export function getRandomEmptyTile(
+   range: number,
+   excludedTiles: Set<Tile>,
+   gameState: GameState,
+): [Tile, ITileData] | null {
    const grid = getGrid(gameState);
    const xys = shuffle(Array.from(gameState.tiles.keys()));
-   const result: Tile[] = [];
    outer: for (let i = 0; i < xys.length; i++) {
       const xy = xys[i];
       const tile = gameState.tiles.get(xy);
@@ -1294,7 +1299,7 @@ export function getRandomEmptyTile(range: number, gameState: GameState): [Tile, 
       for (const point of grid.getRange(tileToPoint(xy), range)) {
          const neighbor = pointToTile(point);
          const neighborTile = gameState.tiles.get(neighbor);
-         if (!neighborTile || neighborTile.building) {
+         if (!neighborTile || neighborTile.building || excludedTiles.has(neighbor)) {
             continue outer;
          }
       }
@@ -1613,6 +1618,9 @@ export function getBuildingRange(xy: Tile, building: IBuildingData, gs: GameStat
             result += 2;
          }
          return result;
+      }
+      case "Keukenhof": {
+         return isFestival(building.type, gs) ? 4 : 2;
       }
       default: {
          return 0;

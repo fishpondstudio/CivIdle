@@ -566,6 +566,39 @@ export class CityDefinitions {
       festivalDesc: () => $t(L.FestivalOfTanit),
       uniqueEffects: () => [],
    };
+
+   Dutch: ICityDefinition = {
+      name: () => $t(L.Dutch),
+      deposits: {
+         Water: 0.03,
+         Copper: 0.01,
+         Iron: 0.01,
+         Wood: 0.03,
+         Stone: 0.01,
+         Gold: 0.03,
+         Coal: 0.01,
+         Oil: 0.01,
+         Aluminum: 0.03,
+         NaturalGas: 0.03,
+         Uranium: 0.02,
+      },
+      size: 40,
+      buildingNames: {
+         Headquarter: () => $t(L.Binnenhof),
+      },
+      uniqueBuildings: {
+         Mauritshuis: "Capitalism",
+         WindTurbine: "Urbanization",
+      },
+      uniqueMultipliers: {},
+      naturalWonders: {
+         Keukenhof: true,
+      },
+      requireGreatPeopleLevel: 140,
+      requireSupporterPack: true,
+      festivalDesc: () => $t(L.Koningsdag),
+      uniqueEffects: () => [$t(L.Every5WindMillsLevelGives1ProductionMultiplierToAdjacentPowerPlants)],
+   };
 }
 
 export type City = keyof CityDefinitions;
