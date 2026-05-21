@@ -2044,4 +2044,6 @@ export const EN = {
    VincentVanGogh: "Vincent van Gogh",
    AntonieVanLeeuwenhoek: "Antonie van Leeuwenhoek",
    Close: "Close",
+   Midsummer: "Midsummer",
+   MidsummerDesc: "Provide +X Building Level Boost to all buildings with Y tile range. X = Production Multiplier that building receives from Age Wisdom. Y = Midsummer's level. This wonder can only be constructed during the midsummer period (6.10 ~ 6.30)",
 };

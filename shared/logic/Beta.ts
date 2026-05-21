@@ -5,3 +5,5 @@ import type { Material } from "../definitions/MaterialDefinitions";
 export const BetaBuildings = new Set<Building>(["WindTurbine"]);
 export const BetaMaterials = new Set<Material>([]);
 export const BetaCities = new Set<City>(["Dutch"]);
+
+export const BetaUnlockMidsummer = true;

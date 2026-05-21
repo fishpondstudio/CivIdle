@@ -1,3 +1,4 @@
+import { BetaUnlockMidsummer } from "../logic/Beta";
 import type { Building } from "./BuildingDefinitions";
 import type { Tech } from "./TechDefinitions";
 
@@ -19,6 +20,12 @@ export const TimedBuildingUnlock: Partial<Record<Building, ITimedBuildingUnlock>
    EasterBunny: {
       tech: "PrivateOwnership",
       condition: (now) => now.getMonth() === 3,
+   },
+   Midsummer: {
+      tech: "Calendar",
+      // Remove the last part of condition after beta!
+      condition: (now) =>
+         (now.getMonth() === 5 && now.getDate() >= 10 && now.getDate() <= 30) || BetaUnlockMidsummer,
    },
 };
 

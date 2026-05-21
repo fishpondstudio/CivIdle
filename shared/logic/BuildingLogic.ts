@@ -1622,6 +1622,9 @@ export function getBuildingRange(xy: Tile, building: IBuildingData, gs: GameStat
       case "Keukenhof": {
          return isFestival(building.type, gs) ? 4 : 2;
       }
+      case "Midsummer": {
+         return building.level;
+      }
       default: {
          return 0;
       }

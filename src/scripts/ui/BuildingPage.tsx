@@ -31,6 +31,7 @@ import { KizhiPogostBuildingBody } from "./KizhiPogostBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { LouvreBuildingBody } from "./LouvreBuildingBody";
 import { MarketBuildingBody } from "./MarketBuildingBody";
+import { MauritshuisBuildingBody } from "./MauritshuisBuildingBody";
 import { MenuComponent } from "./MenuComponent";
 import { MontSaintMichelBuildingBody } from "./MontSaintMichelBuildingBody";
 import { PetraBuildingBody } from "./PetraBuildingBody";
@@ -50,7 +51,6 @@ import { UpgradableWonderBuildingBody } from "./UpgradableWonderBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 import { WorldTradeOrganizationBuildingBody } from "./WorldTradeOrganizationBuildingBody";
 import { ZugspitzeBuildingBody } from "./ZugspitzeBuildingBody";
-import { MauritshuisBuildingBody } from "./MauritshuisBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
    Headquarter: HeadquarterBuildingBody,
@@ -113,6 +113,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    WorldTradeOrganization: WorldTradeOrganizationBuildingBody,
    CothonOfCarthage: CothonOfCarthageBuildingBody,
    Mauritshuis: MauritshuisBuildingBody,
+   Midsummer: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

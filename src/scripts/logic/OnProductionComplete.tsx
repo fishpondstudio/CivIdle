@@ -100,6 +100,7 @@ import {
    filterOf,
    firstKeyOf,
    forEach,
+   hasFlag,
    keysOf,
    mapSafeAdd,
    mapSafePush,
@@ -2380,6 +2381,37 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
             }
          }
+         break;
+      }
+      case "Midsummer": {
+         const range = getBuildingRange(xy, building, gs);
+         for (const point of grid.getRange(tileToPoint(xy), range)) {
+            const targetXy = pointToTile(point);
+            if (targetXy === xy) {
+               continue;
+            }
+            const targetBuilding = getWorkingBuilding(targetXy, gs);
+            if (targetBuilding) {
+               let levelBoost = 0;
+               forEachMultiplier(
+                  targetXy,
+                  (m) => {
+                     if (m.output && hasFlag(m.flag ?? MultiplierFlag.None, MultiplierFlag.AgeWisdom)) {
+                        levelBoost += m.output;
+                     }
+                  },
+                  false,
+                  gs,
+               );
+               if (levelBoost > 0) {
+                  mapSafePush(Tick.next.levelBoost, targetXy, {
+                     value: levelBoost,
+                     source: buildingName,
+                  });
+               }
+            }
+         }
+         break;
       }
    }
 }

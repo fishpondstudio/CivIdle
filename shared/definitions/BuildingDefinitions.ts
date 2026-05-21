@@ -2466,6 +2466,17 @@ export class BuildingDefinitions {
       wikipedia: "Keukenhof",
    };
 
+   Midsummer: IBuildingDefinition = {
+      name: () => $t(L.Midsummer),
+      desc: () => $t(L.MidsummerDesc),
+      input: {},
+      output: {},
+      construction: { Alcohol: 300 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Midsummer",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {
@@ -2577,6 +2588,7 @@ export const BuildingShowLevel = new Set<Building>([
    "WorldTradeOrganization",
    "CothonOfCarthage",
    "Mauritshuis",
+   "Midsummer",
 ] satisfies Building[]);
 
 // This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!
@@ -2607,6 +2619,7 @@ export const UpgradableWorldWonders = new Set<Building>([
    "Habitat67",
    "WorldTradeOrganization",
    "CothonOfCarthage",
+   "Midsummer",
 ] satisfies Building[]);
 
 // Include buildings here that does not really cost construction resources to upgrade
@@ -2619,6 +2632,7 @@ export const IgnoreBuildingUpgradeValue = new Set<Building>([
 // The base of the exponential cost. Default is 1.5
 export const WonderCostBase: Partial<Record<Building, number>> = {
    SydneyOperaHouse: 5,
+   Midsummer: 5,
    GreatOceanRoad: 1.7,
    WorldTradeOrganization: 2,
 };
