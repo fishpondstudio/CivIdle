@@ -277,30 +277,30 @@ function PaintingEffects({
                <summary className="row text-strong">
                   <div>{$t(L.DiversificationBonus)}</div>
                </summary>
+               <ul>
+                  <li className="row">
+                     <Tippy content={$t(L.DisplayPaintingsBy5DifferentPaintersToUnlock1BuildingLevelBoost)}>
+                        <div>{$t(L.XDifferentPainters, { count: 5 })}</div>
+                     </Tippy>
+                     <div className="f1" />
+                     <div>{effects.byPainters.size}/5</div>
+                  </li>
+                  <li className="row">
+                     <Tippy content={$t(L.DisplayPaintingsWith5DifferentThemesToUnlock1BuildingLevelBoost)}>
+                        <div>{$t(L.XDifferentThemes, { count: 5 })}</div>
+                     </Tippy>
+                     <div className="f1" />
+                     <div>{effects.byThemes.size}/5</div>
+                  </li>
+                  <li className="row">
+                     <Tippy content={$t(L.Display5MasterpiecesToUnlock1BuildingLevelBoost)}>
+                        <div>{$t(L.XDifferentMasterpieces, { count: 5 })}</div>
+                     </Tippy>
+                     <div className="f1" />
+                     <div>{effects.masterpieces}/5</div>
+                  </li>
+               </ul>
             </details>
-            <ul>
-               <li className="row">
-                  <Tippy content={$t(L.DisplayPaintingsBy5DifferentPaintersToUnlock1BuildingLevelBoost)}>
-                     <div>{$t(L.XDifferentPainters, { count: 5 })}</div>
-                  </Tippy>
-                  <div className="f1" />
-                  <div>{effects.byPainters.size}/5</div>
-               </li>
-               <li className="row">
-                  <Tippy content={$t(L.DisplayPaintingsWith5DifferentThemesToUnlock1BuildingLevelBoost)}>
-                     <div>{$t(L.XDifferentThemes, { count: 5 })}</div>
-                  </Tippy>
-                  <div className="f1" />
-                  <div>{effects.byThemes.size}/5</div>
-               </li>
-               <li className="row">
-                  <Tippy content={$t(L.Display5MasterpiecesToUnlock1BuildingLevelBoost)}>
-                     <div>{$t(L.XDifferentMasterpieces, { count: 5 })}</div>
-                  </Tippy>
-                  <div className="f1" />
-                  <div>{effects.masterpieces}/5</div>
-               </li>
-            </ul>
          </li>
       </ul>
    );
