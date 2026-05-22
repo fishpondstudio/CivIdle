@@ -114,11 +114,11 @@ export function GalleryModal({ building }: { building: IMauritshuisBuildingData 
                      <PendingPaintings placedPaintings={placedPaintings} paintings={building.paintings} />
                      <div className="row mt10">
                         <button className="f1" onClick={() => setPlacedPaintings(new Map())}>
-                           Reset Layout
+                           {$t(L.ResetLayout)}
                         </button>
                         <div className="w10" />
                         <button className="f1" onClick={hideModal}>
-                           Close Without Saving
+                           {$t(L.CloseWithoutSaving)}
                         </button>
                         <div className="w10" />
                         <button
@@ -129,7 +129,7 @@ export function GalleryModal({ building }: { building: IMauritshuisBuildingData 
                               hideModal();
                            }}
                         >
-                           Save And Close
+                           {$t(L.SaveAndClose)}
                         </button>
                      </div>
                   </div>
