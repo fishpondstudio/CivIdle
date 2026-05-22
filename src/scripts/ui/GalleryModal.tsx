@@ -12,6 +12,7 @@ import {
    Paintings,
    Themes,
 } from "../../../shared/definitions/GalleryPaintings";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IMauritshuisBuildingData } from "../../../shared/logic/Tile";
 import { cls, createTile, range, type Tile, tileToPoint } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
@@ -22,14 +23,13 @@ import { PaintingImages } from "./GalleryPaintingImages";
 import { hideModal } from "./GlobalModal";
 
 export function GalleryModal({ building }: { building: IMauritshuisBuildingData }): React.ReactNode {
-   const { paintings, placedPaintings } = building;
+   const [placedPaintings, setPlacedPaintings] = useState<Map<Painting, IPaintingPlacement>>(
+      structuredClone(building.placedPaintings),
+   );
    return (
       <div className="window" style={{ width: "min(90vw, 1200px)" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.Gallery)}</div>
-            <div className="title-bar-controls">
-               <button onClick={hideModal} aria-label={$t(L.Close)}></button>
-            </div>
          </div>
          <div className="window-body gallery-modal">
             <DragDropProvider
@@ -111,7 +111,27 @@ export function GalleryModal({ building }: { building: IMauritshuisBuildingData 
                   </div>
                   <div className="col f1" style={{ alignSelf: "stretch" }}>
                      <PaintingEffects placedPaintings={placedPaintings} />
-                     <PendingPaintings placedPaintings={placedPaintings} paintings={paintings} />
+                     <PendingPaintings placedPaintings={placedPaintings} paintings={building.paintings} />
+                     <div className="row mt10">
+                        <button className="f1" onClick={() => setPlacedPaintings(new Map())}>
+                           Reset Layout
+                        </button>
+                        <div className="w10" />
+                        <button className="f1" onClick={hideModal}>
+                           Close Without Saving
+                        </button>
+                        <div className="w10" />
+                        <button
+                           className="f1 text-strong"
+                           onClick={() => {
+                              building.placedPaintings = structuredClone(placedPaintings);
+                              notifyGameStateUpdate();
+                              hideModal();
+                           }}
+                        >
+                           Save And Close
+                        </button>
+                     </div>
                   </div>
                </div>
             </DragDropProvider>
@@ -166,7 +186,7 @@ function PaintingEffects({
          className="tree-view"
          style={{
             overflowY: "auto",
-            height: "calc(var(--grid-height) * 0.25 - 8px)",
+            height: "calc(var(--grid-height) * 0.25 - 8px - 35px)",
             marginBottom: 8,
          }}
       >
