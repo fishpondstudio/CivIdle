@@ -753,7 +753,7 @@ export const EN = {
    HenryFord: "Henry Ford",
    Herding: "Herding",
    Hermitage: "Hermitage",
-   HermitageDesc: "This wonder can be upgraded and each level provides +1 Storage Multiplier to each <b>type</b> of building within 2-tile range",
+   HermitageDesc: "This wonder can be upgraded and each level provides +1 Storage Multiplier to each type of building within 2-tile range",
    Herodotus: "Herodotus",
    HideSpinner: "Hide Spinner",
    HideSpinnerDescHTML: "Hide the spinner that indicates the tile is working. <b>This should not affect performance</b>",
