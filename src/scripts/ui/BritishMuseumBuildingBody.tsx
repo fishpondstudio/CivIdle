@@ -18,6 +18,7 @@ import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
+import { html } from "./RenderHTMLComponent";
 
 export function BritishMuseumBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const buildings = getUniqueWonders(gameState.city);
@@ -61,7 +62,7 @@ export function BritishMuseumBuildingBody({ gameState, xy }: IBuildingComponentP
                   {$t(L.BritishMuseumTransform)}
                </button>
             </div>
-            <div className="mt5 text-desc text-small">{Config.Building[building].desc?.()}</div>
+            {html(Config.Building[building].desc?.(), "mt5 text-desc text-small")}
          </fieldset>
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <BuildingValueComponent gameState={gameState} xy={xy} />

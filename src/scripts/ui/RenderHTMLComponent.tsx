@@ -7,7 +7,14 @@ export function RenderHTML({
    return <div className={className} style={style} dangerouslySetInnerHTML={{ __html: html }}></div>;
 }
 
-export function html(html: string, className?: string, style?: React.CSSProperties): React.ReactNode {
+export function html(
+   html: string | null | undefined,
+   className?: string,
+   style?: React.CSSProperties,
+): React.ReactNode {
+   if (!html) {
+      return null;
+   }
    /* biome-ignore lint/security/noDangerouslySetInnerHtml: */
    return <div className={className} style={style} dangerouslySetInnerHTML={{ __html: html }}></div>;
 }
