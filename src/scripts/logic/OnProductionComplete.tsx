@@ -2364,6 +2364,18 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             value: resources.size,
             source: buildingName,
          });
+         if (isFestival(building.type, gs)) {
+            for (const point of grid.getRange(tileToPoint(xy), range)) {
+               const targetXy = pointToTile(point);
+               if (targetXy === xy) {
+                  continue;
+               }
+               mapSafePush(Tick.next.tileMultipliers, targetXy, {
+                  output: 0.5 * resources.size,
+                  source: buildingName,
+               });
+            }
+         }
          break;
       }
       case "WindTurbine": {

@@ -2457,7 +2457,7 @@ export class BuildingDefinitions {
 
    Keukenhof: IBuildingDefinition = {
       name: () => $t(L.Keukenhof),
-      desc: () => $t(L.KeukenhofDesc),
+      desc: () => $t(L.KeukenhofDescV2),
       input: {},
       output: {},
       construction: {},
@@ -2659,5 +2659,5 @@ export const NaturalWonderMaxRange: Partial<Record<Building, number>> = {
    LakeBaikal: 4,
    AuroraBorealis: 4,
    AtlasMountains: 6,
-   Keukenhof: 4,
+   Keukenhof: 3,
 };
