@@ -596,7 +596,7 @@ export class CityDefinitions {
       },
       requireGreatPeopleLevel: 140,
       requireSupporterPack: true,
-      festivalDesc: () => $t(L.Koningsdag),
+      festivalDesc: () => $t(L.KoningsdagV2),
       uniqueEffects: () => [$t(L.Every5WindMillsLevelGives1ProductionMultiplierToAdjacentPowerPlants)],
    };
 }
