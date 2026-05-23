@@ -7,7 +7,6 @@ import type { TechAge } from "../../shared/definitions/TechDefinitions";
 import {
    exploreTile,
    findSpecialBuildingCached,
-   getBuildingCost,
    getTotalBuildingCost,
    isWorldOrNaturalWonder,
 } from "../../shared/logic/BuildingLogic";
@@ -336,13 +335,15 @@ if (import.meta.env.DEV) {
    };
 
    // @ts-expect-error
-   window.completeBuilding = (xy: Tile) => {
-      const building = getGameState().tiles.get(xy)?.building;
-      if (building) {
-         forEach(getBuildingCost(building), (res, amount) => {
-            building.resources[res] = amount;
-         });
-      }
+   window.completeBuildings = () => {
+      getGameState().tiles.forEach((data, tile) => {
+         if (data.building && data.building.status !== "completed") {
+            const building = data.building;
+            forEach(getTotalBuildingCost(building, building.level, building.desiredLevel), (res, amount) => {
+               building.resources[res] = amount;
+            });
+         }
+      });
    };
 
    // @ts-expect-error

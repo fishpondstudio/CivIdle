@@ -683,6 +683,7 @@ export function transportAndConsumeResources(
          if (!isEmpty(filterTransportable(output))) {
             Tick.next.notProducingReasons.set(xy, NotProducingReason.StorageFull);
          }
+         OnBuildingProductionComplete.emit({ xy, offline });
       } else {
          Tick.next.notProducingReasons.set(xy, NotProducingReason.StorageFull);
       }
