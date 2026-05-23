@@ -398,7 +398,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                            </Tippy>
                         </th>{" "}
                         <th className="right">
-                           <Tippy content={$t(L.ProductionWorkers)}>
+                           <Tippy content={$t(L.ElectrificationLevel)}>
                               <div className="m-icon small">bolt</div>
                            </Tippy>
                         </th>
