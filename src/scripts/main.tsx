@@ -6,8 +6,12 @@ import { createRoot } from "react-dom/client";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import "../css/Main.css";
 import CabinMedium from "../fonts/CabinMedium.ttf?url";
+import GermaniaOne from "../fonts/GermaniaOne-Regular.ttf";
+import LilitaOne from "../fonts/LilitaOne-Regular.ttf";
 import OldTypefaces from "../fonts/OldTypefaces.ttf";
 import Platypi from "../fonts/Platypi-Medium.ttf";
+import Quicksand from "../fonts/Quicksand-Bold.ttf";
+import RobotoSlab from "../fonts/RobotoSlab-Bold.ttf";
 import TextureBuildingDef from "../images/textures_building.json";
 import TextureBuilding from "../images/textures_building.png";
 import TextureFlagDef from "../images/textures_flag.json";
@@ -72,6 +76,10 @@ export const fonts = [
    new FontFace(Fonts.Cabin, `url("${CabinMedium}")`),
    new FontFace(Fonts.Platypi, `url("${Platypi}")`),
    new FontFace(Fonts.OldTypefaces, `url("${OldTypefaces}")`),
+   new FontFace(Fonts.RobotoSlab, `url("${RobotoSlab}")`),
+   new FontFace(Fonts.Quicksand, `url("${Quicksand}")`),
+   new FontFace(Fonts.LilitaOne, `url("${LilitaOne}")`),
+   new FontFace(Fonts.GermaniaOne, `url("${GermaniaOne}")`),
 ];
 
 export type MainBundle = keyof typeof mainBundle;
@@ -123,7 +131,11 @@ export async function loadBundle() {
                fontSize: 64,
                fontFamily: f.family,
             },
-            f.family === Fonts.Cabin
+            f.family === Fonts.Cabin ||
+               f.family === Fonts.LilitaOne ||
+               f.family === Fonts.GermaniaOne ||
+               f.family === Fonts.RobotoSlab ||
+               f.family === Fonts.Quicksand
                ? {
                     dropShadow: true,
                     dropShadowAlpha: 0.75,

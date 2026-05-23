@@ -21,6 +21,7 @@ import { firstKeyOf, hasFlag, pointToTile } from "../../../shared/utilities/Help
 import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { $t, L } from "../../../shared/utilities/i18n";
+import SupporterIcon from "../../images/Supporter.png";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { ToggleChatWindow, useFloatingMode, useGameOptions, useGameState } from "../Global";
@@ -367,7 +368,12 @@ function _ChatMessage({
          ) : (
             <div className="row text-small text-desc">
                <div
-                  style={{ color: UserColorsMapping[chat.color] }}
+                  style={
+                     {
+                        color: UserColorsMapping[chat.color],
+                        "--chat-name-color": UserColorsMapping[chat.color],
+                     } as React.CSSProperties
+                  }
                   className="pointer"
                   onClick={(e) => {
                      if (e.ctrlKey) {
@@ -395,7 +401,7 @@ function _ChatMessage({
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
                   <Tippy content={$t(L.AccountSupporter)}>
-                     <MiscTextureComponent name="Supporter" scale={0.15} />
+                     <img src={SupporterIcon} style={{ height: "15px" }} />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
