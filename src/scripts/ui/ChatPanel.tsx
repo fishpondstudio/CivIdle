@@ -344,15 +344,12 @@ function _ChatMessage({
                <div>{new Date(chat.time ?? 0).toLocaleTimeString()}</div>
                <div className="f1"></div>
                <div
-                  style={
-                     {
-                        color: UserColorsMapping[chat.color],
-                        fontFamily: getChatFont(chat.attr),
-                        "--chat-name-color": UserColorsMapping[chat.color],
-                     } as React.CSSProperties
-                  }
+                  style={{
+                     color: UserColorsMapping[chat.color],
+                     fontFamily: getChatFont(chat.attr),
+                  }}
                   className={cls(
-                     hasFlag(chat.attr, ChatAttributes.KeeperOfOurServer) ? "chat-name-glow" : null,
+                     hasFlag(chat.attr, ChatAttributes.KeeperOfOurServer) ? "player-handle-glow" : null,
                   )}
                >
                   {chat.name}
@@ -384,16 +381,13 @@ function _ChatMessage({
          ) : (
             <div className="row text-small text-desc">
                <div
-                  style={
-                     {
-                        color: UserColorsMapping[chat.color],
-                        "--chat-name-color": UserColorsMapping[chat.color],
-                        fontFamily: getChatFont(chat.attr),
-                     } as React.CSSProperties
-                  }
+                  style={{
+                     color: UserColorsMapping[chat.color],
+                     fontFamily: getChatFont(chat.attr),
+                  }}
                   className={cls(
                      "pointer",
-                     hasFlag(chat.attr, ChatAttributes.KeeperOfOurServer) ? "chat-name-glow" : null,
+                     hasFlag(chat.attr, ChatAttributes.KeeperOfOurServer) ? "player-handle-glow" : null,
                   )}
                   onClick={(e) => {
                      if (e.ctrlKey) {

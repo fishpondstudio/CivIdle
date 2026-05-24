@@ -39,6 +39,7 @@ import { FormatNumber } from "./HelperComponents";
 import { PendingClaimModal } from "./PendingClaimModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
+import { getUserFont } from "./UserFont";
 
 const savedResourceWantFilters: Set<Material> = new Set();
 const savedResourceOfferFilters: Set<Material> = new Set();
@@ -414,7 +415,11 @@ function PlayerTradeTableRow({
             </div>
          </td>
          <td className={evenodd}>
-            <FixedLengthText text={trade.from} length={16} />
+            <FixedLengthText
+               text={trade.from}
+               length={16}
+               style={{ fontFamily: getUserFont(trade.fromAttr) }}
+            />
          </td>
          <td className={evenodd}>
             {trade.fromId === user?.userId ? (

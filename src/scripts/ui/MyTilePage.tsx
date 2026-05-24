@@ -7,7 +7,7 @@ import {
    TRADE_TILE_NEIGHBOR_BONUS,
 } from "../../../shared/logic/Constants";
 import { UserAttributes, UserColorsMapping } from "../../../shared/utilities/Database";
-import { formatPercent, hasFlag, safeParseInt } from "../../../shared/utilities/Helper";
+import { cls, formatPercent, hasFlag, safeParseInt } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import {
@@ -29,6 +29,7 @@ import { PlayerHandleComponent } from "./PlayerHandleComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
 import { TitleBarComponent } from "./TitleBarComponent";
+import { getUserFont } from "./UserFont";
 import { WarningComponent } from "./WarningComponent";
 
 export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
@@ -97,8 +98,14 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                         <li key={userId}>
                            <div className="row">
                               <div
-                                 className="text-strong mr5"
-                                 style={{ color: UserColorsMapping[tile.color] }}
+                                 className={cls(
+                                    "mr5",
+                                    hasFlag(tile.attr, UserAttributes.DLC3) ? "player-handle-glow" : null,
+                                 )}
+                                 style={{
+                                    color: UserColorsMapping[tile.color],
+                                    fontFamily: getUserFont(tile.attr),
+                                 }}
                               >
                                  {tile.handle}
                               </div>

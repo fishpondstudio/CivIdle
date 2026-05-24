@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import { UserAttributes, UserColorsMapping } from "../../../shared/utilities/Database";
-import { formatPercent, hasFlag } from "../../../shared/utilities/Helper";
+import { cls, formatPercent, hasFlag } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import { usePlayerMap, useTrades } from "../rpc/RPCClient";
@@ -16,6 +16,7 @@ import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
 import { TitleBarComponent } from "./TitleBarComponent";
+import { getUserFont } from "./UserFont";
 import { WarningComponent } from "./WarningComponent";
 
 export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
@@ -41,8 +42,13 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                </>
             )}
             <fieldset>
-               <legend className="text-strong row">
-                  <div style={{ color: UserColorsMapping[tile.color] }}>{tile.handle}</div>
+               <legend className="row">
+                  <div
+                     style={{ color: UserColorsMapping[tile.color], fontFamily: getUserFont(tile.attr) }}
+                     className={cls(hasFlag(tile.attr, UserAttributes.DLC3) ? "player-handle-glow" : null)}
+                  >
+                     {tile.handle}
+                  </div>
                   <Tippy content={getCountryName(tile.flag)}>
                      <PlayerFlagComponent name={tile.flag} style={{ marginLeft: 5 }} scale={0.7} />
                   </Tippy>

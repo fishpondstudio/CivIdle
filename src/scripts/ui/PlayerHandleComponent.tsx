@@ -18,7 +18,16 @@ import {
    UserAttributes,
    UserColorsMapping,
 } from "../../../shared/utilities/Database";
-import { HOUR, SECOND, forEach, formatHM, hasFlag, sizeOf, uuid4 } from "../../../shared/utilities/Helper";
+import {
+   HOUR,
+   SECOND,
+   cls,
+   forEach,
+   formatHM,
+   hasFlag,
+   sizeOf,
+   uuid4,
+} from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame } from "../Global";
 import { AccountLevelNames } from "../logic/AccountLevel";
@@ -37,6 +46,7 @@ import { MobileSupporterPackComponent } from "./MobileSupporterPackComponent";
 import { RenderHTML, html } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
+import { getUserFont } from "./UserFont";
 import { WarningComponent } from "./WarningComponent";
 
 let _playTime = 0;
@@ -99,7 +109,13 @@ export function PlayerHandleComponent() {
                ) : null}
 
                <div className="row">
-                  <div style={{ color: UserColorsMapping[user.color] }} className="text-strong">
+                  <div
+                     style={{
+                        color: UserColorsMapping[user.color],
+                        fontFamily: getUserFont(user.attr),
+                     }}
+                     className={cls(hasFlag(user.attr, UserAttributes.DLC3) ? "player-handle-glow" : null)}
+                  >
                      {user.handle}
                   </div>
                   <Tippy content={getCountryName(user?.flag)}>
