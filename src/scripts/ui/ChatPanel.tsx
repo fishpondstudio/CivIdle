@@ -21,7 +21,6 @@ import { firstKeyOf, hasFlag, pointToTile } from "../../../shared/utilities/Help
 import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { $t, L } from "../../../shared/utilities/i18n";
-import SupporterIcon from "../../images/Supporter.png";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { ToggleChatWindow, useFloatingMode, useGameOptions, useGameState } from "../Global";
@@ -401,7 +400,7 @@ function _ChatMessage({
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
                   <Tippy content={$t(L.AccountSupporter)}>
-                     <img src={SupporterIcon} style={{ height: "15px" }} />
+                     <MiscTextureComponent name="Supporter" scale={0.15} />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
