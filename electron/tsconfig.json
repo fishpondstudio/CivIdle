@@ -5,7 +5,8 @@
       "forceConsistentCasingInFileNames": true,
       "outDir": "compiled",
       "strict": true,
-      "verbatimModuleSyntax": false
+      "verbatimModuleSyntax": false,
+      "skipLibCheck": true
    },
    "include": ["src/**/*"]
 }
