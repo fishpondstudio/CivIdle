@@ -6,7 +6,6 @@ import { FESTIVAL_CONVERSION_RATE } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { HAPPINESS_MULTIPLIER, HappinessNames, getHappinessIcon } from "../../../shared/logic/HappinessLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
@@ -18,10 +17,11 @@ import { ProgressBarComponent } from "./ProgressBarComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function HappinessComponent({ open }: { open: boolean }): React.ReactNode {
-   const happiness = useCurrentTick().happiness;
+   const tick = useCurrentTick();
+   const happiness = tick.happiness;
    const { workersBeforeHappiness, workersAfterHappiness } = getScienceFromWorkers(useGameState());
    const gs = useGameState();
-   const festival = Tick.current.specialBuildings.get("Headquarter")?.building?.resources.Festival ?? 0;
+   const festival = tick.specialBuildings.get("Headquarter")?.building?.resources.Festival ?? 0;
    if (!happiness) {
       return null;
    }
@@ -79,7 +79,7 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                            </li>
                         );
                      })}
-                     {Tick.current.globalMultipliers.happiness.map((m) => {
+                     {tick.globalMultipliers.happiness.map((m, index) => {
                         return (
                            <li className="row" key={m.source}>
                               <div className="f1">{m.source}</div>

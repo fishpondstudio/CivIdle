@@ -2049,4 +2049,9 @@ export const EN = {
    ResetLayout: "Reset Layout",
    CloseWithoutSaving: "Close Without Saving",
    SaveAndClose: "Save And Close",
+   KeeperOfOurServer: "Keeper Of Our Server",
+   KeepOurServerOnPackOptions: "Keep Our Server On Pack Options",
+   PlayerHandleFont: "Player Handle Font",
+   SupporterPackOptions: "Supporter Pack Options",
+   PlayerHandleColor: "Player Handle Color",
 };

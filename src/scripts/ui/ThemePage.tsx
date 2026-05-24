@@ -13,7 +13,12 @@ import {
    type CursorOption,
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
-import { UserAttributes } from "../../../shared/utilities/Database";
+import {
+   UserAttributes,
+   UserColorsMapping,
+   UserColorsNames,
+   type UserColors,
+} from "../../../shared/utilities/Database";
 import {
    FormatNumberOptions,
    clamp,
@@ -25,7 +30,7 @@ import {
 import { $t, L } from "../../../shared/utilities/i18n";
 import { syncFontSizeScale, syncFontVariantNumeric, useGameOptions } from "../Global";
 import { copyBuildingColorToResource, randomizeBuildingAndResourceColor } from "../logic/ThemeColor";
-import { getUser } from "../rpc/RPCClient";
+import { OnUserChanged, client, getUser, useUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { playClick, playError } from "../visuals/Sound";
@@ -37,14 +42,86 @@ import { RenderHTML } from "./RenderHTMLComponent";
 import { MiscTextureComponent, TileTextureComponent } from "./TextureSprites";
 import { TitleBarComponent } from "./TitleBarComponent";
 import { ToggleComponent } from "./ToggleComponent";
+import { UserFont, getUserFont, setUserFont } from "./UserFont";
 
 export function ThemePage(): React.ReactNode {
    const gameOptions = useGameOptions();
+   const user = useUser();
+   console.log(user);
    return (
       <div className="window">
          <TitleBarComponent>{$t(L.Theme)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
+            {user && hasFlag(user.attr, UserAttributes.DLC1) && (
+               <fieldset>
+                  <legend className="row g5">
+                     <MiscTextureComponent name="Supporter" scale={0.15} />
+                     {$t(L.SupporterPackOptions)}
+                  </legend>
+                  <div className="row">
+                     <div className="f1">{$t(L.PlayerHandleColor)}</div>
+                     <select
+                        value={user.color}
+                        onChange={async (e) => {
+                           try {
+                              const color = safeParseInt(e.target.value, 0) as UserColors;
+                              user.color = color;
+                              OnUserChanged.emit({ ...user });
+                              OnUserChanged.emit(await client.changeColor(color));
+                           } catch (error) {
+                              showToast(String(error));
+                              playError();
+                           }
+                        }}
+                        className="code"
+                        style={{ color: UserColorsMapping[user.color] }}
+                     >
+                        {jsxMapOf(UserColorsMapping, (key, color) => {
+                           return (
+                              <option className="code" style={{ color }} value={key} key={key}>
+                                 {UserColorsNames[key]() ?? $t(L.AccountCustomColorDefault)}
+                              </option>
+                           );
+                        })}
+                     </select>
+                  </div>
+               </fieldset>
+            )}
+            {user && hasFlag(user.attr, UserAttributes.DLC3) && (
+               <fieldset>
+                  <legend className="row g5">
+                     <MiscTextureComponent name="Supporter2" scale={0.15} />
+                     {$t(L.KeepOurServerOnPackOptions)}
+                  </legend>
+                  <div className="row">
+                     <div className="f1">{$t(L.PlayerHandleFont)}</div>
+                     <select
+                        value={getUserFont(user.attr)}
+                        onChange={async (e) => {
+                           try {
+                              const font = e.target.value as UserFont;
+                              user.attr = setUserFont(user.attr, font);
+                              OnUserChanged.emit({ ...user });
+                              OnUserChanged.emit(await client.changeFont(UserFont.indexOf(font)));
+                           } catch (error) {
+                              showToast(String(error));
+                              playError();
+                           }
+                        }}
+                        style={{ fontFamily: getUserFont(user.attr) }}
+                     >
+                        {UserFont.map((option) => {
+                           return (
+                              <option key={option} value={option} style={{ fontFamily: option }}>
+                                 {option}
+                              </option>
+                           );
+                        })}
+                     </select>
+                  </div>
+               </fieldset>
+            )}
             <fieldset>
                <ChangeModernUIComponent />
                <div className="separator" />

@@ -7,8 +7,8 @@ import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import "../css/Main.css";
 import CabinMedium from "../fonts/CabinMedium.ttf?url";
 import GermaniaOne from "../fonts/GermaniaOne-Regular.ttf";
-import LilitaOne from "../fonts/LilitaOne-Regular.ttf";
 import OldTypefaces from "../fonts/OldTypefaces.ttf";
+import Oswald from "../fonts/Oswald-Medium.ttf";
 import Platypi from "../fonts/Platypi-Medium.ttf";
 import Quicksand from "../fonts/Quicksand-Bold.ttf";
 import RobotoSlab from "../fonts/RobotoSlab-Bold.ttf";
@@ -78,7 +78,7 @@ export const fonts = [
    new FontFace(Fonts.OldTypefaces, `url("${OldTypefaces}")`),
    new FontFace(Fonts.RobotoSlab, `url("${RobotoSlab}")`),
    new FontFace(Fonts.Quicksand, `url("${Quicksand}")`),
-   new FontFace(Fonts.LilitaOne, `url("${LilitaOne}")`),
+   new FontFace(Fonts.Oswald, `url("${Oswald}")`),
    new FontFace(Fonts.GermaniaOne, `url("${GermaniaOne}")`),
 ];
 
@@ -132,7 +132,7 @@ export async function loadBundle() {
                fontFamily: f.family,
             },
             f.family === Fonts.Cabin ||
-               f.family === Fonts.LilitaOne ||
+               f.family === Fonts.Oswald ||
                f.family === Fonts.GermaniaOne ||
                f.family === Fonts.RobotoSlab ||
                f.family === Fonts.Quicksand

@@ -17,26 +17,14 @@ import {
    TradeTileReservationDays,
    UserAttributes,
    UserColorsMapping,
-   UserColorsNames,
-   type UserColors,
 } from "../../../shared/utilities/Database";
-import {
-   HOUR,
-   SECOND,
-   forEach,
-   formatHM,
-   hasFlag,
-   safeParseInt,
-   sizeOf,
-   uuid4,
-} from "../../../shared/utilities/Helper";
+import { HOUR, SECOND, forEach, formatHM, hasFlag, sizeOf, uuid4 } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame } from "../Global";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import { useEligibleAccountRank } from "../logic/ClientUpdate";
-import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
+import { client, useUser } from "../rpc/RPCClient";
 import { getCountryName } from "../utilities/CountryCode";
-import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { playClick, playError, playLevelUp } from "../visuals/Sound";
 import { AccountRankUpModal } from "./AccountRankUpModal";
@@ -141,35 +129,6 @@ export function PlayerHandleComponent() {
                   <AccountLevelComponent level={accountLevel} scale={0.15} style={{ marginRight: 5 }} />
                   <div>{AccountLevelNames[accountLevel]()}</div>
                </div>
-               {hasFlag(user.attr, UserAttributes.DLC1) && (
-                  <div className="row text-strong mt5">
-                     <div className="f1">{$t(L.AccountCustomColor)}</div>
-                     <select
-                        value={user.color}
-                        onChange={async (e) => {
-                           try {
-                              const color = safeParseInt(e.target.value, 0) as UserColors;
-                              user.color = color;
-                              OnUserChanged.emit({ ...user });
-                              OnUserChanged.emit(await client.changeColor(color));
-                           } catch (error) {
-                              showToast(String(error));
-                              playError();
-                           }
-                        }}
-                        className="condensed code"
-                        style={{ color: UserColorsMapping[user.color] }}
-                     >
-                        {jsxMapOf(UserColorsMapping, (key, color) => {
-                           return (
-                              <option className="code" style={{ color }} value={key} key={key}>
-                                 {UserColorsNames[key]() ?? $t(L.AccountCustomColorDefault)}
-                              </option>
-                           );
-                        })}
-                     </select>
-                  </div>
-               )}
             </>
          )}
          <AccountDetails />

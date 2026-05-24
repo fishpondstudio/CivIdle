@@ -12,10 +12,11 @@ export enum ChatAttributes {
    Mod = 1 << 0,
    Announce = 1 << 1,
    Supporter = 1 << 2,
-   Font1 = 1 << 3,
-   Font2 = 1 << 4,
-   Font3 = 1 << 5,
-   Font4 = 1 << 6,
+   KeeperOfOurServer = 1 << 3,
+   Font1 = 1 << 4,
+   Font2 = 1 << 5,
+   Font3 = 1 << 6,
+   Font4 = 1 << 7,
 }
 
 export interface IChat {

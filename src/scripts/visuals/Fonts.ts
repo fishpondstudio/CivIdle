@@ -4,6 +4,6 @@ export const Fonts = {
    OldTypefaces: "OldTypefaces",
    RobotoSlab: "RobotoSlab",
    Quicksand: "Quicksand",
-   LilitaOne: "LilitaOne",
+   Oswald: "Oswald",
    GermaniaOne: "GermaniaOne",
 } as const;

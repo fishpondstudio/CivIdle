@@ -140,7 +140,7 @@ export function HeadquarterBuildingBody({
                         </div>
                      </summary>
                      <ul>
-                        {Tick.current.globalMultipliers.builderCapacity.map((value) => {
+                        {Tick.current.globalMultipliers.builderCapacity.map((value, index) => {
                            return (
                               <li key={value.source} className="row">
                                  <div className="f1">{value.source}</div>

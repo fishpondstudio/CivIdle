@@ -17,7 +17,7 @@ import {
    type IChat,
    type IUser,
 } from "../../../shared/utilities/Database";
-import { firstKeyOf, hasFlag, pointToTile } from "../../../shared/utilities/Helper";
+import { cls, firstKeyOf, hasFlag, pointToTile } from "../../../shared/utilities/Helper";
 import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { $t, L } from "../../../shared/utilities/i18n";
@@ -46,6 +46,7 @@ import { PlayerTradeModal } from "./PlayerTradeModal";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
 import { ResourcesTab } from "./StatisticsBuildingBody";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
+import { getChatFont } from "./UserFont";
 
 const SetChatInput = new TypedEvent<{ channel: ChatChannel; getContent: (old: string) => string }>();
 
@@ -342,7 +343,18 @@ function _ChatMessage({
             <div className="row text-small text-desc">
                <div>{new Date(chat.time ?? 0).toLocaleTimeString()}</div>
                <div className="f1"></div>
-               <div style={{ color: UserColorsMapping[chat.color] }} className="text-strong">
+               <div
+                  style={
+                     {
+                        color: UserColorsMapping[chat.color],
+                        fontFamily: getChatFont(chat.attr),
+                        "--chat-name-color": UserColorsMapping[chat.color],
+                     } as React.CSSProperties
+                  }
+                  className={cls(
+                     hasFlag(chat.attr, ChatAttributes.KeeperOfOurServer) ? "chat-name-glow" : null,
+                  )}
+               >
                   {chat.name}
                </div>
                <Tippy content={getCountryName(chat.flag)}>
@@ -358,6 +370,11 @@ function _ChatMessage({
                      <MiscTextureComponent name="Supporter" scale={0.15} />
                   </Tippy>
                ) : null}
+               {hasFlag(chat.attr, ChatAttributes.KeeperOfOurServer) ? (
+                  <Tippy content={$t(L.KeeperOfOurServer)}>
+                     <MiscTextureComponent name="Supporter2" scale={0.15} />
+                  </Tippy>
+               ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
                   <Tippy content={$t(L.AccountLevelMod)}>
                      <MiscTextureComponent name="AccountLevelMod" scale={0.15} />
@@ -371,9 +388,13 @@ function _ChatMessage({
                      {
                         color: UserColorsMapping[chat.color],
                         "--chat-name-color": UserColorsMapping[chat.color],
+                        fontFamily: getChatFont(chat.attr),
                      } as React.CSSProperties
                   }
-                  className="pointer"
+                  className={cls(
+                     "pointer",
+                     hasFlag(chat.attr, ChatAttributes.KeeperOfOurServer) ? "chat-name-glow" : null,
+                  )}
                   onClick={(e) => {
                      if (e.ctrlKey) {
                         filterPlayerName(chat.name);
@@ -401,6 +422,11 @@ function _ChatMessage({
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
                   <Tippy content={$t(L.AccountSupporter)}>
                      <MiscTextureComponent name="Supporter" scale={0.15} />
+                  </Tippy>
+               ) : null}
+               {hasFlag(chat.attr, ChatAttributes.KeeperOfOurServer) ? (
+                  <Tippy content={$t(L.KeeperOfOurServer)}>
+                     <MiscTextureComponent name="Supporter2" scale={0.15} />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
