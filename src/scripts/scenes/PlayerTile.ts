@@ -16,6 +16,7 @@ import { UnicodeText } from "../../../shared/utilities/UnicodeText";
 import { getTexture } from "../logic/VisualLogic";
 import { getUser } from "../rpc/RPCClient";
 import { AccountLevelImages } from "../ui/TextureSprites";
+import { getUserFont } from "../ui/UserFont";
 import { getColorCached } from "../utilities/CachedColor";
 import type { ISceneContext } from "../utilities/SceneManager";
 import { Fonts } from "../visuals/Fonts";
@@ -91,7 +92,7 @@ export class PlayerTile extends Container {
 
       const handle = this.addChild(
          new BitmapText(data.handle, {
-            fontName: Fonts.Cabin,
+            fontName: getUserFont(data.attr) ?? Fonts.Cabin,
             fontSize: 16,
             tint: isMyself ? 0xffb86f : 0xffffff,
          }),

@@ -406,6 +406,11 @@ function PlayerTradeTableRow({
                      <MiscTextureComponent name="Supporter" scale={0.17} />
                   </Tippy>
                ) : null}
+               {hasFlag(trade.fromAttr, UserAttributes.DLC3) ? (
+                  <Tippy content={$t(L.KeeperOfOurServer)}>
+                     <MiscTextureComponent name="Supporter2" scale={0.17} />
+                  </Tippy>
+               ) : null}
             </div>
          </td>
          <td className={evenodd}>

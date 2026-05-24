@@ -212,6 +212,11 @@ function _FindPlayerComponent(): React.ReactNode {
                         <MiscTextureComponent name="Supporter" scale={0.17} />
                      </Tippy>
                   ) : null}
+                  {hasFlag(entry.attr, UserAttributes.DLC3) ? (
+                     <Tippy content={$t(L.KeeperOfOurServer)}>
+                        <MiscTextureComponent name="Supporter2" scale={0.17} />
+                     </Tippy>
+                  ) : null}
                   <Tippy content={AccountLevelNames[entry.level]()}>
                      <AccountLevelComponent level={entry.level} scale={0.17} />
                   </Tippy>

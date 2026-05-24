@@ -54,6 +54,11 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                         <MiscTextureComponent name="Supporter" scale={0.17} style={{ marginLeft: 5 }} />
                      </Tippy>
                   ) : null}
+                  {hasFlag(tile.attr, UserAttributes.DLC3) ? (
+                     <Tippy content={$t(L.KeeperOfOurServer)}>
+                        <MiscTextureComponent name="Supporter2" scale={0.17} style={{ marginLeft: 5 }} />
+                     </Tippy>
+                  ) : null}
                </legend>
                <div className="row mv5">
                   <div className="f1">{$t(L.PlayerMapTariff)}</div>

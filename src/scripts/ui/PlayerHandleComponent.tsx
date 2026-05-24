@@ -110,6 +110,11 @@ export function PlayerHandleComponent() {
                         <MiscTextureComponent name="Supporter" scale={0.18} />
                      </Tippy>
                   ) : null}
+                  {hasFlag(user.attr, UserAttributes.DLC3) ? (
+                     <Tippy content={$t(L.KeeperOfOurServer)}>
+                        <MiscTextureComponent name="Supporter2" scale={0.18} />
+                     </Tippy>
+                  ) : null}
                   <div className="f1" />
                   <div
                      className={classNames("text-link text-strong", { disabled: !user })}

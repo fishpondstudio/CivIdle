@@ -113,6 +113,11 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                                     <MiscTextureComponent name="Supporter" scale={0.17} />
                                  </Tippy>
                               ) : null}
+                              {hasFlag(tile.attr, UserAttributes.DLC3) ? (
+                                 <Tippy content={$t(L.KeeperOfOurServer)}>
+                                    <MiscTextureComponent name="Supporter2" scale={0.17} />
+                                 </Tippy>
+                              ) : null}
                               {tile.city ? (
                                  <div className="ml5 text-desc">{Config.City[tile.city].name()}</div>
                               ) : null}
