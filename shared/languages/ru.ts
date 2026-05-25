@@ -1090,7 +1090,7 @@ export const RU = {
    PeterHiggs: "Питер Хиггс",
    PeterHiggsDesc: "+%{value} Науки от Занятых Работников",
    Petra: "Петра",
-   PetraDescV2: "Разблокируйте большие значения ускорения времени. Это чудо можно улучшать, каждый уровень даёт +1 час хранилища временного разрыва",
+   PetraDescV3: "Разблокируйте большие значения ускорения времени. Это чудо может быть улучшено и каждый уровень даёт +1 час хранилища Временного разрыва. Временной разрыв из этого забега (максимум 4 часа) может быть перенесен на следующий забег",
    PetraOfflineTimeReconciliation: "Вы получили %{count} Временного Разрыва после сверки оффлайн времени сервера",
    Petrol: "Бензин",
    PhiloFarnsworth: "Фило Тейлор Фарнсуорт",
@@ -2057,4 +2057,9 @@ export const RU = {
    ResetLayout: "Сбросить размещение",
    CloseWithoutSaving: "Закрыть без сохранения",
    SaveAndClose: "Сохранить и закрыть",
+   KeeperOfOurServer: "Keeper Of Our Server",
+   KeepOurServerOnPackOptions: "Keep Our Server On Pack Options",
+   PlayerHandleFont: "Шрифт игрока",
+   SupporterPackOptions: "Опции Пакета поддержки",
+   PlayerHandleColor: "Цвет игрока",
 };
