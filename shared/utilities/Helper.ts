@@ -43,7 +43,7 @@ function scientificFormat(num: number): string {
 
 function humanFormat(num: number, suffix: string[]): string {
    let idx = 0;
-   while (Math.abs(num) >= 1000) {
+   while (Math.abs(num) >= 10_000) {
       num /= 1000;
       idx++;
    }
