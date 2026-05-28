@@ -197,21 +197,21 @@ function PaintingEffects({
                </summary>
                <ul>
                   <li className="row">
-                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsByTheSamePainter)}>
-                        <div>{$t(L.PainterAdjacency)}</div>
-                     </Tippy>
-                     <div className="f1" />
-                     <div>{effects.samePainterPairs.size}</div>
-                  </li>
-                  <li className="row">
-                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsOfTheSameSize)}>
+                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsOfTheSameSizeV2)}>
                         <div>{$t(L.SizeAdjacency)}</div>
                      </Tippy>
                      <div className="f1" />
                      <div>{effects.sameSizePairs.size}</div>
                   </li>
                   <li className="row">
-                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsPaintedInTheSameCentury)}>
+                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsByTheSamePainterV2)}>
+                        <div>{$t(L.PainterAdjacency)}</div>
+                     </Tippy>
+                     <div className="f1" />
+                     <div>{effects.samePainterPairs.size}</div>
+                  </li>
+                  <li className="row">
+                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsPaintedInTheSameCenturyV2)}>
                         <div>{$t(L.TimeAdjacency)}</div>
                      </Tippy>
                      <div className="f1" />

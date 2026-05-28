@@ -2371,7 +2371,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   continue;
                }
                mapSafePush(Tick.next.tileMultipliers, targetXy, {
-                  output: 0.5 * resources.size,
+                  output: 0.25 * resources.size,
                   source: buildingName,
                });
             }

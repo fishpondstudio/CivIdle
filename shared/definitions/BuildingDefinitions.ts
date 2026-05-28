@@ -2449,7 +2449,7 @@ export class BuildingDefinitions {
       desc: () => $t(L.MauritshuisDesc),
       input: {},
       output: {},
-      construction: { Politics: 500 },
+      construction: { Politics: 300 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Mauritshuis",
