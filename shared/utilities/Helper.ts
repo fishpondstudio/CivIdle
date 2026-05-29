@@ -43,22 +43,16 @@ function scientificFormat(num: number): string {
 
 function humanFormat(num: number, suffix: string[]): string {
    let idx = 0;
-   while (Math.abs(num) >= 10_000) {
+   while (Math.abs(num) >= 1000) {
       num /= 1000;
       idx++;
    }
-   if (num >= 100) {
-      num = Math.floor(num * 10) / 10;
-   } else if (num >= 10) {
-      num = Math.floor(num * 100) / 100;
-   } else {
-      num = Math.floor(num * 1000) / 1000;
-   }
+   num = roundForFormat(num);
 
    if (idx < suffix.length) {
-      return num.toLocaleString() + suffix[idx];
+      return num + suffix[idx];
    }
-   return `${num.toLocaleString()}E${idx.toString()}`;
+   return `${num}E${idx}`;
 }
 
 export const FormatNumberOptions = { useScientific: true };
@@ -70,6 +64,9 @@ export function formatNumber(num: number | undefined | null, binary = false): st
    if (!Number.isFinite(num)) {
       return String(num);
    }
+   if (Math.abs(num) < 10_000) {
+      return String(roundForFormat(num));
+   }
    if (Math.abs(num) >= 1e15 && FormatNumberOptions.useScientific) {
       return scientificFormat(num);
    }
@@ -77,6 +74,17 @@ export function formatNumber(num: number | undefined | null, binary = false): st
       return humanFormat(num, NUMBER_SUFFIX_BIN);
    }
    return humanFormat(num, NUMBER_SUFFIX_1);
+}
+
+function roundForFormat(num: number): number {
+   const abs = Math.abs(num);
+   if (abs >= 100) {
+      return Math.floor(num * 10) / 10;
+   }
+   if (abs >= 10) {
+      return Math.floor(num * 100) / 100;
+   }
+   return Math.floor(num * 1000) / 1000;
 }
 
 export enum Rounding {
