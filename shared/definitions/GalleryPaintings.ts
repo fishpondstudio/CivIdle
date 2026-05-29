@@ -485,7 +485,7 @@ export function getPaintingMultipliers(
 ): Partial<Record<keyof GlobalMultipliers, number>> {
    let output = effects.sameSizePairs.size * 0.5;
    let levelBoost = effects.samePainterPairs.size * 0.5;
-   const sciencePerBusyWorker = effects.sameCenturyPairs.size * 5;
+   const sciencePerIdleWorker = effects.sameCenturyPairs.size * 2;
    const builderCapacity = effects.sameThemePairs.size * 5;
    if ((effects.byPainters.get("RembrandtVanRijn") ?? 0) >= 3) {
       output += isFestival ? 2 : 1;
@@ -508,7 +508,7 @@ export function getPaintingMultipliers(
    return {
       output,
       levelBoost,
-      sciencePerBusyWorker,
+      sciencePerIdleWorker,
       builderCapacity,
    };
 }

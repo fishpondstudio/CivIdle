@@ -211,7 +211,7 @@ function PaintingEffects({
                      <div>{effects.samePainterPairs.size}</div>
                   </li>
                   <li className="row">
-                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsPaintedInTheSameCenturyV2)}>
+                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsPaintedInTheSameCenturyV3)}>
                         <div>{$t(L.TimeAdjacency)}</div>
                      </Tippy>
                      <div className="f1" />
