@@ -2037,13 +2037,4 @@ export const ZH_TW = {
    Zoroaster: "瑣羅亞斯德(查拉圖斯特拉)",
    Zugspitze: "祖格峰",
    ZugspitzeDesc: "每解鎖一個時代，獲得一個點數，可用於為本次運行中誕生的任何偉人提供一個額外等級（存儲乘數效果和奇觀偉人除外）",
-   EachPairOfAdjacentPaintingsByTheSamePainterV2: "Each pair of adjacent paintings by the same painter grants +0.5 Building Level Boost",
-   EachPairOfAdjacentPaintingsOfTheSameSizeV2: "Each pair of adjacent paintings of the same size grants +0.5 Production Multiplier",
-   EachPairOfAdjacentPaintingsPaintedInTheSameCenturyV3: "Each pair of adjacent paintings painted in the same century (100 years) grants +2 Science Per Idle Worker",
-   KeeperOfOurServer: "Keeper Of Our Server",
-   KeepOurServerOnPackOptions: "Keep Our Server On Pack Options",
-   KoningsdagV3: "Koningsdag: Keukenhof grants buildings within 3 tiles a Production Multiplier equal to 25% of Happiness it provides. Mauritshuis' Painter Collection Bonus and Diversification Bonus are doubled.",
-   PlayerHandleColor: "Player Handle Color",
-   PlayerHandleFont: "Player Handle Font",
-   SupporterPackOptions: "Supporter Pack Options",
 };
