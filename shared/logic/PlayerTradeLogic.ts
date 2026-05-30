@@ -62,6 +62,37 @@ export function getBuyAmountRange(trade: IAddTradeRequest, range: number) {
    return { min: Math.round(amount * (1 - range)), max: Math.round(amount * (1 + range)), amount };
 }
 
+export function updateTradeAmount(
+   trade: IAddTradeRequest,
+   field: "buyAmount" | "sellAmount",
+   profit: number | null,
+): IAddTradeRequest {
+   if (profit === null) {
+      return trade;
+   }
+   if (field === "buyAmount") {
+      trade.buyAmount = Math.round(
+         (trade.sellAmount * Config.MaterialPrice[trade.sellResource]! * (1 + profit)) /
+            Config.MaterialPrice[trade.buyResource]!,
+      );
+   }
+   if (field === "sellAmount") {
+      const factor = 1 / (1 + profit);
+      let round = Math.round;
+      if (factor > 1) {
+         round = Math.floor;
+      }
+      if (factor < 1) {
+         round = Math.ceil;
+      }
+      trade.sellAmount = round(
+         (trade.buyAmount * Config.MaterialPrice[trade.buyResource]! * factor) /
+            Config.MaterialPrice[trade.sellResource]!,
+      );
+   }
+   return trade;
+}
+
 export function getTradePercentage(trade: IAddTradeRequest): number {
    const standardAmount =
       (trade.sellAmount * Config.MaterialPrice[trade.sellResource]!) /

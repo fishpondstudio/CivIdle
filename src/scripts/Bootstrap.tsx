@@ -28,6 +28,7 @@ import {
 } from "../../shared/utilities/Helper";
 import { getServerNow } from "../../shared/utilities/ServerNow";
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
+import { addDebugFunctions } from "./AddDebugFunctions";
 import {
    isGameDataCompatible,
    loadGame,
@@ -224,6 +225,7 @@ export async function startGame(
    Singleton().ticker.start();
    clientHeartbeat();
    initIAP();
+   addDebugFunctions();
 }
 
 // This method is called after server time is synced!
