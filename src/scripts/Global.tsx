@@ -1,5 +1,5 @@
 import { Preferences } from "@capacitor/preferences";
-import { type Application } from "pixi.js";
+import type { Application } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
 import { Config } from "../../shared/logic/Config";
 import type { GameOptions, SavedGame } from "../../shared/logic/GameState";
