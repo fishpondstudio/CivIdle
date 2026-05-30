@@ -10,12 +10,13 @@ import {
    getBuyAmountRange,
    getMaxActiveTrades,
    getUserTradePriceRange,
+   updateTradeAmount,
 } from "../../../shared/logic/PlayerTradeLogic";
 import { combineResources, deductResourceFrom } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { IAddTradeRequest } from "../../../shared/utilities/Database";
 import {
-   clamp,
+   cls,
    formatPercent,
    isNullOrUndefined,
    keysOf,
@@ -69,6 +70,7 @@ export function AddTradeFormComponent({
       sellResource: sellResources[0],
       sellAmount: 0,
    });
+   const [targetPercentage, setTargetPercentage] = useState<number | null>(null);
    const percentage = getUserTradePriceRange(user);
    const buyAmountRange = getBuyAmountRange(trade, getUserTradePriceRange(user));
 
@@ -90,6 +92,32 @@ export function AddTradeFormComponent({
 
    return (
       <>
+         <div className="text-strong mb5">{$t(L.LockTradeProfit)}</div>
+         <div className="row">
+            {[-percentage, -percentage / 2, 0, percentage / 2, percentage].map((pct) => {
+               return (
+                  <button
+                     className={cls("f1", targetPercentage === pct ? "active text-strong" : null)}
+                     key={pct}
+                     onClick={() => {
+                        if (targetPercentage === pct) {
+                           setTargetPercentage(null);
+                        } else {
+                           setTargetPercentage(pct);
+                           if (trade.buyAmount !== 0) {
+                              setTrade(updateTradeAmount({ ...trade }, "sellAmount", pct));
+                           } else {
+                              setTrade(updateTradeAmount({ ...trade }, "buyAmount", pct));
+                           }
+                        }
+                     }}
+                  >
+                     {formatPercent(pct)}
+                  </button>
+               );
+            })}
+         </div>
+         <div className="separator" style={{ margin: "8px -8px" }} />
          <div className="text-strong mb5">{$t(L.PlayerTradeIOffer)}</div>
          <div className="row">
             <select
@@ -97,7 +125,13 @@ export function AddTradeFormComponent({
                value={trade.sellResource}
                onChange={(e) => {
                   if (e.target.value in Config.Material) {
-                     setTrade({ ...trade, sellResource: e.target.value as Material });
+                     setTrade(
+                        updateTradeAmount(
+                           { ...trade, sellResource: e.target.value as Material },
+                           "sellAmount",
+                           targetPercentage,
+                        ),
+                     );
                   }
                }}
             >
@@ -116,7 +150,15 @@ export function AddTradeFormComponent({
                className="text-right"
                type="text"
                value={trade.sellAmount}
-               onChange={(e) => setTrade({ ...trade, sellAmount: safeParseInt(e.target.value) })}
+               onChange={(e) =>
+                  setTrade(
+                     updateTradeAmount(
+                        { ...trade, sellAmount: safeParseInt(e.target.value) },
+                        "buyAmount",
+                        targetPercentage,
+                     ),
+                  )
+               }
             />
          </div>
          <div className="mt5 row text-desc text-small">
@@ -129,10 +171,16 @@ export function AddTradeFormComponent({
                      key={pct}
                      className="text-link text-strong ml10"
                      onClick={() =>
-                        setTrade({
-                           ...trade,
-                           sellAmount: Math.floor((availableResources[trade.sellResource] ?? 0) * pct),
-                        })
+                        setTrade(
+                           updateTradeAmount(
+                              {
+                                 ...trade,
+                                 sellAmount: Math.floor((availableResources[trade.sellResource] ?? 0) * pct),
+                              },
+                              "buyAmount",
+                              targetPercentage,
+                           ),
+                        )
                      }
                   >
                      {formatPercent(pct)}
@@ -148,7 +196,13 @@ export function AddTradeFormComponent({
                value={trade.buyResource}
                onChange={(e) => {
                   if (e.target.value in Config.Material) {
-                     setTrade({ ...trade, buyResource: e.target.value as Material });
+                     setTrade(
+                        updateTradeAmount(
+                           { ...trade, buyResource: e.target.value as Material },
+                           "buyAmount",
+                           targetPercentage,
+                        ),
+                     );
                   }
                }}
             >
@@ -167,37 +221,21 @@ export function AddTradeFormComponent({
                className="text-right"
                type="text"
                value={trade.buyAmount}
-               onChange={(e) => setTrade({ ...trade, buyAmount: safeParseInt(e.target.value) })}
+               onChange={(e) =>
+                  setTrade(
+                     updateTradeAmount(
+                        { ...trade, buyAmount: safeParseInt(e.target.value) },
+                        "sellAmount",
+                        targetPercentage,
+                     ),
+                  )
+               }
             />
          </div>
          <div className="row text-desc text-small mt5">
-            <div>
-               <FormatNumber value={buyAmountRange.min} /> ~ <FormatNumber value={buyAmountRange.max} />
-            </div>
-            <div className="f1" />
-            {[-percentage, -percentage / 2, 0, percentage / 2, percentage].map((pct) => {
-               return (
-                  <div
-                     key={pct}
-                     className="text-link text-strong ml10"
-                     onClick={() =>
-                        setTrade({
-                           ...trade,
-                           buyAmount: clamp(
-                              Math.round(buyAmountRange.amount * (1 + pct)),
-                              buyAmountRange.min,
-                              buyAmountRange.max,
-                           ),
-                        })
-                     }
-                  >
-                     {formatPercent(pct)}
-                  </div>
-               );
-            })}
+            <FormatNumber value={buyAmountRange.min} /> ~ <FormatNumber value={buyAmountRange.max} />
          </div>
-         <div className="sep10" />
-         <div className="inset-shallow row" style={{ padding: "2px 8px" }}>
+         <div className="row mt5">
             <div className="f1">{$t(L.KeepTheWindowOpenAfterPlacingTrade)}</div>
             <div
                className="pointer"
