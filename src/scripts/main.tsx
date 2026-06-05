@@ -6,7 +6,7 @@ import { createRoot } from "react-dom/client";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import "../css/Main.css";
 import CabinMedium from "../fonts/CabinMedium.ttf?url";
-import Cause from "../fonts/Cause-Bold.ttf";
+import Cause from "../fonts/Cause-ExtraBold.ttf";
 import DynaPuff from "../fonts/DynaPuff-Regular.ttf";
 import GermaniaOne from "../fonts/GermaniaOne-Regular.ttf";
 import OldTypefaces from "../fonts/OldTypefaces.ttf";
