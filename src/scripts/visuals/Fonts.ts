@@ -6,4 +6,6 @@ export const Fonts = {
    Quicksand: "Quicksand",
    Oswald: "Oswald",
    GermaniaOne: "GermaniaOne",
+   DynaPuff: "DynaPuff",
+   Cause: "Cause",
 } as const;

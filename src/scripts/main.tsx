@@ -6,6 +6,8 @@ import { createRoot } from "react-dom/client";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import "../css/Main.css";
 import CabinMedium from "../fonts/CabinMedium.ttf?url";
+import Cause from "../fonts/Cause-Bold.ttf";
+import DynaPuff from "../fonts/DynaPuff-Regular.ttf";
 import GermaniaOne from "../fonts/GermaniaOne-Regular.ttf";
 import OldTypefaces from "../fonts/OldTypefaces.ttf";
 import Oswald from "../fonts/Oswald-Medium.ttf";
@@ -80,6 +82,8 @@ export const fonts = [
    new FontFace(Fonts.Quicksand, `url("${Quicksand}")`),
    new FontFace(Fonts.Oswald, `url("${Oswald}")`),
    new FontFace(Fonts.GermaniaOne, `url("${GermaniaOne}")`),
+   new FontFace(Fonts.DynaPuff, `url("${DynaPuff}")`),
+   new FontFace(Fonts.Cause, `url("${Cause}")`),
 ];
 
 export type MainBundle = keyof typeof mainBundle;

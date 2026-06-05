@@ -17,6 +17,8 @@ export enum ChatAttributes {
    Font2 = 1 << 5,
    Font3 = 1 << 6,
    Font4 = 1 << 7,
+   Font5 = 1 << 8,
+   Font6 = 1 << 9,
 }
 
 export interface IChat {
@@ -164,6 +166,8 @@ export enum UserAttributes {
    Font2 = 1 << 14,
    Font3 = 1 << 15,
    Font4 = 1 << 16,
+   Font5 = 1 << 17,
+   Font6 = 1 << 18,
 }
 
 export const UserAttributeKeys = Object.keys(UserAttributes).filter((key) => Number.isNaN(Number(key)));
