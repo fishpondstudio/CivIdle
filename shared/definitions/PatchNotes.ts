@@ -8,7 +8,7 @@ export const PatchNotes: PatchNote[] = [
    {
       version: "1.3.0",
       content: [],
-      link: "https://store.steampowered.com/news/app/2181940/view/680750978144665918",
+      link: "https://store.steampowered.com/news/app/2181940/view/694263045409473388",
    },
    {
       version: "1.2.0",
