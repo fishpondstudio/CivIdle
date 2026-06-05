@@ -2333,6 +2333,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             playLevelUp();
             showModal(<PaintingModal painting={newPainting} />);
          }
+         if (paintings.size === sizeOf(Paintings)) {
+            SteamClient.unlockAchievement("GreatCollector");
+         }
          const effects = calculateEffects(mauritshuis.placedPaintings);
          forEach(getPaintingMultipliers(effects, isFestival(building.type, gs)), (k, v) => {
             Tick.next.globalMultipliers[k].push({

@@ -181,6 +181,10 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("RiseOfPunic");
             break;
          }
+         case "Dutch": {
+            SteamClient.unlockAchievement("TulipManiac");
+            break;
+         }
       }
    }
 
