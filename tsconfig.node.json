@@ -5,5 +5,5 @@
       "moduleResolution": "Bundler",
       "outDir": "out"
    },
-   "include": ["vite.config.ts"]
+   "include": ["vite.config.ts", "vite-plugin-spritesmith.d.ts"]
 }

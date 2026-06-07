@@ -7,14 +7,6 @@
          "path": ".",
          "problemMatcher": ["$tsc-watch"],
          "label": "Watch and Compile",
-         "isBackground": true
-      },
-      {
-         "type": "npm",
-         "script": "watchgo",
-         "path": ".",
-         "problemMatcher": ["$tsc-watch"],
-         "label": "Watch and Compile (Go)",
          "isBackground": true,
          "runOptions": {
             "runOn": "folderOpen"
