@@ -8,34 +8,34 @@ import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 
-const RANGE_OPTIONS = [10, 20, 50] as const;
-type RangeOption = (typeof RANGE_OPTIONS)[number] | "all";
+const RangeOptions = [10, 20, 50] as const;
+type RangeOption = (typeof RangeOptions)[number] | "all";
 
-const SERIES_META = {
+const DataSeries = {
    totalEmpireValue: {
-      label: $t(L.RebirthHistoryEmpireValueV2),
-      labelFull: $t(L.TotalEmpireValue),
+      label: () => $t(L.RebirthHistoryEmpireValueV2),
+      labelFull: () => $t(L.TotalEmpireValue),
       color: "#2980b9",
    },
    totalEmpireValuePerCycle: {
-      label: $t(L.RebirthHistoryEmpireValuePerCycle),
-      labelFull: $t(L.TotalEmpireValuePerCycle),
+      label: () => $t(L.RebirthHistoryEmpireValuePerCycle),
+      labelFull: () => $t(L.TotalEmpireValuePerCycle),
       color: "#8e44ad",
    },
    totalEmpireValuePerWallSecond: {
-      label: $t(L.RebirthHistoryEmpireValuePerWallSecond),
-      labelFull: $t(L.TotalEmpireValuePerWallSecond),
+      label: () => $t(L.RebirthHistoryEmpireValuePerWallSecond),
+      labelFull: () => $t(L.TotalEmpireValuePerWallSecond),
       color: "#16a085",
    },
    greatPeopleAtRebirth: {
-      label: $t(L.RebirthHistoryExtraGreatPeopleAtRebirth),
-      labelFull: $t(L.ExtraGreatPeopleAtReborn),
+      label: () => $t(L.RebirthHistoryExtraGreatPeopleAtRebirth),
+      labelFull: () => $t(L.ExtraGreatPeopleAtReborn),
       color: "#e67e22",
    },
 } as const;
-type SeriesKey = keyof typeof SERIES_META;
+type SeriesKey = keyof typeof DataSeries;
 
-const CHART_OPTIONS: readonly SeriesKey[] = [
+const ChartOptions: readonly SeriesKey[] = [
    "totalEmpireValue",
    "totalEmpireValuePerCycle",
    "totalEmpireValuePerWallSecond",
@@ -85,59 +85,61 @@ export function RebirthHistoryModalV2(): React.ReactNode {
                         <div className="m-icon small">grid_on</div>
                      </button>
                      <div className="f1" />
-                     <button
-                        onClick={async () => {
-                           playClick();
-                           try {
-                              const handle = await window.showSaveFilePicker({
-                                 suggestedName: "CivIdle-Rebirth-History.csv",
-                                 types: [{ description: "CSV", accept: { "text/csv": [".csv"] } }],
-                              });
-                              const headers = [
-                                 $t(L.RebirthTime),
-                                 $t(L.Civilization),
-                                 $t(L.GreatPeopleThisRun),
-                                 $t(L.ExtraGreatPeopleAtReborn),
-                                 $t(L.TotalEmpireValue),
-                                 $t(L.TotalGameTimeThisRun),
-                                 $t(L.TotalEmpireValuePerCycle),
-                                 $t(L.TotalWallTimeThisRun),
-                                 $t(L.TotalEmpireValuePerWallSecond),
-                                 $t(L.EasterBunnyConstructed),
-                              ];
-                              const escapeCSV = (v: string | number | boolean): string => {
-                                 const s = String(v);
-                                 return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-                              };
-                              const rows = all.map((r) => [
-                                 new Date(r.time).toISOString(),
-                                 Config.City[r.city].name(),
-                                 r.greatPeopleThisRun,
-                                 r.greatPeopleAtRebirth,
-                                 r.totalEmpireValue,
-                                 formatHMS(r.totalTicks * 1000),
-                                 r.totalTicks > 0 ? r.totalEmpireValue / r.totalTicks : 0,
-                                 formatHMS(r.totalSeconds * 1000),
-                                 r.totalSeconds > 0 ? r.totalEmpireValue / r.totalSeconds : 0,
-                                 hasFlag(r.flags, RebirthFlags.EasterBunny),
-                              ]);
-                              const csv = `\uFEFF${[headers, ...rows]
-                                 .map((row) => row.map(escapeCSV).join(","))
-                                 .join("\n")}`;
-                              const stream = await handle.createWritable();
-                              await stream.write(new TextEncoder().encode(csv));
-                              await stream.close();
-                           } catch (error) {
-                              showToast(String(error));
-                           }
-                        }}
-                        style={{
-                           width: 30,
-                           padding: 0,
-                        }}
-                     >
-                        <div className="m-icon small">download</div>
-                     </button>
+                     {window.showSaveFilePicker && (
+                        <button
+                           onClick={async () => {
+                              playClick();
+                              try {
+                                 const handle = await window.showSaveFilePicker({
+                                    suggestedName: "CivIdle-Rebirth-History.csv",
+                                    types: [{ description: "CSV", accept: { "text/csv": [".csv"] } }],
+                                 });
+                                 const headers = [
+                                    $t(L.RebirthTime),
+                                    $t(L.Civilization),
+                                    $t(L.GreatPeopleThisRun),
+                                    $t(L.ExtraGreatPeopleAtReborn),
+                                    $t(L.TotalEmpireValue),
+                                    $t(L.TotalGameTimeThisRun),
+                                    $t(L.TotalEmpireValuePerCycle),
+                                    $t(L.TotalWallTimeThisRun),
+                                    $t(L.TotalEmpireValuePerWallSecond),
+                                    $t(L.EasterBunnyConstructed),
+                                 ];
+                                 const escapeCSV = (v: string | number | boolean): string => {
+                                    const s = String(v);
+                                    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+                                 };
+                                 const rows = all.map((r) => [
+                                    new Date(r.time).toISOString(),
+                                    Config.City[r.city].name(),
+                                    r.greatPeopleThisRun,
+                                    r.greatPeopleAtRebirth,
+                                    r.totalEmpireValue,
+                                    formatHMS(r.totalTicks * 1000),
+                                    r.totalTicks > 0 ? r.totalEmpireValue / r.totalTicks : 0,
+                                    formatHMS(r.totalSeconds * 1000),
+                                    r.totalSeconds > 0 ? r.totalEmpireValue / r.totalSeconds : 0,
+                                    hasFlag(r.flags, RebirthFlags.EasterBunny),
+                                 ]);
+                                 const csv = `\uFEFF${[headers, ...rows]
+                                    .map((row) => row.map(escapeCSV).join(","))
+                                    .join("\n")}`;
+                                 const stream = await handle.createWritable();
+                                 await stream.write(new TextEncoder().encode(csv));
+                                 await stream.close();
+                              } catch (error) {
+                                 showToast(String(error));
+                              }
+                           }}
+                           style={{
+                              width: 30,
+                              padding: 0,
+                           }}
+                        >
+                           <div className="m-icon small">download</div>
+                        </button>
+                     )}
                   </div>
                   {viewMode === "chart" ? (
                      <RebirthHistoryChart all={all} />
@@ -174,14 +176,14 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
                   setSelectedSeries(e.target.value as SeriesKey);
                }}
             >
-               {CHART_OPTIONS.map((key) => (
+               {ChartOptions.map((key) => (
                   <option key={key} value={key}>
-                     {SERIES_META[key].label}
+                     {DataSeries[key].label()}
                   </option>
                ))}
             </select>
             <div className="row">
-               {RANGE_OPTIONS.map((r) => (
+               {RangeOptions.map((r) => (
                   <button
                      key={r}
                      onClick={() => {
@@ -218,10 +220,10 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
                      display: "inline-block",
                      width: 16,
                      height: 3,
-                     backgroundColor: SERIES_META[selectedSeries].color,
+                     backgroundColor: DataSeries[selectedSeries].color,
                   }}
                />
-               <span className="text-desc">{SERIES_META[selectedSeries].labelFull}</span>
+               <span className="text-desc">{DataSeries[selectedSeries].labelFull()}</span>
             </div>
          </div>
          <div>
@@ -241,17 +243,17 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
                />
                <YAxis
                   tickFormatter={(v: number) => formatNumber(v)}
-                  width={70}
+                  width="auto"
                   stroke="rgba(128,128,128,0.7)"
                />
-               <Tooltip content={(props) => <RebirthTooltip {...props} />} />
+               <Tooltip content={RebirthTooltip} />
                <Line
                   type="monotone"
                   dataKey={selectedSeries}
-                  name={SERIES_META[selectedSeries].label}
-                  stroke={SERIES_META[selectedSeries].color}
+                  name={DataSeries[selectedSeries].label()}
+                  stroke={DataSeries[selectedSeries].color}
                   strokeWidth={2}
-                  activeDot={{ r: 5, fill: SERIES_META[selectedSeries].color }}
+                  activeDot={{ r: 5, fill: DataSeries[selectedSeries].color }}
                   isAnimationActive={false}
                   connectNulls
                />
@@ -377,7 +379,7 @@ function RebirthTooltip(props: TooltipContentProps): React.ReactNode {
                <TooltipRow
                   label={$t(L.TotalEmpireValue)}
                   value={formatNumber(datum.totalEmpireValue)}
-                  color={SERIES_META.totalEmpireValue.color}
+                  color={DataSeries.totalEmpireValue.color}
                />
                <tr>
                   <td>{$t(L.TotalGameTimeThisRun)}</td>
@@ -386,7 +388,7 @@ function RebirthTooltip(props: TooltipContentProps): React.ReactNode {
                <TooltipRow
                   label={$t(L.TotalEmpireValuePerCycle)}
                   value={formatNumber(datum.totalEmpireValuePerCycle)}
-                  color={SERIES_META.totalEmpireValuePerCycle.color}
+                  color={DataSeries.totalEmpireValuePerCycle.color}
                />
                <tr>
                   <td>{$t(L.TotalWallTimeThisRun)}</td>
@@ -395,7 +397,7 @@ function RebirthTooltip(props: TooltipContentProps): React.ReactNode {
                <TooltipRow
                   label={$t(L.TotalEmpireValuePerWallSecond)}
                   value={formatNumber(datum.totalEmpireValuePerWallSecond)}
-                  color={SERIES_META.totalEmpireValuePerWallSecond.color}
+                  color={DataSeries.totalEmpireValuePerWallSecond.color}
                />
                {hasFlag(datum.flags, RebirthFlags.EasterBunny) ? (
                   <tr>
