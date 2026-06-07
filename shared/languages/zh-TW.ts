@@ -2038,4 +2038,12 @@ export const ZH_TW = {
    Zoroaster: "瑣羅亞斯德(查拉圖斯特拉)",
    Zugspitze: "祖格峰",
    ZugspitzeDesc: "每解鎖一個時代，獲得一個點數，可用於為本次運行中誕生的任何偉人提供一個額外等級（存儲乘數效果和奇觀偉人除外）",
+   RebirthHistoryAll: "All",
+   RebirthHistoryAverage: "Average",
+   RebirthHistoryBest: "Best",
+   RebirthHistoryEmpireValue: "Total EV",
+   RebirthHistoryEmpty: "No rebirth history available yet",
+   RebirthHistoryLatest: "Latest",
+   RebirthHistorySeriesPerCycleSec: "Per Cycle/Sec",
+   RebirthHistoryTotal: "Total",
 };
