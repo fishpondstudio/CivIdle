@@ -599,7 +599,8 @@ ul.tree-view > li:first-child {
    border-collapse: collapse;
 }
 
-.table-view th {
+.table-view th,
+.table-view td.header {
    background-color: rgb(192, 192, 192);
    font-weight: normal;
    text-align: left;
