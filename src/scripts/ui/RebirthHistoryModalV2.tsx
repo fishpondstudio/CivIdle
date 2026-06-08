@@ -228,10 +228,10 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
          </div>
          <div>
             <LineChart
-               style={{ width: "100%", maxWidth: "700px", maxHeight: "70vh", aspectRatio: 1.618 }}
+               style={{ width: "100%", maxHeight: "70vh", aspectRatio: 1.618 }}
                responsive
                data={data}
-               margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+               margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
             >
                <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,128,0.3)" />
                <XAxis
