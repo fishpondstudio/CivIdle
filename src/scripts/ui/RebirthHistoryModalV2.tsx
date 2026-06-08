@@ -129,6 +129,7 @@ export function RebirthHistoryModalV2(): React.ReactNode {
                                  await stream.write(new TextEncoder().encode(csv));
                                  await stream.close();
                               } catch (error) {
+                                 if (error instanceof DOMException && error.name === "AbortError") return;
                                  showToast(String(error));
                               }
                            }}
@@ -163,6 +164,7 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
          ...r,
          totalEmpireValuePerCycle: r.totalTicks > 0 ? r.totalEmpireValue / r.totalTicks : 0,
          totalEmpireValuePerWallSecond: r.totalSeconds > 0 ? r.totalEmpireValue / r.totalSeconds : 0,
+         dateLabel: new Date(r.time).toLocaleDateString(undefined, { month: "short", day: "numeric" }),
       }));
    }, [all, range]);
 
@@ -234,13 +236,7 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
                margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
             >
                <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,128,0.3)" />
-               <XAxis
-                  dataKey={(d) =>
-                     new Date(d.time).toLocaleDateString(undefined, { month: "short", day: "numeric" })
-                  }
-                  stroke="rgba(128,128,128,0.7)"
-                  minTickGap={24}
-               />
+               <XAxis dataKey="dateLabel" stroke="rgba(128,128,128,0.7)" minTickGap={24} />
                <YAxis
                   tickFormatter={(v: number) => formatNumber(v)}
                   width="auto"
@@ -265,78 +261,59 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
 
 function RebirthHistoryTable({ all }: { all: RebirthInfo[] }): React.ReactNode {
    const runs = useMemo(() => [...all].reverse(), [all]);
+   const rows = useMemo(() => {
+      if (runs.length === 0) return [];
+      const rowData: { label: string; values: React.ReactNode[]; bold?: boolean }[] = [
+         { label: $t(L.RebirthTime), bold: true, values: [] },
+         { label: $t(L.Civilization), values: [] },
+         { label: $t(L.GreatPeopleThisRun), values: [] },
+         { label: $t(L.ExtraGreatPeopleAtReborn), values: [] },
+         { label: $t(L.TotalEmpireValue), values: [] },
+         { label: $t(L.TotalGameTimeThisRun), values: [] },
+         { label: $t(L.TotalEmpireValuePerCycle), values: [] },
+         { label: $t(L.TotalWallTimeThisRun), values: [] },
+         { label: $t(L.TotalEmpireValuePerWallSecond), values: [] },
+      ];
+      for (const r of runs) {
+         rowData[0].values.push(new Date(r.time).toLocaleString());
+         rowData[1].values.push(Config.City[r.city].name());
+         rowData[2].values.push(r.greatPeopleThisRun);
+         rowData[3].values.push(r.greatPeopleAtRebirth);
+         rowData[4].values.push(formatNumber(r.totalEmpireValue));
+         rowData[5].values.push(formatHMS(r.totalTicks * 1000));
+         rowData[6].values.push(formatNumber(r.totalTicks > 0 ? r.totalEmpireValue / r.totalTicks : 0));
+         rowData[7].values.push(formatHMS(r.totalSeconds * 1000));
+         rowData[8].values.push(formatNumber(r.totalSeconds > 0 ? r.totalEmpireValue / r.totalSeconds : 0));
+      }
+      return rowData;
+   }, [runs]);
+
    return (
       <div className="table-view" style={{ overflow: "auto", maxHeight: "70vh" }}>
          <table>
             <tbody>
-               <TableRow
-                  label={$t(L.RebirthTime)}
-                  values={runs.map((r) => new Date(r.time).toLocaleString())}
-                  bold
-               />
-               <TableRow label={$t(L.Civilization)} values={runs.map((r) => Config.City[r.city].name())} />
-               <TableRow label={$t(L.GreatPeopleThisRun)} values={runs.map((r) => r.greatPeopleThisRun)} />
-               <TableRow
-                  label={$t(L.ExtraGreatPeopleAtReborn)}
-                  values={runs.map((r) => r.greatPeopleAtRebirth)}
-               />
-               <TableRow
-                  label={$t(L.TotalEmpireValue)}
-                  values={runs.map((r) => formatNumber(r.totalEmpireValue))}
-               />
-               <TableRow
-                  label={$t(L.TotalGameTimeThisRun)}
-                  values={runs.map((r) => formatHMS(r.totalTicks * 1000))}
-               />
-               <TableRow
-                  label={$t(L.TotalEmpireValuePerCycle)}
-                  values={runs.map((r) =>
-                     formatNumber(r.totalTicks > 0 ? r.totalEmpireValue / r.totalTicks : 0),
-                  )}
-               />
-               <TableRow
-                  label={$t(L.TotalWallTimeThisRun)}
-                  values={runs.map((r) => formatHMS(r.totalSeconds * 1000))}
-               />
-               <TableRow
-                  label={$t(L.TotalEmpireValuePerWallSecond)}
-                  values={runs.map((r) =>
-                     formatNumber(r.totalSeconds > 0 ? r.totalEmpireValue / r.totalSeconds : 0),
-                  )}
-               />
+               {rows.map((row) => (
+                  <tr key={row.label} className={row.bold ? "text-strong" : undefined}>
+                     <td
+                        style={{
+                           position: "sticky",
+                           left: 0,
+                           zIndex: 1,
+                           fontWeight: "bold",
+                           minWidth: 100,
+                        }}
+                        className="header"
+                     >
+                        {row.label}
+                     </td>
+                     {row.values.map((v, i) => (
+                        <td key={i}>{v}</td>
+                     ))}
+                  </tr>
+               ))}
             </tbody>
          </table>
       </div>
-   );
-}
-
-function TableRow({
-   label,
-   values,
-   bold,
-}: {
-   label: React.ReactNode;
-   values: React.ReactNode[];
-   bold?: boolean;
-}): React.ReactNode {
-   return (
-      <tr className={bold ? "text-strong" : undefined}>
-         <td
-            style={{
-               position: "sticky",
-               left: 0,
-               zIndex: 1,
-               fontWeight: "bold",
-               minWidth: 100,
-            }}
-            className="header"
-         >
-            {label}
-         </td>
-         {values.map((v, i) => (
-            <td key={i}>{v}</td>
-         ))}
-      </tr>
    );
 }
 
