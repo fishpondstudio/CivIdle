@@ -202,6 +202,11 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage("WTO votes have been rerolled");
          break;
       }
+      case "recountwto": {
+         const resp = await client.recountTradeTileVotes();
+         addSystemMessage(JSON.stringify(resp));
+         break;
+      }
       case "queryplayer": {
          if (!parts[1]) {
             throw new Error("Invalid command format");
