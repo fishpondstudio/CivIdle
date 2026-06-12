@@ -68,6 +68,7 @@ export class GameState {
    lastClientTickAt = 0;
    clientOfflineSec = 0;
    watchedResources: Set<Material> = new Set();
+   watchedTradeable: Set<Material> = new Set();
    mapSize = ROME_CITY_SIZE;
 }
 

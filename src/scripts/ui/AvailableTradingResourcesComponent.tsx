@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import { useState } from "react";
 import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
@@ -16,7 +17,7 @@ import { showToast } from "./GlobalModal";
 import { TableView } from "./TableView";
 import { WarningComponent } from "./WarningComponent";
 
-const availableTradingResourcesSortingState = { column: 0, asc: true };
+const availableTradingResourcesSortingState = { column: 1, asc: true };
 
 export function AvailableTradingResourcesComponent(): React.ReactNode {
    const myXy = getOwnedTradeTile();
@@ -43,6 +44,7 @@ export function AvailableTradingResourcesComponent(): React.ReactNode {
       <TableView
          style={{ maxHeight: "50vh", overflowY: "auto" }}
          header={[
+            { name: "", sortable: false },
             { name: $t(L.ResourceImportResource), sortable: true },
             { name: $t(L.ResourceAmount), sortable: true },
             { name: $t(L.DestroyResource), sortable: false },
@@ -51,7 +53,7 @@ export function AvailableTradingResourcesComponent(): React.ReactNode {
          data={keysOf(availableResources)}
          compareFunc={(a, b, col) => {
             switch (col) {
-               case 1:
+               case 2:
                   return (availableResources[a] ?? 0) - (availableResources[b] ?? 0);
                default:
                   return Config.Material[a].name().localeCompare(Config.Material[b].name());
@@ -80,6 +82,29 @@ function TableRowComponent({
    const [destroyAmount, setDestroyAmount] = useState(0);
    return (
       <tr>
+         <td>
+            <Tippy
+               content={$t(L.ToggleWatchForThisResourceWatchedResourcesAreDisplayedInADedicatedTopLeftTab)}
+            >
+               <div
+                  className="pointer"
+                  onClick={() => {
+                     if (gameState.watchedTradeable.has(resource)) {
+                        gameState.watchedTradeable.delete(resource);
+                     } else {
+                        gameState.watchedTradeable.add(resource);
+                     }
+                     notifyGameStateUpdate(gameState);
+                  }}
+               >
+                  {gameState.watchedTradeable.has(resource) ? (
+                     <div className="m-icon text-green">toggle_on</div>
+                  ) : (
+                     <div className="m-icon text-grey">toggle_off</div>
+                  )}
+               </div>
+            </Tippy>
+         </td>
          <td>{resourceName}</td>
          <td>{formatNumber(amount)}</td>
          <td style={{ width: 0 }}>

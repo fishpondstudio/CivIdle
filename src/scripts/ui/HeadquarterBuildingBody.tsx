@@ -56,7 +56,6 @@ import { WarningComponent } from "./WarningComponent";
 import { WarpSpeedComponent } from "./WarpSpeedComponent";
 import { WonderPage } from "./WonderPage";
 import { WorkerScienceComponent } from "./WorkerScienceComponent";
-import { RebirthHistoryModalV2 } from "./RebirthHistoryModalV2";
 
 export function HeadquarterBuildingBody({
    gameState,
@@ -512,7 +511,7 @@ function RebirthComponent({ gameState }: { gameState: GameState }): ReactNode {
             <div className="f1 text-strong">{$t(L.Reborn)}</div>
          </button>{" "}
          <div className="sep5"></div>
-         <button className="row w100 jcc" onClick={() => showModal(<RebirthHistoryModalV2 />)}>
+         <button className="row w100 jcc" onClick={() => showModal(<RebirthHistoryModal />)}>
             <div className="m-icon small">history</div>
             <div className="f1 text-strong">{$t(L.RebirthHistory)}</div>
          </button>

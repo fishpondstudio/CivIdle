@@ -10,7 +10,7 @@ import {
    getGreatPersonUpgradeCost,
    getMissingGreatPeopleForWisdom,
 } from "../../../shared/logic/RebirthLogic";
-import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
+import { combineResources, getResourceAmount } from "../../../shared/logic/ResourceLogic";
 import { getScienceAmount, getTechUnlockCost, unlockableTechs } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import {
@@ -32,6 +32,7 @@ import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
+import { AvailableTradingResourcesModal } from "../ui/AvailableTradingResourcesModal";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { hideModal, showModal, showToast } from "../ui/GlobalModal";
 import { ManageAgeWisdomModal } from "../ui/ManageAgeWisdomModal";
@@ -500,6 +501,49 @@ export const _Todos = {
       },
       onClick: (gs, options) => {
          showModal(<ManagePermanentGreatPersonModal adaptiveOnly={true} />);
+      },
+   },
+   I9: {
+      name: () => $t(L.WatchedTradeableResources),
+      icon: "swap_horizontal_circle",
+      className: "text-green",
+      maxWidth: "50vw",
+      value: (gs, options) => {
+         return gs.watchedTradeable.size;
+      },
+      desc: (gs, options) => {
+         const availableResources = combineResources(
+            Array.from(Tick.current.playerTradeBuildings.values()).map((m) => m.resources),
+         );
+         return (
+            <>
+               <table className="date-table">
+                  <thead>
+                     <tr>
+                        <th className="text-left">{$t(L.Resource)}</th>
+                        <th className="text-right">{$t(L.ResourceAmount)}</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {Array.from(gs.watchedTradeable).map((res) => {
+                        const amount = availableResources[res] ?? 0;
+                        return (
+                           <tr key={res}>
+                              <td>{Config.Material[res].name()}</td>
+                              <td className="text-right">{formatNumber(amount)}</td>
+                           </tr>
+                        );
+                     })}
+                  </tbody>
+               </table>
+            </>
+         );
+      },
+      condition: (gs, options) => {
+         return gs.watchedTradeable.size > 0;
+      },
+      onClick: (gs, options) => {
+         showModal(<AvailableTradingResourcesModal hideModal={hideModal} />);
       },
    },
    S1: {
