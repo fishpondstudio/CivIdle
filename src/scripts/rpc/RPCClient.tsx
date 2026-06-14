@@ -38,6 +38,7 @@ import {
    WEEK,
    clamp,
    forEach,
+   formatNumber,
    hasFlag,
    mapSafeAdd,
    shuffle,
@@ -209,6 +210,7 @@ export async function populateTileBuildings() {
 export const CLIENT_ID = "CIVIDLE_CLIENT_ID";
 
 let reconnect = 0;
+let isReconnecting = false;
 let requestId = 0;
 // biome-ignore lint/complexity/noBannedTypes: <explanation>
 const rpcRequests: Record<number, { resolve: Function; reject: Function; time: number }> = {};
@@ -297,9 +299,11 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
    ws.binaryType = "arraybuffer";
 
    let resolve: ((v: IWelcomeMessage) => void) | null = null;
+   let reject: ((e: any) => void) | null = null;
 
-   const promise = new Promise<IWelcomeMessage>((resolve_) => {
+   const promise = new Promise<IWelcomeMessage>((resolve_, reject_) => {
       resolve = resolve_;
+      reject = reject_;
    });
 
    ws.onmessage = (e) => {
@@ -459,24 +463,47 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
             retryConnect();
             break;
       }
+      reject?.(ev);
+      for (const id in rpcRequests) {
+         rpcRequests[id].reject(new Error("WebSocket closed during request"));
+         delete rpcRequests[id];
+      }
    };
 
    return promise;
 }
 
-export function disconnectWebSocket() {
-   ws?.close(ServerWSErrorCode.Background);
-   reconnect = 0;
-}
-
-export function reconnectWebSocket() {
-   if (!ws) {
-      connectWebSocket().then(convertOfflineTimeToWarp);
+export async function reconnectWebSocket() {
+   if (ws || isReconnecting) {
+      return;
+   }
+   isReconnecting = true;
+   try {
+      const message = await connectWebSocket();
+      convertOfflineTimeToWarp(message);
+   } catch (e) {
+      if (e instanceof CloseEvent) {
+         // No need to reconnect here as on `onclose` already handles reconnection.
+      } else {
+         retryConnect();
+      }
+   } finally {
+      isReconnecting = false;
    }
 }
 
+let retryTimer: ReturnType<typeof setTimeout> | undefined;
+
 function retryConnect() {
-   setTimeout(reconnectWebSocket, Math.min(Math.pow(2, reconnect++) * SECOND, 16 * SECOND));
+   const time = Math.min(2 ** reconnect++ * SECOND, 16 * SECOND);
+   console.log(`retryConnect: will retry websocket connect in ${formatNumber(time / SECOND)}s`);
+   retryTimer = setTimeout(reconnectWebSocket, time);
+}
+
+export function disconnectWebSocket() {
+   clearTimeout(retryTimer);
+   ws?.close(ServerWSErrorCode.Background);
+   reconnect = 0;
 }
 
 export function convertOfflineTimeToWarp(w: IWelcomeMessage): void {
