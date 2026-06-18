@@ -490,6 +490,7 @@ const ChatMessageContent = memo(
       const isDomainWhitelisted =
          message.startsWith("https://i.imgur.com/") ||
          message.startsWith("https://i.gyazo.com/") ||
+         message.startsWith("https://files.catbox.moe/") ||
          message.startsWith("https://i.ibb.co/") ||
          message.startsWith("https://gcdnb.pbrd.co/") ||
          message.startsWith("https://i.postimg.cc/");
