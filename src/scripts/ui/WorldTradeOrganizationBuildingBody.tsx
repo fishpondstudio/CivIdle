@@ -7,6 +7,7 @@ import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
+import { PlayerListComponent } from "./PlayerListComponent";
 import { html } from "./RenderHTMLComponent";
 import { UpgradeableWonderComponent } from "./UpgradeableWonderComponent";
 import { VotedBoostsComponent } from "./VotedBoostsComponent";
@@ -27,6 +28,7 @@ export function WorldTradeOrganizationBuildingBody({
    }
    return (
       <div className="window-body">
+         <PlayerListComponent type="keepers" />
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <UpgradeableWonderComponent gameState={gameState} xy={xy} />
          <VotedBoostsComponent

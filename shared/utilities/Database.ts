@@ -293,9 +293,17 @@ export interface IClientVotedBoost {
    voted: number;
 }
 
+export interface IClientVotedBoostWithCount extends IClientVotedBoost {
+   options: IVotedBoostWithCount[];
+}
+
+export interface IVotedBoostWithCount extends IVotedBoostOption {
+   count: number;
+}
+
 export interface IGetVotedBoostResponse {
    id: number;
-   current: IClientVotedBoost;
+   current: IClientVotedBoostWithCount;
    next: IClientVotedBoost;
 }
 

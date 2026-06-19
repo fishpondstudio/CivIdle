@@ -939,6 +939,7 @@ export const RU = {
    KanagawaDesc: "Все великие люди текущей эпохи получают дополнительный уровень для этого забега (исключая Зенобию)",
    KarlMarx: "Карл Маркс",
    KeeperOfOurServer: "Хранитель Нашего Сервера",
+   KeeperOfOurServerThankYou: "CivIdle удерживается на плаву благодаря щедрости следующих хранителей нашего сервера",
    KeepTheWindowOpenAfterPlacingTrade: "Не закрывать окно торговли после создания запроса",
    Keukenhof: "Кёкенхоф",
    KeukenhofDescV2: "+X Счастья. X = количество различных ресурсов, производимых или потребляемых в пределах 3 плиток",
@@ -2065,4 +2066,6 @@ export const RU = {
    RebirthHistoryEmpireValueV2: "Empire Value",
    RebirthHistoryEmpty: "No rebirth history available yet",
    RebirthHistoryExtraGreatPeopleAtRebirth: "eGP",
+   WatchedTradeableResources: "Watched Tradeable Resources",
+   XRunsInTotal: "%{count} Runs In Total",
 };
