@@ -1456,7 +1456,7 @@ export const ZH_TW = {
    RemapMiddleClickToRightClickHTML: "複製藍圖從使用<b>滑鼠中鍵</b>更改為使用<b>滑鼠右鍵</b>",
    RembrandtVanRijn: "倫勃朗·哈爾曼松·凡·萊因",
    RememberLastBuildRange: "記住建造範圍",
-   RememberTheLastSelectedBuildRangeAfterYouBuildInRangeTheValueIsRememberedDuringTheCurrentGameSession: "開啟後本次運行中將記住上一次建造範圍",
+   RememberTheLastSelectedBuildRangeAfterYouBuildInRangeTheValueIsRememberedDuringTheCurrentGameSession: "開啟後本次運行中將記住選擇的建造範圍",
    Renaissance: "文藝復興",
    RenaissanceAge: "文藝復興時期",
    ReneDescartes: "勒內·笛卡爾",
