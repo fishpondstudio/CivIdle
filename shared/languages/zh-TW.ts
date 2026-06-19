@@ -1036,7 +1036,7 @@ export const ZH_TW = {
    Masterpiece: "傑作",
    MatrioshkaBrain: "俄羅斯娃娃大腦(套腦)(Matrioshka Brain)",
    MatrioshkaBrainDescV3: "允許科學在計算帝國價值時被計入（5 科學 = 1 帝國價值）。每個忙碌和閒置的工人提供 +5 科學。此奇觀可升級，每次升級額外提供 +1 科學和生產乘數（包括克隆實驗室）",
-   Mauritshuis: "莫瑞泰斯皇家美術館 ",
+   Mauritshuis: "莫瑞泰斯皇家美術館",
    MauritshuisDesc: "每一級獲得一幅荷蘭畫家的畫作（總共 30 幅）。這些畫作可以排列在畫廊中以使所有建築獲得各種獎勵加成",
    MausoleumAtHalicarnassus: "摩索拉斯王陵墓",
    MausoleumAtHalicarnassusDescV2: "周圍 2 地塊範圍內所有建築，對於範圍內建築 “輸出” 與 “輸入” 的資源調用，免費運輸",
