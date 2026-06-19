@@ -1038,7 +1038,7 @@ export const ZH_CN = {
    Masterpiece: "杰作",
    MatrioshkaBrain: "套脑",
    MatrioshkaBrainDescV3: "计算帝国价值时，允许科学纳入计算（ 5 科学= 1 帝国价值）。 +5 劳动者科学产出。该奇观可被升级，并且每一次额外升级，提供 +1 劳动者科学产出，所有产出科学的建筑 +1 生产乘数（包括克隆实验室）",
-   Mauritshuis: "莫瑞泰斯皇家美术馆 ",
+   Mauritshuis: "莫瑞泰斯皇家美术馆",
    MauritshuisDesc: "每一级获得一幅荷兰画家的画作（总共 30 幅）。这些画作可以排列在画廊中以使所有建筑获得各种奖励加成",
    MausoleumAtHalicarnassus: "摩索拉斯陵墓",
    MausoleumAtHalicarnassusDescV2: "周围 2 地块范围内所有建筑，对于范围内建筑 “输出” 与 “输入” 的资源调用，运输资源不需要劳动者",
