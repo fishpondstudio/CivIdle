@@ -935,6 +935,7 @@ export const ZH_CN = {
    KanagawaDesc: "当此奇观被发现后，所有当前时代的伟人（包括未拥有过的），额外获得 +1 等级（芝诺比娅除外）",
    KarlMarx: "卡尔·马克思",
    KeeperOfOurServer: "守护者",
+   KeeperOfOurServerThankYou: "放置文明的持续运营，得益于以下守护者的慷慨捐助（随机显示）",
    KeepOurServerOnPackOptions: "守护者权益",
    KeepTheWindowOpenAfterPlacingTrade: "发出订单后保留此窗口",
    Keukenhof: "库肯霍夫公园",
