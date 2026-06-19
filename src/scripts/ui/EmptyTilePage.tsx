@@ -47,6 +47,7 @@ import { TitleBarComponent } from "./TitleBarComponent";
 let lastBuild: Building | null = null;
 let savedFilter = BuildingFilter.None;
 const savedSorting = { column: 0, asc: true };
+let lastBuildRange = 0;
 
 export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
@@ -60,7 +61,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const [buildCount, setBuildCount] = useState<number>(1);
    const [search, setSearch] = useState<string>("");
    const constructed = getTypeBuildings(gs);
-   const [buildRange, setBuildRange] = useState<number>(0);
+   const [buildRange, setBuildRange] = useState<number>(lastBuildRange);
    const build = useCallback(
       (k: Building) => {
          if (!checkBuildingMax(k, gs)) {
@@ -442,7 +443,13 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                      value={buildRange}
                      onChange={(e) => {
                         playClick();
-                        setBuildRange(Number.parseInt(e.target.value));
+                        const selectedValue = Number.parseInt(e.target.value);
+                        setBuildRange(selectedValue);
+                        if (options.rememberLastBuildRange) {
+                           lastBuildRange = selectedValue;
+                        } else {
+                           lastBuildRange = 0;
+                        }
                         notifyGameStateUpdate();
                      }}
                   >

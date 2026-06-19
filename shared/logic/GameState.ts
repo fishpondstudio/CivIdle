@@ -305,6 +305,9 @@ export class GameOptions {
    migrationFlags = MigrationFlags.None;
    hideResourcePanelSections = new Set<ResourcePanelSection>();
    useMirrorServer = false;
+   rememberLastBuildRange = false;
+   carryOverWatchedResources = false;
+   carryOverWatchedTradeable = false;
 }
 
 export type GameOptionServer = Pick<GameOptions, "ageWisdom" | "greatPeople">;
