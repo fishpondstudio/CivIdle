@@ -933,6 +933,7 @@ export const ZH_TW = {
    KanagawaDesc: "當前時代的所有偉人在本次運行中，額外獲得 +1 等級（不包括澤諾比亞）",
    KarlMarx: "卡爾·馬克思",
    KeeperOfOurServer: "守護者",
+   KeeperOfOurServerThankYou: "由於以下守護者的慷慨解囊，放置文明得以維持下去",
    KeepOurServerOnPackOptions: "守護者權益",
    KeepTheWindowOpenAfterPlacingTrade: "送出訂單後保留此窗口",
    Keukenhof: "庫肯霍夫公園",
@@ -2044,4 +2045,6 @@ export const ZH_TW = {
    RebirthHistoryEmpireValueV2: "Empire Value",
    RebirthHistoryEmpty: "No rebirth history available yet",
    RebirthHistoryExtraGreatPeopleAtRebirth: "eGP",
+   WatchedTradeableResources: "Watched Tradeable Resources",
+   XRunsInTotal: "%{count} Runs In Total",
 };
