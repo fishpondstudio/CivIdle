@@ -1,6 +1,7 @@
 import Tippy from "@tippyjs/react";
 import { useEffect, useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import {
    addPetraOfflineTime,
    BASE_WARP_HOUR,
@@ -500,6 +501,13 @@ export function RebirthModal(): React.ReactNode {
                         carryOverWarp = clamp(hq.building.resources.Warp ?? 0, 0, BASE_WARP_HOUR * 60 * 60);
                      }
 
+                     const watchedResources = options.carryOverWatchedResources
+                        ? gs.watchedResources
+                        : new Set<Material>();
+                     const watchedTradeable = options.carryOverWatchedTradeable
+                        ? gs.watchedTradeable
+                        : new Set<Material>();
+
                      checkRebirthAchievements(greatPeopleCount, gs);
 
                      let flags = RebirthFlags.None;
@@ -537,6 +545,9 @@ export function RebirthModal(): React.ReactNode {
                      if (carryOverWarp > 0) {
                         addPetraOfflineTime(carryOverWarp, getGameState());
                      }
+
+                     getGameState().watchedResources = watchedResources;
+                     getGameState().watchedTradeable = watchedTradeable;
 
                      try {
                         await Promise.all([saveGame(), clientHeartbeat()]);

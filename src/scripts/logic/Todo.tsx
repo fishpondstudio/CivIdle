@@ -462,7 +462,7 @@ export const _Todos = {
          );
       },
       condition: (gs, options) => {
-         return gs.watchedResources.size > 0;
+         return Tick.current.specialBuildings.has("Statistics") && gs.watchedResources.size > 0;
       },
       onClick: (gs, options) => {
          const s = Tick.current.specialBuildings.get("Statistics");
@@ -540,7 +540,7 @@ export const _Todos = {
          );
       },
       condition: (gs, options) => {
-         return gs.watchedTradeable.size > 0;
+         return Tick.current.playerTradeBuildings.size > 0 && gs.watchedTradeable.size > 0;
       },
       onClick: (gs, options) => {
          showModal(<AvailableTradingResourcesModal hideModal={hideModal} />);

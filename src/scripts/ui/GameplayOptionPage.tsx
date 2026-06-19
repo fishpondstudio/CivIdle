@@ -531,6 +531,44 @@ export function GameplayOptionPage(): React.ReactNode {
                <RegenerateGreatPersonImagesButton />
             </fieldset>
             <fieldset>
+               <legend>{$t(L.Miscellaneous)}</legend>
+               <ToggleComponent
+                  title={$t(L.RememberLastBuildRange)}
+                  contentHTML={$t(
+                     L.RememberTheLastSelectedBuildRangeAfterYouBuildInRangeTheValueIsRememberedDuringTheCurrentGameSession,
+                  )}
+                  value={options.rememberLastBuildRange}
+                  onValueChange={(value) => {
+                     options.rememberLastBuildRange = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+               <div className="sep10" />
+               <ToggleComponent
+                  title={$t(L.CarryOverWatchedResources)}
+                  contentHTML={$t(
+                     L.CarryOverWatchedResourcesIntoTheNextRunTheTabOnlyShowsAfterBuildingStatisticsOffice,
+                  )}
+                  value={options.carryOverWatchedResources}
+                  onValueChange={(value) => {
+                     options.carryOverWatchedResources = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+               <div className="sep10" />
+               <ToggleComponent
+                  title={$t(L.CarryOverWatchedTradeableResources)}
+                  contentHTML={$t(
+                     L.CarryOverWatchedTradeableResourcesIntoTheNextRunTheTabOnlyShowsAfterBuildingACaravansary,
+                  )}
+                  value={options.carryOverWatchedTradeable}
+                  onValueChange={(value) => {
+                     options.carryOverWatchedTradeable = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+            </fieldset>
+            <fieldset>
                <legend>{$t(L.MirrorServer)}</legend>
                <ToggleComponent
                   title={$t(L.UseMirrorServer)}
