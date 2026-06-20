@@ -144,7 +144,7 @@ export const ZH_CN = {
    Assembly: "装配",
    Astronomy: "天文学",
    AtlasMountains: "阿特拉斯山脉",
-   AtlasMountainsDesc: "周围 2 地块范围内的所有建筑获得 +N 生产乘数。 N 为该奇观范围内建筑生产但未被消耗的不相同资源数量",
+   AtlasMountainsDesc: "周围 2 地块范围内的所有建筑获得 +N 生产乘数。 N 为该奇观范围内建筑生产但未被范围内建筑消耗的不相同资源种类",
    AtomicBomb: "原子弹",
    AtomicFacility: "原子设施",
    AtomicTheory: "原子理论",
