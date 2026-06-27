@@ -28,21 +28,24 @@ import { AccountLevelNames } from "../logic/AccountLevel";
 import { handleChatCommand } from "../logic/ChatCommand";
 import {
    addSystemMessage,
+   BlockedPlayers,
    client,
    useChatMessages,
    useUser,
    type IClientChat,
    type LocalChat,
 } from "../rpc/RPCClient";
-import { SteamClient, isSteam } from "../rpc/SteamClient";
+import { isSteam, SteamClient } from "../rpc/SteamClient";
 import { getCountryName } from "../utilities/CountryCode";
 import { useTypedEvent } from "../utilities/Hook";
 import { openUrl } from "../utilities/Platform";
 import { playError } from "../visuals/Sound";
 import { BottomPanel } from "./BottomPanel";
+import { ConfirmModal } from "./ConfirmModal";
 import { showModal, showToast } from "./GlobalModal";
 import { filterPlayerName } from "./PlayerTradeComponent";
 import { PlayerTradeModal } from "./PlayerTradeModal";
+import { html } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
 import { ResourcesTab } from "./StatisticsBuildingBody";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
@@ -56,7 +59,9 @@ export function ChatPanel(): React.ReactNode {
       options.chatChannels.add(firstKeyOf(ChatChannels)!);
    }
    const isFloating = useFloatingMode();
-   const messages = useChatMessages().filter((m) => !("channel" in m) || options.chatChannels.has(m.channel));
+   const messages = useChatMessages().filter(
+      (m) => !BlockedPlayers.has(m.name) && (!("channel" in m) || options.chatChannels.has(m.channel)),
+   );
    const [showChatWindow, setShowChatWindow] = useState(false);
    const user = useUser();
    const gs = useGameState();
@@ -116,6 +121,7 @@ export function ChatPanel(): React.ReactNode {
          <div style={style}>
             {Array.from(options.chatChannels).map((channel, i) => (
                <ChatWindow
+                  messages={messages.filter((m) => m.channel === channel)}
                   left={350 * i}
                   key={channel}
                   channel={channel}
@@ -155,17 +161,21 @@ const ChatWindow = memo(_ChatWindow, (prev, next) => {
       prev.show === next.show &&
       prev.onClose === next.onClose &&
       prev.onMinimize === next.onMinimize &&
-      prev.left === next.left
+      prev.left === next.left &&
+      prev.messages.length === next.messages.length &&
+      prev.messages.every((m, i) => m.id === next.messages[i].id)
    );
 });
 
 function _ChatWindow({
    show,
+   messages,
    channel,
    left,
    onClose,
    onMinimize,
 }: {
+   messages: LocalChat[];
    show: boolean;
    channel: ChatChannel;
    left: number;
@@ -174,7 +184,6 @@ function _ChatWindow({
 }): React.ReactNode {
    const scrollAreaRef = useRef<HTMLDivElement>(null);
    const shouldScroll = useRef(false);
-   const messages = useChatMessages().filter((m) => !("channel" in m) || channel === m.channel);
    const lastMessage = messages.length > 0 ? messages[messages.length - 1] : null;
    const user = useUser();
 
@@ -253,7 +262,7 @@ function ChatInput({
       if (chat.startsWith("/")) {
          const command = chat.substring(1);
          addSystemMessage(`$ ${command}`);
-         handleChatCommand(command).catch((e) => addSystemMessage(`${command}: ${e}`));
+         handleChatCommand(command, channel).catch((e) => addSystemMessage(`${command}: ${e}`));
       } else {
          client
             .chat(censor(chat), channel)
@@ -339,6 +348,12 @@ function _ChatMessage({
                : false,
          })}
       >
+         {hasFlag(chat.attr, ChatAttributes.DirectMessage) ? (
+            <div className="row chat-message-private">
+               <div>{$t(L.OnlyYouCanSeeThis)}</div>
+               <div className="m-icon">lock</div>
+            </div>
+         ) : null}
          {chat.name === user?.handle ? (
             <div className="row text-small text-desc">
                <div>{new Date(chat.time ?? 0).toLocaleTimeString()}</div>
@@ -429,9 +444,29 @@ function _ChatMessage({
                   </Tippy>
                ) : null}
                <div className="f1"></div>
+               <Tippy content={$t(L.BlockXCurrentGameSession, { name: chat.name })}>
+                  <div
+                     className="m-icon show-on-hover mr5"
+                     onClick={() => {
+                        showModal(
+                           <ConfirmModal
+                              title={$t(L.BlockXCurrentGameSession, { name: chat.name })}
+                              onConfirm={() => {
+                                 BlockedPlayers.add(chat.name);
+                                 notifyGameStateUpdate();
+                              }}
+                           >
+                              {html($t(L.BlockXCurrentGameSessionDesc, { name: chat.name }))}
+                           </ConfirmModal>,
+                        );
+                     }}
+                  >
+                     block
+                  </div>
+               </Tippy>
                <Tippy content={$t(L.ShowTradesFrom, { name: chat.name })}>
                   <div
-                     className="m-icon show-trade"
+                     className="m-icon show-on-hover"
                      onClick={() => {
                         filterPlayerName(chat.name);
                         showModal(<PlayerTradeModal />);

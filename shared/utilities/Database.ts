@@ -19,6 +19,7 @@ export enum ChatAttributes {
    Font4 = 1 << 7,
    Font5 = 1 << 8,
    Font6 = 1 << 9,
+   DirectMessage = 1 << 10,
 }
 
 export interface IChat {
@@ -358,7 +359,6 @@ export const ChatChannels = {
    ru: "Русский",
    fr: "Français",
    kr: "한국어",
-   jp: "日本語",
    es: "Español",
    pt: "Português",
 } as const;

@@ -218,6 +218,8 @@ const rpcRequests: Record<number, { resolve: Function; reject: Function; time: n
 let steamTicket: string | null = null;
 let steamTicketTime = 0;
 
+export const BlockedPlayers = new Set<string>();
+
 export async function connectWebSocket(): Promise<IWelcomeMessage> {
    const platform = Capacitor.getPlatform();
    if (isSteam()) {
@@ -317,11 +319,18 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
                chatMessages = c.chat.map((c) => ({ ...c, id: mapSafeAdd(_chatIds, c.channel, 1) }));
             } else {
                c.chat.forEach((m) => {
+                  const isDirectMessageToMe =
+                     user &&
+                     !BlockedPlayers.has(m.name) &&
+                     hasFlag(m.attr, ChatAttributes.DirectMessage) &&
+                     m.name !== user.handle;
                   const mentionsMe =
-                     user && m.message.toLowerCase().includes(` @${user.handle.toLowerCase()}`);
+                     user &&
+                     !BlockedPlayers.has(m.name) &&
+                     m.message.toLowerCase().includes(` @${user.handle.toLowerCase()}`);
                   const isAnnounce =
                      hasFlag(m.attr, ChatAttributes.Announce) && options.chatChannels.has(m.channel);
-                  if (mentionsMe || isAnnounce) {
+                  if (mentionsMe || isAnnounce || isDirectMessageToMe) {
                      playBubble();
                      showToast(`${m.name}: ${m.message}`);
                   }

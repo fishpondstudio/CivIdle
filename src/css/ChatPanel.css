@@ -40,14 +40,14 @@
    padding: 6px 8px;
 }
 
-#chat-panel .chat-message-item .show-trade {
+#chat-panel .chat-message-item .show-on-hover {
    font-size: 15px;
-   margin-right: 2px;
+   margin-right: 5px;
    cursor: pointer;
    display: none;
 }
 
-#chat-panel .chat-message-item:hover .show-trade {
+#chat-panel .chat-message-item:hover .show-on-hover {
    display: block;
 }
 
@@ -56,6 +56,17 @@
    user-select: contain;
    cursor: text;
    overflow-wrap: break-word;
+}
+
+#chat-panel .chat-message-private {
+   text-transform: uppercase;
+   font-size: 12px;
+   font-weight: bold;
+   color: #ffb142;
+}
+
+#chat-panel .chat-message-private .m-icon {
+   font-size: 15px;
 }
 
 #chat-panel .chat-message-item .chat-image {

@@ -30,7 +30,13 @@ import {
    uuid4,
 } from "../../../shared/utilities/Helper";
 import { compressSave, decompressSave, overwriteSaveGame, resetToCity, saveGame } from "../Global";
-import { addSystemMessage, clearSystemMessages, client, getPlayerMap } from "../rpc/RPCClient";
+import {
+   addSystemMessage,
+   BlockedPlayers,
+   clearSystemMessages,
+   client,
+   getPlayerMap,
+} from "../rpc/RPCClient";
 import { isSteam, SteamClient } from "../rpc/SteamClient";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { WorldScene } from "../scenes/WorldScene";
@@ -43,7 +49,7 @@ function requireDevelopment(): void {
    }
 }
 
-export async function handleChatCommand(command: string): Promise<void> {
+export async function handleChatCommand(command: string, channel: ChatChannel): Promise<void> {
    const parts = command.split(" ");
    switch (parts[0]) {
       case "loadsave": {
@@ -115,6 +121,31 @@ export async function handleChatCommand(command: string): Promise<void> {
          getGameOptions().showTransportArrow = !getGameOptions().showTransportArrow;
          await saveGame();
          window.location.reload();
+         break;
+      }
+      case "blocklist": {
+         addSystemMessage(`Blocked (Current Game Session): ${Array.from(BlockedPlayers).join(", ")}`);
+         break;
+      }
+      case "unblock": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         if (!BlockedPlayers.has(parts[1])) {
+            addSystemMessage(`${parts[1]} is not blocked`);
+            break;
+         }
+         BlockedPlayers.delete(parts[1]);
+         addSystemMessage(
+            `${parts[1]} has been unblocked.\nBlocked (Current Game Session): ${Array.from(BlockedPlayers).join(", ")}`,
+         );
+         break;
+      }
+      case "dm": {
+         if (!parts[1] || !parts[2]) {
+            throw new Error("Invalid command format");
+         }
+         await client.chat(parts.slice(2).join(" "), channel, parts[1]);
          break;
       }
       case "randomcolor": {
