@@ -13,6 +13,7 @@ import {
    getGreatPersonUpgradeCost,
    getTotalGreatPeopleUpgradeCost,
    getWisdomUpgradeCost,
+   isBirthday,
    isEligibleForWisdom,
    sortGreatPeople,
    undoAllEligiblePermanentGreatPeople,
@@ -24,6 +25,7 @@ import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
+import { openUrl } from "../utilities/Platform";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playAgeUp, playClick, playError, playUpgrade } from "../visuals/Sound";
 import { hideModal, showModal } from "./GlobalModal";
@@ -153,6 +155,7 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
                   <thead>
                      <tr>
                         <th></th>
+                        <th></th>
                         <th>{$t(L.GreatPeopleName)}</th>
                         <th className="text-center nowrap">{$t(L.GreatPeopleThisRunColumn)}</th>
                         <th className="text-center">{$t(L.GreatPeoplePermanentColumn)}</th>
@@ -179,6 +182,23 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
                                        greatPerson={k}
                                        style={{ height: "50px", display: "block" }}
                                     />
+                                 </td>
+                                 <td>
+                                    {isBirthday(k) ? (
+                                       <Tippy content={$t(L.TodayIsTheBirthdayOfX, { name: person.name() })}>
+                                          <div className="m-icon small text-orange mb5">cake</div>
+                                       </Tippy>
+                                    ) : null}
+                                    <Tippy content={$t(L.ViewOnWikipedia, { name: person.name() })}>
+                                       <div
+                                          className="m-icon small text-desc pointer"
+                                          onClick={() =>
+                                             openUrl(`https://en.wikipedia.org/wiki/${person.wikipedia}`)
+                                          }
+                                       >
+                                          open_in_new
+                                       </div>
+                                    </Tippy>
                                  </td>
                                  <td>
                                     <div className="text-strong">{person.name()}</div>

@@ -12,7 +12,11 @@ import {
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getBuildingsByType } from "../../../shared/logic/IntraTickCache";
-import { getGreatPeopleForWisdom, getGreatPersonThisRunLevel } from "../../../shared/logic/RebirthLogic";
+import {
+   getGreatPeopleForWisdom,
+   getGreatPersonThisRunLevel,
+   isBirthday,
+} from "../../../shared/logic/RebirthLogic";
 import { RequestResetTile, getCurrentAge } from "../../../shared/logic/TechLogic";
 import {
    CurrentTickChanged,
@@ -151,6 +155,14 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
          $t(L.SourceGreatPerson, { person: greatPerson.name() }),
          GreatPersonTickFlag.None,
       );
+      if (isBirthday(person)) {
+         greatPerson.tick(
+            person,
+            getGreatPersonThisRunLevel(level),
+            $t(L.SourceGreatPersonBirthday, { person: greatPerson.name() }),
+            GreatPersonTickFlag.None,
+         );
+      }
    });
 
    gs.lastClientTickAt = Date.now();
@@ -163,6 +175,14 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
          $t(L.SourceGreatPersonPermanent, { person: greatPerson.name() }),
          GreatPersonTickFlag.None,
       );
+      if (isBirthday(person)) {
+         greatPerson.tick(
+            person,
+            v.level,
+            $t(L.SourceGreatPersonPermanentBirthday, { person: greatPerson.name() }),
+            GreatPersonTickFlag.None,
+         );
+      }
    });
 
    forEach(options.ageWisdom, (age, level) => {

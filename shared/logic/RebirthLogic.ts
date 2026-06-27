@@ -22,6 +22,7 @@ import {
    shuffle,
    WEEK,
 } from "../utilities/Helper";
+import { getServerNow } from "../utilities/ServerNow";
 import { Config } from "./Config";
 import type {
    GameOptions,
@@ -362,4 +363,14 @@ export function getEligibleRank(user: IUser): AccountLevel {
    });
 
    return level;
+}
+
+export function isBirthday(gp: GreatPerson): boolean {
+   const def = Config.GreatPerson[gp];
+   const serverNow = getServerNow();
+   if (serverNow && def.birthday) {
+      const now = new Date(serverNow);
+      return def.birthday.getMonth() === now.getMonth() && def.birthday.getDate() === now.getDate();
+   }
+   return false;
 }

@@ -24,6 +24,7 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "BronzeAge",
       time: "c. 1800s BC",
+      wikipedia: "Hammurabi",
    });
 
    RamessesII: IGreatPersonDefinition = {
@@ -33,6 +34,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "BronzeAge",
+      wikipedia: "Ramesses_II",
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.builderCapacity.push({
             value: Config.GreatPerson[self].value(level),
@@ -49,6 +51,7 @@ export class GreatPersonDefinitions {
       value: (level) => level * 0.5,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "BronzeAge",
+      wikipedia: "Tang_of_Shang",
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.sciencePerIdleWorker.push({
             value: Config.GreatPerson[self].value(level),
@@ -68,6 +71,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "BronzeAge",
+      wikipedia: "Hatshepsut",
    });
 
    SargonOfAkkad: IGreatPersonDefinition = boostOf({
@@ -80,6 +84,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "BronzeAge",
+      wikipedia: "Sargon_of_Akkad",
    });
 
    Narmer: IGreatPersonDefinition = {
@@ -93,6 +98,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "BronzeAge",
+      wikipedia: "Narmer",
       tick: tickAdaptiveGreatPerson,
       type: GreatPersonType.Adaptive,
    };
@@ -109,6 +115,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IronAge",
+      wikipedia: "Agamemnon",
    });
 
    DukeOfZhou: IGreatPersonDefinition = boostOf({
@@ -121,6 +128,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IronAge",
+      wikipedia: "Duke_of_Zhou",
    });
 
    Dido: IGreatPersonDefinition = boostOf({
@@ -133,6 +141,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IronAge",
+      wikipedia: "Dido",
    });
 
    Zoroaster: IGreatPersonDefinition = boostOf({
@@ -145,6 +154,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IronAge",
+      wikipedia: "Zoroaster",
    });
 
    Samsuiluna: IGreatPersonDefinition = boostOf({
@@ -158,6 +168,7 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IronAge",
       city: "Babylon",
+      wikipedia: "Samsu-iluna",
    });
 
    KingDavid: IGreatPersonDefinition = {
@@ -171,6 +182,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IronAge",
+      wikipedia: "David",
       tick: tickAdaptiveGreatPerson,
       type: GreatPersonType.Adaptive,
    };
@@ -187,6 +199,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Aeschylus",
    });
 
    Ashurbanipal: IGreatPersonDefinition = boostOf({
@@ -199,6 +212,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Ashurbanipal",
    });
 
    NebuchadnezzarII: IGreatPersonDefinition = boostOf({
@@ -211,6 +225,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Nebuchadnezzar_II",
    });
 
    Herodotus: IGreatPersonDefinition = boostOf({
@@ -223,6 +238,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Herodotus",
    });
 
    CyrusII: IGreatPersonDefinition = boostOf({
@@ -235,6 +251,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Cyrus_the_Great",
    });
 
    Socrates: IGreatPersonDefinition = {
@@ -244,6 +261,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Socrates",
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.sciencePerBusyWorker.push({
             value: Config.GreatPerson[self].value(level),
@@ -260,6 +278,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Aristophanes",
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.happiness.push({ value: Config.GreatPerson[self].value(level), source });
       },
@@ -273,6 +292,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Confucius",
       tick: (self, level, source) => {
          addScienceBasedOnBusyWorkers(Config.GreatPerson[self].value(level), source);
       },
@@ -289,6 +309,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Homer",
    });
 
    HannoTheNavigator: IGreatPersonDefinition = {
@@ -298,6 +319,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Hanno_the_Navigator",
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.transportCapacity.push({
             value: Config.GreatPerson[self].value(level),
@@ -319,6 +341,7 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
       city: "Carthaginian",
+      wikipedia: "Hannibal",
    });
 
    Aristotle: IGreatPersonDefinition = boostOf({
@@ -332,6 +355,7 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
       city: "Athens",
+      wikipedia: "Aristotle",
    });
 
    JuliusCaesar: IGreatPersonDefinition = boostOf({
@@ -345,6 +369,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
       city: "Rome",
+      wikipedia: "Julius_Caesar",
+      birthday: new Date(100, 6, 12),
    });
 
    Archimedes: IGreatPersonDefinition = boostOf({
@@ -357,6 +383,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Archimedes",
    });
 
    EmperorWuOfHan: IGreatPersonDefinition = boostOf({
@@ -370,6 +397,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
       city: "Beijing",
+      wikipedia: "Emperor_Wu_of_Han",
+      birthday: new Date(-155, 6, 14),
    });
 
    QinShiHuang: IGreatPersonDefinition = boostOf({
@@ -382,6 +411,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Qin_Shi_Huang",
    });
 
    Cleopatra: IGreatPersonDefinition = boostOf({
@@ -395,6 +425,7 @@ export class GreatPersonDefinitions {
       value: (level) => 2 * level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Cleopatra",
    });
 
    Zenobia: IGreatPersonDefinition = {
@@ -404,6 +435,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Zenobia",
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
    };
@@ -415,6 +447,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Plato",
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
@@ -426,6 +459,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Ashoka",
       tick: (self, level, source) => {},
       type: GreatPersonType.Promotion,
    };
@@ -441,6 +475,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+      wikipedia: "Laozi",
       tick: tickAdaptiveGreatPerson,
       type: GreatPersonType.Adaptive,
    };
@@ -457,6 +492,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
+      wikipedia: "Justinian_I",
    });
 
    IsidoreOfMiletus: IGreatPersonDefinition = {
@@ -466,6 +502,7 @@ export class GreatPersonDefinitions {
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
+      wikipedia: "Isidore_of_Miletus",
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.builderCapacity.push({
             value: Config.GreatPerson[self].value(level),
@@ -485,6 +522,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
+      wikipedia: "Charlemagne",
+      birthday: new Date(742, 3, 2),
    });
 
    HarunAlRashid: IGreatPersonDefinition = boostOf({
@@ -497,6 +536,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
+      wikipedia: "Harun_al-Rashid",
    });
 
    WuZetian: IGreatPersonDefinition = {
@@ -506,6 +546,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
+      wikipedia: "Wu_Zetian",
+      birthday: new Date(624, 1, 17),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.transportCapacity.push({
             value: Config.GreatPerson[self].value(level),
@@ -525,6 +567,7 @@ export class GreatPersonDefinitions {
       value: (level) => 1 * level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
+      wikipedia: "Xuanzang",
    });
 
    Rurik: IGreatPersonDefinition = {
@@ -534,6 +577,7 @@ export class GreatPersonDefinitions {
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
+      wikipedia: "Rurik",
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.happiness.push({ value: Config.GreatPerson[self].value(level), source });
       },
@@ -551,6 +595,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
+      wikipedia: "Fibonacci",
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.sciencePerIdleWorker.push({
             value: Config.GreatPerson[self].value(level) / 2,
@@ -571,6 +616,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
+      wikipedia: "Saladin",
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
@@ -582,6 +628,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
+      wikipedia: "Marco_Polo",
       tick: (self, level, source) => {},
       type: GreatPersonType.Promotion,
    };
@@ -597,6 +644,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
+      wikipedia: "Genghis_Khan",
       tick: tickAdaptiveGreatPerson,
       type: GreatPersonType.Adaptive,
    };
@@ -614,6 +662,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
       city: "Dutch",
+      wikipedia: "Rembrandt",
+      birthday: new Date(1606, 6, 15),
    });
 
    LeonardoDaVinci: IGreatPersonDefinition = boostOf({
@@ -626,6 +676,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "Leonardo_da_Vinci",
+      birthday: new Date(1452, 3, 15),
    });
 
    JohannesKepler: IGreatPersonDefinition = boostOf({
@@ -638,6 +690,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "Johannes_Kepler",
+      birthday: new Date(1571, 11, 27),
    });
 
    AntonieVanLeeuwenhoek: IGreatPersonDefinition = boostOf({
@@ -651,6 +705,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
       city: "Dutch",
+      wikipedia: "Antonie_van_Leeuwenhoek",
+      birthday: new Date(1632, 9, 24),
    });
 
    GalileoGalilei: IGreatPersonDefinition = {
@@ -660,6 +716,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 1,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "Galileo_Galilei",
+      birthday: new Date(1564, 1, 15),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.sciencePerIdleWorker.push({
             value: Config.GreatPerson[self].value(level),
@@ -679,6 +737,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "Martin_Luther",
+      birthday: new Date(1483, 10, 10),
    });
 
    OdaNobunaga: IGreatPersonDefinition = boostOf({
@@ -692,6 +752,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
       city: "Kyoto",
+      wikipedia: "Oda_Nobunaga",
+      birthday: new Date(1534, 5, 23),
    });
 
    WilliamShakespeare: IGreatPersonDefinition = boostOf({
@@ -704,6 +766,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "William_Shakespeare",
+      birthday: new Date(1564, 3, 23),
    });
 
    ReneDescartes: IGreatPersonDefinition = boostOf({
@@ -716,6 +780,8 @@ export class GreatPersonDefinitions {
       value: (level) => 2 * level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "Ren%C3%A9_Descartes",
+      birthday: new Date(1596, 2, 31),
    });
 
    ZhengHe: IGreatPersonDefinition = boostOf({
@@ -728,6 +794,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "Zheng_He",
    });
 
    CosimoDeMedici: IGreatPersonDefinition = boostOf({
@@ -740,6 +807,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "Cosimo_de%27_Medici",
+      birthday: new Date(1389, 8, 27),
    });
 
    IsaacNewton: IGreatPersonDefinition = {
@@ -749,6 +818,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "Isaac_Newton",
+      birthday: new Date(1643, 0, 4),
       tick: (self, level, source) => {
          addScienceBasedOnBusyWorkers(Config.GreatPerson[self].value(level), source);
       },
@@ -765,6 +836,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "Georgius_Agricola",
+      birthday: new Date(1494, 2, 24),
    });
 
    Voltaire: IGreatPersonDefinition = boostOf({
@@ -778,6 +851,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
       city: "French",
+      wikipedia: "Voltaire",
+      birthday: new Date(1694, 10, 21),
    });
 
    Michelangelo: IGreatPersonDefinition = {
@@ -787,6 +862,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "Michelangelo",
+      birthday: new Date(1475, 2, 6),
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
@@ -798,6 +875,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "Johannes_Gutenberg",
       tick: (self, level, source) => {},
       type: GreatPersonType.Promotion,
    };
@@ -813,6 +891,7 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
       city: "English",
+      wikipedia: "Thomas_Gresham",
    });
 
    SuleimanI: IGreatPersonDefinition = boostOf({
@@ -826,6 +905,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
       city: "Ottoman",
+      wikipedia: "Suleiman_the_Magnificent",
+      birthday: new Date(1494, 10, 6),
    });
 
    ChristopherColumbus: IGreatPersonDefinition = {
@@ -839,6 +920,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
+      wikipedia: "Christopher_Columbus",
       tick: tickAdaptiveGreatPerson,
       type: GreatPersonType.Adaptive,
    };
@@ -855,6 +937,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "James_Watt",
+      birthday: new Date(1736, 0, 30),
    });
 
    VincentVanGogh: IGreatPersonDefinition = boostOf({
@@ -868,6 +952,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
       city: "Dutch",
+      wikipedia: "Vincent_van_Gogh",
+      birthday: new Date(1853, 2, 30),
    });
 
    IsambardKingdomBrunel: IGreatPersonDefinition = boostOf({
@@ -880,6 +966,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "Isambard_Kingdom_Brunel",
+      birthday: new Date(1806, 3, 9),
    });
 
    GeorgeWashington: IGreatPersonDefinition = boostOf({
@@ -893,6 +981,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
       city: "NewYork",
+      wikipedia: "George_Washington",
+      birthday: new Date(1732, 1, 22),
    });
 
    LouisSullivan: IGreatPersonDefinition = {
@@ -902,6 +992,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "Louis_Sullivan",
+      birthday: new Date(1856, 8, 3),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.builderCapacity.push({
             value: Config.GreatPerson[self].value(level),
@@ -921,6 +1013,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "Karl_Marx",
+      birthday: new Date(1818, 4, 5),
    });
 
    AdaLovelace: IGreatPersonDefinition = boostOf({
@@ -933,6 +1027,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "Ada_Lovelace",
+      birthday: new Date(1815, 11, 10),
    });
 
    NapoleonBonaparte: IGreatPersonDefinition = boostOf({
@@ -945,6 +1041,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "Napoleon",
+      birthday: new Date(1769, 7, 15),
    });
 
    CharlesDarwin: IGreatPersonDefinition = {
@@ -954,6 +1052,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "Charles_Darwin",
+      birthday: new Date(1809, 1, 12),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.sciencePerBusyWorker.push({
             value: Config.GreatPerson[self].value(level),
@@ -974,6 +1074,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "Carl_Friedrich_Gauss",
+      birthday: new Date(1777, 3, 30),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.sciencePerIdleWorker.push({
             value: 0.5 * Config.GreatPerson[self].value(level),
@@ -994,6 +1096,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "Florence_Nightingale",
+      birthday: new Date(1820, 4, 12),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.happiness.push({
             value: Config.GreatPerson[self].value(level),
@@ -1013,6 +1117,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "J._P._Morgan",
+      birthday: new Date(1837, 3, 17),
    });
 
    AndrewCarnegie: IGreatPersonDefinition = boostOf({
@@ -1025,6 +1131,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "Andrew_Carnegie",
+      birthday: new Date(1835, 10, 25),
    });
 
    AkbarTheGreat: IGreatPersonDefinition = {
@@ -1041,6 +1149,8 @@ export class GreatPersonDefinitions {
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
       city: "Indian",
+      wikipedia: "Akbar",
+      birthday: new Date(1542, 9, 15),
    };
 
    ThomasEdison: IGreatPersonDefinition = {
@@ -1050,6 +1160,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "Thomas_Edison",
+      birthday: new Date(1847, 1, 11),
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
@@ -1061,6 +1173,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "Adam_Smith",
       tick: (self, level, source) => {},
       type: GreatPersonType.Promotion,
    };
@@ -1076,6 +1189,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
+      wikipedia: "Michael_Faraday",
+      birthday: new Date(1791, 8, 22),
       tick: tickAdaptiveGreatPerson,
       type: GreatPersonType.Adaptive,
    };
@@ -1094,6 +1209,7 @@ export class GreatPersonDefinitions {
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
       city: "German",
+      wikipedia: "Ludwig_van_Beethoven",
    };
 
    Tchaikovsky: IGreatPersonDefinition = {
@@ -1110,6 +1226,8 @@ export class GreatPersonDefinitions {
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
       city: "Russian",
+      wikipedia: "Pyotr_Ilyich_Tchaikovsky",
+      birthday: new Date(1840, 4, 7),
    };
 
    // World Wars /////////////////////////////////////////////////////////////////////////////////////////////
@@ -1124,6 +1242,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "John_D._Rockefeller",
+      birthday: new Date(1839, 6, 8),
    });
 
    RudolfDiesel: IGreatPersonDefinition = boostOf({
@@ -1136,6 +1256,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Rudolf_Diesel",
+      birthday: new Date(1858, 2, 18),
    });
 
    PierreDeCoubertin: IGreatPersonDefinition = boostOf({
@@ -1148,6 +1270,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Pierre_de_Coubertin",
+      birthday: new Date(1863, 0, 1),
    });
 
    CharlesParsons: IGreatPersonDefinition = boostOf({
@@ -1160,6 +1284,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Charles_Algernon_Parsons",
+      birthday: new Date(1854, 5, 13),
    });
 
    RichardJordanGatling: IGreatPersonDefinition = boostOf({
@@ -1172,6 +1298,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Richard_Jordan_Gatling",
+      birthday: new Date(1818, 8, 12),
    });
 
    JosephPulitzer: IGreatPersonDefinition = boostOf({
@@ -1184,6 +1312,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Joseph_Pulitzer",
+      birthday: new Date(1847, 3, 10),
    });
 
    CharlesMartinHall: IGreatPersonDefinition = boostOf({
@@ -1196,6 +1326,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Charles_Martin_Hall",
+      birthday: new Date(1863, 11, 6),
    });
 
    MarieCurie: IGreatPersonDefinition = boostOf({
@@ -1208,6 +1340,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Marie_Curie",
+      birthday: new Date(1867, 10, 7),
    });
 
    AlbertEinstein: IGreatPersonDefinition = boostOf({
@@ -1220,6 +1354,8 @@ export class GreatPersonDefinitions {
       value: (level) => 2 * level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Albert_Einstein",
+      birthday: new Date(1879, 2, 14),
    });
 
    AlanTuring: IGreatPersonDefinition = {
@@ -1229,6 +1365,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Alan_Turing",
+      birthday: new Date(1912, 5, 23),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.sciencePerIdleWorker.push({
             value: Config.GreatPerson[self].value(level),
@@ -1245,6 +1383,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Niels_Bohr",
+      birthday: new Date(1885, 9, 7),
       tick: (self, level, source) => {
          addScienceBasedOnBusyWorkers(Config.GreatPerson[self].value(level), source);
       },
@@ -1261,6 +1401,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Amelia_Earhart",
+      birthday: new Date(1897, 6, 24),
    });
 
    HenryFord: IGreatPersonDefinition = boostOf({
@@ -1273,6 +1415,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Henry_Ford",
+      birthday: new Date(1863, 6, 30),
    });
 
    JosephMonier: IGreatPersonDefinition = boostOf({
@@ -1285,6 +1429,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Joseph_Monier",
+      birthday: new Date(1823, 10, 8),
    });
 
    OttoVonBismarck: IGreatPersonDefinition = boostOf({
@@ -1298,6 +1444,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
       city: "German",
+      wikipedia: "Otto_von_Bismarck",
+      birthday: new Date(1815, 3, 1),
    });
 
    MahatmaGandhi: IGreatPersonDefinition = {
@@ -1307,6 +1455,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Mahatma_Gandhi",
+      birthday: new Date(1869, 9, 2),
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
@@ -1318,6 +1468,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Pablo_Picasso",
+      birthday: new Date(1881, 9, 25),
       tick: (self, level, source) => {},
       type: GreatPersonType.Promotion,
    };
@@ -1329,6 +1481,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "John_von_Neumann",
+      birthday: new Date(1903, 11, 28),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.sciencePerBusyWorker.push({
             value: Config.GreatPerson[self].value(level),
@@ -1345,6 +1499,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Charlie_Chaplin",
+      birthday: new Date(1889, 3, 16),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.happiness.push({
             value: Config.GreatPerson[self].value(level),
@@ -1361,6 +1517,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Frank_Lloyd_Wright",
+      birthday: new Date(1867, 5, 8),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.builderCapacity.push({
             value: Config.GreatPerson[self].value(level),
@@ -1381,6 +1539,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
       city: "Brazilian",
+      wikipedia: "Heitor_Villa-Lobos",
+      birthday: new Date(1887, 2, 5),
    });
 
    RabindranathTagore: IGreatPersonDefinition = boostOf({
@@ -1394,6 +1554,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
       city: "Indian",
+      wikipedia: "Rabindranath_Tagore",
+      birthday: new Date(1861, 4, 7),
    });
 
    OskarSchindler: IGreatPersonDefinition = {
@@ -1407,6 +1569,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+      wikipedia: "Oskar_Schindler",
+      birthday: new Date(1908, 3, 28),
       tick: tickAdaptiveGreatPerson,
       type: GreatPersonType.Adaptive,
    };
@@ -1425,6 +1589,8 @@ export class GreatPersonDefinitions {
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
       city: "Australian",
+      wikipedia: "John_Bradfield",
+      birthday: new Date(1867, 11, 26),
    };
 
    // Cold Wars /////////////////////////////////////////////////////////////////////////////////////////////
@@ -1439,6 +1605,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
+      wikipedia: "J._Robert_Oppenheimer",
+      birthday: new Date(1904, 3, 22),
    });
 
    WaltDisney: IGreatPersonDefinition = boostOf({
@@ -1451,6 +1619,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
+      wikipedia: "Walt_Disney",
+      birthday: new Date(1901, 11, 5),
    });
 
    WernherVonBraun: IGreatPersonDefinition = boostOf({
@@ -1463,6 +1633,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
+      wikipedia: "Wernher_von_Braun",
+      birthday: new Date(1912, 2, 23),
    });
 
    ChesterWNimitz: IGreatPersonDefinition = boostOf({
@@ -1475,6 +1647,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
+      wikipedia: "Chester_W._Nimitz",
+      birthday: new Date(1885, 1, 24),
    });
 
    FrankWhittle: IGreatPersonDefinition = boostOf({
@@ -1487,6 +1661,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
+      wikipedia: "Frank_Whittle",
+      birthday: new Date(1907, 5, 1),
    });
 
    EnricoFermi: IGreatPersonDefinition = boostOf({
@@ -1499,6 +1675,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
+      wikipedia: "Enrico_Fermi",
+      birthday: new Date(1901, 8, 29),
    });
 
    PhiloFarnsworth: IGreatPersonDefinition = boostOf({
@@ -1511,6 +1689,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
+      wikipedia: "Philo_Farnsworth",
+      birthday: new Date(1906, 7, 19),
    });
 
    TerryFox: IGreatPersonDefinition = boostOf({
@@ -1524,6 +1704,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
       city: "Canadian",
+      wikipedia: "Terry_Fox",
+      birthday: new Date(1958, 6, 28),
    });
 
    SergeiKorolev: IGreatPersonDefinition = boostOf({
@@ -1536,6 +1718,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
+      wikipedia: "Sergei_Korolev",
+      birthday: new Date(1907, 0, 12),
    });
 
    GeorgeCMarshall: IGreatPersonDefinition = boostOf({
@@ -1548,6 +1732,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
+      wikipedia: "George_C._Marshall",
+      birthday: new Date(1880, 11, 31),
    });
 
    RobertNoyce: IGreatPersonDefinition = boostOf({
@@ -1560,6 +1746,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
+      wikipedia: "Robert_Noyce",
+      birthday: new Date(1927, 11, 12),
    });
 
    FriedrichHayek: IGreatPersonDefinition = boostOf({
@@ -1572,6 +1760,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
+      wikipedia: "Friedrich_Hayek",
+      birthday: new Date(1899, 4, 8),
    });
 
    AndreyKolmogorov: IGreatPersonDefinition = boostOf({
@@ -1585,6 +1775,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
       city: "Russian",
+      wikipedia: "Andrey_Kolmogorov",
+      birthday: new Date(1903, 3, 25),
    });
 
    PaulSamuelson: IGreatPersonDefinition = {
@@ -1608,6 +1800,8 @@ export class GreatPersonDefinitions {
          }
       },
       type: GreatPersonType.Normal,
+      wikipedia: "Paul_Samuelson",
+      birthday: new Date(1915, 4, 15),
    };
 
    JamesWatson: IGreatPersonDefinition = {
@@ -1624,6 +1818,8 @@ export class GreatPersonDefinitions {
          });
       },
       type: GreatPersonType.Normal,
+      wikipedia: "James_Watson",
+      birthday: new Date(1928, 3, 6),
    };
 
    RichardFeynman: IGreatPersonDefinition = {
@@ -1637,6 +1833,8 @@ export class GreatPersonDefinitions {
          addScienceBasedOnBusyWorkers(Config.GreatPerson[self].value(level), source);
       },
       type: GreatPersonType.Normal,
+      wikipedia: "Richard_Feynman",
+      birthday: new Date(1918, 4, 11),
    };
 
    LinusPauling: IGreatPersonDefinition = {
@@ -1653,6 +1851,8 @@ export class GreatPersonDefinitions {
          });
       },
       type: GreatPersonType.Normal,
+      wikipedia: "Linus_Pauling",
+      birthday: new Date(1901, 1, 28),
    };
 
    IMPei: IGreatPersonDefinition = {
@@ -1669,6 +1869,8 @@ export class GreatPersonDefinitions {
          });
       },
       type: GreatPersonType.Normal,
+      wikipedia: "I._M._Pei",
+      birthday: new Date(1917, 3, 26),
    };
 
    BobHope: IGreatPersonDefinition = {
@@ -1685,6 +1887,8 @@ export class GreatPersonDefinitions {
          });
       },
       type: GreatPersonType.Normal,
+      wikipedia: "Bob_Hope",
+      birthday: new Date(1903, 4, 29),
    };
 
    ElvisPresley: IGreatPersonDefinition = {
@@ -1696,6 +1900,8 @@ export class GreatPersonDefinitions {
       age: "ColdWarAge",
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
+      wikipedia: "Elvis_Presley",
+      birthday: new Date(1935, 0, 8),
    };
 
    YuriGagarin: IGreatPersonDefinition = {
@@ -1707,6 +1913,8 @@ export class GreatPersonDefinitions {
       age: "ColdWarAge",
       tick: (self, level, source) => {},
       type: GreatPersonType.Promotion,
+      wikipedia: "Yuri_Gagarin",
+      birthday: new Date(1934, 2, 9),
    };
 
    NeilArmstrong: IGreatPersonDefinition = {
@@ -1722,6 +1930,8 @@ export class GreatPersonDefinitions {
       age: "ColdWarAge",
       tick: tickAdaptiveGreatPerson,
       type: GreatPersonType.Adaptive,
+      wikipedia: "Neil_Armstrong",
+      birthday: new Date(1930, 7, 5),
    };
 
    Pele: IGreatPersonDefinition = {
@@ -1738,6 +1948,8 @@ export class GreatPersonDefinitions {
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
       city: "Brazilian",
+      wikipedia: "Pel%C3%A9",
+      birthday: new Date(1940, 9, 23),
    };
 
    // Information ////////////////////////////////////////////////////////////////////////////////////////////
@@ -1752,6 +1964,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Tim_Berners-Lee",
+      birthday: new Date(1955, 5, 8),
    });
 
    GordonMoore: IGreatPersonDefinition = boostOf({
@@ -1764,6 +1978,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Gordon_Moore",
+      birthday: new Date(1929, 0, 3),
    });
 
    DennisRitchie: IGreatPersonDefinition = boostOf({
@@ -1776,6 +1992,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Dennis_Ritchie",
+      birthday: new Date(1941, 8, 9),
    });
 
    HymanGRickover: IGreatPersonDefinition = boostOf({
@@ -1788,6 +2006,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Hyman_G._Rickover",
+      birthday: new Date(1900, 0, 27),
    });
 
    HarryMarkowitz: IGreatPersonDefinition = boostOf({
@@ -1800,6 +2020,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Harry_Markowitz",
+      birthday: new Date(1927, 7, 24),
    });
 
    JohnCarmack: IGreatPersonDefinition = boostOf({
@@ -1812,6 +2034,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "John_Carmack",
+      birthday: new Date(1970, 7, 20),
    });
 
    SatoshiNakamoto: IGreatPersonDefinition = boostOf({
@@ -1824,6 +2048,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Satoshi_Nakamoto",
    });
 
    CarlSagan: IGreatPersonDefinition = boostOf({
@@ -1836,6 +2061,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Carl_Sagan",
+      birthday: new Date(1934, 10, 9),
    });
 
    JohnMcCarthy: IGreatPersonDefinition = boostOf({
@@ -1848,6 +2075,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "John_McCarthy_(computer_scientist)",
+      birthday: new Date(1927, 8, 4),
    });
 
    BrianSchmidt: IGreatPersonDefinition = boostOf({
@@ -1861,6 +2090,8 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
       city: "Australian",
+      wikipedia: "Brian_Schmidt",
+      birthday: new Date(1967, 1, 24),
    });
 
    StephenHawking: IGreatPersonDefinition = {
@@ -1870,6 +2101,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Stephen_Hawking",
+      birthday: new Date(1942, 0, 8),
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
@@ -1881,6 +2114,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 6,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Zaha_Hadid",
+      birthday: new Date(1950, 9, 31),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.builderCapacity.push({
             value: Config.GreatPerson[self].value(level),
@@ -1897,6 +2132,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 5,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Peter_Higgs",
+      birthday: new Date(1929, 4, 29),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.sciencePerBusyWorker.push({
             value: Config.GreatPerson[self].value(level),
@@ -1913,6 +2150,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 6,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Gabriel_Garc%C3%ADa_M%C3%A1rquez",
+      birthday: new Date(1927, 2, 6),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.happiness.push({
             value: Config.GreatPerson[self].value(level),
@@ -1929,6 +2168,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Maryam_Mirzakhani",
+      birthday: new Date(1977, 4, 12),
       tick: (self, level, source) => {
          Tick.next.globalMultipliers.sciencePerIdleWorker.push({
             value: Config.GreatPerson[self].value(level),
@@ -1949,6 +2190,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Sid_Meier",
+      birthday: new Date(1954, 1, 24),
       tick: tickAdaptiveGreatPerson,
       type: GreatPersonType.Adaptive,
    };
@@ -1964,6 +2207,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "William_Shepherd",
+      birthday: new Date(1949, 6, 26),
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
    };
@@ -1979,6 +2224,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Lee_Kuan_Yew",
+      birthday: new Date(1923, 8, 16),
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
    };
@@ -1994,6 +2241,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Emmanuelle_Charpentier",
+      birthday: new Date(1968, 11, 11),
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
    };
@@ -2009,6 +2258,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Dan_Alderson",
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
    };
@@ -2024,6 +2274,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Freeman_Dyson",
+      birthday: new Date(1923, 11, 15),
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
    };
@@ -2039,6 +2291,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+      wikipedia: "Vera_Rubin",
+      birthday: new Date(1928, 6, 23),
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
    };
@@ -2057,6 +2311,8 @@ export class GreatPersonDefinitions {
       tick: (self, level, source) => {},
       type: GreatPersonType.LevelBoost,
       city: "Canadian",
+      wikipedia: "Geoffrey_Hinton",
+      birthday: new Date(1947, 11, 6),
    };
 }
 
@@ -2094,6 +2350,8 @@ export interface IGreatPersonDefinition {
    boost?: IGreatPersonBoost;
    city?: City;
    tick: (self: GreatPerson, level: number, source: string, flag: GreatPersonTickFlag) => void;
+   wikipedia: string;
+   birthday?: Date;
 }
 
 function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
@@ -2146,6 +2404,8 @@ function boostOf(
       maxLevel: def.maxLevel,
       age: def.age,
       city: def.city,
+      wikipedia: def.wikipedia,
+      birthday: def.birthday,
       type: GreatPersonType.Normal,
       tick: tickGreatPersonBoost,
    };

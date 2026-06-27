@@ -2068,4 +2068,8 @@ export const EN = {
    Zoroaster: "Zoroaster",
    Zugspitze: "Zugspitze",
    ZugspitzeDesc: "For each unlocked age, get one slot that can be used to provide one extra level to any Great Person that is born from this run. (Storage multipliers are not effective due to this multiplier being dynamic)",
+   TodayIsTheBirthdayOfX: "Today is the birthday of %{name} - this great person's effect is doubled!",
+   ViewOnWikipedia: "View %{name} on Wikipedia",
+   SourceGreatPersonBirthday: "Birthday (Great Person): %{person}",
+   SourceGreatPersonPermanentBirthday: "Birthday (Permanent Great Person): %{person}",
 };
