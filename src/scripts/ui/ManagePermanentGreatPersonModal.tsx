@@ -19,7 +19,7 @@ import {
    upgradeAllEligiblePermanentGreatPeople,
    upgradeAllUpgradeablePermanentGreatPeople,
 } from "../../../shared/logic/RebirthLogic";
-import { cls, keysOf, numberToRoman } from "../../../shared/utilities/Helper";
+import { cls, keysOf, numberToRoman, range } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
@@ -325,12 +325,13 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
 
 function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
    const options = useGameOptions();
-   const permanent = options.greatPeople[greatPerson];
    const gs = useGameState();
    const thisRun = gs.greatPeople[greatPerson];
+   const [selectedAmount, setSelectedAmount] = useState(0);
    if (!options.greatPeople[greatPerson]) {
       options.greatPeople[greatPerson] = { amount: 0, level: 0 };
    }
+   const permanent = options.greatPeople[greatPerson];
    const person = Config.GreatPerson[greatPerson];
    const choices = keysOf(Config.GreatPerson)
       .filter(
@@ -348,37 +349,49 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
             </TextWithHelp>
          </td>
          <td className="text-center">
-            {permanent ? (
-               <TextWithHelp content={person.desc(person, permanent.level)}>{permanent.amount}</TextWithHelp>
-            ) : null}
+            <TextWithHelp content={person.desc(person, permanent.level)}>{permanent.amount}</TextWithHelp>
          </td>
          <td>
-            <select
-               value={choice}
-               className="w100"
-               onChange={(e) => {
-                  setChoice(e.target.value as GreatPerson);
-               }}
-            >
-               {choices.map((g) => (
-                  <option key={g} value={g}>
-                     ({options.greatPeople[g]?.amount ?? 0}) {Config.GreatPerson[g].name()}
-                  </option>
-               ))}
-            </select>
+            <div className="row">
+               <select
+                  value={choice}
+                  className="w100"
+                  onChange={(e) => {
+                     setChoice(e.target.value as GreatPerson);
+                  }}
+               >
+                  {choices.map((g) => (
+                     <option key={g} value={g}>
+                        ({options.greatPeople[g]?.amount ?? 0}) {Config.GreatPerson[g].name()}
+                     </option>
+                  ))}
+               </select>
+               <div className="w10" />
+               <select
+                  value={selectedAmount}
+                  onChange={(e) => setSelectedAmount(Number.parseInt(e.target.value))}
+               >
+                  {range(0, permanent.amount + 1).map((amount) => (
+                     <option key={amount} value={amount}>
+                        {amount}
+                     </option>
+                  ))}
+               </select>
+            </div>
          </td>
          <td>
             <button
-               disabled={!permanent || permanent.amount <= 0}
+               disabled={selectedAmount <= 0}
                className="w100 text-strong"
                onClick={() => {
                   if (Config.GreatPerson[choice].type === GreatPersonType.Wildcard) {
                      playError();
                      return;
                   }
-                  if (permanent && permanent.amount > 0) {
-                     --permanent.amount;
-                     addPermanentGreatPerson(choice, 1);
+                  if (permanent.amount >= selectedAmount) {
+                     permanent.amount -= selectedAmount;
+                     addPermanentGreatPerson(choice, selectedAmount);
+                     setSelectedAmount(0);
                      playUpgrade();
                      notifyGameOptionsUpdate();
                      return;
