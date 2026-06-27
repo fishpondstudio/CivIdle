@@ -319,18 +319,13 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
                chatMessages = c.chat.map((c) => ({ ...c, id: mapSafeAdd(_chatIds, c.channel, 1) }));
             } else {
                c.chat.forEach((m) => {
-                  const isDirectMessageToMe =
-                     user &&
-                     !BlockedPlayers.has(m.name) &&
-                     hasFlag(m.attr, ChatAttributes.DirectMessage) &&
-                     m.name !== user.handle;
                   const mentionsMe =
                      user &&
                      !BlockedPlayers.has(m.name) &&
                      m.message.toLowerCase().includes(` @${user.handle.toLowerCase()}`);
                   const isAnnounce =
                      hasFlag(m.attr, ChatAttributes.Announce) && options.chatChannels.has(m.channel);
-                  if (mentionsMe || isAnnounce || isDirectMessageToMe) {
+                  if (mentionsMe || isAnnounce) {
                      playBubble();
                      showToast(`${m.name}: ${m.message}`);
                   }
