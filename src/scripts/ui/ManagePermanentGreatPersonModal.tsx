@@ -20,7 +20,7 @@ import {
    upgradeAllEligiblePermanentGreatPeople,
    upgradeAllUpgradeablePermanentGreatPeople,
 } from "../../../shared/logic/RebirthLogic";
-import { cls, keysOf, numberToRoman, range } from "../../../shared/utilities/Helper";
+import { cls, keysOf, numberToRoman, safeParseInt } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
@@ -347,7 +347,7 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
    const options = useGameOptions();
    const gs = useGameState();
    const thisRun = gs.greatPeople[greatPerson];
-   const [selectedAmount, setSelectedAmount] = useState(0);
+   const [selectedAmount, setSelectedAmount] = useState(1);
    if (!options.greatPeople[greatPerson]) {
       options.greatPeople[greatPerson] = { amount: 0, level: 0 };
    }
@@ -387,31 +387,26 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
                   ))}
                </select>
                <div className="w10" />
-               <select
+               <input
+                  style={{ width: "50px" }}
+                  type="text"
                   value={selectedAmount}
-                  onChange={(e) => setSelectedAmount(Number.parseInt(e.target.value))}
-               >
-                  {range(0, permanent.amount + 1).map((amount) => (
-                     <option key={amount} value={amount}>
-                        {amount}
-                     </option>
-                  ))}
-               </select>
+                  onChange={(e) => setSelectedAmount(safeParseInt(e.target.value, 0))}
+               />
             </div>
          </td>
          <td>
             <button
-               disabled={selectedAmount <= 0}
+               disabled={selectedAmount <= 0 || selectedAmount > permanent.amount}
                className="w100 text-strong"
                onClick={() => {
                   if (Config.GreatPerson[choice].type === GreatPersonType.Wildcard) {
                      playError();
                      return;
                   }
-                  if (permanent.amount >= selectedAmount) {
+                  if (selectedAmount > 0 && selectedAmount <= permanent.amount) {
                      permanent.amount -= selectedAmount;
                      addPermanentGreatPerson(choice, selectedAmount);
-                     setSelectedAmount(0);
                      playUpgrade();
                      notifyGameOptionsUpdate();
                      return;
