@@ -1,4 +1,4 @@
-import { GreatPersonType } from "../../../shared/definitions/GreatPersonDefinitions";
+import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { PatchNotes } from "../../../shared/definitions/PatchNotes";
 import { Config } from "../../../shared/logic/Config";
 import { STEAM_PATCH_NOTES_URL } from "../../../shared/logic/Constants";
@@ -9,6 +9,7 @@ import { getVotingTime } from "../../../shared/logic/PlayerTradeLogic";
 import {
    getGreatPersonUpgradeCost,
    getMissingGreatPeopleForWisdom,
+   isBirthday,
 } from "../../../shared/logic/RebirthLogic";
 import { combineResources, getResourceAmount } from "../../../shared/logic/ResourceLogic";
 import { getScienceAmount, getTechUnlockCost, unlockableTechs } from "../../../shared/logic/TechLogic";
@@ -544,6 +545,31 @@ export const _Todos = {
       },
       onClick: (gs, options) => {
          showModal(<AvailableTradingResourcesModal hideModal={hideModal} />);
+      },
+   },
+   I10: {
+      name: () => $t(L.GreatPeopleBirthday),
+      icon: "cake",
+      className: "text-green",
+      desc: (gs, options) => {
+         const result: string[] = [];
+         for (const [gp, def] of entriesOf(Config.GreatPerson)) {
+            if (isBirthday(gp)) {
+               result.push(def.name());
+            }
+         }
+         return $t(L.GreatPeopleBirthdayDesc, { names: result.join(", ") });
+      },
+      condition: (gs, options) => {
+         for (const [gp, def] of entriesOf(Config.GreatPerson)) {
+            if (isBirthday(gp)) {
+               return true;
+            }
+         }
+         return false;
+      },
+      onClick: (gs, options) => {
+         showModal(<ManagePermanentGreatPersonModal adaptiveOnly={false} />);
       },
    },
    S1: {

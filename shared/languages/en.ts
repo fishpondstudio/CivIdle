@@ -2073,6 +2073,8 @@ export const EN = {
    SourceGreatPersonBirthday: "Birthday (Great Person): %{person}",
    SourceGreatPersonPermanentBirthday: "Birthday (Permanent Great Person): %{person}",
    BlockXCurrentGameSession: "Block %{name} (Current Game Session)",
-   BlockXCurrentGameSessionDesc: "Are you sure you want to block <b>%{name}</b>? The block lasts for the current game session only.", 
+   BlockXCurrentGameSessionDesc: "Are you sure you want to block <b>%{name}</b>? The block lasts for the current game session only.",
    OnlyYouCanSeeThis: "Only you can see this",
+   GreatPeopleBirthday: "Great People's Birthdays",
+   GreatPeopleBirthdayDesc: "Great people's birthdays: %{names} - their effects are doubled!"
 };
