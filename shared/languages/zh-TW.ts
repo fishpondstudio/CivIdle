@@ -791,6 +791,8 @@ export const ZH_TW = {
    GreatOceanRoad: "大洋路",
    GreatOceanRoadDesc: "該奇觀可被升級，每一級為貿易地塊加成對應建築提供 +1 生產等級（不包括相鄰玩家加成，相同地塊僅生效一次）",
    GreatPeople: "偉人",
+   GreatPeopleBirthday: "偉人的誕辰提示",
+   GreatPeopleBirthdayDesc: "今天是以下偉人的誕辰: %{names} ——此生偉人與永恆偉人的效果翻倍！",
    GreatPeopleEffect: "效果",
    GreatPeopleFilter: "輸入名字或時代以篩選偉人",
    GreatPeopleName: "名字",
