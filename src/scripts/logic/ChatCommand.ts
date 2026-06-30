@@ -127,6 +127,16 @@ export async function handleChatCommand(command: string, channel: ChatChannel): 
          addSystemMessage(`Blocked (Current Game Session): ${Array.from(BlockedPlayers).join(", ")}`);
          break;
       }
+      case "block": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         BlockedPlayers.add(parts[1]);
+         addSystemMessage(
+            `${parts[1]} has been blocked.\nBlocked (Current Game Session): ${Array.from(BlockedPlayers).join(", ")}`,
+         );
+         break;
+      }
       case "unblock": {
          if (!parts[1]) {
             throw new Error("Invalid command format");

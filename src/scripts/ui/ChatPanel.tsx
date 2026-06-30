@@ -443,10 +443,9 @@ function _ChatMessage({
                      <MiscTextureComponent name="AccountLevelMod" scale={0.15} />
                   </Tippy>
                ) : null}
-               <div className="f1"></div>
                <Tippy content={$t(L.BlockXCurrentGameSession, { name: chat.name })}>
                   <div
-                     className="m-icon show-on-hover mr5"
+                     className="m-icon show-on-hover"
                      onClick={() => {
                         showModal(
                            <ConfirmModal
@@ -464,6 +463,7 @@ function _ChatMessage({
                      block
                   </div>
                </Tippy>
+               <div className="f1" />
                <Tippy content={$t(L.ShowTradesFrom, { name: chat.name })}>
                   <div
                      className="m-icon show-on-hover"
