@@ -54,6 +54,7 @@ let viewportZoom: number | null = null;
 
 export const GridSize = 100;
 const _cityCache = new Map<City, RenderTexture>();
+const BuildingAlpha = 0.2;
 
 export class PlayerMapScene extends Scene {
    private _width: number;
@@ -65,13 +66,13 @@ export class PlayerMapScene extends Scene {
    private _idToTile = new Map<string, string>();
    private _dirtyTiles = new Set<string>();
 
-   private _landTiles: ParticleContainer;
+   private _landTiles: Container;
    private _landTilesMap = new Map<string, Sprite>();
 
-   private _flags: ParticleContainer;
-   private _flagsMap = new Map<string, Sprite>();
+   private _playerFlags: Container;
+   private _playerFlagsMap = new Map<string, Sprite>();
 
-   private _playerLevels: ParticleContainer;
+   private _playerLevels: Container;
    private _playerLevelsMap = new Map<string, Sprite>();
 
    private _playerHandles: Container;
@@ -83,13 +84,13 @@ export class PlayerMapScene extends Scene {
    private _playerCity: Container;
    private _playerCityMap = new Map<string, DisplayObject>();
 
-   private _tradeCircles: ParticleContainer;
+   private _tradeCircles: Container;
    private _tradeCirclesMap = new Map<string, DisplayObject>();
 
    private _tradeCounts: Container;
    private _tradeCountsMap = new Map<string, DisplayObject>();
 
-   private _buildings: ParticleContainer;
+   private _buildings: Container;
    private _buildingsMap = new Map<string, DisplayObject>();
 
    constructor(context: ISceneContext) {
@@ -102,11 +103,9 @@ export class PlayerMapScene extends Scene {
       this.viewport.setWorldSize(this._width, this._height);
       this.viewport.setZoomRange(minZoom, 1);
 
-      this._landTiles = this.viewport.addChild(
-         new ParticleContainer(sizeOf(WorldMap), { position: true, tint: true }),
-      );
-      this._buildings = this.viewport.addChild(new ParticleContainer(sizeOf(WorldMap)));
-      this._flags = this.viewport.addChild(new ParticleContainer(sizeOf(WorldMap)));
+      this._landTiles = this.viewport.addChild(new Container());
+      this._buildings = this.viewport.addChild(new Container());
+      this._playerFlags = this.viewport.addChild(new ParticleContainer(sizeOf(WorldMap)));
       this._playerLevels = this.viewport.addChild(new ParticleContainer(sizeOf(WorldMap)));
       this._playerHandles = this.viewport.addChild(new Container());
       this._playerTariffs = this.viewport.addChild(new Container());
@@ -208,7 +207,7 @@ export class PlayerMapScene extends Scene {
       this.viewport.zoom = viewportZoom;
       this.viewport.center = viewportCenter;
 
-      this._cullTiles();
+      this._cullTiles(viewportZoom);
       super.onEnable();
    }
 
@@ -227,7 +226,7 @@ export class PlayerMapScene extends Scene {
             building.position.set(point.x * GridSize + GridSize / 2, point.y * GridSize + GridSize / 2);
             building.scale.set(0.75);
             building.tint = 0xffffff;
-            building.alpha = 0.2;
+            building.alpha = BuildingAlpha;
          }
       });
    }
@@ -287,17 +286,29 @@ export class PlayerMapScene extends Scene {
    override onMoved(point: IPointData): void {
       viewportCenter = this.viewport.center;
       viewportZoom = this.viewport.zoom;
-      this._cullTiles();
+      this._cullTiles(viewportZoom);
    }
 
-   private _cullTiles(): void {
+   private _cullTiles(zoom: number): void {
       const rect = this.viewport.visibleWorldRect();
       const currentRect = new Rectangle(0, 0, 0, 0);
+
+      const renderDetails = zoom >= 0.25;
+
+      this._playerFlags.visible = renderDetails;
+      this._playerLevels.visible = renderDetails;
+      this._playerHandles.visible = renderDetails;
+      this._playerTariffs.visible = renderDetails;
+      this._playerCity.visible = renderDetails;
+      this._tradeCircles.visible = renderDetails;
+      this._tradeCounts.visible = renderDetails;
+
       this._landTilesMap.forEach((tile, xy) => {
          const { x, y } = xyToPoint(xy);
 
+         const landTile = this._landTilesMap.get(xy);
          const building = this._buildingsMap.get(xy);
-         const flag = this._flagsMap.get(xy);
+         const flag = this._playerFlagsMap.get(xy);
          const level = this._playerLevelsMap.get(xy);
          const handle = this._playerHandlesMap.get(xy);
          const tariff = this._playerTariffsMap.get(xy);
@@ -313,29 +324,38 @@ export class PlayerMapScene extends Scene {
 
          tile.visible = shouldRender;
 
+         if (landTile) {
+            landTile.visible = shouldRender;
+         }
          if (building) {
-            building.visible = shouldRender;
+            if (renderDetails) {
+               building.visible = shouldRender;
+               building.alpha = BuildingAlpha;
+            } else {
+               building.visible = shouldRender && !this._playerFlagsMap.has(xy);
+               building.alpha = BuildingAlpha * 3;
+            }
          }
-         if (flag) {
-            flag.visible = shouldRender;
-         }
-         if (level) {
-            level.visible = shouldRender;
-         }
+         // if (flag) {
+         //    flag.visible = shouldRender && renderDetails;
+         // }
+         // if (level) {
+         //    level.visible = shouldRender && renderDetails;
+         // }
          if (handle) {
-            handle.visible = shouldRender;
+            handle.visible = shouldRender && renderDetails;
          }
          if (tariff) {
-            tariff.visible = shouldRender;
+            tariff.visible = shouldRender && renderDetails;
          }
          if (city) {
-            city.visible = shouldRender;
+            city.visible = shouldRender && renderDetails;
          }
-         if (tradeCircle) {
-            tradeCircle.visible = shouldRender;
-         }
+         // if (tradeCircle) {
+         //    tradeCircle.visible = shouldRender && renderDetails;
+         // }
          if (tradeCount) {
-            tradeCount.visible = shouldRender;
+            tradeCount.visible = shouldRender && renderDetails;
          }
       });
    }
@@ -471,7 +491,7 @@ export class PlayerMapScene extends Scene {
       const isMyself = entry.userId === getUser()?.userId;
       const trade = this._idToTradeCount.get(entry.userId) ?? 0;
 
-      this._flagsMap.get(xy)?.destroy();
+      this._playerFlagsMap.get(xy)?.destroy();
       this._playerLevelsMap.get(xy)?.destroy();
       this._playerHandlesMap.get(xy)?.destroy();
       this._playerTariffsMap.get(xy)?.destroy();
@@ -486,10 +506,10 @@ export class PlayerMapScene extends Scene {
       }
 
       // Flag
-      const flag = this._flags.addChild(
+      const flag = this._playerFlags.addChild(
          new Sprite(this.context.textures[`Flag_${entry.flag.toUpperCase()}`]),
       );
-      this._flagsMap.set(xy, flag);
+      this._playerFlagsMap.set(xy, flag);
       flag.anchor.set(0.5, 0.5);
       flag.position.set(x * GridSize + 0.5 * GridSize - 20, y * GridSize + 0.5 * GridSize - 30);
       flag.alpha = isReserved ? 1 : 0.5;
@@ -606,8 +626,8 @@ export class PlayerMapScene extends Scene {
          landTile.tint = 0x3498db;
       }
 
-      this._flagsMap.get(xy)?.destroy();
-      this._flagsMap.delete(xy);
+      this._playerFlagsMap.get(xy)?.destroy();
+      this._playerFlagsMap.delete(xy);
 
       this._playerLevelsMap.get(xy)?.destroy();
       this._playerLevelsMap.delete(xy);
