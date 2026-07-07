@@ -1207,7 +1207,7 @@ export const FR = {
    ShowOnlyAdaptiveGreatPeople: "Afficher uniquement les personnages illustre adaptatives",
    ShowTradesFrom: "Afficher les transactions depuis %{name}",
    ShowTransportArrow: "Afficher la flèche de transport",
-   ShowTransportArrowDescHTML: "Désactiver cette option masquera les flèches de transport. Cela pourrait <i>légèrement</i> améliorer les performances sur les appareils de faible puissance. L'amélioration des performances prendra effet <b>après avoir redémarré votre jeu</b>. ",
+   ShowTransportArrowDescHTML: "Désactiver cette option masquera les flèches de transport. Cela pourrait <i>légèrement</i> améliorer les performances sur les appareils de faible puissance.",
    ShowTutorial: "Afficher le tutoriel",
    ShowUnbuiltOnly: "Afficher uniquement les bâtiments qui n'ont pas encore été construits",
    Shrine: "Sanctuaire",

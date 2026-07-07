@@ -1299,7 +1299,7 @@ export const KR = {
    ShortcutUpgradePageEndConstruction: "건설 종료",
    ShortcutUpgradePageIncreaseLevel: "업그레이드 레벨 상승",
    ShowTransportArrow: "운송 화살표 표시",
-   ShowTransportArrowDescHTML: "이 옵션을 끄면 운송 화살표가 숨겨집니다. 저사양 장치에서 <i>약간의</i> 성능 개선이 있을 수 있습니다. 성능 개선은 <b>게임을 재시작한 후</b> 적용됩니다.",
+   ShowTransportArrowDescHTML: "이 옵션을 끄면 운송 화살표가 숨겨집니다. 저사양 장치에서 <i>약간의</i> 성능 개선이 있을 수 있습니다.",
    ShowTutorial: "튜토리얼 보기",
    ShowUnbuiltOnly: "아직 건설되지 않은 건물만 표시",
    Shrine: "신당",

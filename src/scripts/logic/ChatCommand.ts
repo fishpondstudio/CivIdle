@@ -1,7 +1,12 @@
 import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { MAX_TECH_AGE } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
-import { getGameOptions, getGameState, savedGame } from "../../../shared/logic/GameStateLogic";
+import {
+   getGameOptions,
+   getGameState,
+   notifyGameOptionsUpdate,
+   savedGame,
+} from "../../../shared/logic/GameStateLogic";
 import {
    DEFAULT_GREAT_PEOPLE_CHOICE_COUNT,
    rollPermanentGreatPeople,
@@ -119,8 +124,8 @@ export async function handleChatCommand(command: string, channel: ChatChannel): 
       }
       case "togglearrow": {
          getGameOptions().showTransportArrow = !getGameOptions().showTransportArrow;
+         notifyGameOptionsUpdate();
          await saveGame();
-         window.location.reload();
          break;
       }
       case "blocklist": {

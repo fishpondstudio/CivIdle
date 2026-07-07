@@ -58,6 +58,7 @@ const MARGIN = 200;
 const SELECTOR_ALPHA = 0.4;
 const HIGHLIGHT_ALPHA = 0.2;
 const ANIMATION_TIME = 0.2;
+const TRANSPORT_VISUAL_SIZE = 10;
 
 export class WorldScene extends Scene {
    private _width!: number;
@@ -272,6 +273,7 @@ export class WorldScene extends Scene {
 
    override onGameOptionsChanged(gameOptions: GameOptions): void {
       this._tiles.forEach((visual, xy) => visual.onGameOptionChanged(gameOptions));
+      this.drawTransportation(getGameState());
    }
 
    lookAtTile(xy: Tile, lookAtMode: LookAtMode) {
@@ -385,6 +387,9 @@ export class WorldScene extends Scene {
          return;
       }
       this._transportLines.clear();
+      if (!getGameOptions().showTransportArrow) {
+         return;
+      }
       const lines: Record<string, true> = {};
       Transports.forEach((t) => {
          if (t.fromXy !== xy && t.toXy !== xy) {
@@ -453,6 +458,19 @@ export class WorldScene extends Scene {
       const worldRect = this.viewport.visibleWorldRect();
       this._ticked.clear();
       Transports.forEach((t) => {
+         const minX = Math.min(t.fromPosition.x, t.toPosition.x) - TRANSPORT_VISUAL_SIZE;
+         const maxX = Math.max(t.fromPosition.x, t.toPosition.x) + TRANSPORT_VISUAL_SIZE;
+         const minY = Math.min(t.fromPosition.y, t.toPosition.y) - TRANSPORT_VISUAL_SIZE;
+         const maxY = Math.max(t.fromPosition.y, t.toPosition.y) + TRANSPORT_VISUAL_SIZE;
+         if (
+            maxX < worldRect.x ||
+            minX > worldRect.x + worldRect.width ||
+            maxY < worldRect.y ||
+            minY > worldRect.y + worldRect.height
+         ) {
+            return;
+         }
+
          lerpVector2(
             t.fromPosition,
             t.toPosition,

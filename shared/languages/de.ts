@@ -1168,7 +1168,7 @@ export const DE = {
    ShortcutUpgradePageEndConstruction: "Beenden der Konstruktion",
    ShortcutUpgradePageIncreaseLevel: "Upgrade-Level erhöhen",
    ShowTransportArrow: "Transportpfeile anzeigen",
-   ShowTransportArrowDescHTML: "Durch Ausschalten werden die Transportpfeile ausgeblendet. Dies kann die Leistung auf Geräten mit geringer Leistung möglicherweise <i>leicht</i> verbessern. Die Leistungsverbesserung wird <b>nach einem Neustart des Spiels</b> wirksam.",
+   ShowTransportArrowDescHTML: "Durch Ausschalten werden die Transportpfeile ausgeblendet. Dies kann die Leistung auf Geräten mit geringer Leistung möglicherweise <i>leicht</i> verbessern.",
    ShowUnbuiltOnly: "Zeige nur Gebäude die noch nicht gebaut wurden",
    Shrine: "Schrein",
    SidePanelWidth: "Breite des seitlichen Menüfensters",

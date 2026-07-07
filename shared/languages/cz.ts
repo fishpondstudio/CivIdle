@@ -1862,7 +1862,7 @@ export const CZ = {
    ShowOnlyAdaptiveGreatPeople: "Show only adaptive great people",
    ShowTradesFrom: "Show Trades From %{name}",
    ShowTransportArrow: "Show Transport Arrow",
-   ShowTransportArrowDescHTML: "Turning this off will hide transport arrows. It might <i>slightly</i> improve performance on low end devices. Performance improvement takes effect <b>after restarting your game</b>",
+   ShowTransportArrowDescHTML: "Turning this off will hide transport arrows. It might <i>slightly</i> improve performance on low end devices.",
    ShowTutorial: "Show Tutorial",
    ShowWonderPopup: "Wonder Constructed Popup",
    SidePanelWidth: "Side Panel Width",
