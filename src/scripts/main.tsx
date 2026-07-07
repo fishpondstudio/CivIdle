@@ -109,6 +109,9 @@ if (canvas) {
    if (import.meta.env.DEV) {
       registerPixiInspector(app);
       document.body.style.userSelect = "auto";
+      import("./ui/DebugPage").then(({ DebugPage }) =>
+         createRoot(document.getElementById("debug-ui")!).render(<DebugPage />),
+      );
    }
    Assets.addBundle("main", mainBundle);
    loadBundle()
