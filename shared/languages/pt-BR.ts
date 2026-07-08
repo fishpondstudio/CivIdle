@@ -1293,7 +1293,7 @@ export const PT_BR = {
    ShowOnlyAdaptiveGreatPeople: "Mostrar apenas grandes personalidades adaptativas",
    ShowTradesFrom: "Mostrar Trocas de %{name}",
    ShowTransportArrow: "Mostrar Seta de Transporte",
-   ShowTransportArrowDescHTML: "Desativar isso ocultará as setas de transporte. Pode <i>melhorar ligeiramente</i> o desempenho em dispositivos de baixo custo.",
+   ShowTransportArrowDescHTML: "Desativar isso ocultará as setas de transporte. Pode <i>melhorar ligeiramente</i> o desempenho em dispositivos de baixo custo. A melhoria de desempenho entra em vigor <b>após reiniciar o jogo</b>",
    ShowTutorial: "Mostrar Tutorial",
    ShowUnbuiltOnly: "Mostrar apenas edifícios que ainda não foram construídos",
    ShowWonderPopup: "Mostrar Popup de Maravilha Construída",

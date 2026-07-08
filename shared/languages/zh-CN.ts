@@ -1616,7 +1616,7 @@ export const ZH_CN = {
    ShowOnlyAdaptiveGreatPeople: "只显示建筑伟人",
    ShowTradesFrom: "显示 %{name} 的贸易",
    ShowTransportArrow: "显示运送指示",
-   ShowTransportArrowDescHTML: "关闭将隐藏运送指示。它也许能 <i>轻微地</i> 改善在低端设备上的性能表现。",
+   ShowTransportArrowDescHTML: "关闭将隐藏运送指示。它也许能 <i>轻微地</i> 改善在低端设备上的性能表现。此项性能表现改善，需<b>重启你的游戏</b>以起效。",
    ShowTutorial: "显示教程",
    ShowUnbuiltOnly: "仅显示尚未建造完成的建筑",
    ShowWonderPopup: "奇观建造完成弹出",

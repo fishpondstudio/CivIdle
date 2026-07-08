@@ -1848,7 +1848,7 @@ export const DK = {
    ShowOnlyAdaptiveGreatPeople: "Show only adaptive great people",
    ShowTradesFrom: "Show Trades From %{name}",
    ShowTransportArrow: "Show Transport Arrow",
-   ShowTransportArrowDescHTML: "Turning this off will hide transport arrows. It might <i>slightly</i> improve performance on low end devices.",
+   ShowTransportArrowDescHTML: "Turning this off will hide transport arrows. It might <i>slightly</i> improve performance on low end devices. Performance improvement takes effect <b>after restarting your game</b>",
    ShowTutorial: "Show Tutorial",
    ShowWonderPopup: "Wonder Constructed Popup",
    SidMeier: "Sid Meier",

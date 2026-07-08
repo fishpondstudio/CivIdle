@@ -273,7 +273,6 @@ export class WorldScene extends Scene {
 
    override onGameOptionsChanged(gameOptions: GameOptions): void {
       this._tiles.forEach((visual, xy) => visual.onGameOptionChanged(gameOptions));
-      this.drawTransportation(getGameState());
    }
 
    lookAtTile(xy: Tile, lookAtMode: LookAtMode) {
@@ -387,9 +386,6 @@ export class WorldScene extends Scene {
          return;
       }
       this._transportLines.clear();
-      if (!getGameOptions().showTransportArrow) {
-         return;
-      }
       const lines: Record<string, true> = {};
       Transports.forEach((t) => {
          if (t.fromXy !== xy && t.toXy !== xy) {

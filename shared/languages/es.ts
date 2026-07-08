@@ -1284,7 +1284,7 @@ export const ES = {
    ShowOnlyAdaptiveGreatPeople: "Mostrar solo personajes históricos adaptables",
    ShowTradesFrom: "Mostrar comercios de %{name}",
    ShowTransportArrow: "Mostrar flechas de transporte",
-   ShowTransportArrowDescHTML: "Desactivar esta opción ocultará las fechas de transporte. Puede mejorar <i>ligeramente</i> el rendimiento en equipos de gama baja.",
+   ShowTransportArrowDescHTML: "Desactivar esta opción ocultará las fechas de transporte. Puede mejorar <i>ligeramente</i> el rendimiento en equipos de gama baja. La mejora de rendimiento tiene efecto <b>tras reiniciar el juego</b>",
    ShowTutorial: "Mostrar tutorial",
    ShowUnbuiltOnly: "Solo mostrar construcciones que aún no han sido construidas",
    ShowWonderPopup: "Ventana emergente de maravilla construida",

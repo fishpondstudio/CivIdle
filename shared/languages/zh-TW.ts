@@ -1614,7 +1614,7 @@ export const ZH_TW = {
    ShowOnlyAdaptiveGreatPeople: "只顯示建築偉人",
    ShowTradesFrom: "顯示 %{name} 的貿易",
    ShowTransportArrow: "顯示運輸箭頭",
-   ShowTransportArrowDescHTML: "關閉此選項將隱藏運輸箭頭。這可能會<i>稍微</i>改善低端設備上的效能。",
+   ShowTransportArrowDescHTML: "關閉此選項將隱藏運輸箭頭。這可能會<i>稍微</i>改善低端設備上的效能。效能改善會在<b>重新啟動遊戲後</b>生效",
    ShowTutorial: "顯示新手教學",
    ShowUnbuiltOnly: "只顯示尚未建造(數量為0)的建築",
    ShowWonderPopup: "奇觀建造完成彈出",

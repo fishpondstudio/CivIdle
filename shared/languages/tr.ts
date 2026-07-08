@@ -1272,7 +1272,7 @@ export const TR = {
    ShowOnlyAdaptiveGreatPeople: "Sadece uyarlanabilir büyük insanları göster",
    ShowTradesFrom: "%{name} Tarafından Yapılan Ticaretleri Göster",
    ShowTransportArrow: "Taşıma Okunu Göster",
-   ShowTransportArrowDescHTML: "Bunu kapatmak taşıma oklarını gizleyecektir. Düşük donanımlı cihazlarda performansı <i>hafifçe</i> artırabilir.",
+   ShowTransportArrowDescHTML: "Bunu kapatmak taşıma oklarını gizleyecektir. Düşük donanımlı cihazlarda performansı <i>hafifçe</i> artırabilir. Performans iyileştirmesi <b>oyununuzu yeniden başlattıktan sonra</b> etkili olur",
    ShowTutorial: "Eğitimi Göster",
    ShowUnbuiltOnly: "Sadece henüz inşa edilmemiş binaları göster",
    ShowWonderPopup: "Harika İnşa Edildi Penceresi",
