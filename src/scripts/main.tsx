@@ -65,6 +65,13 @@ createRoot(document.getElementById("ui-root")!).render(
    </>,
 );
 
+document.addEventListener("mouseup", (e) => {
+   if (e.button === 3 || e.button === 4) {
+      e.preventDefault();
+      e.stopPropagation();
+   }
+});
+
 const canvas = document.getElementById("game-canvas");
 const mainBundle = {
    TextureBuilding,
