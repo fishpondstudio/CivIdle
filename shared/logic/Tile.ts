@@ -185,10 +185,10 @@ export interface IMauritshuisBuildingData extends IBuildingData {
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
-export const STOCKPILE_CAPACITY_MAX = 20;
+export const STOCKPILE_CAPACITY_MAX = 100;
 
 export const STOCKPILE_MAX_MIN = 0;
-export const STOCKPILE_MAX_MAX = 100;
+export const STOCKPILE_MAX_MAX = 1000;
 
 export const PRIORITY_MIN = 1;
 export const PRIORITY_MAX = 10;
