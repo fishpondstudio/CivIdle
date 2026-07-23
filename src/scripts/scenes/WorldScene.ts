@@ -5,7 +5,6 @@ import {
    LINE_CAP,
    LINE_JOIN,
    ParticleContainer,
-   Rectangle,
    Sprite,
    type ColorSource,
    type FederatedPointerEvent,
@@ -439,7 +438,6 @@ export class WorldScene extends Scene {
    }
 
    private _ticked: Set<number> = new Set();
-   private _rect = new Rectangle(0, 0, TRANSPORT_VISUAL_SIZE, TRANSPORT_VISUAL_SIZE);
    private _pos: IPointData = { x: 0, y: 0 };
 
    private _updateTransportVisual(timeSinceLastTick: number) {
@@ -474,9 +472,12 @@ export class WorldScene extends Scene {
             this._pos,
          );
 
-         this._rect.x = this._pos.x;
-         this._rect.y = this._pos.y;
-         if (!worldRect.intersects(this._rect)) {
+         if (
+            this._pos.x < worldRect.x - TRANSPORT_VISUAL_SIZE ||
+            this._pos.x > worldRect.x + worldRect.width + TRANSPORT_VISUAL_SIZE ||
+            this._pos.y < worldRect.y - TRANSPORT_VISUAL_SIZE ||
+            this._pos.y > worldRect.y + worldRect.height + TRANSPORT_VISUAL_SIZE
+         ) {
             return;
          }
 
@@ -491,11 +492,10 @@ export class WorldScene extends Scene {
          }
 
          if (t.hasEnoughFuel) {
-            const visual = this._transport.get(t.id);
-            visual!.position = this._pos;
+            visual.position = this._pos;
             // This is the last tick
             if (t.ticksSpent >= t.ticksRequired - 1) {
-               visual!.alpha = lerp(
+               visual.alpha = lerp(
                   options.themeColors.TransportIndicatorAlpha,
                   0,
                   clamp(timeSinceLastTick - 0.5, 0, 0.5) * 2,
