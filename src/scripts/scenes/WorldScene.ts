@@ -439,7 +439,7 @@ export class WorldScene extends Scene {
    }
 
    private _ticked: Set<number> = new Set();
-   private _rect = new Rectangle(0, 0, 9.75, 9.75);
+   private _rect = new Rectangle(0, 0, TRANSPORT_VISUAL_SIZE, TRANSPORT_VISUAL_SIZE);
    private _pos: IPointData = { x: 0, y: 0 };
 
    private _updateTransportVisual(timeSinceLastTick: number) {
