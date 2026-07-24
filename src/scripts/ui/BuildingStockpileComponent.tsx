@@ -71,7 +71,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
                type="range"
                min={STOCKPILE_MAX_MIN}
                max={STOCKPILE_MAX_MAX}
-               step="5"
+               step="10"
                value={building.stockpileMax}
                onChange={(e) => {
                   building.stockpileMax = Number.parseInt(e.target.value, 10);
