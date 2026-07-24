@@ -105,7 +105,9 @@ const createWindow = async () => {
    }
 };
 
-Menu.setApplicationMenu(null);
+if (process.platform !== "darwin") {
+   Menu.setApplicationMenu(null);
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
