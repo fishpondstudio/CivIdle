@@ -3,8 +3,9 @@ import type { City } from "../../shared/definitions/CityDefinitions";
 import { IsDeposit } from "../../shared/definitions/MaterialDefinitions";
 import { TimedBuildingUnlock } from "../../shared/definitions/TimedBuildingUnlock";
 import { addPetraOfflineTime, findSpecialBuildingCached } from "../../shared/logic/BuildingLogic";
+import { calculateTierAndPrice } from "../../shared/logic/CalculateTierAndPrice";
 import { Config } from "../../shared/logic/Config";
-import { MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "../../shared/logic/Constants";
+import { MAX_OFFLINE_PRODUCTION_SEC } from "../../shared/logic/Constants";
 import { Languages, syncLanguage, type GameState } from "../../shared/logic/GameState";
 import {
    getGameOptions,
