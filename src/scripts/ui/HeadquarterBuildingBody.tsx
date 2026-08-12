@@ -34,6 +34,7 @@ import { TimeSeries } from "../logic/TimeSeries";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { Singleton } from "../utilities/Singleton";
 import { playAgeUp } from "../visuals/Sound";
+import { BirthdayCalendarModal } from "./BirthdayCalendarModal";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
@@ -405,13 +406,18 @@ function GreatPeopleComponent({
                </details>
             </li>
          </ul>
-         <button
-            className="row w100 mt10 text-strong"
-            onClick={() => showModal(<ManagePermanentGreatPersonModal adaptiveOnly={false} />)}
-         >
-            <div className="m-icon small">person_celebrate</div>
-            <div className="f1 text-center">{$t(L.ManageGreatPeople)}</div>
-         </button>
+         <div className="row mt10 text-strong">
+            <button
+               className="f1 row"
+               onClick={() => showModal(<ManagePermanentGreatPersonModal adaptiveOnly={false} />)}
+            >
+               <div className="m-icon small">person_celebrate</div>
+               <div className="f1 text-center">{$t(L.ManageGreatPeople)}</div>
+            </button>
+            <button className="ph5" onClick={() => showModal(<BirthdayCalendarModal />)}>
+               <div className="m-icon small">calendar_month</div>
+            </button>
+         </div>
          <button className="row w100 mt5 text-strong" onClick={() => showModal(<ManageAgeWisdomModal />)}>
             <div className="m-icon small">emoji_objects</div>
             <div className="f1 text-center">{$t(L.ManageAgeWisdom)}</div>

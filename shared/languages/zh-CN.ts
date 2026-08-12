@@ -2065,4 +2065,7 @@ export const ZH_CN = {
    Zoroaster: "琐罗亚斯德",
    Zugspitze: "楚格峰",
    ZugspitzeDesc: "对于每个已解锁时代，获得一项等级点数。等级点数可被用于提升任意（本轮诞生的）此生伟人的额外等级（存储乘数效果和奇观伟人除外），可随时切换任意此生伟人",
+   BirthdayOfXIsY: "Birthday of %{name} is %{date}",
+   GameCalendar: "Game Calendar",
+   Today: "Today",
 };

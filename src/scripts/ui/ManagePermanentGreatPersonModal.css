@@ -1,0 +1,14 @@
+.great-person-scroll-highlight {
+   animation: great-person-scroll-highlight 2s ease-out;
+}
+
+@keyframes great-person-scroll-highlight {
+   0%,
+   35% {
+      background-color: var(--highlight-color);
+   }
+
+   100% {
+      background-color: transparent;
+   }
+}

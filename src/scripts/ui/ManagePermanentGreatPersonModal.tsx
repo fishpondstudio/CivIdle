@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import type { TechAge } from "../../../shared/definitions/TechDefinitions";
@@ -24,25 +24,43 @@ import { cls, keysOf, numberToRoman, safeParseInt } from "../../../shared/utilit
 import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
+import { getColorCached } from "../utilities/CachedColor";
 import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playAgeUp, playClick, playError, playUpgrade } from "../visuals/Sound";
+import { BirthdayCalendarModal } from "./BirthdayCalendarModal";
 import { hideModal, showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { ManageAgeWisdomModal } from "./ManageAgeWisdomModal";
+import "./ManagePermanentGreatPersonModal.css";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
 
 let ageState: TechAge | null = null;
 
-export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }): React.ReactNode {
-   const [age, setAge] = useState<TechAge | null>(ageState);
+export function ManagePermanentGreatPersonModal(props: {
+   adaptiveOnly: boolean;
+   scrollToGreatPerson?: GreatPerson;
+}): React.ReactNode {
+   const [age, setAge] = useState<TechAge | null>(props.scrollToGreatPerson ? null : ageState);
    const [adaptiveOnly, setAdaptiveOnly] = useState(props.adaptiveOnly);
+   const [highlightedGreatPerson, setHighlightedGreatPerson] = useState<GreatPerson | null>(null);
+   const scrollTargetRef = useRef<HTMLTableRowElement>(null);
    const options = useGameOptions();
+   useEffect(() => {
+      if (!props.scrollToGreatPerson) {
+         return;
+      }
+      const frame = requestAnimationFrame(() => {
+         scrollTargetRef.current?.scrollIntoView({ block: "center" });
+         setHighlightedGreatPerson(props.scrollToGreatPerson ?? null);
+      });
+      return () => cancelAnimationFrame(frame);
+   }, [props.scrollToGreatPerson]);
    return (
-      <div className="window" style={{ width: "800px", maxWidth: "90vw" }}>
+      <div className="window" style={{ width: "1000px", maxWidth: "90vw" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.PermanentGreatPeople)}</div>
             <div className="title-bar-controls">
@@ -146,6 +164,9 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
                   </div>
                   <div>{$t(L.AgeWisdom)}</div>
                </button>
+               <button className="ph5" onClick={() => showModal(<BirthdayCalendarModal />)}>
+                  <div className="m-icon small">calendar_month</div>
+               </button>
             </div>
             <div
                className={classNames({ "table-view": true, "sticky-header f1": true })}
@@ -176,7 +197,20 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
                         .map((k) => {
                            const person = Config.GreatPerson[k];
                            return (
-                              <tr key={k}>
+                              <tr
+                                 key={k}
+                                 ref={k === props.scrollToGreatPerson ? scrollTargetRef : undefined}
+                                 style={
+                                    {
+                                       "--highlight-color": getColorCached(Config.TechAge[person.age].color)
+                                          .setAlpha(0.5)
+                                          .toRgbaString(),
+                                    } as React.CSSProperties
+                                 }
+                                 className={cls(
+                                    k === highlightedGreatPerson ? "great-person-scroll-highlight" : null,
+                                 )}
+                              >
                                  <td>
                                     <GreatPersonImage
                                        greatPerson={k}
@@ -184,11 +218,34 @@ export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }
                                     />
                                  </td>
                                  <td>
-                                    {isBirthday(k) ? (
-                                       <Tippy content={$t(L.TodayIsTheBirthdayOfX, { name: person.name() })}>
-                                          <div className="m-icon small text-orange mb5">cake</div>
+                                    {person.birthday && (
+                                       <Tippy
+                                          content={
+                                             <>
+                                                <div>
+                                                   {$t(L.BirthdayOfXIsY, {
+                                                      name: person.name(),
+                                                      date: person.birthday.toLocaleDateString(),
+                                                   })}
+                                                </div>
+                                                {isBirthday(k) && (
+                                                   <div>
+                                                      {$t(L.TodayIsTheBirthdayOfX, { name: person.name() })}
+                                                   </div>
+                                                )}
+                                             </>
+                                          }
+                                       >
+                                          <div
+                                             className={cls(
+                                                "m-icon small mb2",
+                                                isBirthday(k) ? "text-orange" : "text-desc",
+                                             )}
+                                          >
+                                             cake
+                                          </div>
                                        </Tippy>
-                                    ) : null}
+                                    )}
                                     <Tippy content={$t(L.ViewOnWikipedia, { name: person.name() })}>
                                        <div
                                           className="m-icon small text-desc pointer"

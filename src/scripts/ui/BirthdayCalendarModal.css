@@ -1,0 +1,56 @@
+.birthday-calendar-window {
+   width: 800px !important;
+   max-width: 90vw;
+   height: 650px;
+   max-height: 90vh;
+}
+
+.birthday-calendar {
+   min-width: 0;
+   min-height: 0;
+}
+
+.birthday-calendar-grid {
+   display: grid;
+   grid-template-columns: repeat(7, minmax(0, 1fr));
+   grid-template-rows: auto repeat(6, minmax(0, 1fr));
+   min-height: 0;
+   border-top: 1px solid #808080;
+   border-left: 1px solid #808080;
+}
+
+.birthday-calendar-weekday,
+.birthday-calendar-day {
+   border-right: 1px solid #808080;
+   border-bottom: 1px solid #808080;
+}
+
+.birthday-calendar-weekday {
+   padding: 5px 2px;
+}
+
+.birthday-calendar-day {
+   min-width: 0;
+   min-height: 0;
+   overflow-y: auto;
+   background: #fff;
+   color: #333;
+}
+
+.birthday-calendar-day-empty {
+   background: #eeeeee;
+}
+
+.birthday-calendar-today {
+   position: relative;
+   background: #fff4d6;
+}
+
+.birthday-calendar-person {
+   min-width: 0;
+   overflow: hidden;
+   padding: 2px 5px;
+   border-radius: 4px;
+   text-overflow: ellipsis;
+   color: #333;
+}
