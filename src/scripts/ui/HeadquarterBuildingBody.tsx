@@ -406,9 +406,9 @@ function GreatPeopleComponent({
                </details>
             </li>
          </ul>
-         <div className="row mt10 text-strong">
+         <div className="row mt10">
             <button
-               className="f1 row"
+               className="f1 row text-strong"
                onClick={() => showModal(<ManagePermanentGreatPersonModal adaptiveOnly={false} />)}
             >
                <div className="m-icon small">person_celebrate</div>
