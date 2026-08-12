@@ -123,7 +123,7 @@ export function KeepersOfOurServerComponent(): React.ReactNode {
             </button>
          </div>
          <div className="separator" />
-         {html($t(L.OnYourSpecialdayDesc, { cooldown: BIRTHDAY_COOLDOWN_DAYS }), "text-desc")}
+         {html($t(L.OnYourSpecialDayDesc, { cooldown: BIRTHDAY_COOLDOWN_DAYS }), "text-desc")}
       </fieldset>
    );
 }

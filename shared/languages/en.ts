@@ -2084,7 +2084,7 @@ export const EN = {
    Save: "Save",
    SpecialDayEffectDesc: "All buildings get +1 Production Multiplier and +1 Building Level Boost.",
    XSpecialDay: "%{name}'s Special Day",
-   OnYourSpecialdayDesc: "On your special day, all players receive +1 Production Multiplier and +1 Building Level Boost for every building. Your special day is shown on the game calendar. <b>This can only be changed once every %{cooldown} days.</b>",
+   OnYourSpecialDayDesc: "On your special day, all players receive +1 Production Multiplier and +1 Building Level Boost for every building. Your special day is shown on the game calendar. <b>This can only be changed once every %{cooldown} days.</b>",
    Day: "Day",
    Month: "Month",
 };
