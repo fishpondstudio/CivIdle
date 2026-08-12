@@ -1,7 +1,7 @@
-.birthday-calendar-window {
-   width: 800px !important;
+#global-modal .birthday-calendar-window {
+   width: 800px;
    max-width: 90vw;
-   height: 650px;
+   height: 700px;
    max-height: 90vh;
 }
 

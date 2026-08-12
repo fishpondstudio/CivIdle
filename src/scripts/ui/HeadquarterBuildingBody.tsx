@@ -34,13 +34,13 @@ import { TimeSeries } from "../logic/TimeSeries";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { Singleton } from "../utilities/Singleton";
 import { playAgeUp } from "../visuals/Sound";
-import { BirthdayCalendarModal } from "./BirthdayCalendarModal";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { CurrentRunStatsComponent } from "./CurrentRunStatsComponent";
+import { GameCalendarModal } from "./GameCalendarModal";
 import { showModal } from "./GlobalModal";
 import { HallOfFameModal } from "./HallOfFameModal";
 import { HappinessComponent } from "./HappinessComponent";
@@ -414,7 +414,7 @@ function GreatPeopleComponent({
                <div className="m-icon small">person_celebrate</div>
                <div className="f1 text-center">{$t(L.ManageGreatPeople)}</div>
             </button>
-            <button className="ph5" onClick={() => showModal(<BirthdayCalendarModal />)}>
+            <button className="ph5" onClick={() => showModal(<GameCalendarModal />)}>
                <div className="m-icon small">calendar_month</div>
             </button>
          </div>

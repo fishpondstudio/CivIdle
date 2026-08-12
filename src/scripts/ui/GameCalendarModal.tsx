@@ -5,10 +5,10 @@ import { Config } from "../../../shared/logic/Config";
 import { cls, keysOf } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { getColorCached } from "../utilities/CachedColor";
-import "./BirthdayCalendarModal.css";
+import "./GameCalendarModal.css";
 import { hideModal, showModal } from "./GlobalModal";
 
-export function BirthdayCalendarModal(): React.ReactNode {
+export function GameCalendarModal(): React.ReactNode {
    const today = new Date();
    const [month, setMonth] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
    const monthStart = new Date(month.getFullYear(), month.getMonth(), 1);

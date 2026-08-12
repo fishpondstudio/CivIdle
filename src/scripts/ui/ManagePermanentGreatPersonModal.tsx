@@ -29,7 +29,7 @@ import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playAgeUp, playClick, playError, playUpgrade } from "../visuals/Sound";
-import { BirthdayCalendarModal } from "./BirthdayCalendarModal";
+import { GameCalendarModal } from "./GameCalendarModal";
 import { hideModal, showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { ManageAgeWisdomModal } from "./ManageAgeWisdomModal";
@@ -164,7 +164,7 @@ export function ManagePermanentGreatPersonModal(props: {
                   </div>
                   <div>{$t(L.AgeWisdom)}</div>
                </button>
-               <button className="ph5" onClick={() => showModal(<BirthdayCalendarModal />)}>
+               <button className="ph5" onClick={() => showModal(<GameCalendarModal />)}>
                   <div className="m-icon small">calendar_month</div>
                </button>
             </div>
