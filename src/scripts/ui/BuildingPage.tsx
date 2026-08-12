@@ -114,6 +114,15 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    CothonOfCarthage: CothonOfCarthageBuildingBody,
    Mauritshuis: MauritshuisBuildingBody,
    Midsummer: UpgradableWonderBuildingBody,
+   CircusMaximus: UpgradableWonderBuildingBody,
+   Colosseum: UpgradableWonderBuildingBody,
+   StatueOfZeus: UpgradableWonderBuildingBody,
+   Parthenon: UpgradableWonderBuildingBody,
+   AbuSimbel: UpgradableWonderBuildingBody,
+   GreatSphinx: UpgradableWonderBuildingBody,
+   GreatWall: UpgradableWonderBuildingBody,
+   YellowCraneTower: UpgradableWonderBuildingBody,
+   PorcelainTower: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

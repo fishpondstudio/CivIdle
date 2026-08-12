@@ -265,10 +265,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "CircusMaximus": {
-         addMultiplier("MusiciansGuild", { output: 1, storage: 1 }, buildingName);
-         addMultiplier("PaintersGuild", { output: 1, storage: 1 }, buildingName);
-         addMultiplier("WritersGuild", { output: 1, storage: 1 }, buildingName);
-         Tick.next.globalMultipliers.happiness.push({ value: 5, source: buildingName });
+         const level = building.level;
+         addMultiplier("MusiciansGuild", { output: level, storage: level }, buildingName);
+         addMultiplier("PaintersGuild", { output: level, storage: level }, buildingName);
+         addMultiplier("WritersGuild", { output: level, storage: level }, buildingName);
+         Tick.next.globalMultipliers.happiness.push({ value: 5 * level, source: buildingName });
          break;
       }
       case "Alps": {
@@ -363,9 +364,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "Colosseum": {
-         let happiness = (Config.TechAge[getCurrentAge(gs)].idx + 1) * 2;
+         const level = building.level;
+         let happiness = (Config.TechAge[getCurrentAge(gs)].idx + 1) * level;
          if (!Tick.current.notProducingReasons.has(xy)) {
-            happiness += Config.Building.Colosseum.input.Chariot!;
+            happiness += 5 * level;
          }
          Tick.next.globalMultipliers.happiness.push({
             value: happiness,
@@ -584,10 +586,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "StatueOfZeus": {
-         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+         const level = building.level;
+         for (const neighbor of grid.getRange(tileToPoint(xy), level)) {
             const neighborXy = pointToTile(neighbor);
-            const building = gs.tiles.get(neighborXy)?.building;
-            if (building && Config.BuildingTier[building.type] === 1) {
+            const building = getWorkingBuilding(neighborXy, gs);
+            if (building) {
                mapSafePush(Tick.next.tileMultipliers, neighborXy, {
                   output: 5,
                   storage: 5,
@@ -750,7 +753,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "AbuSimbel": {
          let count = 0;
-         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+         for (const neighbor of grid.getRange(tileToPoint(xy), building.level)) {
             const neighborXy = pointToTile(neighbor);
             if (isWorldWonder(getWorkingBuilding(neighborXy, gs)?.type)) {
                ++count;
@@ -760,17 +763,17 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const total = getGreatPersonTotalLevel("RamessesII", gs);
          if (total > 0) {
             Tick.next.globalMultipliers.builderCapacity.push({
-               value: Config.GreatPerson.RamessesII.value(total),
+               value: Config.GreatPerson.RamessesII.value(total * building.level),
                source: buildingName,
             });
          }
          break;
       }
       case "GreatSphinx": {
-         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+         for (const point of grid.getRange(tileToPoint(xy), building.level)) {
             const tileXy = pointToTile(point);
             const b = gs.tiles.get(tileXy)?.building;
-            if (b && (Config.BuildingTier[b.type] ?? 0) > 1) {
+            if (b) {
                const type = b.type;
                let count = 0;
                for (const n of grid.getNeighbors(point)) {
@@ -854,11 +857,17 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "YellowCraneTower": {
          for (const point of grid.getRange(tileToPoint(xy), getYellowCraneTowerRange(xy, gs))) {
             mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
-               output: 1,
-               storage: 1,
-               worker: 1,
+               output: building.level,
+               storage: building.level,
+               worker: building.level,
                source: buildingName,
             });
+            if (isFestival("YellowCraneTower", gs)) {
+               mapSafePush(Tick.next.levelBoost, pointToTile(point), {
+                  value: building.level,
+                  source: buildingName,
+               });
+            }
          }
          break;
       }
@@ -954,19 +963,22 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          for (const point of grid.getRange(tileToPoint(xy), getGreatWallRange(xy, gs))) {
             const building = getWorkingBuilding(pointToTile(point), gs);
             if (!building || isSpecialBuilding(building.type)) continue;
-            let count = Math.abs(
+            const count = Math.abs(
                Config.TechAge[getCurrentAge(gs)].idx -
                   Config.TechAge[getBuildingUnlockAge(building.type)].idx,
             );
-            if (isFestival("GreatWall", gs)) {
-               count *= 2;
-            }
             mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
                output: count,
                storage: count,
                worker: count,
                source: buildingName,
             });
+            if (isFestival("GreatWall", gs)) {
+               mapSafePush(Tick.next.levelBoost, pointToTile(point), {
+                  value: count,
+                  source: buildingName,
+               });
+            }
          }
          break;
       }
@@ -991,7 +1003,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "PorcelainTower": {
-         Tick.next.globalMultipliers.happiness.push({ value: 5, source: buildingName });
+         Tick.next.globalMultipliers.happiness.push({ value: 5 + building.level - 1, source: buildingName });
          if (isFestival("PorcelainTower", gs)) {
             forEach(gs.greatPeople, (gp, level) => {
                if (level > 0) {

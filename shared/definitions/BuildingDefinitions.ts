@@ -1062,7 +1062,7 @@ export class BuildingDefinitions {
    };
    Parthenon: IBuildingDefinition = {
       name: () => $t(L.Parthenon),
-      desc: () => $t(L.ParthenonDescV2),
+      desc: () => $t(L.ParthenonDescV3),
       input: {},
       output: {},
       max: 1,
@@ -1202,7 +1202,7 @@ export class BuildingDefinitions {
    };
    Colosseum: IBuildingDefinition = {
       name: () => $t(L.Colosseum),
-      desc: () => $t(L.ColosseumDescV2),
+      desc: () => $t(L.ColosseumDescV3),
       input: { Chariot: 10 },
       output: {},
       construction: { Brick: 100, Chariot: 100, Alcohol: 100 },
@@ -1222,7 +1222,7 @@ export class BuildingDefinitions {
    };
    StatueOfZeus: IBuildingDefinition = {
       name: () => $t(L.StatueOfZeus),
-      desc: () => $t(L.StatueOfZeusDesc),
+      desc: () => $t(L.StatueOfZeusDescV2),
       input: {},
       output: {},
       construction: { Marble: 100, Brick: 100, Music: 100 },
@@ -1232,7 +1232,7 @@ export class BuildingDefinitions {
    };
    CircusMaximus: IBuildingDefinition = {
       name: () => $t(L.CircusMaximus),
-      desc: () => $t(L.CircusMaximusDescV2),
+      desc: () => $t(L.CircusMaximusDescV3),
       input: {},
       output: {},
       construction: { Music: 100, Poem: 100, Painting: 100 },
@@ -1312,7 +1312,7 @@ export class BuildingDefinitions {
    };
    AbuSimbel: IBuildingDefinition = {
       name: () => $t(L.AbuSimbel),
-      desc: () => $t(L.AbuSimbelDesc),
+      desc: () => $t(L.AbuSimbelDescV2),
       input: {},
       output: {},
       max: 1,
@@ -1322,7 +1322,7 @@ export class BuildingDefinitions {
    };
    GreatSphinx: IBuildingDefinition = {
       name: () => $t(L.GreatSphinx),
-      desc: () => $t(L.GreatSphinxDescV2),
+      desc: () => $t(L.GreatSphinxDescV3),
       input: {},
       output: {},
       max: 1,
@@ -1392,7 +1392,7 @@ export class BuildingDefinitions {
    };
    GreatWall: IBuildingDefinition = {
       name: () => $t(L.GreatWall),
-      desc: () => $t(L.GreatWallDesc),
+      desc: () => $t(L.GreatWallDescV2),
       input: {},
       output: {},
       construction: { Brick: 100, Tool: 100, Horse: 100 },
@@ -1402,7 +1402,7 @@ export class BuildingDefinitions {
    };
    YellowCraneTower: IBuildingDefinition = {
       name: () => $t(L.YellowCraneTower),
-      desc: () => $t(L.YellowCraneTowerDesc),
+      desc: () => $t(L.YellowCraneTowerDescV2),
       input: {},
       output: {},
       construction: { Furniture: 100, Sword: 100, Coin: 100 },
@@ -1412,7 +1412,7 @@ export class BuildingDefinitions {
    };
    PorcelainTower: IBuildingDefinition = {
       name: () => $t(L.PorcelainTower),
-      desc: () => $t(L.PorcelainTowerDesc),
+      desc: () => $t(L.PorcelainTowerDescV2),
       input: {},
       output: {},
       construction: { Banknote: 100, Garment: 100, Knight: 100 },
@@ -2478,78 +2478,6 @@ export class BuildingDefinitions {
    };
 
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
-
-   // Winery: IBuildingDefinition = {
-   //    name: () => t(L.Winery),
-   //    input: { Grape: 1, Water: 1 },
-   //    output: { Wine: 1 },
-   //    construction: { Stone: 1, Marble: 1 },
-   // };
-
-   // Borobudur: IBuildingDefinition = {
-   //    name: () => t(L.Borobudur),
-   //    desc: () => t(L.BorobudurDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Borobudur",
-   // };
-
-   // Moai: IBuildingDefinition = {
-   //    name: () => t(L.Moai),
-   //    desc: () => t(L.MoaiDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Moai",
-   // };
-
-   // BranCastle: IBuildingDefinition = {
-   //    name: () => t(L.BranCastle),
-   //    desc: () => t(L.BranCastleDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Bran_Castle",
-   // };
-
-   // SydneyOperaHouse: IBuildingDefinition = {
-   //    name: () => t(L.SydneyOperaHouse),
-   //    desc: () => t(L.SydneyOperaHouseDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Sydney_Opera_House",
-   // };
-
-   // FishPond: IBuildingDefinition = {
-   //    name: () => t(L.FishPond),
-   //    input: {},
-   //    deposit: { Water: true },
-   //    output: { Fish: 1 },
-   //    construction: { Brick: 1 },
-   // };
-
-   // OlivePlantation: IBuildingDefinition = {
-   //    name: () => t(L.OlivePlantation),
-   //    input: {},
-   //    output: { Olive: 1 },
-   //    construction: { Wood: 1 },
-   // };
-
-   // Vineyard: IBuildingDefinition = {
-   //    name: () => t(L.Vineyard),
-   //    input: {},
-   //    output: { Grape: 1 },
-   //    construction: { Wood: 1 },
-   // };
-
-   // OilPress: IBuildingDefinition = {
-   //    name: () => t(L.OilPress),
-   //    input: { Olive: 2 },
-   //    output: { OliveOil: 1 },
-   //    construction: { Brick: 1 },
-   // };
 }
 export type Building = keyof BuildingDefinitions;
 
@@ -2589,6 +2517,15 @@ export const BuildingShowLevel = new Set<Building>([
    "CothonOfCarthage",
    "Mauritshuis",
    "Midsummer",
+   "CircusMaximus",
+   "Colosseum",
+   "StatueOfZeus",
+   "Parthenon",
+   "AbuSimbel",
+   "GreatSphinx",
+   "GreatWall",
+   "YellowCraneTower",
+   "PorcelainTower",
 ] satisfies Building[]);
 
 // This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!
@@ -2620,6 +2557,15 @@ export const UpgradableWorldWonders = new Set<Building>([
    "WorldTradeOrganization",
    "CothonOfCarthage",
    "Midsummer",
+   "CircusMaximus",
+   "Colosseum",
+   "StatueOfZeus",
+   "Parthenon",
+   "AbuSimbel",
+   "GreatSphinx",
+   "GreatWall",
+   "YellowCraneTower",
+   "PorcelainTower",
 ] satisfies Building[]);
 
 // Include buildings here that does not really cost construction resources to upgrade
@@ -2635,6 +2581,10 @@ export const WonderCostBase: Partial<Record<Building, number>> = {
    Midsummer: 5,
    GreatOceanRoad: 1.7,
    WorldTradeOrganization: 2,
+   StatueOfZeus: 5,
+   AbuSimbel: 2,
+   GreatSphinx: 5,
+   GreatWall: 5,
 };
 
 // This is used for the initial placement of natural wonders.

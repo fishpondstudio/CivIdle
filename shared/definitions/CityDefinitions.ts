@@ -94,7 +94,7 @@ export class CityDefinitions {
       naturalWonders: { NileRiver: true, MountSinai: true },
       requireGreatPeopleLevel: 10,
       requireSupporterPack: false,
-      festivalDesc: () => $t(L.OpetV2),
+      festivalDesc: () => $t(L.OpetV3),
       uniqueEffects: () => [],
    };
    Beijing: ICityDefinition = {
@@ -125,7 +125,7 @@ export class CityDefinitions {
       naturalWonders: { MountTai: true, YangtzeRiver: true },
       requireGreatPeopleLevel: 15,
       requireSupporterPack: false,
-      festivalDesc: () => $t(L.LunarNewYear),
+      festivalDesc: () => $t(L.LunarNewYearV2),
       uniqueEffects: () => [],
    };
    NewYork: ICityDefinition = {

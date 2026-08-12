@@ -1178,10 +1178,10 @@ export function getYellowCraneTowerRange(xy: Tile, gs: GameState): number {
    for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
       const neighbor = gs.tiles.get(pointToTile(point));
       if (neighbor?.explored && neighbor?.building?.type === "YangtzeRiver") {
-         return 2;
+         return 4;
       }
    }
-   return 1;
+   return 2;
 }
 
 export function getGreatWallRange(xy: Tile, gs: GameState): number {
@@ -1191,10 +1191,10 @@ export function getGreatWallRange(xy: Tile, gs: GameState): number {
    }
    for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
       if (getWorkingBuilding(pointToTile(point), gs)?.type === "ForbiddenCity") {
-         return 2;
+         return building.level + 1;
       }
    }
-   return 1;
+   return building.level;
 }
 
 export function getBuildingDescription(b: Building): string {
@@ -1533,7 +1533,6 @@ export function getBuildingRange(xy: Tile, building: IBuildingData, gs: GameStat
       case "HangingGarden":
       case "ChichenItza":
       case "AngkorWat":
-      case "StatueOfZeus":
       case "Poseidon":
       case "EiffelTower":
       case "SummerPalace":
@@ -1545,7 +1544,6 @@ export function getBuildingRange(xy: Tile, building: IBuildingData, gs: GameStat
       case "StatueOfLiberty": {
          return 1;
       }
-      case "GreatSphinx":
       case "Hollywood":
       case "Pantheon":
       case "TheMet":
@@ -1622,6 +1620,9 @@ export function getBuildingRange(xy: Tile, building: IBuildingData, gs: GameStat
       case "Keukenhof": {
          return 3;
       }
+      case "StatueOfZeus":
+      case "AbuSimbel":
+      case "GreatSphinx":
       case "Midsummer": {
          return building.level;
       }

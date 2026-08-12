@@ -73,23 +73,6 @@ export function onBuildingComplete(xy: Tile): void {
          });
          break;
       }
-      case "Parthenon": {
-         const candidates1 = rollGreatPeopleThisRun(new Set(["ClassicalAge"]), gs.city, 4);
-         if (candidates1) {
-            gs.greatPeopleChoicesV2.push(candidates1);
-         }
-
-         const candidates2 = rollGreatPeopleThisRun(new Set(["ClassicalAge"]), gs.city, 4);
-         if (candidates2) {
-            gs.greatPeopleChoicesV2.push(candidates2);
-         }
-
-         if (gs.greatPeopleChoicesV2.length > 0) {
-            playAgeUp();
-            showModal(<ChooseGreatPersonModal permanent={false} />);
-         }
-         break;
-      }
       case "TajMahal": {
          const candidates1 = rollGreatPeopleThisRun(
             new Set(["ClassicalAge"]),
