@@ -6,8 +6,8 @@ import {
    getStorageFor,
    getTotalBuildingCost,
 } from "../shared/logic/BuildingLogic";
+import { calculateTierAndPrice } from "../shared/logic/CalculateTierAndPrice";
 import { Config } from "../shared/logic/Config";
-import { calculateTierAndPrice } from "../shared/logic/Constants";
 import { GameOptions, GameState, SavedGame } from "../shared/logic/GameState";
 import { deserializeSave, serializeSave } from "../shared/logic/GameStateLogic";
 import { initializeGameState } from "../shared/logic/InitializeGameState";
