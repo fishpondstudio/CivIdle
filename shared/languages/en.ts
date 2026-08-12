@@ -2080,4 +2080,11 @@ export const EN = {
    YellowCraneTowerDescV2: "Provides +1 choice when selecting Great People. All buildings within 2 tiles gain +X Production, Worker Capacity, and Storage Multipliers. X = this wonder's level. Building it next to Yangtze River increases its range by 2 tiles",
    LunarNewYearV2: "Lunar New Year: Great Wall and Yellow Crane Tower also grant affected buildings a Building Level Boost equal to the Production Multiplier they provide. Porcelain Tower grants +1 level to all Great People from this run",
    PorcelainTowerDescV2: "+5 Happiness, plus +1 Happiness for each additional level. When constructed, all Extra Great People earned at Rebirth become available for this run, following the same roll rules as permanent Great People",
+   SpecialDay: "Special Day",
+   Save: "Save",
+   SpecialDayEffectDesc: "All buildings get +1 Production Multiplier and +1 Building Level Boost.",
+   XSpecialDay: "%{name}'s Special Day",
+   OnYourSpecialdayDesc: "On your special day, all players receive +1 Production Multiplier and +1 Building Level Boost for every building. Your special day is shown on the game calendar. <b>This can only be changed once every %{cooldown} days.</b>",
+   Day: "Day",
+   Month: "Month",
 };

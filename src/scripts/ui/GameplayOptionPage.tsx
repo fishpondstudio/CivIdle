@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Config } from "../../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC } from "../../../shared/logic/Constants";
 import {
+   type ExtraTileInfoType,
    ExtraTileInfoTypes,
    getTranslatedPercentage,
    ResourcePanelSectionLabels,
    ResourcePanelSections,
    TransportSourceCacheTimeoutMax,
    TransportSourceCacheTimeoutMin,
-   type ExtraTileInfoType,
 } from "../../../shared/logic/GameState";
 import { getGameOptions, notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
@@ -23,9 +23,16 @@ import {
 } from "../../../shared/logic/Tile";
 import { clearTransportSourceCache } from "../../../shared/logic/Update";
 import {
+   UserAttributes,
+   type UserColors,
+   UserColorsMapping,
+   UserColorsNames,
+} from "../../../shared/utilities/Database";
+import {
    clamp,
    formatHM,
    formatPercent,
+   hasFlag,
    keysOf,
    resolveIn,
    safeParseInt,
@@ -34,17 +41,19 @@ import {
 import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { Todo } from "../logic/Todo";
-import { client } from "../rpc/RPCClient";
+import { client, OnUserChanged, useUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { regenerateGreatPersonImages } from "../visuals/GreatPersonVisual";
-import { playClick } from "../visuals/Sound";
+import { playClick, playError } from "../visuals/Sound";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { showToast } from "./GlobalModal";
+import { KeepersOfOurServerComponent } from "./KeepersOfOurServerComponent";
 import { LanguageSelect } from "./LanguageSelectComponent";
 import { MenuComponent } from "./MenuComponent";
 import { html, RenderHTML } from "./RenderHTMLComponent";
 import { recoverFromServer } from "./SaveCorruptedPage";
+import { MiscTextureComponent } from "./TextureSprites";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
 import { ToggleComponent } from "./ToggleComponent";
@@ -52,6 +61,7 @@ import { WarningComponent } from "./WarningComponent";
 
 export function GameplayOptionPage(): React.ReactNode {
    const options = useGameOptions();
+   const user = useUser();
    return (
       <div className="window">
          <TitleBarComponent>{$t(L.Gameplay)}</TitleBarComponent>
@@ -74,6 +84,42 @@ export function GameplayOptionPage(): React.ReactNode {
                   </div>
                ) : null}
             </fieldset>
+            {user && hasFlag(user.attr, UserAttributes.DLC1) && (
+               <fieldset>
+                  <legend className="row g5">
+                     <MiscTextureComponent name="Supporter" scale={0.15} />
+                     {$t(L.SupporterPackOptions)}
+                  </legend>
+                  <div className="row">
+                     <div className="f1">{$t(L.PlayerHandleColor)}</div>
+                     <select
+                        value={user.color}
+                        onChange={async (e) => {
+                           try {
+                              const color = safeParseInt(e.target.value, 0) as UserColors;
+                              user.color = color;
+                              OnUserChanged.emit({ ...user });
+                              OnUserChanged.emit(await client.changeColor(color));
+                           } catch (error) {
+                              showToast(String(error));
+                              playError();
+                           }
+                        }}
+                        className="code"
+                        style={{ color: UserColorsMapping[user.color] }}
+                     >
+                        {jsxMapOf(UserColorsMapping, (key, color) => {
+                           return (
+                              <option className="code" style={{ color }} value={key} key={key}>
+                                 {UserColorsNames[key]() ?? $t(L.AccountCustomColorDefault)}
+                              </option>
+                           );
+                        })}
+                     </select>
+                  </div>
+               </fieldset>
+            )}
+            <KeepersOfOurServerComponent />
             <fieldset>
                <legend>{$t(L.GlobalBuildingDefault)}</legend>
                <div className="row mb5">

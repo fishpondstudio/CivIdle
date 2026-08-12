@@ -12,6 +12,7 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/TRPCClient";
 import type {
    AllMessageTypes,
+   IBirthdayMessage,
    IChat,
    IChatMessage,
    IClientMapEntry,
@@ -62,6 +63,7 @@ let user: IUser | null = null;
 let platformInfo: IPlatformInfo | null = null;
 
 export const OnUserChanged = new TypedEvent<IUser | null>();
+export const OnBirthdaysChanged = new TypedEvent<Record<string, { month: number; day: number }>>();
 export const OnPlatformInfoChanged = new TypedEvent<IPlatformInfo | null>();
 export const OnChatMessage = new TypedEvent<LocalChat[]>();
 export const OnTradeChanged = new TypedEvent<IClientTrade[]>();
@@ -88,6 +90,11 @@ export type LocalChat = IClientChat;
 let chatMessages: LocalChat[] = [];
 const trades: Map<string, IClientTrade> = new Map();
 const playerMap: Map<string, IClientMapEntry> = new Map();
+let birthdays: Record<string, { month: number; day: number }> = {};
+
+export function getBirthdays(): Record<string, { month: number; day: number }> {
+   return birthdays;
+}
 
 export function getPlayerMap(): Map<string, IClientMapEntry> {
    return playerMap;
@@ -145,6 +152,7 @@ export function getTradeCount(): number {
 export const usePlayerMap = makeObservableHook(OnPlayerMapChanged, () => playerMap);
 export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessages);
 export const useTrades = makeObservableHook(OnTradeChanged, getTrades);
+export const useBirthdays = makeObservableHook(OnBirthdaysChanged, getBirthdays);
 export const useUser = makeObservableHook(OnUserChanged, getUser);
 export const usePlatformInfo = makeObservableHook(OnPlatformInfoChanged, getPlatformInfo);
 
@@ -440,6 +448,12 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
          case MessageType.RPC: {
             const r = message as IRPCMessage;
             handleRpcResponse(r.data);
+            break;
+         }
+         case MessageType.Birthday: {
+            const b = message as IBirthdayMessage;
+            birthdays = b.birthdays;
+            OnBirthdaysChanged.emit(birthdays);
             break;
          }
       }

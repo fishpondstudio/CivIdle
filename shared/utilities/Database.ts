@@ -40,6 +40,7 @@ export enum MessageType {
    Trade = 3,
    Map = 4,
    PendingClaim = 5,
+   Birthday = 6,
 }
 
 export interface IMessage {
@@ -101,6 +102,11 @@ export interface IPendingClaimMessage extends IMessage {
    claims: Record<string, number>;
 }
 
+export interface IBirthdayMessage extends IMessage {
+   type: MessageType.Birthday;
+   birthdays: Record<string, { month: number; day: number }>;
+}
+
 export interface IAddTradeRequest {
    buyResource: Material;
    buyAmount: number;
@@ -141,7 +147,8 @@ export type AllMessageTypes =
    | IWelcomeMessage
    | ITradeMessage
    | IMapMessage
-   | IPendingClaimMessage;
+   | IPendingClaimMessage
+   | IBirthdayMessage;
 
 export interface ITradeValue {
    value: number;
@@ -254,6 +261,7 @@ export interface IUser {
    lastTradedAt: number;
    heartbeatData?: IHeartbeatData;
    gameOptions?: GameOptionServer;
+   birthday?: { month: number; day: number; updatedAt: number };
 }
 
 export interface IConnectionRequest {

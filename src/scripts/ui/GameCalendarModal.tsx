@@ -4,16 +4,20 @@ import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinit
 import { Config } from "../../../shared/logic/Config";
 import { cls, keysOf } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
+import { useBirthdays } from "../rpc/RPCClient";
 import { getColorCached } from "../utilities/CachedColor";
 import "./GameCalendarModal.css";
 import { hideModal, showModal } from "./GlobalModal";
+import { MiscTextureComponent } from "./TextureSprites";
 
 export function GameCalendarModal(): React.ReactNode {
    const today = new Date();
+   const playerBirthdays = useBirthdays();
    const [month, setMonth] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
    const monthStart = new Date(month.getFullYear(), month.getMonth(), 1);
    const daysInMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
    const birthdays = getBirthdaysByDay(month.getMonth());
+   const playerBirthdaysByDay = getPlayerBirthdaysByDay(playerBirthdays, month.getMonth());
 
    return (
       <div className="window birthday-calendar-window col">
@@ -112,6 +116,26 @@ export function GameCalendarModal(): React.ReactNode {
                                        </Tippy>
                                     );
                                  })}
+                                 {playerBirthdaysByDay.get(day)?.map((handle) => (
+                                    <Tippy
+                                       content={
+                                          <>
+                                             <div className="text-strong">
+                                                {$t(L.XSpecialDay, { name: handle })}
+                                             </div>
+                                             <div>{$t(L.SpecialDayEffectDesc)}</div>
+                                          </>
+                                       }
+                                       key={handle}
+                                    >
+                                       <div className="birthday-calendar-person birthday-calendar-player mb2 nowrap">
+                                          <div className="birthday-calendar-player-icon">
+                                             <MiscTextureComponent name="Supporter2" scale={0.15} />
+                                          </div>
+                                          <div className="birthday-calendar-player-handle">{handle}</div>
+                                       </div>
+                                    </Tippy>
+                                 ))}
                               </div>
                            </>
                         )}
@@ -122,6 +146,23 @@ export function GameCalendarModal(): React.ReactNode {
          </div>
       </div>
    );
+}
+
+function getPlayerBirthdaysByDay(
+   birthdays: Record<string, { month: number; day: number }>,
+   month: number,
+): Map<number, string[]> {
+   const result = new Map<number, string[]>();
+   for (const [handle, birthday] of Object.entries(birthdays)) {
+      if (birthday.month !== month) {
+         continue;
+      }
+      const handles = result.get(birthday.day) ?? [];
+      handles.push(handle);
+      result.set(birthday.day, handles);
+   }
+   result.forEach((handles) => handles.sort((a, b) => a.localeCompare(b)));
+   return result;
 }
 
 async function showManagePermanentGreatPeople(greatPerson?: GreatPerson): Promise<void> {

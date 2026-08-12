@@ -101,6 +101,7 @@ import {
    firstKeyOf,
    forEach,
    hasFlag,
+   isNullOrUndefined,
    keysOf,
    mapSafeAdd,
    mapSafePush,
@@ -113,8 +114,9 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { srand } from "../../../shared/utilities/Random";
+import { getServerNow } from "../../../shared/utilities/ServerNow";
 import { $t, L } from "../../../shared/utilities/i18n";
-import { TileBuildings, client, isAllyWith, populateTileBuildings } from "../rpc/RPCClient";
+import { TileBuildings, client, getBirthdays, isAllyWith, populateTileBuildings } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { getNeighboringPlayers, getOwnedOrOccupiedTiles } from "../scenes/PathFinder";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
@@ -224,6 +226,25 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          if (isSteam() && allyCount > 0 && !declareFriendshipAchievementUnlocked) {
             SteamClient.unlockAchievement("DeclareFriendship");
             declareFriendshipAchievementUnlocked = true;
+         }
+
+         const now = getServerNow();
+         if (!isNullOrUndefined(now)) {
+            const nowDate = new Date(now);
+            forEach(getBirthdays(), (handle, birthday) => {
+               if (birthday.month === nowDate.getMonth() && birthday.day === nowDate.getDate()) {
+                  Tick.next.globalMultipliers.output.push({
+                     value: 1,
+                     source: $t(L.XSpecialDay, { name: handle }),
+                     flag: MultiplierFlag.Unstable,
+                  });
+                  Tick.next.globalMultipliers.levelBoost.push({
+                     value: 1,
+                     source: $t(L.XSpecialDay, { name: handle }),
+                     flag: MultiplierFlag.Unstable,
+                  });
+               }
+            });
          }
 
          if (allyCount >= 3) {

@@ -154,7 +154,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
             person,
             getGreatPersonThisRunLevel(level),
             $t(L.SourceGreatPersonBirthday, { person: greatPerson.name() }),
-            GreatPersonTickFlag.None,
+            GreatPersonTickFlag.Unstable,
          );
       }
    });
@@ -174,7 +174,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
             person,
             v.level,
             $t(L.SourceGreatPersonPermanentBirthday, { person: greatPerson.name() }),
-            GreatPersonTickFlag.None,
+            GreatPersonTickFlag.Unstable,
          );
       }
    });

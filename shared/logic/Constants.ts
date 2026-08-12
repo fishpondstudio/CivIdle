@@ -1,7 +1,3 @@
-import type { Building } from "../definitions/BuildingDefinitions";
-import type { Material } from "../definitions/MaterialDefinitions";
-import type { PartialTabulate } from "../utilities/TypeDefinitions";
-
 export const SAVE_FILE_VERSION = 1;
 export const SAVE_KEY = "CivIdle";
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
@@ -37,9 +33,4 @@ export const EAST_INDIA_COMPANY_BOOST_PER_EV = 2000;
 export const TRADE_TILE_BONUS = 5;
 export const TRADE_TILE_NEIGHBOR_BONUS = 1;
 export const TRADE_TILE_ALLY_BONUS = 2;
-
-export interface IRecipe {
-   building: Building;
-   input: PartialTabulate<Material>;
-   output: PartialTabulate<Material>;
-}
+export const BIRTHDAY_COOLDOWN_DAYS = 360;

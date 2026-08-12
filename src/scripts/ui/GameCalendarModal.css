@@ -54,3 +54,21 @@
    text-overflow: ellipsis;
    color: #333;
 }
+
+.birthday-calendar-player {
+   gap: 5px;
+   display: flex;
+   align-items: center;
+   background: #dbeafe;
+}
+
+.birthday-calendar-player-icon {
+   flex: none;
+}
+
+.birthday-calendar-player-handle {
+   min-width: 0;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}

@@ -16,6 +16,7 @@ import {
    round,
    sizeOf,
 } from "../utilities/Helper";
+import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import {
    getBuildingCost,
    getBuildingDescription,
@@ -25,7 +26,7 @@ import {
    isWorldWonder,
 } from "./BuildingLogic";
 import { Config } from "./Config";
-import { SCIENCE_VALUE, type IRecipe } from "./Constants";
+import { SCIENCE_VALUE } from "./Constants";
 import { getBuildingsThatProduce } from "./ResourceLogic";
 import { getAgeForTech } from "./TechLogic";
 
@@ -526,4 +527,9 @@ export function getOrderedTechThatProduce(res: Material): Tech[] {
 
    const result = Array.from(new Set(tech)).sort((a, b) => Config.Tech[a].column - Config.Tech[b].column);
    return result;
+}
+export interface IRecipe {
+   building: Building;
+   input: PartialTabulate<Material>;
+   output: PartialTabulate<Material>;
 }
