@@ -228,6 +228,11 @@ export async function handleChatCommand(command: string, channel: ChatChannel): 
          addSystemMessage("Trade tile cooldown has been cleared");
          break;
       }
+      case "clearbirthdaycd": {
+         await client.clearBirthdayCooldown();
+         addSystemMessage("Birthday cooldown has been cleared");
+         break;
+      }
       case "tabulate": {
          const resp = await client.tabulateVotedBoost();
          addSystemMessage(JSON.stringify(resp));
