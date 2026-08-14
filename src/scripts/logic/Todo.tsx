@@ -1,4 +1,4 @@
-import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import { GreatPersonType } from "../../../shared/definitions/GreatPersonDefinitions";
 import { PatchNotes } from "../../../shared/definitions/PatchNotes";
 import { Config } from "../../../shared/logic/Config";
 import { STEAM_PATCH_NOTES_URL } from "../../../shared/logic/Constants";
@@ -17,17 +17,20 @@ import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import {
    cls,
    entriesOf,
+   forEach,
    formatHMS,
    formatNumber,
    HOUR,
+   isNullOrUndefined,
    keysOf,
    mapCount,
    mathSign,
    tileToPoint,
 } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
+import { getServerNow } from "../../../shared/utilities/ServerNow";
 import { saveGame } from "../Global";
-import { isConnected } from "../rpc/RPCClient";
+import { getBirthdays, isConnected } from "../rpc/RPCClient";
 import { isSteam, SteamClient } from "../rpc/SteamClient";
 import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
@@ -35,6 +38,7 @@ import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { AvailableTradingResourcesModal } from "../ui/AvailableTradingResourcesModal";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
+import { GameCalendarModal } from "../ui/GameCalendarModal";
 import { hideModal, showModal, showToast } from "../ui/GlobalModal";
 import { ManageAgeWisdomModal } from "../ui/ManageAgeWisdomModal";
 import { ManagePermanentGreatPersonModal } from "../ui/ManagePermanentGreatPersonModal";
@@ -552,13 +556,30 @@ export const _Todos = {
       icon: "cake",
       className: "text-green",
       desc: (gs, options) => {
-         const result: string[] = [];
+         const greatPeople: string[] = [];
          for (const [gp, def] of entriesOf(Config.GreatPerson)) {
             if (isBirthday(gp)) {
-               result.push(def.name());
+               greatPeople.push(def.name());
             }
          }
-         return $t(L.GreatPeopleBirthdayDesc, { names: result.join(", ") });
+         const keepers: string[] = [];
+         const now = getServerNow();
+         if (!isNullOrUndefined(now)) {
+            const nowDate = new Date(now);
+            forEach(getBirthdays(), (handle, birthday) => {
+               if (birthday.month === nowDate.getMonth() && birthday.day === nowDate.getDate()) {
+                  keepers.push(handle);
+               }
+            });
+         }
+         return (
+            <>
+               {greatPeople.length > 0 && (
+                  <div>{$t(L.GreatPeopleBirthdayDesc, { names: greatPeople.join(", ") })}</div>
+               )}
+               {keepers.length > 0 && <div>{$t(L.KeepersSpecialDay, { names: keepers.join(", ") })}</div>}
+            </>
+         );
       },
       condition: (gs, options) => {
          for (const [gp, def] of entriesOf(Config.GreatPerson)) {
@@ -566,10 +587,19 @@ export const _Todos = {
                return true;
             }
          }
+         const now = getServerNow();
+         if (!isNullOrUndefined(now)) {
+            const nowDate = new Date(now);
+            for (const [handle, birthday] of entriesOf(getBirthdays())) {
+               if (birthday.month === nowDate.getMonth() && birthday.day === nowDate.getDate()) {
+                  return true;
+               }
+            }
+         }
          return false;
       },
       onClick: (gs, options) => {
-         showModal(<ManagePermanentGreatPersonModal adaptiveOnly={false} />);
+         showModal(<GameCalendarModal />);
       },
    },
    S1: {
