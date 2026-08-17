@@ -625,7 +625,7 @@ export const ZH_CN = {
    FavoriteBuildingEmptyToast: "你没有任何偏好建筑",
    FavoriteBuildingRemove: "移出偏好",
    FeatureRequireQuaestorOrAbove: "此项功能需要财务官及以上等级",
-   Festival: "节日点数",
+   Festival: "节日",
    FestivalCycle: "节日可持续周期",
    FestivalOfTanit: "坦提节：阿特拉斯山脉周围扩大 2 地块范围并且额外提供生产等级",
    FestivalTechTooltipV2: "正向幸福感（最大值为 50 ）可同时产出节日点数，1 幸福= 1 节日点数（开启节日时不获得节日点数）。每有 %{point} 节日点数，你的帝国可以开启一个周期的节日，节日将授予具有地区特色的独特加成。当前地区的节日——%{desc}",
