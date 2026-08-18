@@ -80,7 +80,18 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
                className="w100 row jcc"
                onClick={() => {
                   showModal(
-                     <ConfirmModal title={$t(L.PlayerMapClaimThisTile)} onConfirm={() => {}}>
+                     <ConfirmModal
+                        title={$t(L.PlayerMapClaimThisTile)}
+                        onConfirm={async () => {
+                           try {
+                              await client.claimTile(xy);
+                              playSuccess();
+                           } catch (error) {
+                              playError();
+                              showToast(String(error));
+                           }
+                        }}
+                     >
                         <div className="row g10">
                            <div>
                               <img src={Information} />
