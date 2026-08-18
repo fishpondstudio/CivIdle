@@ -124,7 +124,7 @@ export class TechTreeScene extends Scene {
       forEach(this._layout, (columnIdx, techs) => {
          techs.forEach((item, rowIdx) => {
             const x = 50 + 500 * columnIdx;
-            const height = item === "Future" ? 150 : BOX_HEIGHT;
+            const height = item === "Future" ? 160 : BOX_HEIGHT;
             const y =
                layoutSpaceBetween(
                   height,

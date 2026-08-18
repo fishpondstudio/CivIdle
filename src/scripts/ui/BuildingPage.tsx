@@ -40,6 +40,7 @@ import { ReligionBuildingBody } from "./ReligionBuildingBody";
 import { SaviorOnSpilledBloodBuildingBody as AuroraBorealisBuildingBody } from "./SaviorOnSpilledBloodBuildingBody";
 import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
+import { SuperintelligenceBuildingBody } from "./SuperintelligenceBuildingBody";
 import { SwissBankBuildingBody } from "./SwissBankBuildingBody";
 import { TheMetBuildingBody } from "./TheMetBuildingBody";
 import { TitleBarComponent } from "./TitleBarComponent";
@@ -123,6 +124,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    GreatWall: UpgradableWonderBuildingBody,
    YellowCraneTower: UpgradableWonderBuildingBody,
    PorcelainTower: UpgradableWonderBuildingBody,
+   Superintelligence: SuperintelligenceBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

@@ -20,7 +20,7 @@ import { Tick } from "./TickLogic";
 import { getDepositTileCount } from "./Tile";
 import { OnTechUnlocked } from "./Update";
 
-export function getTechUnlockCost(tech: Tech, gs: GameState): number {
+export function getTechUnlockCost(tech: Tech, gs?: GameState): number {
    const a = getAgeForTech(tech);
    let ageIdx = 0;
    if (a) {
@@ -28,13 +28,23 @@ export function getTechUnlockCost(tech: Tech, gs: GameState): number {
       ageIdx = age.idx;
    }
    let discount = 0;
-   if (gs.unlockedUpgrades.SacredBand) {
+   if (gs?.unlockedUpgrades.SacredBand) {
       discount += 0.05;
    }
-   if (gs.unlockedUpgrades.PunicGoldenAge) {
+   if (gs?.unlockedUpgrades.PunicGoldenAge) {
       discount += 0.1;
    }
    return Math.pow(5, ageIdx) * Math.pow(1.5, Config.Tech[tech].column) * 5000 * (1 - discount);
+}
+
+export function getAllTechUnlockCost(): number {
+   let totalScience = 0;
+   forEach(Config.Tech, (tech, def) => {
+      if (def.column > 0) {
+         totalScience += getTechUnlockCost(tech);
+      }
+   });
+   return totalScience;
 }
 
 export function getTotalTechUnlockCost(tech: Tech, gs: GameState) {

@@ -911,7 +911,7 @@ export class TechDefinitions {
       name: () => $t(L.Future),
       column: 27,
       requireTech: ["Blockchain", "VirtualReality", "Robotics", "ArtificialIntelligence"],
-      unlockBuilding: ["AldersonDisk", "DysonSphere", "MatrioshkaBrain"],
+      unlockBuilding: ["AldersonDisk", "DysonSphere", "MatrioshkaBrain", "Superintelligence"],
    };
 }
 

@@ -24,7 +24,7 @@ import {
    makeGreatPeopleFromThisRunPermanent,
    rollPermanentGreatPeople,
 } from "../../../shared/logic/RebirthLogic";
-import { getAgeForTech, getCurrentAge } from "../../../shared/logic/TechLogic";
+import { getAgeForTech, getAllTechUnlockCost, getCurrentAge } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { UserAttributes } from "../../../shared/utilities/Database";
 import {
@@ -500,6 +500,11 @@ export function RebirthModal(): React.ReactNode {
                      if (hq && petra) {
                         carryOverWarp = clamp(hq.building.resources.Warp ?? 0, 0, BASE_WARP_HOUR * 60 * 60);
                      }
+                     let carryOverScience = 0;
+                     const superintelligence = findSpecialBuilding("Superintelligence", getGameState());
+                     if (superintelligence) {
+                        carryOverScience = superintelligence.building.level > 1 ? getAllTechUnlockCost() : 0;
+                     }
 
                      const watchedResources = options.carryOverWatchedResources
                         ? gs.watchedResources
@@ -544,6 +549,13 @@ export function RebirthModal(): React.ReactNode {
 
                      if (carryOverWarp > 0) {
                         addPetraOfflineTime(carryOverWarp, getGameState());
+                     }
+
+                     if (carryOverScience > 0) {
+                        const hq = findSpecialBuilding("Headquarter", getGameState());
+                        if (hq) {
+                           hq.building.resources.Science = carryOverScience;
+                        }
                      }
 
                      getGameState().watchedResources = watchedResources;
