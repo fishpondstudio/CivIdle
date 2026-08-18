@@ -17,11 +17,13 @@ import {
    xyToPoint,
 } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
+import Information from "../../images/Information.png";
 import { client, getPlayerMap, getUser, usePlayerMap, useUser } from "../rpc/RPCClient";
 import { getOwnedOrOccupiedTiles, getOwnedTradeTile } from "../scenes/PathFinder";
 import { refreshOnTypedEvent } from "../utilities/Hook";
 import { playError, playSuccess } from "../visuals/Sound";
-import { showToast } from "./GlobalModal";
+import { ConfirmModal } from "./ConfirmModal";
+import { showModal, showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 
 export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
@@ -76,14 +78,17 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
             <button
                disabled={cooldownLeft > 0}
                className="w100 row jcc"
-               onClick={async () => {
-                  try {
-                     await client.claimTile(xy);
-                     playSuccess();
-                  } catch (error) {
-                     playError();
-                     showToast(String(error));
-                  }
+               onClick={() => {
+                  showModal(
+                     <ConfirmModal title={$t(L.PlayerMapClaimThisTile)} onConfirm={() => {}}>
+                        <div className="row g10">
+                           <div>
+                              <img src={Information} />
+                           </div>
+                           {$t(L.MoveTileConfirm, { time: Math.round(MoveTileCooldown / HOUR) })}
+                        </div>
+                     </ConfirmModal>,
+                  );
                }}
             >
                <div className="m-icon small mr5">health_and_safety</div>

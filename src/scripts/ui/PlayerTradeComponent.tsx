@@ -670,8 +670,8 @@ function PlayerTradeFilterModal({
                   className="f1 text-center"
                   onClick={() => {
                      clearSavedFilters();
+                     forceUpdate();
                      applyFilters();
-                     hideModal();
                   }}
                >
                   {$t(L.PlayerTradeFiltersClear)}

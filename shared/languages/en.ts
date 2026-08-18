@@ -2076,4 +2076,5 @@ export const EN = {
    Zugspitze: "Zugspitze",
    ZugspitzeDesc: "For each unlocked age, get one slot that can be used to provide one extra level to any Great Person that is born from this run. (Storage multipliers are not effective due to this multiplier being dynamic)",
    KeepersSpecialDay: "Keepers of Our Server's Special Day: %{names} (each provides +1 Production Multiplier and Building Level Boost to all buildings)",
+   MoveTileConfirm: "Are you sure you want to claim this tile? Your occupied tiles will be lost and you cannot claim a new tile for %{time} hours.",
 };
