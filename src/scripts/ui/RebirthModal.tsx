@@ -14,7 +14,7 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { SUPPORTER_PACK_URL } from "../../../shared/logic/Constants";
-import { RebirthFlags } from "../../../shared/logic/GameState";
+import { GameStateFlags, RebirthFlags } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getFreeCityThisWeek,
@@ -38,6 +38,7 @@ import {
    reduceOf,
    rejectIn,
    safeParseInt,
+   setFlag,
    uuid4,
 } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
@@ -556,6 +557,10 @@ export function RebirthModal(): React.ReactNode {
                         if (hq) {
                            hq.building.resources.Science = carryOverScience;
                         }
+                        getGameState().flags = setFlag(
+                           getGameState().flags,
+                           GameStateFlags.HasCarriedOverScience,
+                        );
                      }
 
                      getGameState().watchedResources = watchedResources;
