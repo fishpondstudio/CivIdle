@@ -990,7 +990,7 @@ export const ZH_CN = {
    LinusPaulingDesc: "闲置劳动者产出科学 +%{value} ",
    Literature: "文学",
    LiveData: "实时数据",
-   LockTradeProfit: "锁定发出订单者的收益",
+   LockTradeProfit: "锁定发出订单者的收益（交付者则为相反）",
    LocomotiveFactory: "机车工厂",
    Logging: "伐木作业",
    LoggingCamp: "伐木场",
