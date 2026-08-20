@@ -988,7 +988,7 @@ export const ZH_TW = {
    LinusPaulingDesc: "閒置工人產出科學 +%{value} ",
    Literature: "文學",
    LiveData: "實時數據",
-   LockTradeProfit: "鎖定送出訂單者的收益",
+   LockTradeProfit: "鎖定送出訂單者的收益（交貨者則為相反）",
    LocomotiveFactory: "火車頭工廠",
    Logging: "森林",
    LoggingCamp: "伐木場",
