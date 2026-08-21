@@ -30,6 +30,7 @@ import {
    isSpecialBuilding,
    isWorldOrNaturalWonder,
    isWorldWonder,
+   totalLevelBoostFor,
    totalMultiplierFor,
    useWorkers,
 } from "../../../shared/logic/BuildingLogic";
@@ -2415,7 +2416,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "WindTurbine": {
-         const multiplier = Math.floor(building.level / 5);
+         const totalLevel = building.level + totalLevelBoostFor(xy);
+         const multiplier = Math.floor(totalLevel / 5);
          if (multiplier > 0) {
             for (const point of grid.getNeighbors(tileToPoint(xy))) {
                const targetXy = pointToTile(point);
