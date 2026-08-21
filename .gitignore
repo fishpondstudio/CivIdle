@@ -13,6 +13,7 @@ dist-ssr
 *.local
 temp/
 out/
+.pmpm-store/
 
 
 # Editor directories and files
