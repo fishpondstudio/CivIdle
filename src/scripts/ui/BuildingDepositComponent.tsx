@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { hasRequiredDeposit } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { sizeOf } from "../../../shared/utilities/Helper";
@@ -39,9 +39,9 @@ export function BuildingDepositComponent({ gameState, xy }: IBuildingComponentPr
                         </>
                      ) : (
                         <>
-                           <Tippy content={$t(L.NotOnDeposit, { deposit: Config.Material[k].name() })}>
+                           <LazyTippy content={$t(L.NotOnDeposit, { deposit: Config.Material[k].name() })}>
                               <div className="f1 text-red text-strong">{Config.Material[k].name()}</div>
-                           </Tippy>
+                           </LazyTippy>
 
                            <div className="m-icon small text-red">cancel</div>
                         </>

@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import { NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
@@ -106,7 +106,7 @@ function ResourceColor({ resource, buildingColor }: { resource: Material; buildi
                search
             </div>
             <div className="f1">{r.name()}</div>
-            <Tippy content={$t(L.BuildingColorMatchBuilding)}>
+            <LazyTippy content={$t(L.BuildingColorMatchBuilding)}>
                <div
                   className="small mr10 ml10 m-icon text-link"
                   onClick={() => {
@@ -116,7 +116,7 @@ function ResourceColor({ resource, buildingColor }: { resource: Material; buildi
                >
                   colorize
                </div>
-            </Tippy>
+            </LazyTippy>
             <div>
                <ColorPicker
                   value={gameOptions.resourceColors[resource] ?? "#ffffff"}

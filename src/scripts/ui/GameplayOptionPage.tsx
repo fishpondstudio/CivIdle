@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useState } from "react";
 import { Config } from "../../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC } from "../../../shared/logic/Constants";
@@ -318,7 +318,7 @@ export function GameplayOptionPage(): React.ReactNode {
                                        }}
                                     />
                                  </td>
-                                 <Tippy content={$t(L.PinTodoTooltip)}>
+                                 <LazyTippy content={$t(L.PinTodoTooltip)}>
                                     <td>
                                        <ToggleComponent
                                           title=""
@@ -335,7 +335,7 @@ export function GameplayOptionPage(): React.ReactNode {
                                           }}
                                        />
                                     </td>
-                                 </Tippy>
+                                 </LazyTippy>
                               </tr>
                            );
                         })}
@@ -672,7 +672,7 @@ export function GameplayOptionPage(): React.ReactNode {
                                           </TextWithHelp>
                                        </td>
                                        <td style={{ width: 0 }}>
-                                          <Tippy content={$t(L.BuildingDefaultsRemove)}>
+                                          <LazyTippy content={$t(L.BuildingDefaultsRemove)}>
                                              <div
                                                 className="text-red m-icon small"
                                                 onClick={() => {
@@ -682,7 +682,7 @@ export function GameplayOptionPage(): React.ReactNode {
                                              >
                                                 delete
                                              </div>
-                                          </Tippy>
+                                          </LazyTippy>
                                        </td>
                                     </tr>
                                  );
@@ -700,7 +700,7 @@ export function GameplayOptionPage(): React.ReactNode {
 function RegenerateGreatPersonImagesButton(): React.ReactNode {
    const [ongoing, setOngoing] = useState(false);
    return (
-      <Tippy content={$t(L.RegenerateGreatPersonPortraitsDesc)}>
+      <LazyTippy content={$t(L.RegenerateGreatPersonPortraitsDesc)}>
          <button
             disabled={ongoing}
             className="jcc w100 mt5"
@@ -714,6 +714,6 @@ function RegenerateGreatPersonImagesButton(): React.ReactNode {
          >
             {ongoing ? $t(L.Regenerating) : $t(L.RegenerateGreatPersonPortraits)}
          </button>
-      </Tippy>
+      </LazyTippy>
    );
 }

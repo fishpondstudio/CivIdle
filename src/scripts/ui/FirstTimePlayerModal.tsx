@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useState } from "react";
 import { GameOptionsChanged } from "../../../shared/logic/GameStateLogic";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
@@ -115,9 +115,9 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
                />
             </div>
             <div>
-               <Tippy content={countryName}>
+               <LazyTippy content={countryName}>
                   <PlayerFlagComponent name={flag} style={{ marginLeft: 5 }} />
-               </Tippy>
+               </LazyTippy>
             </div>
          </div>
          <div className="sep5" />
@@ -129,7 +129,7 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
                {jsxMapOf(CountryCode, (c, v) => {
                   return (
-                     <Tippy key={c} content={v}>
+                     <LazyTippy key={c} content={v}>
                         <div
                            className="pointer"
                            onClick={async () => {
@@ -143,7 +143,7 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
                         >
                            <PlayerFlagComponent name={c} />
                         </div>
-                     </Tippy>
+                     </LazyTippy>
                   );
                })}
             </div>

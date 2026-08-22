@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useState } from "react";
 import { Config } from "../../../shared/logic/Config";
 import {
@@ -109,21 +109,21 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                               >
                                  {tile.handle}
                               </div>
-                              <Tippy content={getCountryName(tile.flag)}>
+                              <LazyTippy content={getCountryName(tile.flag)}>
                                  <PlayerFlagComponent name={tile.flag} scale={0.7} />
-                              </Tippy>
-                              <Tippy content={AccountLevelNames[tile.level]()}>
+                              </LazyTippy>
+                              <LazyTippy content={AccountLevelNames[tile.level]()}>
                                  <AccountLevelComponent level={tile.level} scale={0.17} />
-                              </Tippy>
+                              </LazyTippy>
                               {hasFlag(tile.attr, UserAttributes.DLC1) ? (
-                                 <Tippy content={$t(L.AccountSupporter)}>
+                                 <LazyTippy content={$t(L.AccountSupporter)}>
                                     <MiscTextureComponent name="Supporter" scale={0.17} />
-                                 </Tippy>
+                                 </LazyTippy>
                               ) : null}
                               {hasFlag(tile.attr, UserAttributes.DLC3) ? (
-                                 <Tippy content={$t(L.KeeperOfOurServer)}>
+                                 <LazyTippy content={$t(L.KeeperOfOurServer)}>
                                     <MiscTextureComponent name="Supporter2" scale={0.17} />
-                                 </Tippy>
+                                 </LazyTippy>
                               ) : null}
                               {tile.city ? (
                                  <div className="ml5 text-desc">{Config.City[tile.city].name()}</div>
@@ -135,9 +135,9 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                                     <div className="text-green text-strong">{$t(L.Ally)}</div>
                                  </>
                               ) : (
-                                 <Tippy content={$t(L.BecomeAllyTooltipV2)}>
+                                 <LazyTippy content={$t(L.BecomeAllyTooltipV2)}>
                                     <div className="text-desc text-strong">{$t(L.Neighbor)}</div>
-                                 </Tippy>
+                                 </LazyTippy>
                               )}
                            </div>
                            <ul>

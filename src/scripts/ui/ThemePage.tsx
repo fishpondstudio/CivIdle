@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { Config } from "../../../shared/logic/Config";
 import {
    CursorOptions,
@@ -439,7 +439,7 @@ export function ThemePage(): React.ReactNode {
 
             <fieldset>
                <legend>{$t(L.ResourceColor)}</legend>
-               <Tippy content={$t(L.BuildingColorMatchBuildingTooltip)}>
+               <LazyTippy content={$t(L.BuildingColorMatchBuildingTooltip)}>
                   <button
                      onClick={() => {
                         copyBuildingColorToResource(gameOptions);
@@ -449,7 +449,7 @@ export function ThemePage(): React.ReactNode {
                   >
                      {$t(L.BuildingColorMatchBuilding)}
                   </button>
-               </Tippy>
+               </LazyTippy>
                <div
                   className="mv5 text-link pointer text-strong"
                   onClick={() => {

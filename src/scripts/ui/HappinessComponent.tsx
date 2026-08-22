@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import { getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -151,14 +151,14 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                <div className="separator" />
                <div className="row text-strong mb5">
                   <div className="m-icon mr5">celebration</div>
-                  <Tippy
+                  <LazyTippy
                      content={$t(L.FestivalTechTooltipV2, {
                         desc: Config.City[gs.city].festivalDesc(),
                         point: FESTIVAL_CONVERSION_RATE,
                      })}
                   >
                      <div>{$t(L.StartFestival)}</div>
-                  </Tippy>
+                  </LazyTippy>
                   <div className="f1"></div>
                   <div
                      onClick={() => {

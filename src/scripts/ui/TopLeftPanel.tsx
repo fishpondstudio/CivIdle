@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { cls } from "../../../shared/utilities/Helper";
 import { useFloatingMode, useGameOptions, useGameState } from "../Global";
 import { Todo, TodoList } from "../logic/Todo";
@@ -33,7 +33,7 @@ function TutorialComponent(): React.ReactNode {
    }
    const [progress, total] = tutorial.progress(gs);
    return (
-      <Tippy placement="right" content={html(tutorial.desc())}>
+      <LazyTippy placement="right" content={html(tutorial.desc())}>
          <div
             onMouseOver={() => {
                clearHighlightPanel?.();
@@ -59,7 +59,7 @@ function TutorialComponent(): React.ReactNode {
                {progress}/{total}
             </div>
          </div>
-      </Tippy>
+      </LazyTippy>
    );
 }
 
@@ -96,7 +96,7 @@ function TodoTab({ todo, disableClick }: { todo: Todo; disableClick: boolean }):
    }
    const value = config.value?.(gs, options);
    return (
-      <Tippy
+      <LazyTippy
          maxWidth={config.maxWidth}
          placement="bottom"
          content={
@@ -120,6 +120,6 @@ function TodoTab({ todo, disableClick }: { todo: Todo; disableClick: boolean }):
             <div className="m-icon">{config.icon}</div>
             {value && <div className="count">{value}</div>}
          </div>
-      </Tippy>
+      </LazyTippy>
    );
 }

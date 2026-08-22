@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import type React from "react";
 import { getEastIndiaCompanyUpgradeCost } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -61,7 +61,7 @@ export function EastIndiaCompanyBuildingBody({ gameState, xy }: IBuildingCompone
                }}
             >
                <div className="m-icon small">assistant_navigation</div>
-               <Tippy
+               <LazyTippy
                   content={
                      <span
                         className={
@@ -78,7 +78,7 @@ export function EastIndiaCompanyBuildingBody({ gameState, xy }: IBuildingCompone
                   }
                >
                   <div className="text-strong f1">{$t(L.Upgrade)}</div>
-               </Tippy>
+               </LazyTippy>
             </button>
          </fieldset>
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />

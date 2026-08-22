@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useEffect, useRef } from "react";
 import { getGameOptions, notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { $t, L } from "../../../shared/utilities/i18n";
@@ -109,9 +109,9 @@ export function TutorialModal(): React.ReactNode {
                return (
                   <div key={t.name()} className="row mb5 text-desc">
                      <div className="m-icon small text-green mr5">check_circle</div>
-                     <Tippy placement="left" content={html(t.desc())}>
+                     <LazyTippy placement="left" content={html(t.desc())}>
                         <div>{t.name()}</div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1" />
                      <div>
                         {progress}/{total}

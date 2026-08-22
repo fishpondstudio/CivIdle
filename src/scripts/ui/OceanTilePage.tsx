@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { $t, L } from "../../../shared/utilities/i18n";
 import GreatWave from "../../images/GreatWave.jpg";
 import { MenuComponent } from "./MenuComponent";
@@ -10,11 +10,11 @@ export function OceanTilePage({ xy }: { xy: string }): React.ReactNode {
          <TitleBarComponent>{$t(L.PlayerMapUnclaimedTile)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
-            <Tippy content="神奈川沖浪裏 (Great Wave off Kanagawa), 葛飾北斎 (Katsushika Hokusai), 1831">
+            <LazyTippy content="神奈川沖浪裏 (Great Wave off Kanagawa), 葛飾北斎 (Katsushika Hokusai), 1831">
                <div className="inset-shallow">
                   <img src={GreatWave} className="w100" style={{ display: "block" }} />
                </div>
-            </Tippy>
+            </LazyTippy>
          </div>
       </div>
    );

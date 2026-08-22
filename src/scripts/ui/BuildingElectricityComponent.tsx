@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import {
    ElectrificationStatus,
@@ -34,9 +34,9 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
             <div className="separator"></div>
             <div className="row">
                {$t(L.ElectrificationStatusV2)}
-               <Tippy content={$t(L.ElectrificationStatusDescV2)}>
+               <LazyTippy content={$t(L.ElectrificationStatusDescV2)}>
                   <div className="m-icon small ml5 text-desc help-cursor">help</div>
-               </Tippy>
+               </LazyTippy>
                <div className="f1"></div>
                {status === "Active" ? <div className="m-icon small text-green">bolt</div> : null}
                <div
@@ -109,9 +109,9 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
             <div className="row text-strong">
                {hasPower ? null : <img src={warning} style={{ margin: "0 2px 0 0" }} />}
                {$t(L.RequirePower)}
-               <Tippy content={$t(L.RequirePowerDesc)}>
+               <LazyTippy content={$t(L.RequirePowerDesc)}>
                   <div className="m-icon small ml5 text-desc help-cursor">help</div>
-               </Tippy>
+               </LazyTippy>
                <div className="f1"></div>
                <div className="ml10">
                   {hasPower ? (

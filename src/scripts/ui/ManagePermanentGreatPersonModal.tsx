@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useEffect, useRef, useState } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
@@ -100,16 +100,16 @@ export function ManagePermanentGreatPersonModal(props: {
                   })}
                </select>
                <div className="w5" />
-               <Tippy content={$t(L.ShowOnlyAdaptiveGreatPeople)}>
+               <LazyTippy content={$t(L.ShowOnlyAdaptiveGreatPeople)}>
                   <button
                      onClick={() => setAdaptiveOnly(!adaptiveOnly)}
                      className={cls(adaptiveOnly ? "active" : null)}
                   >
                      {$t(L.Adaptive)}
                   </button>
-               </Tippy>
+               </LazyTippy>
                <div className="f1"></div>
-               <Tippy content={$t(L.UpgradeAllPermanentGreatPeopleThatAreEligibleForAgeWisdom)}>
+               <LazyTippy content={$t(L.UpgradeAllPermanentGreatPeopleThatAreEligibleForAgeWisdom)}>
                   <button
                      onClick={() => {
                         playClick();
@@ -119,8 +119,8 @@ export function ManagePermanentGreatPersonModal(props: {
                   >
                      {$t(L.UpgradeWisdomEligible)}
                   </button>
-               </Tippy>
-               <Tippy content={$t(L.UpgradeAllPermanentGreatPeopleThatAreUpgradeable)}>
+               </LazyTippy>
+               <LazyTippy content={$t(L.UpgradeAllPermanentGreatPeopleThatAreUpgradeable)}>
                   <button
                      onClick={() => {
                         playClick();
@@ -130,8 +130,8 @@ export function ManagePermanentGreatPersonModal(props: {
                   >
                      {$t(L.UpgradeAll)}
                   </button>
-               </Tippy>
-               <Tippy
+               </LazyTippy>
+               <LazyTippy
                   content={
                      isOnlineUser()
                         ? $t(L.UndoUpgradesForAllPermanentGreatPeopleThatAreEligibleForAgeWisdom)
@@ -152,7 +152,7 @@ export function ManagePermanentGreatPersonModal(props: {
                   >
                      {$t(L.UndoAll)}
                   </button>
-               </Tippy>
+               </LazyTippy>
                <button
                   className="row"
                   onClick={() => {
@@ -226,7 +226,7 @@ export function ManagePermanentGreatPersonModal(props: {
                         </td>
                         <td>
                            {person.birthday && (
-                              <Tippy
+                              <LazyTippy
                                  content={
                                     <>
                                        <div>
@@ -249,16 +249,16 @@ export function ManagePermanentGreatPersonModal(props: {
                                  >
                                     cake
                                  </div>
-                              </Tippy>
+                              </LazyTippy>
                            )}
-                           <Tippy content={$t(L.ViewOnWikipedia, { name: person.name() })}>
+                           <LazyTippy content={$t(L.ViewOnWikipedia, { name: person.name() })}>
                               <div
                                  className="m-icon small text-desc pointer"
                                  onClick={() => openUrl(`https://en.wikipedia.org/wiki/${person.wikipedia}`)}
                               >
                                  open_in_new
                               </div>
-                           </Tippy>
+                           </LazyTippy>
                         </td>
                         <td>
                            <div className="text-strong">{person.name()}</div>
@@ -266,13 +266,13 @@ export function ManagePermanentGreatPersonModal(props: {
                            {person.city ? (
                               <div className="row text-orange text-small">
                                  <div className="m-icon small mr2">map</div>
-                                 <Tippy
+                                 <LazyTippy
                                     content={$t(L.OnlyAvailableWhenPlaying, {
                                        city: Config.City[person.city].name(),
                                     })}
                                  >
                                     <div>{Config.City[person.city].name()}</div>
-                                 </Tippy>
+                                 </LazyTippy>
                               </div>
                            ) : null}
                         </td>
@@ -351,17 +351,17 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
          </td>
          <td>
             {!isEligibleForWisdom(greatPerson) ? (
-               <Tippy content={$t(L.AgeWisdomNotEligible)}>
+               <LazyTippy content={$t(L.AgeWisdomNotEligible)}>
                   <div className="m-icon text-desc">do_not_disturb_on</div>
-               </Tippy>
+               </LazyTippy>
             ) : wisdomShortage < 0 ? (
-               <Tippy content={$t(L.AgeWisdomGreatPeopleShardsNeeded, { amount: -wisdomShortage })}>
+               <LazyTippy content={$t(L.AgeWisdomGreatPeopleShardsNeeded, { amount: -wisdomShortage })}>
                   <div className="m-icon text-orange">error</div>
-               </Tippy>
+               </LazyTippy>
             ) : (
-               <Tippy content={$t(L.AgeWisdomGreatPeopleShardsSatisfied, { amount: -wisdomShortage })}>
+               <LazyTippy content={$t(L.AgeWisdomGreatPeopleShardsSatisfied, { amount: -wisdomShortage })}>
                   <div className="m-icon text-green">check_circle</div>
-               </Tippy>
+               </LazyTippy>
             )}
          </td>
          <td>
@@ -379,7 +379,7 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
                      notifyGameOptionsUpdate();
                   }}
                >
-                  <Tippy
+                  <LazyTippy
                      content={
                         isOnlineUser()
                            ? $t(L.PermanentGreatPeopleUpgradeUndo, {
@@ -391,7 +391,7 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
                      <div className="m-icon" style={{ fontSize: 20 }}>
                         undo
                      </div>
-                  </Tippy>
+                  </LazyTippy>
                </button>
             ) : null}
          </td>
@@ -473,9 +473,9 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
             </button>
          </td>
          <td>
-            <Tippy content={$t(L.AgeWisdomNotEligible)}>
+            <LazyTippy content={$t(L.AgeWisdomNotEligible)}>
                <div className="m-icon text-desc">do_not_disturb_on</div>
-            </Tippy>
+            </LazyTippy>
          </td>
          <td></td>
       </>
@@ -582,9 +582,9 @@ function GreatPersonPromotionRow({ greatPerson }: { greatPerson: GreatPerson }):
             </button>
          </td>
          <td>
-            <Tippy content={$t(L.AgeWisdomNotEligible)}>
+            <LazyTippy content={$t(L.AgeWisdomNotEligible)}>
                <div className="m-icon text-desc">do_not_disturb_on</div>
-            </Tippy>
+            </LazyTippy>
          </td>
          <td></td>
       </>
@@ -614,7 +614,7 @@ function GreatPersonAdaptiveRow({ greatPerson }: { greatPerson: GreatPerson }): 
          </td>
          <td>
             <div className="row g5">
-               <Tippy
+               <LazyTippy
                   content={
                      <>
                         <div>{person.desc(person, permanent?.level ?? 1)}</div>
@@ -623,7 +623,7 @@ function GreatPersonAdaptiveRow({ greatPerson }: { greatPerson: GreatPerson }): 
                   }
                >
                   <div className="m-icon small text-orange">info</div>
-               </Tippy>
+               </LazyTippy>
                <select
                   value={gs.adaptiveGreatPeople.get(greatPerson) ?? ""}
                   disabled={gs.adaptiveGreatPeople.has(greatPerson)}
@@ -683,9 +683,9 @@ function GreatPersonAdaptiveRow({ greatPerson }: { greatPerson: GreatPerson }): 
             </button>
          </td>
          <td>
-            <Tippy content={$t(L.AgeWisdomNotEligible)}>
+            <LazyTippy content={$t(L.AgeWisdomNotEligible)}>
                <div className="m-icon text-desc">do_not_disturb_on</div>
-            </Tippy>
+            </LazyTippy>
          </td>
          <td></td>
       </>

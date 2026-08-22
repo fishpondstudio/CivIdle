@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import type React from "react";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
@@ -297,7 +297,7 @@ function ChatInput({
             style={{ position: "absolute", bottom: "100%", left: 0 }}
             onClose={() => setShowChatChannel(false)}
          />
-         <Tippy content={ChatChannels[channel]}>
+         <LazyTippy content={ChatChannels[channel]}>
             <div
                className="language-switch pointer"
                onClick={() => {
@@ -306,7 +306,7 @@ function ChatInput({
             >
                {channel.toUpperCase()}
             </div>
-         </Tippy>
+         </LazyTippy>
          <input
             ref={chatInput}
             className={classNames({ "f1 w100": true, "is-chat-command": chat.startsWith("/") })}
@@ -369,28 +369,28 @@ function _ChatMessage({
                >
                   {chat.name}
                </div>
-               <Tippy content={getCountryName(chat.flag)}>
+               <LazyTippy content={getCountryName(chat.flag)}>
                   <PlayerFlagComponent name={chat.flag} scale={0.625} />
-               </Tippy>
+               </LazyTippy>
                {chat.level > 0 ? (
-                  <Tippy content={AccountLevelNames[chat.level]()}>
+                  <LazyTippy content={AccountLevelNames[chat.level]()}>
                      <AccountLevelComponent level={chat.level} scale={0.15} />
-                  </Tippy>
+                  </LazyTippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
-                  <Tippy content={$t(L.AccountSupporter)}>
+                  <LazyTippy content={$t(L.AccountSupporter)}>
                      <MiscTextureComponent name="Supporter" scale={0.15} />
-                  </Tippy>
+                  </LazyTippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.KeeperOfOurServer) ? (
-                  <Tippy content={$t(L.KeeperOfOurServer)}>
+                  <LazyTippy content={$t(L.KeeperOfOurServer)}>
                      <MiscTextureComponent name="Supporter2" scale={0.15} />
-                  </Tippy>
+                  </LazyTippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
-                  <Tippy content={$t(L.AccountLevelMod)}>
+                  <LazyTippy content={$t(L.AccountLevelMod)}>
                      <MiscTextureComponent name="AccountLevelMod" scale={0.15} />
-                  </Tippy>
+                  </LazyTippy>
                ) : null}
             </div>
          ) : (
@@ -418,32 +418,32 @@ function _ChatMessage({
                >
                   {chat.name}
                </div>
-               <Tippy content={getCountryName(chat.flag)}>
+               <LazyTippy content={getCountryName(chat.flag)}>
                   <div>
                      <PlayerFlagComponent name={chat.flag} scale={0.625} />
                   </div>
-               </Tippy>
+               </LazyTippy>
                {chat.level > 0 ? (
-                  <Tippy content={AccountLevelNames[chat.level]()}>
+                  <LazyTippy content={AccountLevelNames[chat.level]()}>
                      <AccountLevelComponent level={chat.level} scale={0.15} />
-                  </Tippy>
+                  </LazyTippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
-                  <Tippy content={$t(L.AccountSupporter)}>
+                  <LazyTippy content={$t(L.AccountSupporter)}>
                      <MiscTextureComponent name="Supporter" scale={0.15} />
-                  </Tippy>
+                  </LazyTippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.KeeperOfOurServer) ? (
-                  <Tippy content={$t(L.KeeperOfOurServer)}>
+                  <LazyTippy content={$t(L.KeeperOfOurServer)}>
                      <MiscTextureComponent name="Supporter2" scale={0.15} />
-                  </Tippy>
+                  </LazyTippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
-                  <Tippy content={$t(L.AccountLevelMod)}>
+                  <LazyTippy content={$t(L.AccountLevelMod)}>
                      <MiscTextureComponent name="AccountLevelMod" scale={0.15} />
-                  </Tippy>
+                  </LazyTippy>
                ) : null}
-               <Tippy content={$t(L.BlockXCurrentGameSession, { name: chat.name })}>
+               <LazyTippy content={$t(L.BlockXCurrentGameSession, { name: chat.name })}>
                   <div
                      className="m-icon show-on-hover"
                      onClick={() => {
@@ -462,9 +462,9 @@ function _ChatMessage({
                   >
                      block
                   </div>
-               </Tippy>
+               </LazyTippy>
                <div className="f1" />
-               <Tippy content={$t(L.ShowTradesFrom, { name: chat.name })}>
+               <LazyTippy content={$t(L.ShowTradesFrom, { name: chat.name })}>
                   <div
                      className="m-icon show-on-hover"
                      onClick={() => {
@@ -474,7 +474,7 @@ function _ChatMessage({
                   >
                      currency_exchange
                   </div>
-               </Tippy>
+               </LazyTippy>
                <div>{new Date(chat.time ?? 0).toLocaleTimeString()}</div>
             </div>
          )}

@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useState } from "react";
 import { NoPrice, NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
@@ -338,9 +338,9 @@ export function AddTradeButtonComponent({ onClick }: { onClick: () => void }): R
          disabled={!!disabledReason}
       >
          <div className="m-icon small">add_circle</div>
-         <Tippy content={disabledReason} disabled={!disabledReason}>
+         <LazyTippy content={disabledReason} disabled={!disabledReason}>
             <div className="f1">{$t(L.PlayerTradeNewTrade)}</div>
-         </Tippy>
+         </LazyTippy>
       </button>
    );
 }

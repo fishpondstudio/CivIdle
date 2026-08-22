@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useState } from "react";
 import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
@@ -91,7 +91,7 @@ export function GameCalendarModal(): React.ReactNode {
                                  {birthdays.get(day)?.map((greatPerson) => {
                                     const def = Config.GreatPerson[greatPerson];
                                     return (
-                                       <Tippy
+                                       <LazyTippy
                                           key={greatPerson}
                                           content={
                                              <>
@@ -113,11 +113,11 @@ export function GameCalendarModal(): React.ReactNode {
                                           >
                                              {Config.GreatPerson[greatPerson].name()}
                                           </div>
-                                       </Tippy>
+                                       </LazyTippy>
                                     );
                                  })}
                                  {playerBirthdaysByDay.get(day)?.map((handle) => (
-                                    <Tippy
+                                    <LazyTippy
                                        content={
                                           <>
                                              <div className="text-strong">
@@ -134,7 +134,7 @@ export function GameCalendarModal(): React.ReactNode {
                                           </div>
                                           <div className="birthday-calendar-player-handle">{handle}</div>
                                        </div>
-                                    </Tippy>
+                                    </LazyTippy>
                                  ))}
                               </div>
                            </>

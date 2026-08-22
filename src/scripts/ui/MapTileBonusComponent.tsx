@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { memo, useState } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { Config } from "../../../shared/logic/Config";
@@ -122,7 +122,7 @@ function HighlightBuildings(): React.ReactNode {
             .sort((a, b) => (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0))
             .map((building) => {
                return (
-                  <Tippy key={building} content={Config.Building[building].name()}>
+                  <LazyTippy key={building} content={Config.Building[building].name()}>
                      <div
                         className="row jcc"
                         onClick={() => {
@@ -149,7 +149,7 @@ function HighlightBuildings(): React.ReactNode {
                            }}
                         />
                      </div>
-                  </Tippy>
+                  </LazyTippy>
                );
             })}
       </div>
@@ -204,22 +204,22 @@ function _FindPlayerComponent(): React.ReactNode {
                <div className="row mt5" key={xy}>
                   {handle}
                   <div className="w5" />
-                  <Tippy content={getCountryName(entry.flag)}>
+                  <LazyTippy content={getCountryName(entry.flag)}>
                      <PlayerFlagComponent name={entry.flag} scale={0.7} />
-                  </Tippy>
+                  </LazyTippy>
                   {hasFlag(entry.attr, UserAttributes.DLC1) ? (
-                     <Tippy content={$t(L.AccountSupporter)}>
+                     <LazyTippy content={$t(L.AccountSupporter)}>
                         <MiscTextureComponent name="Supporter" scale={0.17} />
-                     </Tippy>
+                     </LazyTippy>
                   ) : null}
                   {hasFlag(entry.attr, UserAttributes.DLC3) ? (
-                     <Tippy content={$t(L.KeeperOfOurServer)}>
+                     <LazyTippy content={$t(L.KeeperOfOurServer)}>
                         <MiscTextureComponent name="Supporter2" scale={0.17} />
-                     </Tippy>
+                     </LazyTippy>
                   ) : null}
-                  <Tippy content={AccountLevelNames[entry.level]()}>
+                  <LazyTippy content={AccountLevelNames[entry.level]()}>
                      <AccountLevelComponent level={entry.level} scale={0.17} />
-                  </Tippy>
+                  </LazyTippy>
                   <div className="f1" />
                   <div
                      className="m-icon small text-link"

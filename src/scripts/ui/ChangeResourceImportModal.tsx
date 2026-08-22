@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import { useState } from "react";
 import type { Material } from "../../../shared/definitions/MaterialDefinitions";
@@ -63,9 +63,9 @@ export function ChangeResourceImportModal({
             <div className="row mv5">
                <div className="row" style={{ width: LABEL_WIDTH }}>
                   <div>{$t(L.ResourceImportImportPerCycleV2)}</div>
-                  <Tippy content={$t(L.ResourceImportImportPerCycleV2ToolTip)}>
+                  <LazyTippy content={$t(L.ResourceImportImportPerCycleV2ToolTip)}>
                      <div className="m-icon small ml5 text-desc">help</div>
-                  </Tippy>
+                  </LazyTippy>
                </div>
                <input
                   className="f1 text-right w100"
@@ -106,9 +106,9 @@ export function ChangeResourceImportModal({
             <div className="row mv5">
                <div className="row" style={{ width: LABEL_WIDTH }}>
                   <div>{$t(L.ResourceImportImportCapV2)}</div>
-                  <Tippy content={$t(L.ResourceImportImportCapV2Tooltip)}>
+                  <LazyTippy content={$t(L.ResourceImportImportCapV2Tooltip)}>
                      <div className="m-icon small ml5 text-desc">help</div>
-                  </Tippy>
+                  </LazyTippy>
                </div>
                <input
                   className="f1 text-right w100"
@@ -147,7 +147,7 @@ export function ChangeResourceImportModal({
                <fieldset className="mb10">
                   <legend>{$t(L.ResourceTransportPreference)}</legend>
                   <div className="row mv5">
-                     <Tippy content={$t(L.TechResourceTransportPreferenceDefaultTooltip)}>
+                     <LazyTippy content={$t(L.TechResourceTransportPreferenceDefaultTooltip)}>
                         <button
                            onClick={() => {
                               delete resourceImport.inputMode;
@@ -163,10 +163,10 @@ export function ChangeResourceImportModal({
                         >
                            {$t(L.TechResourceTransportPreferenceDefault)}
                         </button>
-                     </Tippy>
+                     </LazyTippy>
                      {jsxMMapOf(BuildingInputModeNames, (mode, name) => {
                         return (
-                           <Tippy key={mode} content={BuildingInputModeTooltips.get(mode)?.() ?? ""}>
+                           <LazyTippy key={mode} content={BuildingInputModeTooltips.get(mode)?.() ?? ""}>
                               <button
                                  onClick={() => {
                                     setResourceImport({
@@ -183,7 +183,7 @@ export function ChangeResourceImportModal({
                               >
                                  {name()}
                               </button>
-                           </Tippy>
+                           </LazyTippy>
                         );
                      })}
                   </div>

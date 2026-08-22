@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { GreatPeopleChoice } from "../../../shared/logic/GameState";
@@ -113,7 +113,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
                            p.type === GreatPersonType.Adaptive ||
                            p.type === GreatPersonType.LevelBoost) &&
                         (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
-                           <Tippy
+                           <LazyTippy
                               content={$t(L.GreatPersonThisRunEffectiveLevel, {
                                  count: gs.greatPeople[greatPerson] ?? 0,
                                  person: p.name(),
@@ -121,7 +121,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
                               })}
                            >
                               <div className="m-icon text-orange mt5">release_alert</div>
-                           </Tippy>
+                           </LazyTippy>
                         ) : null}
                      </div>
                   );

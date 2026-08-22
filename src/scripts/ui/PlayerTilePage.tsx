@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { Config } from "../../../shared/logic/Config";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import { UserAttributes, UserColorsMapping } from "../../../shared/utilities/Database";
@@ -49,21 +49,21 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                   >
                      {tile.handle}
                   </div>
-                  <Tippy content={getCountryName(tile.flag)}>
+                  <LazyTippy content={getCountryName(tile.flag)}>
                      <PlayerFlagComponent name={tile.flag} style={{ marginLeft: 5 }} scale={0.7} />
-                  </Tippy>
-                  <Tippy content={AccountLevelNames[tile.level]()}>
+                  </LazyTippy>
+                  <LazyTippy content={AccountLevelNames[tile.level]()}>
                      <AccountLevelComponent level={tile.level} scale={0.17} style={{ marginLeft: 5 }} />
-                  </Tippy>
+                  </LazyTippy>
                   {hasFlag(tile.attr, UserAttributes.DLC1) ? (
-                     <Tippy content={$t(L.AccountSupporter)}>
+                     <LazyTippy content={$t(L.AccountSupporter)}>
                         <MiscTextureComponent name="Supporter" scale={0.17} style={{ marginLeft: 5 }} />
-                     </Tippy>
+                     </LazyTippy>
                   ) : null}
                   {hasFlag(tile.attr, UserAttributes.DLC3) ? (
-                     <Tippy content={$t(L.KeeperOfOurServer)}>
+                     <LazyTippy content={$t(L.KeeperOfOurServer)}>
                         <MiscTextureComponent name="Supporter2" scale={0.17} style={{ marginLeft: 5 }} />
-                     </Tippy>
+                     </LazyTippy>
                   ) : null}
                </legend>
                <div className="row mv5">

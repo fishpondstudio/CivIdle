@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { memo, useEffect, useRef } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { Config } from "../../../shared/logic/Config";
@@ -74,7 +74,7 @@ function RestitutorComponent(): React.ReactNode {
       return null;
    }
    return (
-      <Tippy content={html($t(L.RestitutorDescHTML))}>
+      <LazyTippy content={html($t(L.RestitutorDescHTML))}>
          <div
             className="inset-shallow mb10 pointer"
             onClick={() => {
@@ -85,6 +85,6 @@ function RestitutorComponent(): React.ReactNode {
          >
             <img src={Restitutor} style={{ width: "100%", display: "block" }} />
          </div>
-      </Tippy>
+      </LazyTippy>
    );
 }

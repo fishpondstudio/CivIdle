@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useState } from "react";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
@@ -116,7 +116,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                                  notifyGameOptionsUpdate();
                               }}
                            >
-                              <Tippy
+                              <LazyTippy
                                  disabled={missing.size <= 0}
                                  content={
                                     <div>
@@ -135,7 +135,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                                  }
                               >
                                  <div>{$t(L.Upgrade)}</div>
-                              </Tippy>
+                              </LazyTippy>
                            </button>
                         </div>
                      );

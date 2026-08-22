@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useState } from "react";
 import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
@@ -83,7 +83,7 @@ function TableRowComponent({
    return (
       <tr>
          <td>
-            <Tippy
+            <LazyTippy
                content={$t(L.ToggleWatchForThisResourceWatchedResourcesAreDisplayedInADedicatedTopLeftTab)}
             >
                <div
@@ -103,7 +103,7 @@ function TableRowComponent({
                      <div className="m-icon text-grey">toggle_off</div>
                   )}
                </div>
-            </Tippy>
+            </LazyTippy>
          </td>
          <td>{resourceName}</td>
          <td>{formatNumber(amount)}</td>

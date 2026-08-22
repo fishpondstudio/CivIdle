@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { IOFlags, shouldAlwaysShowBuildingOptions } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -34,7 +34,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
             {$t(L.StockpileSettings)}: {building.stockpileCapacity}x
          </legend>
          <div className="sep5"></div>
-         <Tippy content={$t(L.StockpileDesc, { capacity: building.stockpileCapacity })}>
+         <LazyTippy content={$t(L.StockpileDesc, { capacity: building.stockpileCapacity })}>
             <input
                type="range"
                min={STOCKPILE_CAPACITY_MIN}
@@ -45,7 +45,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
                   notifyGameStateUpdate();
                }}
             />
-         </Tippy>
+         </LazyTippy>
          <div className="sep15"></div>
          <ApplyToAllComponent
             xy={xy}
@@ -60,7 +60,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
             </div>
          </div>
          <div className="sep5"></div>
-         <Tippy
+         <LazyTippy
             content={
                building.stockpileMax <= 0
                   ? $t(L.StockpileMaxUnlimitedDesc)
@@ -78,7 +78,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
                   notifyGameStateUpdate();
                }}
             />
-         </Tippy>
+         </LazyTippy>
          <div className="sep15"></div>
          <ApplyToAllComponent
             xy={xy}

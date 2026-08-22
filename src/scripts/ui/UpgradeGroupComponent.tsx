@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import type { Upgrade } from "../../../shared/definitions/UpgradeDefinitions";
 import { getBuildingCost, getBuildingDescription } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -34,7 +34,7 @@ export function UpgradeGroupComponent<T>({
                   let action: React.ReactNode = null;
                   if ((!getSelected() && i === 0) || (getSelected() && building.level === i)) {
                      action = (
-                        <Tippy
+                        <LazyTippy
                            disabled={!getSelected()}
                            content={mapOf(getBuildingCost(building), (res, amount) => {
                               return (
@@ -68,7 +68,7 @@ export function UpgradeGroupComponent<T>({
                            >
                               {$t(L.UnlockBuilding)}
                            </div>
-                        </Tippy>
+                        </LazyTippy>
                      );
                   } else if (building.level > i) {
                      action = <div className="m-icon small text-green">check_circle</div>;

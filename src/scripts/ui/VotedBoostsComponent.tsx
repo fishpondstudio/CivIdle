@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useEffect, useState } from "react";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
@@ -121,13 +121,13 @@ function VotedBoostsOptionComp({ data }: { data: IVotedBoostOption }): React.Rea
          <div className="row g10 mt5" style={{ overflow: "auto", width: "100%" }}>
             {data.buildings.map((building) => {
                return (
-                  <Tippy key={building} content={Config.Building[building].name()}>
+                  <LazyTippy key={building} content={Config.Building[building].name()}>
                      <BuildingSpriteComponent
                         building={building}
                         scale={(0.24 * getGameOptions().sidePanelWidth) / 450}
                         style={{ filter: "invert(0.75)" }}
                      />
-                  </Tippy>
+                  </LazyTippy>
                );
             })}
          </div>

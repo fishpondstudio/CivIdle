@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { exploreTile, getExplorerRange } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
@@ -109,11 +109,11 @@ export function UnexploredTilePage({ xy, gameState }: IBuildingComponentProps): 
                   <div className="f1 text-strong">{$t(L.SendACartographer)}</div>
                </button>
             </fieldset>
-            <Tippy content="Der Wanderer über dem Nebelmeer (Wanderer above the Sea of Fog), Caspar David Friedrich, 1818">
+            <LazyTippy content="Der Wanderer über dem Nebelmeer (Wanderer above the Sea of Fog), Caspar David Friedrich, 1818">
                <div className="inset-shallow">
                   <img src={Discovery} className="w100" style={{ display: "block" }} />
                </div>
-            </Tippy>
+            </LazyTippy>
          </div>
       </div>
    );

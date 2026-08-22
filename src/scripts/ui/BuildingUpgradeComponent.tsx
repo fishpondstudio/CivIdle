@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { Fragment, useEffect, useState } from "react";
 import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import {
@@ -220,22 +220,22 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                   </div>
                   <div className="text-small text-desc">{$t(L.BuildingTier)}</div>
                </div>
-               <Tippy content={Config.TechAge[age].name()}>
+               <LazyTippy content={Config.TechAge[age].name()}>
                   <div className="f1 text-center">
                      <div className="text-strong text-large">
                         {numberToRoman(Config.TechAge[age].idx + 1)}
                      </div>
                      <div className="text-small text-desc">{$t(L.TechAge)}</div>
                   </div>
-               </Tippy>
+               </LazyTippy>
             </div>
             <div className="separator" />
             <div className="row text-small text-strong">
-               <Tippy content={$t(L.BatchModeTooltip, { count: selected.size })}>
+               <LazyTippy content={$t(L.BatchModeTooltip, { count: selected.size })}>
                   <div>
                      {$t(L.BatchUpgrade)}: {selected.size}
                   </div>
-               </Tippy>
+               </LazyTippy>
                <div className="f1"></div>
                <select
                   className="condensed mr5"
@@ -271,11 +271,11 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             <div className="separator" />
             <div className="row">
                {levels.map((level, idx) => (
-                  <Tippy key={idx} content={buildCost(idx, level)}>
+                  <LazyTippy key={idx} content={buildCost(idx, level)}>
                      <button className="f1" onClick={() => upgradeTo(idx === 0 ? -1 : level)}>
                         {idx === 0 ? "+1" : `~${level}`}
                      </button>
-                  </Tippy>
+                  </LazyTippy>
                ))}
             </div>
             {theMet ? (
@@ -313,12 +313,12 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                   }}
                >
                   <div className="m-icon small">zoom_out_map</div>
-                  <Tippy
+                  <LazyTippy
                      content={$t(L.MoveBuildingNoTeleport)}
                      disabled={(theMet.building.resources.Teleport ?? 0) > 0}
                   >
                      <div className="f1">{moving ? $t(L.MoveBuildingSelectTile) : $t(L.MoveBuilding)}</div>
-                  </Tippy>
+                  </LazyTippy>
                </button>
             ) : null}
          </fieldset>

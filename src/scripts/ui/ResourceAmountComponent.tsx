@@ -1,9 +1,9 @@
-import Tippy from "@tippyjs/react";
 import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { formatNumber } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
+import { LazyTippy } from "./LazyTippy";
 
 export function ResourceAmountComponent({
    className,
@@ -34,13 +34,9 @@ export function ResourceAmountComponent({
       </span>
    );
 
-   if (!showTooltip) {
+   if (!showTooltip || !tooltip) {
       return content;
    }
 
-   return (
-      <Tippy content={tooltip} disabled={!tooltip}>
-         {content}
-      </Tippy>
-   );
+   return <LazyTippy content={tooltip}>{content}</LazyTippy>;
 }

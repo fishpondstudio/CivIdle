@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useState } from "react";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
@@ -46,11 +46,11 @@ export function ChangePlayerHandleModal(): React.ReactNode {
                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
                   {jsxMapOf(CountryCode, (c, v) => {
                      return (
-                        <Tippy key={c} content={v}>
+                        <LazyTippy key={c} content={v}>
                            <div onClick={() => setFlag(c)} className="pointer">
                               <PlayerFlagComponent name={c} scale={1} />
                            </div>
-                        </Tippy>
+                        </LazyTippy>
                      );
                   })}
                </div>

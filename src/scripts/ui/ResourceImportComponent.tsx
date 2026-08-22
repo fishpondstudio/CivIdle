@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { NoPrice, NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
@@ -149,13 +149,13 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                      <td className="row">
                         <div>{Config.Material[res].name()}</div>
                         {isNullOrUndefined(ri?.inputMode) ? null : (
-                           <Tippy
+                           <LazyTippy
                               content={$t(L.TechResourceTransportPreferenceOverrideTooltip, {
                                  mode: BuildingInputModeNames.get(ri.inputMode)!(),
                               })}
                            >
                               <div className="m-icon text-orange small ml5">local_shipping</div>
-                           </Tippy>
+                           </LazyTippy>
                         )}
                      </td>
                      <td className="text-right">
@@ -351,9 +351,9 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
          <div className="separator" />
          <div className="row">
             <div>{$t(L.QuickUiMode)}</div>
-            <Tippy content={$t(L.QuickUiModeTooltip)}>
+            <LazyTippy content={$t(L.QuickUiModeTooltip)}>
                <div className="m-icon small ml5 text-desc help-cursor">help</div>
-            </Tippy>
+            </LazyTippy>
             <div className="f1" />
             <div
                className="pointer ml20"
@@ -373,9 +373,9 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
          <div className="separator" />
          <div className="row">
             <div>{$t(L.ResourceExportBelowCap)}</div>
-            <Tippy content={$t(L.ResourceExportBelowCapTooltip)}>
+            <LazyTippy content={$t(L.ResourceExportBelowCapTooltip)}>
                <div className="m-icon small ml5 text-desc help-cursor">help</div>
-            </Tippy>
+            </LazyTippy>
             <div className="f1"></div>
             <div
                className="pointer ml20"
@@ -411,9 +411,9 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
          <div className="separator"></div>
          <div className="row">
             <div>{$t(L.ResourceExportToSameType)}</div>
-            <Tippy content={$t(L.ResourceExportToSameTypeTooltip)}>
+            <LazyTippy content={$t(L.ResourceExportToSameTypeTooltip)}>
                <div className="m-icon small ml5 text-desc help-cursor">help</div>
-            </Tippy>
+            </LazyTippy>
             <div className="f1"></div>
             <div
                className="pointer ml20"
@@ -449,9 +449,9 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
          <div className="separator"></div>
          <div className="row">
             <div>{$t(L.ManagedImport)}</div>
-            <Tippy content={$t(L.ManagedImportDescV2, { range: MANAGED_IMPORT_RANGE })}>
+            <LazyTippy content={$t(L.ManagedImportDescV2, { range: MANAGED_IMPORT_RANGE })}>
                <div className="m-icon small ml5 text-desc help-cursor">help</div>
-            </Tippy>
+            </LazyTippy>
             <div className="f1"></div>
             <div
                className="pointer ml20"

@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { applyToAllBuildings } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
@@ -39,7 +39,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
    const property = getOptions(building);
    return (
       <div className="text-small row">
-         <Tippy content={$t(L.ApplyToAllBuilding, { building: def.name() })}>
+         <LazyTippy content={$t(L.ApplyToAllBuilding, { building: def.name() })}>
             <button
                style={{ width: 27, padding: 0 }}
                onClick={() => {
@@ -50,10 +50,10 @@ export function ApplyToAllComponent<T extends IBuildingData>({
             >
                <div className="m-icon small">sync</div>
             </button>
-         </Tippy>
+         </LazyTippy>
          {[1, 2, 3, 4, 5].map((tile) => {
             return (
-               <Tippy key={tile} content={$t(L.ApplyToBuildingInTile, { building: def.name(), tile })}>
+               <LazyTippy key={tile} content={$t(L.ApplyToBuildingInTile, { building: def.name(), tile })}>
                   <button
                      style={{ width: 27, padding: 0 }}
                      onMouseEnter={() => {
@@ -87,12 +87,12 @@ export function ApplyToAllComponent<T extends IBuildingData>({
                   >
                      {tile}
                   </button>
-               </Tippy>
+               </LazyTippy>
             );
          })}
          <div className="f1"></div>
          {hasFlag(flags, ApplyToAllFlag.NoDefault) ? null : (
-            <Tippy
+            <LazyTippy
                content={$t(L.SetAsDefaultBuilding, {
                   building: def.name(),
                })}
@@ -111,7 +111,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
                >
                   <div className="m-icon small">settings_heart</div>
                </button>
-            </Tippy>
+            </LazyTippy>
          )}
       </div>
    );

@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { getResourceImportIdleCapacity } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -40,13 +40,13 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
                   <legend>{$t(L.WarehouseAutopilotSettings)}</legend>
                   <div className="row">
                      <div>{$t(L.WarehouseAutopilotSettingsEnable)}</div>
-                     <Tippy
+                     <LazyTippy
                         content={$t(L.WarehouseSettingsAutopilotDesc, {
                            capacity: formatNumber(idleCapacity),
                         })}
                      >
                         <div className="m-icon small ml5 text-desc help-cursor">help</div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1"></div>
                      <div
                         className="pointer ml20"
@@ -82,9 +82,9 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
                   <div className="separator"></div>
                   <div className="row">
                      <div>{$t(L.WarehouseAutopilotSettingsRespectCapSetting)}</div>
-                     <Tippy content={$t(L.WarehouseAutopilotSettingsRespectCapSettingTooltip)}>
+                     <LazyTippy content={$t(L.WarehouseAutopilotSettingsRespectCapSettingTooltip)}>
                         <div className="m-icon small ml5 text-desc help-cursor">help</div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1"></div>
                      <div
                         className="pointer ml20"

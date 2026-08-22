@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
 import { getBuildingDescription, getMultipliersDescription } from "../../../shared/logic/BuildingLogic";
@@ -191,7 +191,7 @@ export function RebirthModal(): React.ReactNode {
                      {Config.City[nextCity].requireSupporterPack ? (
                         <>
                            <div className="separator-vertical" style={{ height: 30, margin: "-5px 20px" }} />
-                           <Tippy content={$t(L.SupporterPackRequiredTooltip)}>
+                           <LazyTippy content={$t(L.SupporterPackRequiredTooltip)}>
                               <div
                                  className="row f1 pointer"
                                  onClick={() => {
@@ -212,7 +212,7 @@ export function RebirthModal(): React.ReactNode {
                                     )}
                                  </div>
                               </div>
-                           </Tippy>
+                           </LazyTippy>
                         </>
                      ) : null}
                   </div>
@@ -223,11 +223,11 @@ export function RebirthModal(): React.ReactNode {
                      ({citySize + extraTileForNextRebirth}x{citySize + extraTileForNextRebirth})
                   </div>
                   {extraTileForNextRebirth > 0 && (
-                     <Tippy
+                     <LazyTippy
                         content={$t(L.ExtraTileForNextRebirthTooltip, { count: extraTileForNextRebirth })}
                      >
                         <div className="m-icon small ml5 text-green">info</div>
-                     </Tippy>
+                     </LazyTippy>
                   )}
                </div>
                <div

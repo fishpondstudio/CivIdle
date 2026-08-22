@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import {
    IOFlags,
@@ -236,7 +236,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                         gameState={gameState}
                      />
                   </div>
-                  <Tippy
+                  <LazyTippy
                      content={$t(L.TurnOffFullBuildings, { building: Config.Building[building.type].name() })}
                   >
                      <button
@@ -257,7 +257,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                      >
                         <div className="m-icon small">domain_disabled</div>
                      </button>
-                  </Tippy>
+                  </LazyTippy>
                </div>
             </>
          )}

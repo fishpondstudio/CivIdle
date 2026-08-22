@@ -1,6 +1,6 @@
-import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { hasFlag, toggleFlag } from "../../../shared/utilities/Helper";
+import { LazyTippy } from "./LazyTippy";
 
 export enum BuildingFilter {
    None = 0,
@@ -52,5 +52,5 @@ export function Filter({
    if (!tooltip) {
       return content;
    }
-   return <Tippy content={tooltip}>{content}</Tippy>;
+   return <LazyTippy content={tooltip}>{content}</LazyTippy>;
 }

@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import { useCallback, useState } from "react";
 import { TableVirtuoso } from "react-virtuoso";
@@ -140,7 +140,7 @@ export function PlayerTradeComponent({
                   {$t(L.PlayerTradeFilters)} ({filterCount})
                </div>
             </button>
-            <Tippy content={$t(L.PlayerTradeFilterWhatIHave)}>
+            <LazyTippy content={$t(L.PlayerTradeFilterWhatIHave)}>
                <button
                   onClick={() => {
                      clearSavedFilters();
@@ -154,12 +154,12 @@ export function PlayerTradeComponent({
                >
                   <div className="m-icon small">database</div>
                </button>
-            </Tippy>
-            <Tippy content={$t(L.PlayerTradeClearFilter)}>
+            </LazyTippy>
+            <LazyTippy content={$t(L.PlayerTradeClearFilter)}>
                <button onClick={clearFilters}>
                   <div className="m-icon small">cancel</div>
                </button>
-            </Tippy>
+            </LazyTippy>
          </div>
          <div className="table-view">
             <TableVirtuoso
@@ -385,32 +385,32 @@ function PlayerTradeTableRow({
                "text-desc": Math.abs(percentage) < CURRENCY_PERCENT_EPSILON,
             })}
          >
-            <Tippy content={$t(L.MarketValueDesc, { value: formatPercent(percentage, 0) })}>
+            <LazyTippy content={$t(L.MarketValueDesc, { value: formatPercent(percentage, 0) })}>
                <div>
                   {mathSign(percentage, CURRENCY_PERCENT_EPSILON)}
                   {formatPercent(Math.abs(percentage), 0)}
                </div>
-            </Tippy>
+            </LazyTippy>
          </td>
          <td className={evenodd}>
             <div className="row">
-               <Tippy content={getCountryName(trade.fromFlag)}>
+               <LazyTippy content={getCountryName(trade.fromFlag)}>
                   <PlayerFlagComponent name={trade.fromFlag} scale={0.7} />
-               </Tippy>
+               </LazyTippy>
                {trade.fromLevel > 0 ? (
-                  <Tippy content={AccountLevelNames[trade.fromLevel]()}>
+                  <LazyTippy content={AccountLevelNames[trade.fromLevel]()}>
                      <AccountLevelComponent level={trade.fromLevel} scale={0.17} />
-                  </Tippy>
+                  </LazyTippy>
                ) : null}
                {hasFlag(trade.fromAttr, UserAttributes.DLC1) ? (
-                  <Tippy content={$t(L.AccountSupporter)}>
+                  <LazyTippy content={$t(L.AccountSupporter)}>
                      <MiscTextureComponent name="Supporter" scale={0.17} />
-                  </Tippy>
+                  </LazyTippy>
                ) : null}
                {hasFlag(trade.fromAttr, UserAttributes.DLC3) ? (
-                  <Tippy content={$t(L.KeeperOfOurServer)}>
+                  <LazyTippy content={$t(L.KeeperOfOurServer)}>
                      <MiscTextureComponent name="Supporter2" scale={0.17} />
-                  </Tippy>
+                  </LazyTippy>
                ) : null}
             </div>
          </td>
@@ -572,7 +572,7 @@ function PlayerTradeFilterModal({
                      <div style={{ display: "grid", gridTemplateColumns: "repeat(9, 1fr)" }}>
                         {Array.from(flags).map((flag) => {
                            return (
-                              <Tippy key={flag} content={getCountryName(flag)}>
+                              <LazyTippy key={flag} content={getCountryName(flag)}>
                                  <div
                                     className="row jcc pointer"
                                     style={{
@@ -592,7 +592,7 @@ function PlayerTradeFilterModal({
                                  >
                                     <PlayerFlagComponent name={flag} scale={0.7} />
                                  </div>
-                              </Tippy>
+                              </LazyTippy>
                            );
                         })}
                      </div>

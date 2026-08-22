@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import type React from "react";
 import { useState } from "react";
@@ -383,24 +383,24 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                         <th></th>
                         <th></th>
                         <th className="right">
-                           <Tippy content={$t(L.BuildingEmpireValue)}>
+                           <LazyTippy content={$t(L.BuildingEmpireValue)}>
                               <div className="m-icon small">account_balance</div>
-                           </Tippy>
+                           </LazyTippy>
                         </th>
                         <th className="right">
-                           <Tippy content={$t(L.TransportationWorkers)}>
+                           <LazyTippy content={$t(L.TransportationWorkers)}>
                               <div className="m-icon small">local_shipping</div>
-                           </Tippy>
+                           </LazyTippy>
                         </th>
                         <th className="right">
-                           <Tippy content={$t(L.ProductionWorkers)}>
+                           <LazyTippy content={$t(L.ProductionWorkers)}>
                               <div className="m-icon small">settings</div>
-                           </Tippy>
+                           </LazyTippy>
                         </th>{" "}
                         <th className="right">
-                           <Tippy content={$t(L.ElectrificationLevel)}>
+                           <LazyTippy content={$t(L.ElectrificationLevel)}>
                               <div className="m-icon small">bolt</div>
-                           </Tippy>
+                           </LazyTippy>
                         </th>
                      </tr>
                   );
@@ -458,13 +458,13 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                            <FormatNumber value={Tick.current.workersAssignment.get(xy) ?? 0} />
                         </td>
                         <td>
-                           <Tippy content={ElectrificationStatus[electrificationStatus]()}>
+                           <LazyTippy content={ElectrificationStatus[electrificationStatus]()}>
                               <div className="row">
                                  <div className="f1" />
                                  <ElectrificationIcon status={electrificationStatus} />
                                  {canBeElectrified(building.type) ? building.electrification : null}
                               </div>
-                           </Tippy>
+                           </LazyTippy>
                         </td>
                      </>
                   );
@@ -550,7 +550,7 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                );
             })}
             <div className="f1"></div>
-            <Tippy content={$t(L.PinResourceTab)}>
+            <LazyTippy content={$t(L.PinResourceTab)}>
                <button
                   className={cls(gs.pinStatPanel ? "active" : null)}
                   style={{ width: 27, padding: 0 }}
@@ -561,8 +561,8 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                >
                   <div className="m-icon small">picture_in_picture</div>
                </button>
-            </Tippy>
-            <Tippy content={showTheoreticalValue ? $t(L.TheoreticalData) : $t(L.LiveData)}>
+            </LazyTippy>
+            <LazyTippy content={showTheoreticalValue ? $t(L.TheoreticalData) : $t(L.LiveData)}>
                <button
                   className={classNames({
                      active: !showTheoreticalValue,
@@ -574,7 +574,7 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                >
                   <div className="m-icon small">live_tv</div>
                </button>
-            </Tippy>
+            </LazyTippy>
          </div>
          <TableView
             classNames="sticky-header f1"
@@ -644,11 +644,11 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                   <tr key={res}>
                      <td>
                         <div>{r.name()}</div>
-                        <Tippy content={$t(L.EmpireValue)}>
+                        <LazyTippy content={$t(L.EmpireValue)}>
                            <span className="text-desc text-small">
                               <FormatNumber value={Config.MaterialPrice[res]} />
                            </span>
-                        </Tippy>
+                        </LazyTippy>
                      </td>
                      <td className="right">
                         <FormatNumber value={amount} />
@@ -657,7 +657,7 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                         <div className={classNames({ "text-right": true, "text-red": deficit < 0 })}>
                            <FormatNumber value={deficit} />
                         </div>
-                        <Tippy
+                        <LazyTippy
                            content={$t(L.StatisticsResourcesDeficitDesc, {
                               output: formatNumber(output),
                               input: formatNumber(input),
@@ -672,13 +672,13 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                                  <FormatNumber value={input} />
                               </span>
                            </div>
-                        </Tippy>
+                        </LazyTippy>
                      </td>
                      <td className={classNames({ "text-red": deficit < 0, "text-right text-small": true })}>
                         {formatHMS(timeLeft)}
                      </td>
                      <td>
-                        <Tippy
+                        <LazyTippy
                            content={$t(
                               L.ToggleWatchForThisResourceWatchedResourcesAreDisplayedInADedicatedTopLeftTab,
                            )}
@@ -699,7 +699,7 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                            >
                               {gameState.watchedResources.has(res) ? "toggle_on" : "toggle_off"}
                            </div>
-                        </Tippy>
+                        </LazyTippy>
                      </td>
                   </tr>
                );

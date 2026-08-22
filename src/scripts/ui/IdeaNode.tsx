@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
 import { CarthaginianIdeas, getIdeaDesc } from "../../../shared/definitions/IdeaDefinitions";
 import type { Upgrade } from "../../../shared/definitions/UpgradeDefinitions";
@@ -21,7 +21,7 @@ export function IdeaNode({ data }: NodeProps<IdeaNode>) {
    const available = total - used;
    const canUnlock = requires.every((u) => gs.unlockedUpgrades[u]) && available > 0;
    return (
-      <Tippy
+      <LazyTippy
          disabled={gs.unlockedUpgrades[upgrade]}
          content={
             <>
@@ -84,7 +84,7 @@ export function IdeaNode({ data }: NodeProps<IdeaNode>) {
                isConnectable={false}
             />
          </div>
-      </Tippy>
+      </LazyTippy>
    );
 }
 

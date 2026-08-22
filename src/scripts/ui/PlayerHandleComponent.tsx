@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { Config } from "../../../shared/logic/Config";
@@ -118,18 +118,18 @@ export function PlayerHandleComponent() {
                   >
                      {user.handle}
                   </div>
-                  <Tippy content={getCountryName(user?.flag)}>
+                  <LazyTippy content={getCountryName(user?.flag)}>
                      <PlayerFlagComponent name={user.flag} style={{ marginLeft: 5 }} scale={0.75} />
-                  </Tippy>
+                  </LazyTippy>
                   {hasFlag(user.attr, UserAttributes.DLC1) ? (
-                     <Tippy content={$t(L.AccountSupporter)}>
+                     <LazyTippy content={$t(L.AccountSupporter)}>
                         <MiscTextureComponent name="Supporter" scale={0.18} />
-                     </Tippy>
+                     </LazyTippy>
                   ) : null}
                   {hasFlag(user.attr, UserAttributes.DLC3) ? (
-                     <Tippy content={$t(L.KeeperOfOurServer)}>
+                     <LazyTippy content={$t(L.KeeperOfOurServer)}>
                         <MiscTextureComponent name="Supporter2" scale={0.18} />
-                     </Tippy>
+                     </LazyTippy>
                   ) : null}
                   <div className="f1" />
                   <div

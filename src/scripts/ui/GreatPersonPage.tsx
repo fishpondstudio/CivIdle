@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebirthLogic";
@@ -97,13 +97,13 @@ export function GreatPersonPage(): React.ReactNode {
                            {person.city ? (
                               <div className="row text-orange text-small">
                                  <div className="m-icon small mr2">map</div>
-                                 <Tippy
+                                 <LazyTippy
                                     content={$t(L.OnlyAvailableWhenPlaying, {
                                        city: Config.City[person.city].name(),
                                     })}
                                  >
                                     <div>{Config.City[person.city].name()}</div>
-                                 </Tippy>
+                                 </LazyTippy>
                               </div>
                            ) : null}
                         </td>

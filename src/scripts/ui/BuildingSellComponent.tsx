@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { useCallback } from "react";
 import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -40,7 +40,10 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
          </button>
          {[1, 2, 3, 4, 5, getCitySize(gameState) * 2].map((range) => {
             return (
-               <Tippy key={range} content={$t(L.DemolishAllBuilding, { building: def.name(), tile: range })}>
+               <LazyTippy
+                  key={range}
+                  content={$t(L.DemolishAllBuilding, { building: def.name(), tile: range })}
+               >
                   <button
                      style={{ width: 27, padding: 0 }}
                      onMouseEnter={() => {
@@ -103,7 +106,7 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
                   >
                      {range}
                   </button>
-               </Tippy>
+               </LazyTippy>
             );
          })}
       </fieldset>

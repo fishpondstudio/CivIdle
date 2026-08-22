@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
 import type { Material } from "../../../shared/definitions/MaterialDefinitions";
@@ -115,7 +115,7 @@ export function ResourcePanel(): React.ReactNode {
       >
          {isSteam() && (
             <>
-               <Tippy content={$t(L.EnterExitMinimizedMode)}>
+               <LazyTippy content={$t(L.EnterExitMinimizedMode)}>
                   <div className="menu-button app-region-none">
                      <div
                         className="m-icon"
@@ -146,7 +146,7 @@ export function ResourcePanel(): React.ReactNode {
                         {isFloating ? "pip_exit" : "picture_in_picture"}
                      </div>
                   </div>
-               </Tippy>
+               </LazyTippy>
                <div className="separator-vertical" />
             </>
          )}
@@ -204,7 +204,7 @@ export function ResourcePanel(): React.ReactNode {
          )}
          {!options.hideResourcePanelSections.has("Happiness") && tick.happiness ? (
             <>
-               <Tippy
+               <LazyTippy
                   placement="bottom"
                   content={
                      options.resourceBarShowUncappedHappiness ? $t(L.HappinessUncapped) : $t(L.Happiness)
@@ -240,13 +240,13 @@ export function ResourcePanel(): React.ReactNode {
                         )}
                      </div>
                   </div>
-               </Tippy>
+               </LazyTippy>
                <div className="separator-vertical" />
             </>
          ) : null}
          {!options.hideResourcePanelSections.has("Festival") && (
             <>
-               <Tippy disabled={isFloating} content={Config.City[gs.city].festivalDesc()}>
+               <LazyTippy disabled={isFloating} content={Config.City[gs.city].festivalDesc()}>
                   <div
                      className={classNames({
                         section: true,
@@ -270,13 +270,13 @@ export function ResourcePanel(): React.ReactNode {
                         />
                      </div>
                   </div>
-               </Tippy>
+               </LazyTippy>
                <div className="separator-vertical" />
             </>
          )}
          {!options.hideResourcePanelSections.has("Workers") && (
             <>
-               <Tippy content={`${$t(L.WorkersBusy)} / ${$t(L.TotalWorkers)}`} placement="bottom">
+               <LazyTippy content={`${$t(L.WorkersBusy)} / ${$t(L.TotalWorkers)}`} placement="bottom">
                   <div className="section">
                      <div
                         className={classNames({
@@ -289,14 +289,14 @@ export function ResourcePanel(): React.ReactNode {
                         <FormatNumber value={workersBusy} />/<FormatNumber value={workersAfterHappiness} />
                      </div>
                   </div>
-               </Tippy>
+               </LazyTippy>
                <div className="separator-vertical" />
             </>
          )}
          {!options.hideResourcePanelSections.has("Electricity") &&
             hasFeature(GameFeature.Electricity, gs) && (
                <>
-                  <Tippy placement="bottom" content={`${$t(L.PowerUsed)}/${$t(L.PowerAvailable)}`}>
+                  <LazyTippy placement="bottom" content={`${$t(L.PowerUsed)}/${$t(L.PowerAvailable)}`}>
                      <div className="section">
                         <div
                            className={classNames({
@@ -317,13 +317,13 @@ export function ResourcePanel(): React.ReactNode {
                            <FormatNumber value={tick.workersAvailable.get("Power") ?? 0} />W
                         </div>
                      </div>
-                  </Tippy>
+                  </LazyTippy>
                   <div className="separator-vertical" />
                </>
             )}
          {!options.hideResourcePanelSections.has("Science") && (
             <>
-               <Tippy content={$t(L.Science)} placement="bottom">
+               <LazyTippy content={$t(L.Science)} placement="bottom">
                   <div
                      className="section pointer"
                      onClick={() => Singleton().sceneManager.loadScene(TechTreeScene)}
@@ -344,7 +344,7 @@ export function ResourcePanel(): React.ReactNode {
                         </span>
                      </div>
                   </div>
-               </Tippy>
+               </LazyTippy>
                <div className="separator-vertical" />
             </>
          )}
@@ -356,7 +356,7 @@ export function ResourcePanel(): React.ReactNode {
          )}
          {!options.hideResourcePanelSections.has("EmpireValue") && (
             <>
-               <Tippy
+               <LazyTippy
                   content={
                      <>
                         <div className="row">
@@ -390,13 +390,13 @@ export function ResourcePanel(): React.ReactNode {
                         </span>
                      </div>
                   </div>
-               </Tippy>
+               </LazyTippy>
                <div className="separator-vertical" />
             </>
          )}
          {!options.hideResourcePanelSections.has("GreatPeople") && (
             <>
-               <Tippy
+               <LazyTippy
                   maxWidth="50vw"
                   content={
                      <>
@@ -431,7 +431,7 @@ export function ResourcePanel(): React.ReactNode {
                         </span>
                      </div>
                   </div>
-               </Tippy>
+               </LazyTippy>
                <div className="separator-vertical" />
             </>
          )}
@@ -439,7 +439,7 @@ export function ResourcePanel(): React.ReactNode {
          getOwnedTradeTile() &&
          Tick.current.playerTradeBuildings.size > 0 ? (
             <>
-               <Tippy content={$t(L.PlayerTrade)}>
+               <LazyTippy content={$t(L.PlayerTrade)}>
                   <div
                      className="section pointer mh10"
                      onPointerDown={(e) => {
@@ -452,12 +452,12 @@ export function ResourcePanel(): React.ReactNode {
                         <span>{formatNumber(getTradeCount())}</span>
                      </div>
                   </div>
-               </Tippy>
+               </LazyTippy>
                <div className="separator-vertical" />
             </>
          ) : null}
          {!options.hideResourcePanelSections.has("TimeWarp") && (
-            <Tippy
+            <LazyTippy
                content={
                   <>
                      <div className="row g20">
@@ -489,7 +489,7 @@ export function ResourcePanel(): React.ReactNode {
                      ))}
                   </select>
                </div>
-            </Tippy>
+            </LazyTippy>
          )}
       </div>
    );
@@ -506,7 +506,7 @@ function DeficitResources(): React.ReactNode {
       }
    });
    return (
-      <Tippy
+      <LazyTippy
          maxWidth="50vw"
          content={
             <>
@@ -554,6 +554,6 @@ function DeficitResources(): React.ReactNode {
             <div className="m-icon small">do_not_disturb_on</div>
             <div>{formatNumber(deficit.size)}</div>
          </div>
-      </Tippy>
+      </LazyTippy>
    );
 }

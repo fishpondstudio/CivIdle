@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import { IOFlags, getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -127,9 +127,9 @@ export function BuildingIOTreeViewComponent({
                                        <li key={idx} className="row">
                                           <div>{m.source}</div>
                                           {hasFlag(m.flag ?? MultiplierFlag.None, MultiplierFlag.Unstable) ? (
-                                             <Tippy content={$t(L.DynamicMultiplierTooltip)}>
+                                             <LazyTippy content={$t(L.DynamicMultiplierTooltip)}>
                                                 <div className="m-icon small ml5 text-desc">whatshot</div>
-                                             </Tippy>
+                                             </LazyTippy>
                                           ) : null}
                                           <div className="f1 text-right">
                                              <FormatNumber value={m[type]} />

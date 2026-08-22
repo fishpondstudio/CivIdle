@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { TableVirtuoso } from "react-virtuoso";
 import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
@@ -119,11 +119,11 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
                         <>
                            <td>
                               {hasFlag(trade.flag, PendingClaimFlag.Tariff) ? (
-                                 <Tippy content={$t(L.PlayerTradeTariffTooltip)}>
+                                 <LazyTippy content={$t(L.PlayerTradeTariffTooltip)}>
                                     <div className="m-icon small text-center text-orange">
                                        currency_exchange
                                     </div>
-                                 </Tippy>
+                                 </LazyTippy>
                               ) : null}
                            </td>
                            <td>{Config.Material[trade.resource as Material].name()}</td>
@@ -131,11 +131,11 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
                               <FixedLengthText text={trade.fillBy} length={10} />
                            </td>
                            <td className="text-right">
-                              <Tippy content={trade.amount}>
+                              <LazyTippy content={trade.amount}>
                                  <span>
                                     <FormatNumber value={trade.amount} />
                                  </span>
-                              </Tippy>
+                              </LazyTippy>
                            </td>
                            <td className="text-right">
                               <div className="text-link text-strong" onClick={() => claimTrades([trade])}>

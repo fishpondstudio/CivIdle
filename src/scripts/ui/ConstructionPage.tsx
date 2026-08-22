@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import { isBuildingUpgradable, isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -91,11 +91,11 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                         >
                            indeterminate_check_box
                         </div>
-                        <Tippy content={$t(L.ScrollWheelAdjustLevelTooltip)}>
+                        <LazyTippy content={$t(L.ScrollWheelAdjustLevelTooltip)}>
                            <div className="text-large text-center" style={{ width: "40px" }}>
                               {building.desiredLevel}
                            </div>
-                        </Tippy>
+                        </LazyTippy>
                         <div className="m-icon ml5 text-link" onClick={() => increaseDesiredLevel()}>
                            add_box
                         </div>
@@ -204,11 +204,13 @@ function CancelUpgradeComponent({ building }: { building: IBuildingData }): Reac
                <div className="m-icon small">delete</div>
                <div className="f1 text-strong">{$t(L.CancelUpgrade)}</div>
             </button>
-            <Tippy content={$t(L.CancelAllUpgradeDesc, { building: Config.Building[building.type].name() })}>
+            <LazyTippy
+               content={$t(L.CancelAllUpgradeDesc, { building: Config.Building[building.type].name() })}
+            >
                <button onClick={cancelAllUpgrades}>
                   <div className="m-icon small">delete_forever</div>
                </button>
-            </Tippy>
+            </LazyTippy>
          </div>
       </fieldset>
    );

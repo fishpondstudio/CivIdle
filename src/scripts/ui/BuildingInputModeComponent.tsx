@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import { IOFlags, shouldAlwaysShowBuildingOptions } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
@@ -32,7 +32,7 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
          <div className="row">
             {jsxMMapOf(BuildingInputModeNames, (mode, name) => {
                return (
-                  <Tippy key={mode} content={BuildingInputModeTooltips.get(mode)?.() ?? ""}>
+                  <LazyTippy key={mode} content={BuildingInputModeTooltips.get(mode)?.() ?? ""}>
                      <button
                         onClick={() => {
                            building.inputMode = mode;
@@ -46,7 +46,7 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
                      >
                         {name()}
                      </button>
-                  </Tippy>
+                  </LazyTippy>
                );
             })}
          </div>

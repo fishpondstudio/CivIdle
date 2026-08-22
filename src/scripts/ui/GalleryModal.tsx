@@ -1,6 +1,5 @@
 import { type CollisionDetector, CollisionPriority, CollisionType } from "@dnd-kit/abstract";
 import { DragDropProvider, useDraggable, useDroppable } from "@dnd-kit/react";
-import Tippy from "@tippyjs/react";
 import { memo, useState } from "react";
 import {
    calculateEffects,
@@ -21,6 +20,7 @@ import { refreshOnTypedEvent, useTypedEvent } from "../utilities/Hook";
 import "./GalleryModal.css";
 import { PaintingImages } from "./GalleryPaintingImages";
 import { hideModal } from "./GlobalModal";
+import { LazyTippy } from "./LazyTippy";
 
 export function GalleryModal({ building }: { building: IMauritshuisBuildingData }): React.ReactNode {
    const [placedPaintings, setPlacedPaintings] = useState<Map<Painting, IPaintingPlacement>>(
@@ -197,30 +197,30 @@ function PaintingEffects({
                </summary>
                <ul>
                   <li className="row">
-                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsOfTheSameSizeV2)}>
+                     <LazyTippy content={$t(L.EachPairOfAdjacentPaintingsOfTheSameSizeV2)}>
                         <div>{$t(L.SizeAdjacency)}</div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1" />
                      <div>{effects.sameSizePairs.size}</div>
                   </li>
                   <li className="row">
-                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsByTheSamePainterV2)}>
+                     <LazyTippy content={$t(L.EachPairOfAdjacentPaintingsByTheSamePainterV2)}>
                         <div>{$t(L.PainterAdjacency)}</div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1" />
                      <div>{effects.samePainterPairs.size}</div>
                   </li>
                   <li className="row">
-                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsPaintedInTheSameCenturyV3)}>
+                     <LazyTippy content={$t(L.EachPairOfAdjacentPaintingsPaintedInTheSameCenturyV3)}>
                         <div>{$t(L.TimeAdjacency)}</div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1" />
                      <div>{effects.sameCenturyPairs.size}</div>
                   </li>
                   <li className="row">
-                     <Tippy content={$t(L.EachPairOfAdjacentPaintingsWithTheSameTheme)}>
+                     <LazyTippy content={$t(L.EachPairOfAdjacentPaintingsWithTheSameTheme)}>
                         <div>{$t(L.ThemeAdjacency)}</div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1" />
                      <div>{effects.sameThemePairs.size}</div>
                   </li>
@@ -234,38 +234,44 @@ function PaintingEffects({
                </summary>
                <ul>
                   <li className="row">
-                     <Tippy content={$t(L.Display3PaintingsByRembrandtVanRijnToUnlock1ProductionMultiplier)}>
+                     <LazyTippy
+                        content={$t(L.Display3PaintingsByRembrandtVanRijnToUnlock1ProductionMultiplier)}
+                     >
                         <div>
                            {$t(L.XPaintingsBy, {
                               painter: Painters.RembrandtVanRijn(),
                               count: 3,
                            })}
                         </div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1" />
                      <div>{effects.byPainters.get("RembrandtVanRijn") ?? 0}/3</div>
                   </li>
                   <li className="row">
-                     <Tippy content={$t(L.Display3PaintingsByJohannesVermeerToUnlock1ProductionMultiplier)}>
+                     <LazyTippy
+                        content={$t(L.Display3PaintingsByJohannesVermeerToUnlock1ProductionMultiplier)}
+                     >
                         <div>
                            {$t(L.XPaintingsBy, {
                               painter: Painters.JohannesVermeer(),
                               count: 3,
                            })}
                         </div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1" />
                      <div>{effects.byPainters.get("JohannesVermeer") ?? 0}/3</div>
                   </li>
                   <li className="row">
-                     <Tippy content={$t(L.Display3PaintingsByVincentVanGoghToUnlock1ProductionMultiplier)}>
+                     <LazyTippy
+                        content={$t(L.Display3PaintingsByVincentVanGoghToUnlock1ProductionMultiplier)}
+                     >
                         <div>
                            {$t(L.XPaintingsBy, {
                               painter: Painters.VincentVanGogh(),
                               count: 3,
                            })}
                         </div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1" />
                      <div>{effects.byPainters.get("VincentVanGogh") ?? 0}/3</div>
                   </li>
@@ -279,23 +285,27 @@ function PaintingEffects({
                </summary>
                <ul>
                   <li className="row">
-                     <Tippy content={$t(L.DisplayPaintingsBy5DifferentPaintersToUnlock1BuildingLevelBoost)}>
+                     <LazyTippy
+                        content={$t(L.DisplayPaintingsBy5DifferentPaintersToUnlock1BuildingLevelBoost)}
+                     >
                         <div>{$t(L.XDifferentPainters, { count: 5 })}</div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1" />
                      <div>{effects.byPainters.size}/5</div>
                   </li>
                   <li className="row">
-                     <Tippy content={$t(L.DisplayPaintingsWith5DifferentThemesToUnlock1BuildingLevelBoost)}>
+                     <LazyTippy
+                        content={$t(L.DisplayPaintingsWith5DifferentThemesToUnlock1BuildingLevelBoost)}
+                     >
                         <div>{$t(L.XDifferentThemes, { count: 5 })}</div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1" />
                      <div>{effects.byThemes.size}/5</div>
                   </li>
                   <li className="row">
-                     <Tippy content={$t(L.Display5MasterpiecesToUnlock1BuildingLevelBoost)}>
+                     <LazyTippy content={$t(L.Display5MasterpiecesToUnlock1BuildingLevelBoost)}>
                         <div>{$t(L.XDifferentMasterpieces, { count: 5 })}</div>
-                     </Tippy>
+                     </LazyTippy>
                      <div className="f1" />
                      <div>{effects.masterpieces}/5</div>
                   </li>
@@ -394,7 +404,7 @@ function PaintingItem({
    });
 
    return (
-      <Tippy
+      <LazyTippy
          content={
             <div>
                <div className="row g20">
@@ -440,7 +450,7 @@ function PaintingItem({
             src={PaintingImages[id]}
             alt={id}
          />
-      </Tippy>
+      </LazyTippy>
    );
 }
 

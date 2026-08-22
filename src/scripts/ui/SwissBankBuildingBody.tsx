@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import type React from "react";
 import { NoPrice, NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
 import { getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
@@ -149,9 +149,9 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                               <li key={idx} className="row">
                                  <div>{m.source}</div>
                                  {hasFlag(m.flag ?? MultiplierFlag.None, MultiplierFlag.Unstable) ? (
-                                    <Tippy content={$t(L.DynamicMultiplierTooltip)}>
+                                    <LazyTippy content={$t(L.DynamicMultiplierTooltip)}>
                                        <div className="m-icon small ml5 text-desc">whatshot</div>
-                                    </Tippy>
+                                    </LazyTippy>
                                  ) : null}
                                  <div className="f1 text-right">{formatNumber(m.output)}</div>
                               </li>
@@ -169,9 +169,9 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
          <fieldset>
             <div className="row">
                <div>{$t(L.NoKotiExport)}</div>
-               <Tippy content={$t(L.NoKotiExportDesc)}>
+               <LazyTippy content={$t(L.NoKotiExportDesc)}>
                   <div className="m-icon small ml5 text-desc help-cursor">help</div>
-               </Tippy>
+               </LazyTippy>
                <div className="f1"></div>
                <div
                   className="pointer ml20"

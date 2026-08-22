@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { Config } from "../../../shared/logic/Config";
 import { GameStateChanged } from "../../../shared/logic/GameStateLogic";
 import {
@@ -129,7 +129,7 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
                      </li>
                      <li className="row">
                         <div>{$t(L.PlayerMapTileFromOccupying)}</div>
-                        <Tippy
+                        <LazyTippy
                            content={
                               <RenderHTML
                                  html={$t(L.PlayerMapTileFromOccupyingTooltipHTML, {
@@ -140,7 +140,7 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
                            }
                         >
                            <div className="m-icon small ml5 text-desc">info</div>
-                        </Tippy>
+                        </LazyTippy>
 
                         <div className="f1" />
                         <div>{formatNumber(fromOccupying)}</div>
@@ -150,7 +150,7 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
 
                <li className="row">
                   <div className="text-strong">{$t(L.PlayerMapTileUsedTilePoint)}</div>
-                  <Tippy
+                  <LazyTippy
                      content={
                         <RenderHTML
                            html={$t(L.PlayerMapTileUsedTilePointTooltipHTML, { point: TilePointPerHour })}
@@ -158,7 +158,7 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
                      }
                   >
                      <div className="m-icon small ml5 text-desc">info</div>
-                  </Tippy>
+                  </LazyTippy>
 
                   <div className="f1" />
                   <div className="text-strong">{formatNumber(myTiles.length)}</div>

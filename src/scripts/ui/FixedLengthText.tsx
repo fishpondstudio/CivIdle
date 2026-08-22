@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 
 export function FixedLengthText({
    text,
@@ -9,8 +9,8 @@ export function FixedLengthText({
       return <span style={style}>{text}</span>;
    }
    return (
-      <Tippy content={text}>
+      <LazyTippy content={text}>
          <span style={style}>{text.substring(0, length - 3)}...</span>
-      </Tippy>
+      </LazyTippy>
    );
 }

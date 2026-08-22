@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import {
    getBuilderCapacity,
    getBuildingPercentage,
@@ -72,13 +72,13 @@ export function BuildingConstructionProgressComponent({
                                  notifyGameStateUpdate();
                               }}
                            >
-                              <Tippy content={$t(L.TransportManualControlTooltip)}>
+                              <LazyTippy content={$t(L.TransportManualControlTooltip)}>
                                  {(building.suspendedInput.has(res) ?? false) ? (
                                     <div className="m-icon text-red">toggle_off</div>
                                  ) : (
                                     <div className="m-icon text-green">toggle_on</div>
                                  )}
-                              </Tippy>
+                              </LazyTippy>
                            </td>
                            <td>{Config.Material[res].name()}</td>
                            <td className="text-right">

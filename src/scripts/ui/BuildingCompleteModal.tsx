@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { isNaturalWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -24,7 +24,7 @@ export function BuildingCompleteModal({ building }: { building: Building }): Rea
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
          </div>
-         <Tippy
+         <LazyTippy
             content={
                isNatural
                   ? "The Grand Canyon of the Yellowstone, Thomas Moran, 1872"
@@ -36,7 +36,7 @@ export function BuildingCompleteModal({ building }: { building: Building }): Rea
                className="w100"
                style={{ display: "block" }}
             />
-         </Tippy>
+         </LazyTippy>
          <div className="window-body" style={{ overflowY: "auto", maxHeight: "75vh" }}>
             <div className="inset-shallow white row g10 p10">
                <div>

@@ -1,7 +1,7 @@
-import Tippy from "@tippyjs/react";
 import type React from "react";
 import type { Placement } from "tippy.js";
 import "tippy.js/dist/tippy.css";
+import { LazyTippy } from "./LazyTippy";
 
 export function TextWithHelp({
    children,
@@ -22,8 +22,8 @@ export function TextWithHelp({
       className += " with-help";
    }
    return (
-      <Tippy content={content} placement={placement ?? "auto"}>
+      <LazyTippy content={content} placement={placement ?? "auto"}>
          <span className={className}>{children}</span>
-      </Tippy>
+      </LazyTippy>
    );
 }

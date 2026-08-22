@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { GameAnalytics } from "gameanalytics";
 import { useEffect } from "react";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
@@ -33,9 +33,9 @@ export function SupporterPackModal(): React.ReactNode {
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
          </div>
-         <Tippy content="Cicerone denuncia Catilina, Cesare Maccari, 1882 ~ 1888">
+         <LazyTippy content="Cicerone denuncia Catilina, Cesare Maccari, 1882 ~ 1888">
             <img src={SupporterPackImage} className="w100" style={{ display: "block" }} />
-         </Tippy>
+         </LazyTippy>
          <div className="window-body" style={{ overflowY: "auto", maxHeight: "75vh" }}>
             <div className="inset-shallow white row g10 p10">
                <div>

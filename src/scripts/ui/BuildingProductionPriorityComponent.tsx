@@ -1,4 +1,4 @@
-import Tippy from "@tippyjs/react";
+import { LazyTippy } from "./LazyTippy";
 import { IOFlags, shouldAlwaysShowBuildingOptions } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -32,7 +32,7 @@ export function BuildingProductionPriorityComponent({
          <legend>
             {$t(L.ProductionPriority)}: {building.productionPriority}
          </legend>
-         <Tippy content={$t(L.ProductionPriorityDescV4)}>
+         <LazyTippy content={$t(L.ProductionPriorityDescV4)}>
             <input
                type="range"
                min={PRIORITY_MIN}
@@ -44,7 +44,7 @@ export function BuildingProductionPriorityComponent({
                   notifyGameStateUpdate();
                }}
             />
-         </Tippy>
+         </LazyTippy>
          <div className="sep15"></div>
          <ApplyToAllComponent
             xy={xy}
