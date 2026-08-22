@@ -38,6 +38,7 @@ import { ResourcePanel } from "./ui/ResourcePanel";
 import { TopLeftPanel } from "./ui/TopLeftPanel";
 import { isAndroid, isIOS } from "./utilities/Platforms";
 import { Fonts } from "./visuals/Fonts";
+import { getFullVersion } from "./logic/Version";
 
 if (!import.meta.env.DEV) {
    Sentry.init({
@@ -71,6 +72,8 @@ document.addEventListener("mouseup", (e) => {
       e.stopPropagation();
    }
 });
+
+document.title = `CivIdle ${getFullVersion()}`;
 
 const canvas = document.getElementById("game-canvas");
 const mainBundle = {
