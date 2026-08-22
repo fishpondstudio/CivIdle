@@ -105,11 +105,9 @@ export function RebirthConfirm({
                      {html($t(L.SuperintelligenceRebirthWarning))}
                   </WarningComponent>
                ) : null}
+               <div>{$t(L.AreYouSureYouWantToRebirthAsX, { city: Config.City[nextCity].name() })}</div>
             </div>
-            <div className="mv10">
-               {$t(L.AreYouSureYouWantToRebirthAsX, { city: Config.City[nextCity].name() })}
-            </div>
-            <div>
+            <div className="mt10">
                <div className="f1" />
                <button
                   className="text-strong w100"
