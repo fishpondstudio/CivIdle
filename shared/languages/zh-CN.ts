@@ -1340,7 +1340,8 @@ export const ZH_CN = {
    Politics: "政治",
    PolytheismLevelX: "多神教 %{level}",
    PorcelainTower: "大报恩寺琉璃塔",
-   PorcelainTowerDescV2: "+5 幸福感。该奇观可被升级，并且每一次额外升级 +1 幸福感。建造完成时，你重生时可获取的当前额外伟人，将可在本轮提前获取（他们与永恒伟人遵循相同的获取规则）并在获取后提供相应此生伟人加成（之后新增的额外伟人不可再次本轮提前获取。例：重生时 500 额外伟人因提前获取 200 额外伟人，则重生后只能获取 300 伟人）",
+   PorcelainTowerDescV2:
+      "+5 幸福感。该奇观可被升级，并且每一次额外升级 +1 幸福感。建造完成时，你重生时可获取的当前额外伟人，将可在本轮提前获取（他们与永恒伟人遵循相同的获取规则）并在获取后提供相应此生伟人加成（之后新增的额外伟人不可再次本轮提前获取。例：重生时 500 额外伟人因提前获取 200 额外伟人，则重生后只能获取 300 伟人）",
    PorcelainTowerMaxPickPerRoll: "倾向于最大化每次选择",
    PorcelainTowerMaxPickPerRollDescHTML: "建造完成大报恩寺琉璃塔后进行伟人选择时，倾向于最大化每次选择数量",
    PortOfSingapore: "新加坡港",
@@ -1732,7 +1733,6 @@ export const ZH_CN = {
    Supercomputer: "Civ超级计算机",
    SupercomputerLab: "超算研究室",
    Superintelligence: "技术奇点",
-   SuperintelligenceDesc: "建造该奇观后，可花费 7.75 Qa 科学研究技术奇点使下轮游玩获得 3.875 Qa 科学（足以解锁所有科技）",
    SuperintelligenceRebirthWarning: "您已建造 <b>技术奇点</b> 尚未研究<b>激活技术奇点</b>——您将无法获得 <b>3.875 Qa</b> 科学",
    SupporterPack: "支持者包",
    SupporterPackOptions: "支持者权益",
@@ -2073,4 +2073,5 @@ export const ZH_CN = {
    Zoroaster: "琐罗亚斯德",
    Zugspitze: "楚格峰",
    ZugspitzeDesc: "对于每个已解锁时代，获得一项等级点数。等级点数可被用于提升任意（本轮诞生的）此生伟人的额外等级（存储乘数效果和奇观伟人除外），可随时切换任意此生伟人",
+   SuperintelligenceDescV2: "After constructing this wonder, Superintelligence can be researched, which costs %{N}X science and carries over X science to your next run. X = total science to unlock the whole tech tree",
 };

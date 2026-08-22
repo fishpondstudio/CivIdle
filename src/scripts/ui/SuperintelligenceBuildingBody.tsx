@@ -1,4 +1,5 @@
 import { Config } from "../../../shared/logic/Config";
+import { SUPERINTEL_SCIENCE_RATIO } from "../../../shared/logic/Constants";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getAllTechUnlockCost, tryDeductScience } from "../../../shared/logic/TechLogic";
 import { formatNumber } from "../../../shared/utilities/Helper";
@@ -30,7 +31,7 @@ export function SuperintelligenceBuildingBody({ gameState, xy }: IBuildingCompon
                <div className="row">
                   <div className="f1">{$t(L.ResearchCost)}</div>
                   <div className="text-strong">
-                     {formatNumber(totalScience * 2)} {Config.Material.Science.name()}
+                     {formatNumber(totalScience * SUPERINTEL_SCIENCE_RATIO)} {Config.Material.Science.name()}
                   </div>
                </div>
             )}
@@ -43,7 +44,7 @@ export function SuperintelligenceBuildingBody({ gameState, xy }: IBuildingCompon
                      if (building.level > 1) {
                         return;
                      }
-                     if (!tryDeductScience(totalScience * 2, gameState)) {
+                     if (!tryDeductScience(totalScience * SUPERINTEL_SCIENCE_RATIO, gameState)) {
                         playError();
                         return;
                      }
