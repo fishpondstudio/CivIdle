@@ -2039,7 +2039,7 @@ export const PT_BR = {
    SuleimanI: "Suleiman I",
    Sundarbans: "Sundarbans",
    Superintelligence: "Superintelligence",
-   SuperintelligenceDescV2: "After constructing this wonder, Superintelligence can be researched, which costs %{N}X science and carries over X science to your next run. X = total science to unlock the whole tech tree",
+   SuperintelligenceDescV3: "After constructing this wonder, Superintelligence can be researched, which costs %{N}X science and carries over X science to your next run. X = total science to unlock the whole tech tree.",
    SuperintelligenceRebirthWarning: "You have constructed <b>Superintelligence</b> but have not researched it - you will not carry over any science",
    SupporterPackOptions: "Supporter Pack Options",
    SydneyHarbourBridge: "Sydney Harbour Bridge",

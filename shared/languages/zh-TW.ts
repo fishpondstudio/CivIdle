@@ -2071,5 +2071,5 @@ export const ZH_TW = {
    Zoroaster: "瑣羅亞斯德(查拉圖斯特拉)",
    Zugspitze: "祖格峰",
    ZugspitzeDesc: "每解鎖一個時代，獲得一個點數，可用於為本次運行中誕生的任何偉人提供一個額外等級（存儲乘數效果和奇觀偉人除外）",
-   SuperintelligenceDescV2: "After constructing this wonder, Superintelligence can be researched, which costs %{N}X science and carries over X science to your next run. X = total science to unlock the whole tech tree",
+   SuperintelligenceDescV3: "After constructing this wonder, Superintelligence can be researched, which costs %{N}X science and carries over X science to your next run. X = total science to unlock the whole tech tree.",
 };

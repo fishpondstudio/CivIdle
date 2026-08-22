@@ -1,3 +1,4 @@
+import { SUPERINTEL_SCIENCE_RATIO } from "../logic/Constants";
 import { formatPercent } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { $t, L } from "../utilities/i18n";
@@ -1720,7 +1721,7 @@ export class BuildingDefinitions {
 
    Superintelligence: IBuildingDefinition = {
       name: () => $t(L.Superintelligence),
-      desc: () => $t(L.SuperintelligenceDescV2),
+      desc: () => $t(L.SuperintelligenceDescV3, { N: SUPERINTEL_SCIENCE_RATIO }),
       input: {},
       output: {},
       construction: { Robocar: 100, PlanetaryRover: 100, CivGPT: 100, CivOasis: 100, Bitcoin: 100 },

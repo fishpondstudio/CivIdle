@@ -51,7 +51,7 @@ import {
    getXyBuildings,
 } from "./IntraTickCache";
 import { LogicResult } from "./LogicResult";
-import { getGreatPersonTotalLevel, getPermanentGreatPeopleLevel, getUpgradeCostFib } from "./RebirthLogic";
+import { getGreatPersonTotalLevel, getUpgradeCostFib } from "./RebirthLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech, getCurrentAge } from "./TechLogic";
 import {
@@ -1630,8 +1630,4 @@ export function getBuildingRange(xy: Tile, building: IBuildingData, gs: GameStat
          return 0;
       }
    }
-}
-
-export function getSuperintelligenceScienceRatio(gs: GameOptions): number {
-   return Math.max(10, Math.floor(Math.sqrt(getPermanentGreatPeopleLevel(gs))));
 }
