@@ -34,4 +34,3 @@ export const TRADE_TILE_BONUS = 5;
 export const TRADE_TILE_NEIGHBOR_BONUS = 1;
 export const TRADE_TILE_ALLY_BONUS = 2;
 export const BIRTHDAY_COOLDOWN_DAYS = 360;
-export const SUPERINTEL_SCIENCE_RATIO = 5;

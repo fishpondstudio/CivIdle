@@ -1,6 +1,6 @@
+import { getSuperintelligenceScienceRatio } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { SUPERINTEL_SCIENCE_RATIO } from "../../../shared/logic/Constants";
-import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getAllTechUnlockCost, tryDeductScience } from "../../../shared/logic/TechLogic";
 import { formatNumber } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
@@ -12,11 +12,13 @@ import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 
 export function SuperintelligenceBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
+   const options = getGameOptions();
    const building = gameState.tiles.get(xy)?.building;
    if (!building) {
       return null;
    }
    const totalScience = getAllTechUnlockCost();
+   const ratio = getSuperintelligenceScienceRatio(options);
    return (
       <div className="window-body">
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
@@ -31,7 +33,7 @@ export function SuperintelligenceBuildingBody({ gameState, xy }: IBuildingCompon
                <div className="row">
                   <div className="f1">{$t(L.ResearchCost)}</div>
                   <div className="text-strong">
-                     {formatNumber(totalScience * SUPERINTEL_SCIENCE_RATIO)} {Config.Material.Science.name()}
+                     {formatNumber(totalScience * ratio)} {Config.Material.Science.name()}
                   </div>
                </div>
             )}
@@ -44,7 +46,7 @@ export function SuperintelligenceBuildingBody({ gameState, xy }: IBuildingCompon
                      if (building.level > 1) {
                         return;
                      }
-                     if (!tryDeductScience(totalScience * SUPERINTEL_SCIENCE_RATIO, gameState)) {
+                     if (!tryDeductScience(totalScience * ratio, gameState)) {
                         playError();
                         return;
                      }
