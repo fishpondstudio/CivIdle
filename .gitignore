@@ -14,6 +14,7 @@ dist-ssr
 temp/
 out/
 .pmpm-store/
+.playwright-cli/
 
 
 # Editor directories and files
