@@ -20,6 +20,9 @@ OnTechUnlocked.on((tech) => {
    switch (tech) {
       case "Future": {
          const gs = getGameState();
+         if (hasFlag(gs.flags, GameStateFlags.HasCarriedOverScience)) {
+            return;
+         }
          SteamClient.unlockAchievement("Future");
          if (gs.seconds * SECOND <= 24 * HOUR) {
             SteamClient.unlockAchievement("OneMoreTurn");

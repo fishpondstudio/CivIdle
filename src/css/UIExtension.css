@@ -175,6 +175,11 @@ fieldset .separator {
    padding-right: 10px;
 }
 
+.ph15 {
+   padding-left: 15px;
+   padding-right: 15px;
+}
+
 .p0 {
    padding: 0;
 }
@@ -430,6 +435,16 @@ fieldset .separator {
    margin-bottom: 5px;
 }
 
+.mv15 {
+   margin-top: 15px;
+   margin-bottom: 15px;
+}
+
+.mv20 {
+   margin-top: 20px;
+   margin-bottom: 20px;
+}
+
 .mh5 {
    margin-left: 5px;
    margin-right: 5px;
@@ -466,6 +481,14 @@ fieldset .separator {
 
 .m10 {
    margin: 10px;
+}
+
+.mt15 {
+   margin-top: 15px;
+}
+
+.mt20 {
+   margin-top: 20px;
 }
 
 .m5 {

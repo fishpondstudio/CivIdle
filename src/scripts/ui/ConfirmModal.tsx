@@ -17,9 +17,9 @@ export function ConfirmModal({
          <div className="title-bar">
             <div className="title-bar-text">{title}</div>
          </div>
-         <div className="window-body" style={{ padding: "5px 10px" }}>
+         <div className="window-body">
             {children}
-            <div className="row" style={{ margin: "20px 0 0 0", justifyContent: "center" }}>
+            <div className="row mt15 jcc">
                <button
                   style={{ width: "80px", fontWeight: "bold" }}
                   onClick={() => {

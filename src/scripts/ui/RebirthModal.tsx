@@ -1,30 +1,16 @@
 import Tippy from "@tippyjs/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
-import type { Material } from "../../../shared/definitions/MaterialDefinitions";
-import {
-   addPetraOfflineTime,
-   BASE_WARP_HOUR,
-   findSpecialBuilding,
-   getBuildingDescription,
-   getMultipliersDescription,
-   getPompidou,
-   getRandomEmptyTile,
-   hasNotUsedDinosaurProvincialPark,
-} from "../../../shared/logic/BuildingLogic";
+import { getBuildingDescription, getMultipliersDescription } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { SUPPORTER_PACK_URL } from "../../../shared/logic/Constants";
-import { RebirthFlags } from "../../../shared/logic/GameState";
-import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import {
    getFreeCityThisWeek,
-   getGreatPeopleChoiceCount,
    getPermanentGreatPeopleLevel,
    getRebirthGreatPeopleCount,
-   makeGreatPeopleFromThisRunPermanent,
-   rollPermanentGreatPeople,
 } from "../../../shared/logic/RebirthLogic";
-import { getAgeForTech, getCurrentAge } from "../../../shared/logic/TechLogic";
+import { getAgeForTech } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { UserAttributes } from "../../../shared/utilities/Database";
 import {
@@ -36,36 +22,26 @@ import {
    mapOf,
    range,
    reduceOf,
-   rejectIn,
    safeParseInt,
-   uuid4,
 } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
-import { resetToCity, saveGame, useGameState } from "../Global";
-import { checkRebirthAchievements } from "../logic/Achievement";
-import { clientHeartbeat } from "../logic/Heartbeat";
-import { client, isOnlineUser, useTrades, useUser } from "../rpc/RPCClient";
+import { useGameState } from "../Global";
+import { useUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
-import { playClick, playError } from "../visuals/Sound";
-import { hideModal, showToast } from "./GlobalModal";
+import { playClick } from "../visuals/Sound";
+import { hideModal, showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { html, RenderHTML } from "./RenderHTMLComponent";
+import { RebirthConfirm } from "./RebirthConfirm";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { BuildingSpriteComponent, DepositTextureComponent, MiscTextureComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
 
 export function RebirthModal(): React.ReactNode {
-   const trades = useTrades();
    const user = useUser();
    const options = getGameOptions();
-   const [tradeCount, setTradeCount] = useState<number>(
-      trades.filter((t) => t.fromId === user?.userId).length,
-   );
-   useEffect(() => {
-      client.getPendingClaims().then((c) => setTradeCount((old) => old + c.length));
-   }, []);
 
    const gs = useGameState();
    const [nextCity, setNextCity] = useState<City>(gs.city);
@@ -91,10 +67,6 @@ export function RebirthModal(): React.ReactNode {
       Number.POSITIVE_INFINITY,
    );
    const [pickPerRoll, setPickPerRoll] = useState(maxPickPerRoll);
-   const showPompidouWarning =
-      Tick.current.specialBuildings.has("CentrePompidou") &&
-      (getCurrentAge(gs) !== "InformationAge" || gs.city === nextCity);
-
    const extraTileForNextRebirth = Tick.current.specialBuildings.get("SydneyOperaHouse")?.building.level ?? 0;
 
    const uniqueEffects = Config.City[nextCity].uniqueEffects();
@@ -106,11 +78,6 @@ export function RebirthModal(): React.ReactNode {
          </div>
          <div className="window-body">
             <div style={{ maxHeight: "75vh", overflowY: "auto", margin: "-8px -8px 0 -8px", padding: 10 }}>
-               {tradeCount > 0 ? (
-                  <WarningComponent icon="warning" className="mb10 text-small">
-                     <RenderHTML html={$t(L.RebornTradeWarning)} />
-                  </WarningComponent>
-               ) : null}
                {options.rebirthInfo.length <= 0 ? (
                   <WarningComponent icon="info" className="mb10 text-small">
                      <RenderHTML html={$t(L.RebornModalDescV3)} />
@@ -125,20 +92,6 @@ export function RebirthModal(): React.ReactNode {
                      />
                   </WarningComponent>
                )}
-               {showPompidouWarning ? (
-                  <WarningComponent icon="info" className="text-small mb10">
-                     <RenderHTML
-                        html={$t(L.CentrePompidouWarningHTML, {
-                           civ: Config.City[nextCity].name(),
-                        })}
-                     />
-                  </WarningComponent>
-               ) : null}
-               {hasNotUsedDinosaurProvincialPark() ? (
-                  <WarningComponent icon="info" className="text-small mb10">
-                     {html($t(L.DinosaurProvincialParkNotUsedWarningHTML))}
-                  </WarningComponent>
-               ) : null}
                <ul className="tree-view">
                   <li className="row">
                      <div className="f1">{$t(L.GreatPeopleThisRun)}</div>
@@ -444,119 +397,7 @@ export function RebirthModal(): React.ReactNode {
                   }
                   style={{ padding: "0 15px" }}
                   className="text-strong"
-                  onClick={async () => {
-                     if (
-                        getPermanentGreatPeopleLevel(getGameOptions()) <
-                           Config.City[nextCity].requireGreatPeopleLevel ||
-                        !hasSupporterPack()
-                     ) {
-                        playError();
-                        return;
-                     }
-
-                     const gameId = uuid4();
-
-                     try {
-                        await Promise.race([
-                           client.rebirthV3(gameId, {
-                              ageWisdom: options.ageWisdom,
-                              greatPeople: options.greatPeople,
-                           }),
-                           rejectIn(10),
-                        ]);
-                     } catch (error) {
-                        console.error(error);
-                        if (!import.meta.env.DEV && isOnlineUser()) {
-                           playError();
-                           showToast($t(L.RebornOfflineWarning));
-                           return;
-                        }
-                     }
-
-                     const greatPeopleCount = clamp(
-                        greatPeopleAtRebirthCount - gs.claimedGreatPeople,
-                        0,
-                        Number.POSITIVE_INFINITY,
-                     );
-                     const currentCity = gs.city;
-
-                     if (!gs.rebirthed) {
-                        rollPermanentGreatPeople(
-                           greatPeopleCount,
-                           pickPerRoll,
-                           getGreatPeopleChoiceCount(gs),
-                           getCurrentAge(gs),
-                           gs.city,
-                        ).forEach((gp) => {
-                           getGameOptions().greatPeopleChoicesV2.push(gp);
-                        });
-                        makeGreatPeopleFromThisRunPermanent();
-                        gs.rebirthed = true;
-                     }
-
-                     let carryOverWarp = 0;
-                     const hq = findSpecialBuilding("Headquarter", getGameState());
-                     const petra = findSpecialBuilding("Petra", getGameState());
-                     if (hq && petra) {
-                        carryOverWarp = clamp(hq.building.resources.Warp ?? 0, 0, BASE_WARP_HOUR * 60 * 60);
-                     }
-
-                     const watchedResources = options.carryOverWatchedResources
-                        ? gs.watchedResources
-                        : new Set<Material>();
-                     const watchedTradeable = options.carryOverWatchedTradeable
-                        ? gs.watchedTradeable
-                        : new Set<Material>();
-
-                     checkRebirthAchievements(greatPeopleCount, gs);
-
-                     let flags = RebirthFlags.None;
-                     if (findSpecialBuilding("EasterBunny", gs)) {
-                        flags |= RebirthFlags.EasterBunny;
-                     }
-
-                     getGameOptions().rebirthInfo.push({
-                        greatPeopleAtRebirth: greatPeopleAtRebirthCount,
-                        greatPeopleThisRun: reduceOf(gs.greatPeople, (prev, k, v) => prev + v, 0),
-                        totalEmpireValue: Tick.current.totalValue,
-                        totalTicks: gs.tick,
-                        totalSeconds: gs.seconds,
-                        city: currentCity,
-                        time: Date.now(),
-                        flags,
-                     });
-
-                     getGameOptions().showTutorial = false;
-
-                     playClick();
-                     await resetToCity(gameId, nextCity, extraTileForNextRebirth);
-
-                     const pompidou = getPompidou(gs);
-                     if (currentCity !== nextCity && pompidou) {
-                        const result = getRandomEmptyTile(1, new Set(), getGameState());
-                        if (result) {
-                           const [xy, tile] = result;
-                           tile.explored = true;
-                           tile.building = pompidou;
-                           pompidou.cities.add(currentCity);
-                        }
-                     }
-
-                     if (carryOverWarp > 0) {
-                        addPetraOfflineTime(carryOverWarp, getGameState());
-                     }
-
-                     getGameState().watchedResources = watchedResources;
-                     getGameState().watchedTradeable = watchedTradeable;
-
-                     try {
-                        await Promise.all([saveGame(), clientHeartbeat()]);
-                        window.location.reload();
-                     } catch (error) {
-                        playError();
-                        showToast(String(error));
-                     }
-                  }}
+                  onClick={() => showModal(<RebirthConfirm nextCity={nextCity} pickPerRoll={pickPerRoll} />)}
                >
                   {$t(L.Reborn)}
                </button>

@@ -40,6 +40,7 @@ export enum GameStateFlags {
    HasDemolishedBuilding = 1 << 0,
    HasUsedTimeWarp = 1 << 1,
    HasThreeAllies = 1 << 2,
+   HasCarriedOverScience = 1 << 3,
 }
 
 export class GameState {

@@ -1718,6 +1718,17 @@ export class BuildingDefinitions {
       wikipedia: "Matrioshka_brain",
    };
 
+   Superintelligence: IBuildingDefinition = {
+      name: () => $t(L.Superintelligence),
+      desc: () => $t(L.SuperintelligenceDesc),
+      input: {},
+      output: {},
+      construction: { Robocar: 100, PlanetaryRover: 100, CivGPT: 100, CivOasis: 100, Bitcoin: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Superintelligence",
+   };
+
    LargeHadronCollider: IBuildingDefinition = {
       name: () => $t(L.LargeHadronCollider),
       desc: () => $t(L.LargeHadronColliderDescV3),
@@ -2573,6 +2584,7 @@ export const IgnoreBuildingUpgradeValue = new Set<Building>([
    "Petra",
    "EastIndiaCompany",
    "BranCastle",
+   "Superintelligence",
 ] satisfies Building[]);
 
 // The base of the exponential cost. Default is 1.5

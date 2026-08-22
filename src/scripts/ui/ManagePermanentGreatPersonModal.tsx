@@ -1,5 +1,4 @@
 import Tippy from "@tippyjs/react";
-import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
@@ -35,6 +34,7 @@ import { FormatNumber } from "./HelperComponents";
 import { ManageAgeWisdomModal } from "./ManageAgeWisdomModal";
 import "./ManagePermanentGreatPersonModal.css";
 import { RenderHTML } from "./RenderHTMLComponent";
+import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
 
@@ -49,6 +49,7 @@ export function ManagePermanentGreatPersonModal(props: {
    const [highlightedGreatPerson, setHighlightedGreatPerson] = useState<GreatPerson | null>(null);
    const scrollTargetRef = useRef<HTMLTableRowElement>(null);
    const options = useGameOptions();
+   const gs = useGameState();
    useEffect(() => {
       if (!props.scrollToGreatPerson) {
          return;
@@ -168,120 +169,118 @@ export function ManagePermanentGreatPersonModal(props: {
                   <div className="m-icon small">calendar_month</div>
                </button>
             </div>
-            <div
-               className={classNames({ "table-view": true, "sticky-header f1": true })}
+            <TableView
+               classNames="sticky-header f1"
                style={{ height: "60vh" }}
-            >
-               <table>
-                  <thead>
-                     <tr>
-                        <th></th>
-                        <th></th>
-                        <th>{$t(L.GreatPeopleName)}</th>
-                        <th className="text-center nowrap">{$t(L.GreatPeopleThisRunColumn)}</th>
-                        <th className="text-center">{$t(L.GreatPeoplePermanentColumn)}</th>
-                        <th></th>
-                        <th className="text-center">{$t(L.Upgrade)}</th>
-                        <th colSpan={2}></th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     {keysOf(Config.GreatPerson)
-                        .filter((gp) => {
-                           const ageFilter = age === null || Config.GreatPerson[gp].age === age;
-                           const adaptiveFilter =
-                              !adaptiveOnly || Config.GreatPerson[gp].type === GreatPersonType.Adaptive;
-                           return ageFilter && adaptiveFilter;
-                        })
-                        .sort(sortGreatPeople)
-                        .map((k) => {
-                           const person = Config.GreatPerson[k];
-                           return (
-                              <tr
-                                 key={k}
-                                 ref={k === props.scrollToGreatPerson ? scrollTargetRef : undefined}
-                                 style={
-                                    {
-                                       "--highlight-color": getColorCached(Config.TechAge[person.age].color)
-                                          .setAlpha(0.5)
-                                          .toRgbaString(),
-                                    } as React.CSSProperties
+               header={[
+                  { name: "", sortable: true },
+                  { name: "", sortable: false },
+                  { name: $t(L.GreatPeopleName), sortable: true },
+                  { name: $t(L.GreatPeopleThisRunColumn), className: "text-center nowrap", sortable: true },
+                  { name: $t(L.GreatPeoplePermanentColumn), className: "text-center", sortable: true },
+                  { name: "", sortable: false },
+                  { name: $t(L.Upgrade), className: "text-center", sortable: false },
+                  { name: "", sortable: false },
+                  { name: "", sortable: false },
+               ]}
+               data={keysOf(Config.GreatPerson).filter((gp) => {
+                  const ageFilter = age === null || Config.GreatPerson[gp].age === age;
+                  const adaptiveFilter =
+                     !adaptiveOnly || Config.GreatPerson[gp].type === GreatPersonType.Adaptive;
+                  return ageFilter && adaptiveFilter;
+               })}
+               compareFunc={(a, b, col) => {
+                  switch (col) {
+                     case 2:
+                        return Config.GreatPerson[a].name().localeCompare(Config.GreatPerson[b].name());
+                     case 3: {
+                        const diff = (gs.greatPeople[a] ?? 0) - (gs.greatPeople[b] ?? 0);
+                        return diff || sortGreatPeople(a, b);
+                     }
+                     case 4: {
+                        const diff =
+                           (options.greatPeople[a]?.level ?? 0) - (options.greatPeople[b]?.level ?? 0);
+                        return diff || sortGreatPeople(a, b);
+                     }
+                     default:
+                        return sortGreatPeople(a, b);
+                  }
+               }}
+               renderRow={(k) => {
+                  const person = Config.GreatPerson[k];
+                  return (
+                     <tr
+                        key={k}
+                        ref={k === props.scrollToGreatPerson ? scrollTargetRef : undefined}
+                        style={
+                           {
+                              "--highlight-color": getColorCached(Config.TechAge[person.age].color)
+                                 .setAlpha(0.5)
+                                 .toRgbaString(),
+                           } as React.CSSProperties
+                        }
+                        className={cls(k === highlightedGreatPerson ? "great-person-scroll-highlight" : null)}
+                     >
+                        <td>
+                           <GreatPersonImage greatPerson={k} style={{ height: "50px", display: "block" }} />
+                        </td>
+                        <td>
+                           {person.birthday && (
+                              <Tippy
+                                 content={
+                                    <>
+                                       <div>
+                                          {$t(L.BirthdayOfXIsY, {
+                                             name: person.name(),
+                                             date: person.birthday.toLocaleDateString(),
+                                          })}
+                                       </div>
+                                       {isBirthday(k) && (
+                                          <div>{$t(L.TodayIsTheBirthdayOfX, { name: person.name() })}</div>
+                                       )}
+                                    </>
                                  }
-                                 className={cls(
-                                    k === highlightedGreatPerson ? "great-person-scroll-highlight" : null,
-                                 )}
                               >
-                                 <td>
-                                    <GreatPersonImage
-                                       greatPerson={k}
-                                       style={{ height: "50px", display: "block" }}
-                                    />
-                                 </td>
-                                 <td>
-                                    {person.birthday && (
-                                       <Tippy
-                                          content={
-                                             <>
-                                                <div>
-                                                   {$t(L.BirthdayOfXIsY, {
-                                                      name: person.name(),
-                                                      date: person.birthday.toLocaleDateString(),
-                                                   })}
-                                                </div>
-                                                {isBirthday(k) && (
-                                                   <div>
-                                                      {$t(L.TodayIsTheBirthdayOfX, { name: person.name() })}
-                                                   </div>
-                                                )}
-                                             </>
-                                          }
-                                       >
-                                          <div
-                                             className={cls(
-                                                "m-icon small mb2",
-                                                isBirthday(k) ? "text-orange" : "text-desc",
-                                             )}
-                                          >
-                                             cake
-                                          </div>
-                                       </Tippy>
+                                 <div
+                                    className={cls(
+                                       "m-icon small mb2",
+                                       isBirthday(k) ? "text-orange" : "text-desc",
                                     )}
-                                    <Tippy content={$t(L.ViewOnWikipedia, { name: person.name() })}>
-                                       <div
-                                          className="m-icon small text-desc pointer"
-                                          onClick={() =>
-                                             openUrl(`https://en.wikipedia.org/wiki/${person.wikipedia}`)
-                                          }
-                                       >
-                                          open_in_new
-                                       </div>
-                                    </Tippy>
-                                 </td>
-                                 <td>
-                                    <div className="text-strong">{person.name()}</div>
-                                    <div className="text-desc text-small">
-                                       {Config.TechAge[person.age].name()}
-                                    </div>
-                                    {person.city ? (
-                                       <div className="row text-orange text-small">
-                                          <div className="m-icon small mr2">map</div>
-                                          <Tippy
-                                             content={$t(L.OnlyAvailableWhenPlaying, {
-                                                city: Config.City[person.city].name(),
-                                             })}
-                                          >
-                                             <div>{Config.City[person.city].name()}</div>
-                                          </Tippy>
-                                       </div>
-                                    ) : null}
-                                 </td>
-                                 <GreatPersonRow greatPerson={k} />
-                              </tr>
-                           );
-                        })}
-                  </tbody>
-               </table>
-            </div>
+                                 >
+                                    cake
+                                 </div>
+                              </Tippy>
+                           )}
+                           <Tippy content={$t(L.ViewOnWikipedia, { name: person.name() })}>
+                              <div
+                                 className="m-icon small text-desc pointer"
+                                 onClick={() => openUrl(`https://en.wikipedia.org/wiki/${person.wikipedia}`)}
+                              >
+                                 open_in_new
+                              </div>
+                           </Tippy>
+                        </td>
+                        <td>
+                           <div className="text-strong">{person.name()}</div>
+                           <div className="text-desc text-small">{Config.TechAge[person.age].name()}</div>
+                           {person.city ? (
+                              <div className="row text-orange text-small">
+                                 <div className="m-icon small mr2">map</div>
+                                 <Tippy
+                                    content={$t(L.OnlyAvailableWhenPlaying, {
+                                       city: Config.City[person.city].name(),
+                                    })}
+                                 >
+                                    <div>{Config.City[person.city].name()}</div>
+                                 </Tippy>
+                              </div>
+                           ) : null}
+                        </td>
+                        <GreatPersonRow greatPerson={k} />
+                     </tr>
+                  );
+               }}
+            />
          </div>
       </div>
    );
