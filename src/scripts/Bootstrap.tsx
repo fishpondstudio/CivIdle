@@ -56,6 +56,7 @@ import { showModal, showToast } from "./ui/GlobalModal";
 import { LoadingPage, LoadingPageStage } from "./ui/LoadingPage";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { SaveCorruptedPage } from "./ui/SaveCorruptedPage";
+import { getWebglRenderInfo } from "./ui/WebglRenderInfo";
 import { GameTicker } from "./utilities/GameTicker";
 import { initIAP } from "./utilities/IAP";
 import { SceneManager } from "./utilities/SceneManager";
@@ -127,6 +128,7 @@ export async function startGame(
       textures,
    });
    setCityOverride(gameState);
+   document.title = `CivIdle ${getFullVersion()} ${getWebglRenderInfo()}`;
 
    // ========== Connect to server ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });

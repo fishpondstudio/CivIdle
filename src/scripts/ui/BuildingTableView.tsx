@@ -82,6 +82,7 @@ export function BuildingTableView({
    return (
       <div className="table-view building-list f1" style={{ minHeight: 0 }}>
          <TableVirtuoso
+            increaseViewportBy={200}
             style={{ height: "100%" }}
             data={sorted}
             computeItemKey={(_index, building) => building}

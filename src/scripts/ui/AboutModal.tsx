@@ -4,9 +4,9 @@ import logo from "../../images/icon.png";
 import { getFullVersion } from "../logic/Version";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { openUrl } from "../utilities/Platform";
-import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
+import { getWebglRenderInfo } from "./WebglRenderInfo";
 
 export function AboutModal(): React.ReactNode {
    return (
@@ -80,19 +80,4 @@ export function AboutModal(): React.ReactNode {
          </div>
       </div>
    );
-}
-
-function getWebglRenderInfo(): string {
-   const { app } = Singleton().sceneManager.getContext();
-   const gl = app.view.getContext("webgl2");
-   if (!gl) {
-      return "";
-   }
-   const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-   if (!debugInfo) {
-      return "";
-   }
-   // const vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
-   const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-   return renderer;
 }
