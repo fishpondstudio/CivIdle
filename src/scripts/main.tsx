@@ -32,13 +32,14 @@ import { initLiveUpdate } from "./LiveUpdate";
 import type { RouteChangeEvent } from "./Route";
 import { Route } from "./Route";
 import { build } from "./Version.json";
+import { getFullVersion } from "./logic/Version";
 import { ChatPanel } from "./ui/ChatPanel";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { ResourcePanel } from "./ui/ResourcePanel";
 import { TopLeftPanel } from "./ui/TopLeftPanel";
+import { getWebglRenderInfo } from "./ui/WebglRenderInfo";
 import { isAndroid, isIOS } from "./utilities/Platforms";
 import { Fonts } from "./visuals/Fonts";
-import { getFullVersion } from "./logic/Version";
 
 if (!import.meta.env.DEV) {
    Sentry.init({
@@ -114,7 +115,7 @@ if (canvas) {
          move: true,
       },
    });
-
+   document.title = `CivIdle ${getFullVersion()} ${getWebglRenderInfo(app)}`;
    canvas.appendChild(app.view as any);
    if (import.meta.env.DEV) {
       registerPixiInspector(app);

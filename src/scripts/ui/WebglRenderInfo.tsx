@@ -1,7 +1,6 @@
-import { Singleton } from "../utilities/Singleton";
+import type { Application } from "pixi.js";
 
-export function getWebglRenderInfo(): string {
-   const { app } = Singleton().sceneManager.getContext();
+export function getWebglRenderInfo(app: Application): string {
    const gl = app.view.getContext("webgl2");
    if (!gl) {
       return "";

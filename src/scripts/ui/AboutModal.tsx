@@ -4,6 +4,7 @@ import logo from "../../images/icon.png";
 import { getFullVersion } from "../logic/Version";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { openUrl } from "../utilities/Platform";
+import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { getWebglRenderInfo } from "./WebglRenderInfo";
@@ -30,7 +31,9 @@ export function AboutModal(): React.ReactNode {
                   )}
                   <hr className="mv10" />
                   <div className="text-small text-desc">
-                     {$t(L.GraphicsDriver, { driver: getWebglRenderInfo() })}
+                     {$t(L.GraphicsDriver, {
+                        driver: getWebglRenderInfo(Singleton().sceneManager.getContext().app),
+                     })}
                   </div>
                   <div className="text-small text-desc">
                      {$t(L.UserAgent, { driver: navigator.userAgent })}
