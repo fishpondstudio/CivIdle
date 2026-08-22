@@ -2082,4 +2082,7 @@ export const EN = {
    ScienceCarryingOver: "Science Carrying Over",
    ResearchSuperintelligence: "Research Superintelligence",
    ResearchCost: "Research Cost",
+   RebirthAsX: "Rebirth as %{city}",
+   SuperintelligenceRebirthWarning: "You have constructed <b>Superintelligence</b> but have not researched it - you will not carry over any science",
+   AreYouSureYouWantToRebirthAsX: "Are you sure you want to rebirth as %{city}?",
 };
