@@ -3,14 +3,12 @@ import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameOptions } from "../../../shared/logic/GameState";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
-import { forEach, reduceOf, sizeOf } from "../../../shared/utilities/Helper";
+import { forEach, reduceOf } from "../../../shared/utilities/Helper";
 
 export function randomizeBuildingAndResourceColor(gameOptions: GameOptions) {
    const colors = randomColor({
       luminosity: "light",
-      count:
-         reduceOf(Config.Building, (prev, k) => prev + (isSpecialBuilding(k) ? 0 : 1), 0) +
-         sizeOf(Config.Material),
+      count: reduceOf(Config.Building, (prev, k) => prev + (isSpecialBuilding(k) ? 0 : 1), 0),
    });
    forEach(Config.Building, (k, v) => {
       if (!isSpecialBuilding(k)) {
@@ -19,10 +17,9 @@ export function randomizeBuildingAndResourceColor(gameOptions: GameOptions) {
          delete gameOptions.buildingColors[k];
       }
    });
-   forEach(Config.Material, (k, v) => {
-      gameOptions.resourceColors[k] = colors.pop();
-   });
+   copyBuildingColorToResource(gameOptions);
 }
+
 export function copyBuildingColorToResource(gameOptions: GameOptions) {
    forEach(Config.Material, (res) => {
       const buildings = getBuildingsThatProduce(res);
