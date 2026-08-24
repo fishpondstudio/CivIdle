@@ -1897,7 +1897,7 @@ export class BuildingDefinitions {
 
    YearOfTheSnake: IBuildingDefinition = {
       name: () => $t(L.YearOfTheSnakeV2),
-      desc: () => $t(L.YearOfTheSnakeDesc),
+      desc: () => $t(L.YearOfTheSnakeDescV2),
       input: {},
       output: {},
       construction: { Opera: 500 },

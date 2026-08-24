@@ -1420,8 +1420,6 @@ export const DE = {
    WuZetian: "Kaiserin Wu Zetian",
    WuZetianDesc: "+%{value} Multiplikator für die Transportkapazität",
    YangtzeRiverDesc: "Alle Gebäude, die Wasser verbrauchen, erhalten +1 Produktions-, Arbeitskraft- und Lagermultiplikator. Verdopple den Effekt von Zheng He (Große Person). Jede Stufe der Permanenten Kaiserin Wu Zetian (Große Person) verleiht allen Gebäuden +1 Speicher-Multiplikator.",
-   YearOfTheSnakeDesc:
-      "Nach Fertigstellung erhält man beim Eintritt in ein neues Zeitalter nicht mehr eine große Persönlichkeit aus jedem freigeschalteten Zeitalter, sondern die gleiche Anzahl großer Persönlichkeiten aus dem aktuellen Zeitalter. Alle Gebäude im Umkreis von 2 Kacheln erhalten einen Produktionsmultiplikator von +1. Dieses Weltwunder kann ausgebaut werden, und jede weitere Ausbaustufe erhöht den Produktionsmultiplikator für Gebäude im Umkreis von zwei Feldern um +1. Dieses Weltwunder kann nur während des Mondneujahrs (1.20–2.10) errichtet werden",
    ZagrosMountainsDesc: "Alle angrenzenden Gebäude, die weniger als 5 Produktionsmultiplikatoren haben, erhalten +2 Produktionsmultiplikatoren. Verdopple den Effekt von Nebukadnezar II (Große Persönlichkeit)",
    ZahaHadidDesc: "+%{value} Multiplikator der Bauarbeiterkapazität",
    ZenobiaDesc: "+%{value}h Petra Warp Speicher",
@@ -2080,6 +2078,8 @@ export const DE = {
    Xuanzang: "Xuanzang",
    YangtzeRiver: "Yangtze River",
    Year: "Year",
+   YearOfTheSnakeDescV2:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (5 days before and 15 days after the lunar new year)",
    YearOfTheSnakeV2: "Lunar New Year",
    YellowCraneTower: "Yellow Crane Tower",
    YellowCraneTowerDescV2: "Provides +1 choice when selecting Great People. All buildings within 2 tiles gain +X Production, Worker Capacity, and Storage Multipliers. X = this wonder's level. Building it next to Yangtze River increases its range by 2 tiles",

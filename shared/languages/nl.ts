@@ -721,8 +721,6 @@ export const NL = {
    Writing: "Schrijven",
    WuZetian: "Keizerin Wu Zetian",
    WuZetianDesc: "+%{value} Transportcapaciteit Vermenigvuldiger",
-   YearOfTheSnakeDesc:
-      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)",
    ZagrosMountainsDesc: "All adjacent buildings that have less than 5 Production Multiplier get +2 Production Multiplier. Double the effect of Nebuchadnezzar II (Great Person)",
    ZigguratOfUrDescV2: "Every 10 happiness (capped) provides +1 Production Multiplier to all buildings that do not produce workers and are unlocked in previous ages (max = number of unlocked ages / 2). Wonders (incl. Natural) no longer provide +1 Happiness. The effect can be turned off",
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run",
@@ -2067,6 +2065,8 @@ export const NL = {
    YangtzeRiver: "Yangtze River",
    YangtzeRiverDesc: "All buildings that consume water get +1 Production, Worker Capacity and Storage Multiplier. Double the effect of Zheng He (Great Person). Each level of Permanent Empress Wu Zetian (Great Person) provides +1 Storage Multiplier to all buildings",
    Year: "Year",
+   YearOfTheSnakeDescV2:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (5 days before and 15 days after the lunar new year)",
    YearOfTheSnakeV2: "Lunar New Year",
    YellowCraneTower: "Yellow Crane Tower",
    YellowCraneTowerDescV2: "Provides +1 choice when selecting Great People. All buildings within 2 tiles gain +X Production, Worker Capacity, and Storage Multipliers. X = this wonder's level. Building it next to Yangtze River increases its range by 2 tiles",

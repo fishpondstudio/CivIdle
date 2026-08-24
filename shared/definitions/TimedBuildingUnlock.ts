@@ -35,6 +35,44 @@ export function isChristmas(now: Date): boolean {
    return now.getMonth() === 11;
 }
 
+let _formatter: Intl.DateTimeFormat | undefined;
+try {
+   _formatter = new Intl.DateTimeFormat("en-u-ca-chinese", {
+      month: "numeric",
+      day: "numeric",
+   });
+} catch {
+   _formatter = undefined;
+}
+const _cachedLunarYearRanges = new Map<number, [start: number, end: number]>();
+
 export function isLunarNewYear(now: Date): boolean {
-   return now.getMonth() === 1 && now.getDate() >= 10 && now.getDate() <= 24;
+   const year = now.getFullYear();
+   let range = _cachedLunarYearRanges.get(year);
+
+   if (!range) {
+      if (_formatter) {
+         const lunarNewYear = new Date(year, 0, 20, 12);
+         while (lunarNewYear.getMonth() < 2) {
+            const parts = _formatter.formatToParts(lunarNewYear);
+            const month = parts.find((part) => part.type === "month")?.value;
+            const day = parts.find((part) => part.type === "day")?.value;
+            if (month === "1" && day === "1") {
+               range = [
+                  new Date(year, lunarNewYear.getMonth(), lunarNewYear.getDate() - 5).getTime(),
+                  new Date(year, lunarNewYear.getMonth(), lunarNewYear.getDate() + 15).getTime(),
+               ];
+               break;
+            }
+            lunarNewYear.setDate(lunarNewYear.getDate() + 1);
+         }
+      }
+
+      // Assume February 1 is Lunar New Year if the Chinese calendar is unavailable.
+      range ??= [new Date(year, 0, 27).getTime(), new Date(year, 1, 16).getTime()];
+      _cachedLunarYearRanges.set(year, range);
+   }
+
+   const timestamp = now.getTime();
+   return range ? timestamp >= range[0] && timestamp < range[1] : false;
 }

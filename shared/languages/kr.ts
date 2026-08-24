@@ -1593,8 +1593,6 @@ export const KR = {
    Xuanzang: "현장",
    YangtzeRiver: "양쯔강",
    YangtzeRiverDesc: "물을 소비하는 모든 건물은 생산력, 노동자 능력, 저장소 배수를 +1 얻습니다. 정화(위인)의 효과가 두 배로 증가합니다. 영구적인 측천무후(위인)은 레벨 당 모든 건물에 +1 저장소 배수를 제공합니다.",
-   YearOfTheSnakeDesc:
-      "건설 완료 후, 새로운 시대에 진입할 때 잠금 해제된 시대의 위인 하나씩 얻는 대신, 현재 시대의 위인을 같은 수만큼 얻습니다. 2타일 범위 내의 모든 건물이 +1 생산 배수를 얻습니다. 이 불가사의는 업그레이드 할 수 있으며, 각 추가 업그레이드는 2타일 범위 내의 건물에 +1 생산 배수를 제공합니다. 이 불가사의는 설날 기간(2.10~2.24)에만 건설할 수 있습니다.",
    YearOfTheSnakeV2: "설날",
    YellowCraneTower: "황학루",
    YouAreOffline: "오프라인 상태입니다",
@@ -2079,6 +2077,8 @@ export const KR = {
    XRunsInTotal: "%{count} Runs In Total",
    XSpecialDay: "%{name}'s Special Day",
    Year: "Year",
+   YearOfTheSnakeDescV2:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (5 days before and 15 days after the lunar new year)",
    YellowCraneTowerDescV2: "Provides +1 choice when selecting Great People. All buildings within 2 tiles gain +X Production, Worker Capacity, and Storage Multipliers. X = this wonder's level. Building it next to Yangtze River increases its range by 2 tiles",
    YouAreOfflineHTML: "You are currently not connected to the server. Check your internet connect and click to reload the game. You might need to restart Steam if reloading doesn't work",
    YouHaveAdaptiveGreatPeopleWithBoostToSelect: "You have adaptive great people with boost to select",

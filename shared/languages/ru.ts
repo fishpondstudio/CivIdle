@@ -1737,7 +1737,7 @@ export const RU = {
    SupercomputerLab: "Суперкомпьютерная лаборатория",
    Superintelligence: "Сверхразум",
    SuperintelligenceDescV3: "После постройки этого чуда, можно будет исследовать Сверхразум, что обойдется в %{N}X науки и перенесет X науки на следующий забег. X = всего науки, необходимой, чтобы открыть все дерево технологий.",
-   SuperintelligenceRebirthWarning: "Вы построили <b>Сверхразум</b> но не исследовали его - вы не перенесете никакой науки",   
+   SuperintelligenceRebirthWarning: "Вы построили <b>Сверхразум</b> но не исследовали его - вы не перенесете никакой науки",
    SupporterPack: "Пакет поддержки",
    SupporterPackOptions: "Опции Пакета поддержки",
    SupporterPackReminder: "Вы играли <b>%{time}</b>. Рассмотрите возможность приобретения <b>набора поддержки</b>, чтобы помочь поддерживать работу игрового сервера",
@@ -2067,8 +2067,6 @@ export const RU = {
    YangtzeRiver: "Река Янцзы",
    YangtzeRiverDesc: "Все здания, потребляющие Воду, получают +1 к Множителям Производства, Производительности Работников и Хранилища. Удваивает эффект Чжэн Хэ (Великий Человек). Каждый уровень Постоянной Императрицы У Цзэтянь (Великий Человек) дает +1 к Множителю Хранилища для всех зданий",
    Year: "Год",
-   YearOfTheSnakeDesc:
-      "После завершения строительства, при входе в новую эпоху, вместо того, чтобы получать по одному великому человеку из каждой разблокированной эпохи, получите такое же количество великих людей в текущей эпохе. Все здания в радиусе 2 плиток получают +1 к Множителю производства. Это чудо можно улучшить, каждое дополнительное улучшение дает +1 к Множителю производства зданиям в радиусе 2 плиток. Это чудо может быть построено только в период лунного нового года (10.02 ~ 24.02)",
    YearOfTheSnakeV2: "Лунный Новый Год",
    YellowCraneTower: "Башня Жёлтого журавля",
    YellowCraneTowerDescV2: "Предоставляет +1 вариант при выборе Великих Людей. Все здания в пределах 2 плиток получают +X к Множителям Производства, Производительности Работников и Хранилища. X = уровень этого чуда. Постройка рядом с Рекой Янцзы увеличивает дальность действия на 2 плитки",
@@ -2092,4 +2090,6 @@ export const RU = {
    PlatformAndroid: "Android",
    PlatformiOS: "iOS",
    PlatformSteam: "Steam",
+   YearOfTheSnakeDescV2:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (5 days before and 15 days after the lunar new year)",
 };

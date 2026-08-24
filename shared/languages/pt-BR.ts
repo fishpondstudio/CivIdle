@@ -1658,8 +1658,6 @@ export const PT_BR = {
    YangtzeRiver: "Rio Yangtze",
    YangtzeRiverDesc:
       "Todos os edifícios que consomem água recebem +1 de Produção, Capacidade de Trabalhadores e Multiplicador de Armazenamento. Dobra o efeito de Zheng He (Figura Histórica). Cada nível de Imperatriz Permanente Wu Zetian (Figura Histórica) fornece +1 de Multiplicador de Armazenamento para todos os edifícios.",
-   YearOfTheSnakeDesc:
-      "Após ser completada, ao entrar em uma nova era, em vez de ganhar uma Figura Histórica de cada era desbloqueada, ganhe a mesma quantidade de Figuras Históricas na era atual. Todos os edifícios dentro de um raio de 2 quadrados recebem +1 Multiplicador de Produção. Esta maravilha pode ser atualizada, e cada atualização adicional fornece +1 Multiplicador de Produção para edifícios dentro de um raio de 2 quadrados. Esta maravilha só pode ser construída durante o período do Ano Novo Lunar (1.20 ~ 2.10)",
    YearOfTheSnakeV2: "Ano Novo Lunar",
    YellowCraneTower: "Torre do Guindaste Amarelo",
    YouAreOffline: "Você Está Offline",
@@ -2084,6 +2082,8 @@ export const PT_BR = {
    XSpecialDay: "%{name}'s Special Day",
    Xuanzang: "Xuanzang",
    Year: "Year",
+   YearOfTheSnakeDescV2:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (5 days before and 15 days after the lunar new year)",
    YellowCraneTowerDescV2: "Provides +1 choice when selecting Great People. All buildings within 2 tiles gain +X Production, Worker Capacity, and Storage Multipliers. X = this wonder's level. Building it next to Yangtze River increases its range by 2 tiles",
    YouHaveAdaptiveGreatPeopleWithBoostToSelect: "You have adaptive great people with boost to select",
    YuriGagarin: "Yuri Gagarin",

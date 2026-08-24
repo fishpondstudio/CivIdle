@@ -1654,8 +1654,6 @@ export const ES = {
    YangtzeRiver: "Río Yangtze",
    YangtzeRiverDesc:
       "Todas las construcciones que consumen agua obtienen +1 Multiplicador de Producción, Capacidad de Trabajadores y Almacenamiento. Duplica el efecto de Zheng He (Personaje Histórico). Cada nivel permanente de la Emperatriz Wu Zetian (Personaje Histórico) proporciona +1 Multiplicador de Almacenamiento a todas las construcciones",
-   YearOfTheSnakeDesc:
-      "Tras completarlo, al entrar en una nueva era, en vez de obtener un personaje histórico de cada era desbloqueada, obten la misma cantidad de personajes históricos en la era actual. Todas las construcciones en un rango de 2 casillas reciben +1 Multiplicador de Producción. Esta maravilla puede mejorarse y cada mejora adicional proporciona +1 Multiplicador de Producción a construcciones en un rango de 2 casillas. Esta maravilla solo puede ser construida durante el periodo del Nuevo Año Lunar (1.20 ~ 2.10)",
    YearOfTheSnakeV2: "Año Nuevo Lunar",
    YellowCraneTower: "Torre de la Grulla Amarilla",
    YouAreOffline: "Estás sin conexión",
@@ -2094,6 +2092,8 @@ export const ES = {
    XSpecialDay: "%{name}'s Special Day",
    Xuanzang: "Xuanzang",
    Year: "Year",
+   YearOfTheSnakeDescV2:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (5 days before and 15 days after the lunar new year)",
    YellowCraneTowerDescV2: "Provides +1 choice when selecting Great People. All buildings within 2 tiles gain +X Production, Worker Capacity, and Storage Multipliers. X = this wonder's level. Building it next to Yangtze River increases its range by 2 tiles",
    YouHaveAdaptiveGreatPeopleWithBoostToSelect: "You have adaptive great people with boost to select",
    YuriGagarin: "Yuri Gagarin",

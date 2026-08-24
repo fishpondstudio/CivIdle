@@ -1631,8 +1631,6 @@ export const TR = {
    XResourceHasBeenDestroyed: "<b>%{amount} %{resource}</b> yok edildi",
    YangtzeRiver: "Yangtze Nehri",
    YangtzeRiverDesc: "Su tüketen tüm binalar +1 Üretim, İşçi Kapasitesi ve Depolama Çarpanı alır. Zheng He'nin (Büyük İnsan) etkisini ikiye katlar. Kalıcı İmparatoriçe Wu Zetian'ın (Büyük İnsan) her seviyesi tüm binalara +1 Depolama Çarpanı sağlar",
-   YearOfTheSnakeDesc:
-      "Tamamlandıktan sonra, yeni bir çağa girildiğinde, kilidi açılmış her çağdan bir büyük insan almak yerine, mevcut çağdan aynı miktarda büyük insan alın. 2 kare menzilindeki tüm binalar +1 Üretim Çarpanı alır. Bu harika yükseltilebilir ve her ek yükseltme 2 kare menzilindeki binalara +1 Üretim Çarpanı sağlar. Bu harika sadece ay yeni yılı döneminde (1.20 ~ 2.10) inşa edilebilir",
    YellowCraneTower: "Sarı Turna Kulesi",
    YouAreOffline: "Çevrimdışısınız",
    YouAreOfflineHTML: "Şu anda sunucuya bağlı değilsiniz. İnternet bağlantınızı kontrol edin ve oyunu yeniden yüklemek için tıklayın. Yeniden yüklemek işe yaramazsa Steam'i yeniden başlatmanız gerekebilir",
@@ -2078,6 +2076,8 @@ export const TR = {
    XSpecialDay: "%{name}'s Special Day",
    Xuanzang: "Xuanzang",
    Year: "Year",
+   YearOfTheSnakeDescV2:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (5 days before and 15 days after the lunar new year)",
    YearOfTheSnakeV2: "Lunar New Year",
    YellowCraneTowerDescV2: "Provides +1 choice when selecting Great People. All buildings within 2 tiles gain +X Production, Worker Capacity, and Storage Multipliers. X = this wonder's level. Building it next to Yangtze River increases its range by 2 tiles",
    YouHaveAdaptiveGreatPeopleWithBoostToSelect: "You have adaptive great people with boost to select",

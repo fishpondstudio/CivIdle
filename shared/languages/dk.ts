@@ -925,8 +925,6 @@ export const DK = {
    WuZetianDesc: "+%{value} Transportkapacitetsmultiplikator",
    YangtzeRiver: "Yangtze-floden",
    YangtzeRiverDesc: "Alle bygninger, der forbruger vand, får +1 Produktion, Arbejdskapacitet og Lager Multiplikator. Fordoble effekten af Zheng He (Stor Person). Hver niveau af Permanent Kejserinde Wu Zetian (Stor Person) giver +1 Lager Multiplikator til alle bygninger",
-   YearOfTheSnakeDesc:
-      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)",
    YellowCraneTower: "Gul Kran-Tårn",
    ZagrosMountainsDesc: "All adjacent buildings that have less than 5 Production Multiplier get +2 Production Multiplier. Double the effect of Nebuchadnezzar II (Great Person)",
    ZenobiaDesc: "+%{value}t Petra Tidskrumning Lager",
@@ -2069,6 +2067,8 @@ export const DK = {
    XSpecialDay: "%{name}'s Special Day",
    Xuanzang: "Xuanzang",
    Year: "Year",
+   YearOfTheSnakeDescV2:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (5 days before and 15 days after the lunar new year)",
    YearOfTheSnakeV2: "Lunar New Year",
    YellowCraneTowerDescV2: "Provides +1 choice when selecting Great People. All buildings within 2 tiles gain +X Production, Worker Capacity, and Storage Multipliers. X = this wonder's level. Building it next to Yangtze River increases its range by 2 tiles",
    YouAreOffline: "You Are Offline",

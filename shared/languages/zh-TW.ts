@@ -2051,7 +2051,6 @@ export const ZH_TW = {
    YangtzeRiver: "長江",
    YangtzeRiverDesc: "所有消耗水的建築獲得 +1 生產、工人能力以及存儲乘數。鄭和(偉人)效果加倍。武則天(偉人)每升一級為所有建築提供+1儲存乘數。與黃鶴樓(奇觀)具搭配效果",
    Year: "年份",
-   YearOfTheSnakeDesc: "建成後，當進入一個新時代時，將原本每個已解鎖時代獲得一位偉人，改為獲得相同數量的當代偉人。周圍 2 格範圍內的所有建築獲得 +1 的生產加成乘數。此世界奇觀可升級，每次額外升級會為周圍 2 格範圍內的所有建築再提供 +1 的生產加成乘數。此奇觀僅能在農曆新年期間（2月10日至2月24日）建造。",
    YearOfTheSnakeV2: "春節市集",
    YellowCraneTower: "黃鶴樓",
    YellowCraneTowerDescV2: "選擇偉人時 +1 可選項。每一級為周圍 2 地塊範圍內的所有建築提供 +1 生產、工人能力以及存儲乘數。當與長江相鄰時，則黃鶴樓周圍擴大 2 地塊範圍",
@@ -2072,4 +2071,6 @@ export const ZH_TW = {
    Zugspitze: "祖格峰",
    ZugspitzeDesc: "每解鎖一個時代，獲得一個點數，可用於為本次運行中誕生的任何偉人提供一個額外等級（存儲乘數效果和奇觀偉人除外）",
    SuperintelligenceDescV3: "After constructing this wonder, Superintelligence can be researched, which costs %{N}X science and carries over X science to your next run. X = total science to unlock the whole tech tree.",
+   YearOfTheSnakeDescV2:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (5 days before and 15 days after the lunar new year)",
 };
