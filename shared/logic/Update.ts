@@ -39,6 +39,7 @@ import {
    getAvailableWorkers,
    getBuilderCapacity,
    getBuildingCost,
+   getBuildingRange,
    getBuildingValue,
    getCurrentPriority,
    getElectrificationLevel,
@@ -58,7 +59,6 @@ import {
    getWorkingBuilding,
    hasEnoughResources,
    hasRequiredDeposit,
-   isFestival,
    isNaturalWonder,
    isSpecialBuilding,
    isTransportable,
@@ -958,15 +958,15 @@ export function transportResource(
       }
 
       let immediate = false;
-      const festival = isFestival("SanchiStupa", gs);
-      const range = festival ? 3 : 2;
       const sanchiStupa = Tick.current.specialBuildings.get("SanchiStupa");
-      if (
-         sanchiStupa &&
-         (grid.distanceTile(from, sanchiStupa.tile) <= range ||
-            grid.distanceTile(targetXy, sanchiStupa.tile) <= range)
-      ) {
-         immediate = true;
+      if (sanchiStupa) {
+         const range = getBuildingRange(sanchiStupa.tile, sanchiStupa.building, gs);
+         if (
+            grid.distanceTile(from, sanchiStupa.tile) <= range ||
+            grid.distanceTile(targetXy, sanchiStupa.tile) <= range
+         ) {
+            immediate = true;
+         }
       }
 
       const hafsid = gs.unlockedUpgrades.HafsidDynasty;

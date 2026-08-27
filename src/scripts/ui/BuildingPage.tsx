@@ -125,6 +125,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    YellowCraneTower: UpgradableWonderBuildingBody,
    PorcelainTower: UpgradableWonderBuildingBody,
    Superintelligence: SuperintelligenceBuildingBody,
+   SanchiStupa: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

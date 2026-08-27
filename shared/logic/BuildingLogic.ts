@@ -1588,7 +1588,7 @@ export function getBuildingRange(xy: Tile, building: IBuildingData, gs: GameStat
          return isFestival(building.type, gs) ? 5 : 3;
       }
       case "SanchiStupa": {
-         return isFestival(building.type, gs) ? 3 : 2;
+         return isFestival(building.type, gs) ? 3 + building.level : 1 + building.level;
       }
       case "GangesRiver": {
          return isFestival(building.type, gs) ? 2 : 1;

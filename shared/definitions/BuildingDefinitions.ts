@@ -2194,7 +2194,7 @@ export class BuildingDefinitions {
 
    SanchiStupa: IBuildingDefinition = {
       name: () => $t(L.SanchiStupa),
-      desc: () => $t(L.SanchiStupaDesc),
+      desc: () => $t(L.SanchiStupaDescV2),
       input: {},
       output: {},
       construction: { Garment: 100, Sword: 100, Furniture: 100 },
@@ -2538,6 +2538,7 @@ export const BuildingShowLevel = new Set<Building>([
    "GreatWall",
    "YellowCraneTower",
    "PorcelainTower",
+   "SanchiStupa",
 ] satisfies Building[]);
 
 // This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!
@@ -2578,6 +2579,7 @@ export const UpgradableWorldWonders = new Set<Building>([
    "GreatWall",
    "YellowCraneTower",
    "PorcelainTower",
+   "SanchiStupa",
 ] satisfies Building[]);
 
 // Include buildings here that does not really cost construction resources to upgrade
@@ -2598,6 +2600,7 @@ export const WonderCostBase: Partial<Record<Building, number>> = {
    AbuSimbel: 2,
    GreatSphinx: 5,
    GreatWall: 5,
+   SanchiStupa: 4,
 };
 
 // This is used for the initial placement of natural wonders.

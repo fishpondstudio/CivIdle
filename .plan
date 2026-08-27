@@ -74,3 +74,15 @@
 [b]Old:[/b] Lunar New Year: Great Wall provides double the boost to buildings. Porcelain Tower provides +1 level to all great people from this run
 [b]New:[/b] Lunar New Year: Great Wall and Yellow Crane Tower also grant affected buildings a Building Level Boost equal to the Production Multiplier they provide. Porcelain Tower grants +1 level to all Great People from this run
 [b]Change:[/b] Great Wall's doubled multipliers have been replaced with an equivalent Building Level Boost, and Yellow Crane Tower now also grants a Building Level Boost during Lunar New Year. Porcelain Tower's festival bonus is unchanged.
+
+[h3]Sanchi Stupa[/h3]
+
+[b]Old:[/b] Transports from or to buildings within 2-tile range of Sanchi Stupa are immediate
+[b]New:[/b] Transports from or to buildings within 2-tile range of Sanchi Stupa are immediate. This wonder can be upgraded, and each additional upgrade provides +1 range
+[b]Change:[/b] Sanchi Stupa can now be upgraded, with each additional level extending the range of its immediate transportation effect by 1 tile.
+
+[h3]Diwali (Indian Festival)[/h3]
+
+[b]Old:[/b] Diwali: Increase the range of Ganges River to 2 tiles. Increase the range of Sanchi Stupa to 3 tiles. Increase the range of Red Fort to 5 tiles
+[b]New:[/b] Diwali: Increase the range of Ganges River to 2 tiles. Sanchi Stupa gains +2 range. Increase the range of Red Fort to 5 tiles
+[b]Change:[/b] Diwali now adds 2 tiles to Sanchi Stupa's range instead of setting it to 3 tiles, allowing the festival bonus to scale with Sanchi Stupa upgrades.
