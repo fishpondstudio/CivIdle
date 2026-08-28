@@ -229,7 +229,7 @@ export const ZH_TW = {
    Brickworks: "磚窯",
    BritishMuseum: "大英博物館",
    BritishMuseumChooseWonder: "選擇一個世界奇觀",
-   BritishMuseumDesc: "建造完成後，可以變更為其他文明的可建造世界奇觀（只有一次機會）",
+   BritishMuseumDesc: "建造完成後，可以變更為其他文明的可建造世界奇觀（蓬皮杜中心、巨港、莫瑞泰斯皇家美術館除外。僅有一次變更機會，請慎重考慮）",
    BritishMuseumTransform: "變更",
    Broadway: "百老匯",
    BroadwayCurrentlySelected: "當前選擇的",
