@@ -36,7 +36,7 @@ export function isChristmas(now: Date): boolean {
 }
 
 export function isRestitutorReleaseWindow(now: Date): boolean {
-   return now.getMonth() === 8 && now.getDate() >= 8 && now.getDate() <= 22;
+   return now.getFullYear() === 2026 && now.getMonth() === 8 && now.getDate() >= 8 && now.getDate() <= 22;
 }
 
 let _formatter: Intl.DateTimeFormat | undefined;
