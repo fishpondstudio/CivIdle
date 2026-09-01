@@ -2085,4 +2085,5 @@ export const EN = {
    ZugspitzeDesc: "For each unlocked age, get one slot that can be used to provide one extra level to any Great Person that is born from this run. (Storage multipliers are not effective due to this multiplier being dynamic)",
    SanchiStupaDescV2: "Transports from or to buildings within 2-tile range of Sanchi Stupa are immediate. This wonder can be upgraded and each additional upgrade provides +1 range",
    DiwaliV3: "Diwali: Increase the range of Ganges River to 2-tile. Sanchi Stupa gets +2 range. Increase the range of Red Fort to 5-tile",
+   RestitutorEmpireRestoredEarlyAccess: "Restitutor: Empire Restored Early Access",
 };

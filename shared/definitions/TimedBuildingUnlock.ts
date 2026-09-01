@@ -35,6 +35,10 @@ export function isChristmas(now: Date): boolean {
    return now.getMonth() === 11;
 }
 
+export function isRestitutorReleaseWindow(now: Date): boolean {
+   return now.getMonth() === 8 && now.getDate() >= 8 && now.getDate() <= 22;
+}
+
 let _formatter: Intl.DateTimeFormat | undefined;
 try {
    _formatter = new Intl.DateTimeFormat("en-u-ca-chinese", {

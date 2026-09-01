@@ -7,6 +7,7 @@ import {
 } from "../../../shared/definitions/GalleryPaintings";
 import { GreatPersonTickFlag, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import type { Material } from "../../../shared/definitions/MaterialDefinitions";
+import { isRestitutorReleaseWindow } from "../../../shared/definitions/TimedBuildingUnlock";
 import {
    IOFlags,
    addWorkers,
@@ -246,6 +247,18 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   });
                }
             });
+            if (isRestitutorReleaseWindow(nowDate)) {
+               Tick.next.globalMultipliers.output.push({
+                  value: 1,
+                  source: $t(L.RestitutorEmpireRestoredEarlyAccess),
+                  flag: MultiplierFlag.Unstable,
+               });
+               Tick.next.globalMultipliers.levelBoost.push({
+                  value: 1,
+                  source: $t(L.RestitutorEmpireRestoredEarlyAccess),
+                  flag: MultiplierFlag.Unstable,
+               });
+            }
          }
 
          if (allyCount >= 3) {
