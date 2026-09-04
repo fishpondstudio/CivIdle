@@ -460,6 +460,16 @@ export const AccountLevelMaxTariffRate: Record<AccountLevel, number> = {
    [AccountLevel.Augustus]: 0.1,
 };
 
+export const AccountLevelTileCount: Record<AccountLevel, number> = {
+   [AccountLevel.Tribune]: 1,
+   [AccountLevel.Quaestor]: 2,
+   [AccountLevel.Aedile]: 3,
+   [AccountLevel.Praetor]: 4,
+   [AccountLevel.Consul]: 5,
+   [AccountLevel.Caesar]: 5,
+   [AccountLevel.Augustus]: 5,
+};
+
 export enum ServerWSErrorCode {
    Ok = 0,
    BadRequest = 3000,

@@ -4,6 +4,7 @@ import _WorldMap from "../definitions/WorldMap.json";
 import {
    AccountLevel,
    AccountLevelMaxActiveTrades,
+   AccountLevelTileCount,
    AccountLevelTradePriceRange,
    MAP_MAX_X,
    TradeTileReservationDays,
@@ -162,20 +163,7 @@ export function hasResourceForPlayerTrade(res: Material): boolean {
 }
 
 export function getTileFromAccountRank(rank: AccountLevel): number {
-   switch (rank) {
-      case AccountLevel.Quaestor:
-         return 2;
-      case AccountLevel.Aedile:
-         return 3;
-      case AccountLevel.Praetor:
-         return 4;
-      case AccountLevel.Consul:
-      case AccountLevel.Caesar:
-      case AccountLevel.Augustus:
-         return 5;
-      default:
-         return 1;
-   }
+   return AccountLevelTileCount[rank];
 }
 
 export const TilePointPerHour = 0.005;

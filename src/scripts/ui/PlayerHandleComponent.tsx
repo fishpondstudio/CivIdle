@@ -15,6 +15,7 @@ import {
    AccountLevelMaxActiveTrades,
    AccountLevelMaxTariffRate,
    AccountLevelPlayTime,
+   AccountLevelTileCount,
    AccountLevelTradePriceRange,
    TradeTileReservationDays,
    UserAttributes,
@@ -342,6 +343,16 @@ function AccountDetails(): React.ReactNode {
                      <td>{TradeTileReservationDays[AccountLevel.Consul]}d</td>
                      <td>{TradeTileReservationDays[AccountLevel.Caesar]}d</td>
                      <td>{TradeTileReservationDays[AccountLevel.Augustus]}d</td>
+                  </tr>
+                  <tr>
+                     <td>{$t(L.TradeTile)}</td>
+                     <td>{AccountLevelTileCount[AccountLevel.Tribune]}</td>
+                     <td>{AccountLevelTileCount[AccountLevel.Quaestor]}</td>
+                     <td>{AccountLevelTileCount[AccountLevel.Aedile]}</td>
+                     <td>{AccountLevelTileCount[AccountLevel.Praetor]}</td>
+                     <td>{AccountLevelTileCount[AccountLevel.Consul]}</td>
+                     <td>{AccountLevelTileCount[AccountLevel.Caesar]}</td>
+                     <td>{AccountLevelTileCount[AccountLevel.Augustus]}</td>
                   </tr>
                   <tr>
                      <td>{$t(L.AccountPlayTimeRequirementV2)}</td>

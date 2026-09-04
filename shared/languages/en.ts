@@ -2089,4 +2089,5 @@ export const EN = {
    Plus2ActiveTradesForSupporter: "+2 Active Trades for Supporter",
    Plus2ActiveTradesForKeeperOfOurServer: "+2 Active Trades for Keeper of Our Server",
    MaxTariff: "Max Tariff",
+   TradeTile: "Trade Tile",
 };
