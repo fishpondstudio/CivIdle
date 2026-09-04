@@ -430,6 +430,36 @@ export const AccountLevelGreatPeopleLevel: Record<AccountLevel, number> = {
    [AccountLevel.Augustus]: 2000,
 };
 
+export const AccountLevelTradePriceRange: Record<AccountLevel, number> = {
+   [AccountLevel.Tribune]: 0.1,
+   [AccountLevel.Quaestor]: 0.2,
+   [AccountLevel.Aedile]: 0.21,
+   [AccountLevel.Praetor]: 0.22,
+   [AccountLevel.Consul]: 0.23,
+   [AccountLevel.Caesar]: 0.24,
+   [AccountLevel.Augustus]: 0.25,
+};
+
+export const AccountLevelMaxActiveTrades: Record<AccountLevel, number> = {
+   [AccountLevel.Tribune]: 2,
+   [AccountLevel.Quaestor]: 4,
+   [AccountLevel.Aedile]: 6,
+   [AccountLevel.Praetor]: 8,
+   [AccountLevel.Consul]: 10,
+   [AccountLevel.Caesar]: 10,
+   [AccountLevel.Augustus]: 10,
+};
+
+export const AccountLevelMaxTariffRate: Record<AccountLevel, number> = {
+   [AccountLevel.Tribune]: 0.01,
+   [AccountLevel.Quaestor]: 0.05,
+   [AccountLevel.Aedile]: 0.06,
+   [AccountLevel.Praetor]: 0.07,
+   [AccountLevel.Consul]: 0.08,
+   [AccountLevel.Caesar]: 0.09,
+   [AccountLevel.Augustus]: 0.1,
+};
+
 export enum ServerWSErrorCode {
    Ok = 0,
    BadRequest = 3000,

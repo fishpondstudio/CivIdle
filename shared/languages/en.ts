@@ -2086,4 +2086,7 @@ export const EN = {
    SanchiStupaDescV2: "Transports from or to buildings within 2-tile range of Sanchi Stupa are immediate. This wonder can be upgraded and each additional upgrade provides +1 range",
    DiwaliV3: "Diwali: Increase the range of Ganges River to 2-tile. Sanchi Stupa gets +2 range. Increase the range of Red Fort to 5-tile",
    RestitutorEmpireRestoredEarlyAccess: "Restitutor: Empire Restored Early Access",
+   Plus2ActiveTradesForSupporter: "+2 Active Trades for Supporter",
+   Plus2ActiveTradesForKeeperOfOurServer: "+2 Active Trades for Keeper of Our Server",
+   MaxTariff: "Max Tariff",
 };

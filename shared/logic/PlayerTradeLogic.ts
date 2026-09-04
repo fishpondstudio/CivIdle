@@ -3,13 +3,16 @@ import type { Tech } from "../definitions/TechDefinitions";
 import _WorldMap from "../definitions/WorldMap.json";
 import {
    AccountLevel,
+   AccountLevelMaxActiveTrades,
+   AccountLevelTradePriceRange,
    MAP_MAX_X,
    TradeTileReservationDays,
+   UserAttributes,
    type IAddTradeRequest,
    type IClientMapEntry,
    type IUser,
 } from "../utilities/Database";
-import { DAY, WEEK, type IPointData } from "../utilities/Helper";
+import { DAY, hasFlag, WEEK, type IPointData } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
@@ -19,40 +22,20 @@ import { Tick } from "./TickLogic";
 const WorldMap = _WorldMap as Record<string, boolean>;
 
 export function getUserTradePriceRange(user: IUser | null): number {
-   if (!user) {
-      return 0.05;
-   }
-   switch (user.level) {
-      case AccountLevel.Quaestor:
-         return 0.1;
-      case AccountLevel.Aedile:
-         return 0.15;
-      case AccountLevel.Praetor:
-         return 0.2;
-      case AccountLevel.Consul:
-      case AccountLevel.Caesar:
-      case AccountLevel.Augustus:
-         return 0.25;
-      default:
-         return 0.05;
-   }
+   return AccountLevelTradePriceRange[user?.level ?? AccountLevel.Tribune];
 }
 
+export const ExtraActiveTradePerDLC = 2;
+
 export function getMaxActiveTrades(user: IUser): number {
-   switch (user.level) {
-      case AccountLevel.Quaestor:
-         return 4;
-      case AccountLevel.Aedile:
-         return 6;
-      case AccountLevel.Praetor:
-         return 8;
-      case AccountLevel.Consul:
-      case AccountLevel.Caesar:
-      case AccountLevel.Augustus:
-         return 10;
-      default:
-         return 2;
+   let result = AccountLevelMaxActiveTrades[user.level ?? AccountLevel.Tribune];
+   if (hasFlag(user.attr, UserAttributes.DLC1)) {
+      result += ExtraActiveTradePerDLC;
    }
+   if (hasFlag(user.attr, UserAttributes.DLC3)) {
+      result += ExtraActiveTradePerDLC;
+   }
+   return result;
 }
 
 export function getBuyAmountRange(trade: IAddTradeRequest, range: number) {

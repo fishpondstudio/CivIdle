@@ -10,7 +10,7 @@ export function TextWithHelp({
    className,
    noStyle,
 }: React.PropsWithChildren<{
-   content: string | null | undefined;
+   content: React.ReactNode;
    placement?: Placement;
    className?: string;
    noStyle?: boolean;

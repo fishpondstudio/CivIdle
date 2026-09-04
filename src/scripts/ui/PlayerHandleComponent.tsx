@@ -1,4 +1,3 @@
-import { LazyTippy } from "./LazyTippy";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { Config } from "../../../shared/logic/Config";
@@ -13,7 +12,10 @@ import {
 import {
    AccountLevel,
    AccountLevelGreatPeopleLevel,
+   AccountLevelMaxActiveTrades,
+   AccountLevelMaxTariffRate,
    AccountLevelPlayTime,
+   AccountLevelTradePriceRange,
    TradeTileReservationDays,
    UserAttributes,
    UserColorsMapping,
@@ -24,6 +26,7 @@ import {
    cls,
    forEach,
    formatHM,
+   formatPercent,
    hasFlag,
    sizeOf,
    uuid4,
@@ -42,6 +45,7 @@ import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { ConfirmModal } from "./ConfirmModal";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { LazyTippy } from "./LazyTippy";
 import { MobileSupporterPackComponent } from "./MobileSupporterPackComponent";
 import { RenderHTML, html } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
@@ -267,14 +271,31 @@ function AccountDetails(): React.ReactNode {
                      </td>
                   </tr>
                   <tr>
-                     <td>{$t(L.AccountActiveTrade)}</td>
-                     <td>2</td>
-                     <td>4</td>
-                     <td>6</td>
-                     <td>8</td>
-                     <td>10</td>
-                     <td>10</td>
-                     <td>10</td>
+                     <td>
+                        <TextWithHelp
+                           content={
+                              <>
+                                 <div className="row g5">
+                                    <MiscTextureComponent name="Supporter" scale={0.15} />
+                                    <div>{$t(L.Plus2ActiveTradesForSupporter)}</div>
+                                 </div>
+                                 <div className="row g5">
+                                    <MiscTextureComponent name="Supporter2" scale={0.15} />
+                                    <div>{$t(L.Plus2ActiveTradesForKeeperOfOurServer)}</div>
+                                 </div>
+                              </>
+                           }
+                        >
+                           {$t(L.AccountActiveTrade)}
+                        </TextWithHelp>
+                     </td>
+                     <td>{AccountLevelMaxActiveTrades[AccountLevel.Tribune]}</td>
+                     <td>{AccountLevelMaxActiveTrades[AccountLevel.Quaestor]}</td>
+                     <td>{AccountLevelMaxActiveTrades[AccountLevel.Aedile]}</td>
+                     <td>{AccountLevelMaxActiveTrades[AccountLevel.Praetor]}</td>
+                     <td>{AccountLevelMaxActiveTrades[AccountLevel.Consul]}</td>
+                     <td>{AccountLevelMaxActiveTrades[AccountLevel.Caesar]}</td>
+                     <td>{AccountLevelMaxActiveTrades[AccountLevel.Augustus]}</td>
                   </tr>
                   <tr>
                      <td>{$t(L.AccountTradeValuePerMinute)}</td>
@@ -290,13 +311,23 @@ function AccountDetails(): React.ReactNode {
                   </tr>
                   <tr>
                      <td>{$t(L.AccountTradePriceRange)}</td>
-                     <td>5%</td>
-                     <td>10%</td>
-                     <td>15%</td>
-                     <td>20%</td>
-                     <td>25%</td>
-                     <td>25%</td>
-                     <td>25%</td>
+                     <td>{formatPercent(AccountLevelTradePriceRange[AccountLevel.Tribune])}</td>
+                     <td>{formatPercent(AccountLevelTradePriceRange[AccountLevel.Quaestor])}</td>
+                     <td>{formatPercent(AccountLevelTradePriceRange[AccountLevel.Aedile])}</td>
+                     <td>{formatPercent(AccountLevelTradePriceRange[AccountLevel.Praetor])}</td>
+                     <td>{formatPercent(AccountLevelTradePriceRange[AccountLevel.Consul])}</td>
+                     <td>{formatPercent(AccountLevelTradePriceRange[AccountLevel.Caesar])}</td>
+                     <td>{formatPercent(AccountLevelTradePriceRange[AccountLevel.Augustus])}</td>
+                  </tr>
+                  <tr>
+                     <td>{$t(L.MaxTariff)}</td>
+                     <td>{formatPercent(AccountLevelMaxTariffRate[AccountLevel.Tribune])}</td>
+                     <td>{formatPercent(AccountLevelMaxTariffRate[AccountLevel.Quaestor])}</td>
+                     <td>{formatPercent(AccountLevelMaxTariffRate[AccountLevel.Aedile])}</td>
+                     <td>{formatPercent(AccountLevelMaxTariffRate[AccountLevel.Praetor])}</td>
+                     <td>{formatPercent(AccountLevelMaxTariffRate[AccountLevel.Consul])}</td>
+                     <td>{formatPercent(AccountLevelMaxTariffRate[AccountLevel.Caesar])}</td>
+                     <td>{formatPercent(AccountLevelMaxTariffRate[AccountLevel.Augustus])}</td>
                   </tr>
                   <tr>
                      <td>

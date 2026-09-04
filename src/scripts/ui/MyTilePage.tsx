@@ -1,12 +1,12 @@
-import { LazyTippy } from "./LazyTippy";
 import { useState } from "react";
 import { Config } from "../../../shared/logic/Config";
+import { TRADE_TILE_ALLY_BONUS, TRADE_TILE_NEIGHBOR_BONUS } from "../../../shared/logic/Constants";
 import {
-   MAX_TARIFF_RATE,
-   TRADE_TILE_ALLY_BONUS,
-   TRADE_TILE_NEIGHBOR_BONUS,
-} from "../../../shared/logic/Constants";
-import { UserAttributes, UserColorsMapping } from "../../../shared/utilities/Database";
+   AccountLevel,
+   AccountLevelMaxTariffRate,
+   UserAttributes,
+   UserColorsMapping,
+} from "../../../shared/utilities/Database";
 import { cls, formatPercent, hasFlag, safeParseInt } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { AccountLevelNames } from "../logic/AccountLevel";
@@ -23,6 +23,7 @@ import { getCountryName } from "../utilities/CountryCode";
 import { jsxMMapOf } from "../utilities/Helper";
 import { refreshOnTypedEvent } from "../utilities/Hook";
 import { showToast } from "./GlobalModal";
+import { LazyTippy } from "./LazyTippy";
 import { MapTileBonusComponent } from "./MapTileBonusComponent";
 import { MenuComponent } from "./MenuComponent";
 import { PlayerHandleComponent } from "./PlayerHandleComponent";
@@ -55,7 +56,7 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                <input
                   type="range"
                   min={0}
-                  max={100 * 100 * MAX_TARIFF_RATE}
+                  max={100 * 100 * AccountLevelMaxTariffRate[user?.level ?? AccountLevel.Tribune]}
                   step="10"
                   value={tariffRate * 100 * 100}
                   onChange={(e) => {
