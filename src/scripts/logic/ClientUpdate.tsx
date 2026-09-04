@@ -25,6 +25,7 @@ import {
    calculateCurrentTick,
    freezeTickData,
 } from "../../../shared/logic/TickLogic";
+import { Planner } from "../../../shared/logic/TransportSourcePlanner";
 import {
    OnBuildingComplete,
    OnBuildingOrUpgradeComplete,
@@ -33,7 +34,6 @@ import {
    OnPriceUpdated,
    RequestChooseGreatPerson,
    RequestFloater,
-   clearTransportSourceCache,
    getSortedTiles,
    tickPower,
    tickPrice,
@@ -128,7 +128,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       TransportSourceCacheTimeoutMax,
    );
    if (currentSessionTick % options.transportSourceCacheTimeout === 0) {
-      clearTransportSourceCache();
+      Planner.clear();
    }
 
    forEach(gs.unlockedTech, (tech) => {
@@ -193,6 +193,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 
    tickPrice(gs);
    tickTransports(gs);
+   Planner.reset();
 
    const tiles = getSortedTiles(gs);
 

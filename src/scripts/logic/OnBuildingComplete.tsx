@@ -29,7 +29,8 @@ import {
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { makeBuilding, type IBuildingData } from "../../../shared/logic/Tile";
-import { clearTransportSourceCache, OnBuildingComplete } from "../../../shared/logic/Update";
+import { Planner } from "../../../shared/logic/TransportSourcePlanner";
+import { OnBuildingComplete } from "../../../shared/logic/Update";
 import {
    clamp,
    filterOf,
@@ -60,7 +61,7 @@ export function onBuildingComplete(xy: Tile): void {
       return;
    }
 
-   clearTransportSourceCache();
+   Planner.clear();
 
    const grid = getGrid(gs);
    switch (building.type) {

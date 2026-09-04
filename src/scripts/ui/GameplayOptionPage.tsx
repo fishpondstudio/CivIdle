@@ -21,7 +21,7 @@ import {
    STOCKPILE_MAX_MAX,
    STOCKPILE_MAX_MIN,
 } from "../../../shared/logic/Tile";
-import { clearTransportSourceCache } from "../../../shared/logic/Update";
+import { Planner } from "../../../shared/logic/TransportSourcePlanner";
 import {
    UserAttributes,
    type UserColors,
@@ -569,7 +569,7 @@ export function GameplayOptionPage(): React.ReactNode {
                   className="jcc w100 mt10"
                   onClick={() => {
                      playClick();
-                     clearTransportSourceCache();
+                     Planner.clear();
                   }}
                >
                   {$t(L.ClearTransportPlanCache)}

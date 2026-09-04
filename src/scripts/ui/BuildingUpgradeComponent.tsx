@@ -12,7 +12,7 @@ import { clearIntraTickCache, getGrid } from "../../../shared/logic/IntraTickCac
 import { RequestResetTile } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
-import { clearTransportSourceCache } from "../../../shared/logic/Update";
+import { Planner } from "../../../shared/logic/TransportSourcePlanner";
 import {
    formatNumber,
    keysOf,
@@ -303,7 +303,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                         RequestResetTile.emit(tile.tile);
                         RequestResetTile.emit(newTile.tile);
                         notifyGameStateUpdate();
-                        clearTransportSourceCache();
+                        Planner.clear();
                         clearIntraTickCache();
                         Singleton().sceneManager.getCurrent(WorldScene)?.selectGrid(point);
                      } else {

@@ -24,9 +24,9 @@ import {
    tileToPoint,
    type Tile,
 } from "../utilities/Helper";
+import { $t, L } from "../utilities/i18n";
 import { srand } from "../utilities/Random";
 import { TypedEvent } from "../utilities/TypedEvent";
-import { $t, L } from "../utilities/i18n";
 import {
    IOFlags,
    addTransportation,
@@ -101,6 +101,7 @@ import {
    type IWarehouseBuildingData,
 } from "./Tile";
 import { Transports, type ITransportationDataV2 } from "./Transports";
+import { Planner } from "./TransportSourcePlanner";
 
 export const OnPriceUpdated = new TypedEvent<GameState>();
 export const OnBuildingComplete = new TypedEvent<Tile>();
@@ -239,7 +240,7 @@ export function transportAndConsumeResources(
    const transportSourceCache = offline || getGameOptions().enableTransportSourceCache;
 
    if (!transportSourceCache) {
-      clearTransportSourceCache();
+      Planner.clearDistanceSources();
    }
 
    if (building.desiredLevel > building.level) {
@@ -820,12 +821,6 @@ export function hashTileAndRes(xy: Tile, res: Material): TileAndRes {
    return (tileToHash(xy) << 12) | Config.MaterialHash[res]!;
 }
 
-const _transportSourceCache = new Map<TileAndRes, Tile[]>();
-
-export function clearTransportSourceCache(): void {
-   _transportSourceCache.clear();
-}
-
 export function transportResource(
    res: Material,
    amount: number,
@@ -848,51 +843,24 @@ export function transportResource(
    if (!targetBuilding) {
       return amountLeft;
    }
-   // This cache needs to be cleared when:
-   // 1) Building has changed (add, remove and move)
-   // 2) [THIS IS NO LONGER TRUE] ~Building's max input distance has changed~
-   // Also, we can only cache Distance Input Mode. We cannot cache Warehouse (due to Managed Mode)
-   const cacheKey =
-      transportSourceCache && mode === BuildingInputMode.Distance && !("resourceImports" in targetBuilding)
-         ? hashTileAndRes(targetXy, res)
-         : null;
-
-   let sources: Tile[] | undefined;
-
-   if (sourcesOverride) {
-      sources = sourcesOverride;
-   }
-
-   if (!sources && cacheKey) {
-      sources = _transportSourceCache.get(cacheKey);
-   }
-
+   let sources = sourcesOverride;
    if (!sources) {
-      const candidates = Tick.current.resourcesByTile.get(res)?.slice() ?? [];
-      // We need to add all Warehouse/Caravansary here, because it is excluded from `resourcesByTile`
-      Tick.current.resourceImportBuildings.forEach((b, xy) => {
-         candidates.push({
-            tile: xy,
-            amount: b.building.resources[res] ?? 0,
-            usedStoragePercentage: b.usedStoragePercentage,
-         });
-      });
-
-      candidates.sort((point1, point2) => {
-         switch (mode) {
-            case BuildingInputMode.Distance:
-               return grid.distanceTile(point1.tile, targetXy) - grid.distanceTile(point2.tile, targetXy);
-            case BuildingInputMode.Amount:
-               return point2.amount - point1.amount;
-            case BuildingInputMode.StoragePercentage:
-               return point2.usedStoragePercentage - point1.usedStoragePercentage;
-         }
-      });
-
-      sources = candidates.map((s) => s.tile);
-
-      if (transportSourceCache && cacheKey && sources) {
-         _transportSourceCache.set(cacheKey, sources);
+      switch (mode) {
+         case BuildingInputMode.Distance:
+            // Distance plans can be cached across ticks for regular buildings. Resource import buildings
+            // are excluded because their managed import configuration can change dynamically.
+            sources = Planner.getDistanceSources(
+               targetXy,
+               res,
+               transportSourceCache && !("resourceImports" in targetBuilding),
+            );
+            break;
+         case BuildingInputMode.Amount:
+            sources = Planner.getAmountSources(res);
+            break;
+         case BuildingInputMode.StoragePercentage:
+            sources = Planner.getStoragePercentageSources(res);
+            break;
       }
    }
 

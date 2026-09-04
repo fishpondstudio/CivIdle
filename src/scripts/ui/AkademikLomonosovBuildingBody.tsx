@@ -2,7 +2,7 @@ import { useState } from "react";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { clearIntraTickCache } from "../../../shared/logic/IntraTickCache";
 import { RequestResetTile } from "../../../shared/logic/TechLogic";
-import { clearTransportSourceCache } from "../../../shared/logic/Update";
+import { Planner } from "../../../shared/logic/TransportSourcePlanner";
 import { pointToTile } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
@@ -49,7 +49,7 @@ export function AkademikLomonosovBuildingBody({ gameState, xy }: IBuildingCompon
                   RequestResetTile.emit(tile.tile);
                   RequestResetTile.emit(newTile.tile);
                   notifyGameStateUpdate();
-                  clearTransportSourceCache();
+                  Planner.clear();
                   clearIntraTickCache();
                   Singleton().sceneManager.getCurrent(WorldScene)?.selectGrid(point);
                } else {

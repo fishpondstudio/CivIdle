@@ -5,7 +5,7 @@ import { Config } from "../../../shared/logic/Config";
 import { GameStateFlags } from "../../../shared/logic/GameState";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getCitySize, getGrid } from "../../../shared/logic/IntraTickCache";
-import { clearTransportSourceCache } from "../../../shared/logic/Update";
+import { Planner } from "../../../shared/logic/TransportSourcePlanner";
 import { pointToTile, setFlag, tileToPoint } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
@@ -25,7 +25,7 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
    const demolishBuilding = useCallback(() => {
       delete tile!.building;
       Singleton().sceneManager.enqueue(WorldScene, (s) => s.resetTile(tile!.tile));
-      clearTransportSourceCache();
+      Planner.clear();
       gameState.flags = setFlag(gameState.flags, GameStateFlags.HasDemolishedBuilding);
       notifyGameStateUpdate();
    }, [tile, gameState]);
@@ -94,7 +94,7 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
                                        GameStateFlags.HasDemolishedBuilding,
                                     );
                                  }
-                                 clearTransportSourceCache();
+                                 Planner.clear();
                                  notifyGameStateUpdate();
                                  showToast($t(L.ApplyToBuildingsToastHTML, { count, building: def.name() }));
                               }}
