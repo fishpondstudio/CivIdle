@@ -2598,6 +2598,7 @@ export const WonderCostBase: Partial<Record<Building, number>> = {
    WorldTradeOrganization: 2,
    StatueOfZeus: 5,
    AbuSimbel: 2,
+   Colosseum: 2,
    GreatSphinx: 5,
    GreatWall: 5,
    SanchiStupa: 4,
