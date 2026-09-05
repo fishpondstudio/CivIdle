@@ -1,4 +1,3 @@
-import { LazyTippy } from "./LazyTippy";
 import { useState } from "react";
 import { Config } from "../../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC } from "../../../shared/logic/Constants";
@@ -50,6 +49,7 @@ import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { showToast } from "./GlobalModal";
 import { KeepersOfOurServerComponent } from "./KeepersOfOurServerComponent";
 import { LanguageSelect } from "./LanguageSelectComponent";
+import { LazyTippy } from "./LazyTippy";
 import { MenuComponent } from "./MenuComponent";
 import { html, RenderHTML } from "./RenderHTMLComponent";
 import { recoverFromServer } from "./SaveCorruptedPage";
@@ -485,6 +485,23 @@ export function GameplayOptionPage(): React.ReactNode {
                {options.soundEffect ? (
                   <>
                      <div className="separator" />
+                     <div className="row">
+                        <div className="f1">{$t(L.MuteWhenBackgrounded)}</div>
+                        <div
+                           onClick={() => {
+                              options.muteWhenBackgrounded = !options.muteWhenBackgrounded;
+                              playClick();
+                              notifyGameOptionsUpdate(options);
+                           }}
+                           className="ml10 pointer"
+                        >
+                           {options.muteWhenBackgrounded ? (
+                              <div className="m-icon text-green">toggle_on</div>
+                           ) : (
+                              <div className="m-icon text-grey">toggle_off</div>
+                           )}
+                        </div>
+                     </div>
                      <div className="row">
                         <div className="f1">{$t(L.TradeFillSound)}</div>
                         <div

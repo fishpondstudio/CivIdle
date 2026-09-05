@@ -309,6 +309,7 @@ export class GameOptions {
    rememberLastBuildRange = false;
    carryOverWatchedResources = false;
    carryOverWatchedTradeable = false;
+   muteWhenBackgrounded = false;
 }
 
 export type GameOptionServer = Pick<GameOptions, "ageWisdom" | "greatPeople">;

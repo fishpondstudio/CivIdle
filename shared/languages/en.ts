@@ -2090,4 +2090,5 @@ export const EN = {
    Plus2ActiveTradesForKeeperOfOurServer: "+2 Active Trades for Keeper of Our Server",
    MaxTariff: "Max Tariff",
    TradeTile: "Trade Tile",
+   MuteWhenBackgrounded: "Mute When Backgrounded",
 };

@@ -27,78 +27,88 @@ sound.add("upgrade", upgrade).singleInstance = true;
 sound.add("chime", chime).singleInstance = true;
 
 export function playClick() {
-   if (!getGameOptions().soundEffect) {
+   if (!shouldPlaySound()) {
       return;
    }
    sound.play("click");
 }
 
 export function playBeep() {
-   if (!getGameOptions().soundEffect) {
+   if (!shouldPlaySound()) {
       return;
    }
    sound.play("beep");
 }
 
 export function playError() {
-   if (!getGameOptions().soundEffect) {
+   if (!shouldPlaySound()) {
       return;
    }
    sound.play("error");
 }
 
 export function playKaching() {
-   if (!getGameOptions().soundEffect) {
+   if (!shouldPlaySound()) {
       return;
    }
    sound.play("kaching");
 }
 
 export function playAgeUp() {
-   if (!getGameOptions().soundEffect) {
+   if (!shouldPlaySound()) {
       return;
    }
    sound.play("ageup");
 }
 
 export function playLevelUp() {
-   if (!getGameOptions().soundEffect) {
+   if (!shouldPlaySound()) {
       return;
    }
    sound.play("levelup");
 }
 
 export function playBubble() {
-   if (!getGameOptions().soundEffect) {
+   if (!shouldPlaySound()) {
       return;
    }
    sound.play("bubble");
 }
 
 export function playDing() {
-   if (!getGameOptions().soundEffect) {
+   if (!shouldPlaySound()) {
       return;
    }
    sound.play("ding");
 }
 
 export function playUpgrade() {
-   if (!getGameOptions().soundEffect) {
+   if (!shouldPlaySound()) {
       return;
    }
    sound.play("upgrade");
 }
 
 export function playSuccess() {
-   if (!getGameOptions().soundEffect) {
+   if (!shouldPlaySound()) {
       return;
    }
    sound.play("success");
 }
 
 export function playChime() {
-   if (!getGameOptions().soundEffect) {
+   if (!shouldPlaySound()) {
       return;
    }
    sound.play("chime");
+}
+
+function shouldPlaySound(): boolean {
+   if (!getGameOptions().soundEffect) {
+      return false;
+   }
+   if (getGameOptions().muteWhenBackgrounded && document.visibilityState === "hidden") {
+      return false;
+   }
+   return true;
 }
