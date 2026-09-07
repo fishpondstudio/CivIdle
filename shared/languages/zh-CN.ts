@@ -309,8 +309,7 @@ export const ZH_CN = {
    CathedralOfBrasiliaWarningHTML: "为了形成生产链，一个建筑生产的资源除了一种资源外（只能一种资源产出没被✅），其他所有资源都需要被另一个建筑消耗。（奇观、旅馆、仓库、市集、克隆工厂和克隆实验室除外）",
    Census: "劳动者统计",
    CentrePompidou: "蓬皮杜国家艺术和文化中心",
-   CentrePompidouDesc:
-      "建造完成后，所有建筑获得 +1 生产乘数和 +2 存储乘数。每完成一个文明到达信息时代，重生后可使该奇观获得 +100% 效果（每个文明仅一次增强效果）。该奇观的价值不计入帝国的总价值中。该奇观的继承需满足以下全部条件：①当前到达信息时代 ②重生后的文明与本轮不同",
+   CentrePompidouDesc: "建造完成后，所有建筑获得 +1 生产乘数和 +2 存储乘数。每完成一个文明到达信息时代，重生后可使该奇观获得 +100% 效果（每个文明仅一次增强效果）。该奇观的价值不计入帝国的总价值中。该奇观的继承需满足以下全部条件：①当前到达信息时代 ②重生后的文明与本轮不同",
    CentrePompidouWarningHTML: "如果你重生在 <b>%{civ}</b> ，蓬皮杜国家艺术和文化中心将无法继承，",
    CerneAbbasGiant: "塞那阿巴斯巨人像",
    CerneAbbasGiantDesc: "当此奇观被发现后，每建造完成一个奇观时诞生一位当前时代的伟人",
@@ -2054,8 +2053,7 @@ export const ZH_CN = {
    YangtzeRiver: "长江",
    YangtzeRiverDesc: "当此奇观被发现后，所有消耗水的建筑，获得 +1 生产、劳动者能力以及存储乘数。郑和效果翻倍（此生伟人与永恒伟人的效果翻倍。时代智慧除外）；女皇武则天作为永恒伟人，其每级（永恒伟人等级）使长江为所有建筑提供 +1 存储乘数",
    Year: "年份",
-   YearOfTheSnakeDescV2: 
-      "建造完成后，进入一个新时代时，由每一个已解锁时代获取一位伟人改为获取相同数量的当前时代伟人。周围 2 地块范围内的所有建筑，获得 +1 生产乘数。该奇观可被升级，并且每一次额外升级为周围 2 地块范围内的所有建筑提供 +1 生产乘数。该奇观仅可在农历新年期间（2月1日至2月21日）建造",
+   YearOfTheSnakeDescV2: "建造完成后，进入一个新时代时，由每一个已解锁时代获取一位伟人改为获取相同数量的当前时代伟人。周围 2 地块范围内的所有建筑，获得 +1 生产乘数。该奇观可被升级，并且每一次额外升级为周围 2 地块范围内的所有建筑提供 +1 生产乘数。该奇观仅可在农历新年期间（2月1日至2月21日）建造",
    YearOfTheSnakeV2: "春节市集",
    YellowCraneTower: "黄鹤楼",
    YellowCraneTowerDescV2: "选择伟人时 +1 可选项。每一级为周围 2 地块范围内的所有建筑提供 +1 生产、劳动者能力以及存储乘数。当与长江相邻时，则黄鹤楼周围扩大 2 地块范围",
@@ -2075,4 +2073,10 @@ export const ZH_CN = {
    Zoroaster: "琐罗亚斯德",
    Zugspitze: "楚格峰",
    ZugspitzeDesc: "对于每个已解锁时代，获得一项等级点数。等级点数可被用于提升任意（本轮诞生的）此生伟人的额外等级（存储乘数效果和奇观伟人除外），可随时切换任意此生伟人",
+   MaxTariff: "Max Tariff",
+   MuteWhenBackgrounded: "Mute When Backgrounded",
+   Plus2ActiveTradesForKeeperOfOurServer: "+2 Active Trades for Keeper of Our Server",
+   Plus2ActiveTradesForSupporter: "+2 Active Trades for Supporter",
+   RestitutorEmpireRestoredEarlyAccess: "Restitutor: Empire Restored Early Access",
+   TradeTile: "Trade Tile",
 };

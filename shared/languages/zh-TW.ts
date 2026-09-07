@@ -2052,8 +2052,7 @@ export const ZH_TW = {
    YangtzeRiver: "長江",
    YangtzeRiverDesc: "所有消耗水的建築獲得 +1 生產、工人能力以及存儲乘數。鄭和(偉人)效果加倍。武則天(偉人)每升一級為所有建築提供+1儲存乘數。與黃鶴樓(奇觀)具搭配效果",
    Year: "年份",
-   YearOfTheSnakeDescV2: 
-      "建成後，當進入一個新時代時，將原本每個已解鎖時代獲得一位偉人，改為獲得相同數量的當代偉人。周圍 2 格範圍內的所有建築獲得 +1 的生產加成乘數。此世界奇觀可升級，每次額外升級會為周圍 2 格範圍內的所有建築再提供 +1 的生產加成乘數。此奇觀僅能在農曆新年期間（2月1日至2月21日）建造。",
+   YearOfTheSnakeDescV2: "建成後，當進入一個新時代時，將原本每個已解鎖時代獲得一位偉人，改為獲得相同數量的當代偉人。周圍 2 格範圍內的所有建築獲得 +1 的生產加成乘數。此世界奇觀可升級，每次額外升級會為周圍 2 格範圍內的所有建築再提供 +1 的生產加成乘數。此奇觀僅能在農曆新年期間（2月1日至2月21日）建造。",
    YearOfTheSnakeV2: "春節市集",
    YellowCraneTower: "黃鶴樓",
    YellowCraneTowerDescV2: "選擇偉人時 +1 可選項。每一級為周圍 2 地塊範圍內的所有建築提供 +1 生產、工人能力以及存儲乘數。當與長江相鄰時，則黃鶴樓周圍擴大 2 地塊範圍",
@@ -2073,4 +2072,10 @@ export const ZH_TW = {
    Zoroaster: "瑣羅亞斯德(查拉圖斯特拉)",
    Zugspitze: "祖格峰",
    ZugspitzeDesc: "每解鎖一個時代，獲得一個點數，可用於為本次運行中誕生的任何偉人提供一個額外等級（存儲乘數效果和奇觀偉人除外）",
+   MaxTariff: "Max Tariff",
+   MuteWhenBackgrounded: "Mute When Backgrounded",
+   Plus2ActiveTradesForKeeperOfOurServer: "+2 Active Trades for Keeper of Our Server",
+   Plus2ActiveTradesForSupporter: "+2 Active Trades for Supporter",
+   RestitutorEmpireRestoredEarlyAccess: "Restitutor: Empire Restored Early Access",
+   TradeTile: "Trade Tile",
 };
