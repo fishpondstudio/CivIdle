@@ -1,13 +1,17 @@
-import { LazyTippy } from "./LazyTippy";
-import { useState } from "react";
+import { memo, useState } from "react";
 import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import { isRestitutorReleaseWindow } from "../../../shared/definitions/TimedBuildingUnlock";
 import { Config } from "../../../shared/logic/Config";
+import { RESTITUTOR_STEAM_URL } from "../../../shared/logic/Constants";
 import { cls, keysOf } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
+import RestitutorIcon from "../../images/RestitutorIcon.png";
 import { useBirthdays } from "../rpc/RPCClient";
 import { getColorCached } from "../utilities/CachedColor";
+import { openUrl } from "../utilities/Platform";
 import "./GameCalendarModal.css";
 import { hideModal, showModal } from "./GlobalModal";
+import { LazyTippy } from "./LazyTippy";
 import { MiscTextureComponent } from "./TextureSprites";
 
 export function GameCalendarModal(): React.ReactNode {
@@ -72,6 +76,9 @@ export function GameCalendarModal(): React.ReactNode {
                      month.getMonth() === today.getMonth() &&
                      month.getFullYear() === today.getFullYear();
 
+                  const restitutor = isRestitutorReleaseWindow(
+                     new Date(month.getFullYear(), month.getMonth(), day),
+                  );
                   return (
                      <div
                         className={cls(
@@ -88,6 +95,7 @@ export function GameCalendarModal(): React.ReactNode {
                                  {day}
                               </div>
                               <div className="col">
+                                 {restitutor && <RestitutorComponent />}
                                  {birthdays.get(day)?.map((greatPerson) => {
                                     const def = Config.GreatPerson[greatPerson];
                                     return (
@@ -191,5 +199,42 @@ function getBirthdaysByDay(month: number): Map<number, GreatPerson[]> {
 function getWeekdayNames(): string[] {
    return Array.from({ length: 7 }, (_, index) =>
       new Date(2021, 7, index + 1).toLocaleDateString(undefined, { weekday: "short" }),
+   );
+}
+
+const RestitutorComponent = memo(_RestitutorComponent);
+function _RestitutorComponent(): React.ReactNode {
+   return (
+      <LazyTippy
+         content={
+            <>
+               <div className="text-strong">{$t(L.RestitutorEmpireRestoredEarlyAccess)}</div>
+               <div>{$t(L.SpecialDayEffectDesc)}</div>
+            </>
+         }
+      >
+         <div
+            className="birthday-calendar-person birthday-calendar-player mb2 nowrap pointer"
+            style={{
+               backgroundColor: "#AF893F",
+               color: "#fff",
+               textShadow: "0 0 5px rgba(0, 0, 0, 0.5)",
+            }}
+            onClick={() => openUrl(RESTITUTOR_STEAM_URL)}
+         >
+            <div className="birthday-calendar-player-icon">
+               <img
+                  src={RestitutorIcon}
+                  style={{
+                     width: 17,
+                     height: 17,
+                     display: "block",
+                     borderRadius: "20%",
+                  }}
+               />
+            </div>
+            <div>{$t(L.RestitutorEmpireRestoredEarlyAccess)}</div>
+         </div>
+      </LazyTippy>
    );
 }
