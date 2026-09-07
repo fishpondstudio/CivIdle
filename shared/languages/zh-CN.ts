@@ -1737,7 +1737,7 @@ export const ZH_CN = {
    Supercomputer: "Civ超级计算机",
    SupercomputerLab: "超算研究室",
    Superintelligence: "技术奇点",
-   SuperintelligenceDescV3: "建造该奇观后，可花费 38.75 Qa 科学研究技术奇点使重生后的文明获得 3.875 Qa 科学（足以解锁所有科技）",
+   SuperintelligenceDescV3: "建造该奇观后，可花费 38.75 Qa 科学研究技术奇点使重生后的文明获得 3.875 Qa 科学（足以解锁所有科技，激活后重生后的文明将无法获得未来相关成就）",
    SuperintelligenceRebirthWarning: "您已建造 <b>技术奇点</b> 尚未研究<b>激活技术奇点</b>——重生后的文明将无法获得 <b>3.875 Qa</b> 科学",
    SupporterPack: "支持者包",
    SupporterPackOptions: "支持者权益",
