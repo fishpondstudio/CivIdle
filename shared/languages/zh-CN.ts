@@ -1048,7 +1048,7 @@ export const ZH_CN = {
    MausoleumAtHalicarnassusDescV2: "周围 2 地块范围内所有建筑，对于范围内建筑 “输出” 与 “输入” 的资源调用，运输资源不需要劳动者",
    MaxExplorers: "最大探险家数量",
    MaxOfflineProductionTimeDesc: "最大离线生产时间为 %{time} 。把超出最大离线生产时间的离线时间全部转化为扭曲时间（ 1 秒= 1 扭曲时间）",
-   MaxTariff: "最大税收",
+   MaxTariff: "最大关税",
    MaxTransportDistance: "最大输入距离",
    Meat: "肉",
    MedinaOfTunis: "突尼斯—麦地那",
