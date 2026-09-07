@@ -1,4 +1,3 @@
-import { LazyTippy } from "./LazyTippy";
 import { useState } from "react";
 import { NoPrice, NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
@@ -29,6 +28,7 @@ import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { playClick, playError, playKaching } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { LazyTippy } from "./LazyTippy";
 
 const INPUT_WIDTH = 100;
 
@@ -92,12 +92,44 @@ export function AddTradeFormComponent({
 
    return (
       <>
-         <div className="text-strong mb5">{$t(L.LockTradeProfit)}</div>
+         <div className="text-strong mb5 row g10">
+            <div className="f1">{$t(L.LockTradeProfit)}</div>
+            {targetPercentage !== null && (
+               <>
+                  <div>{formatPercent(targetPercentage)}</div>
+                  <button style={{ padding: "0 5px" }} onClick={() => setTargetPercentage(null)}>
+                     <div className="m-icon small">refresh</div>
+                  </button>
+               </>
+            )}
+         </div>
+         {targetPercentage !== null && (
+            <input
+               style={{ marginBottom: "10px" }}
+               type="range"
+               min={-percentage}
+               max={percentage}
+               step={0.001}
+               value={targetPercentage}
+               onChange={(e) => {
+                  const pct = Number(e.target.value);
+                  setTargetPercentage(pct);
+                  if (trade.buyAmount !== 0) {
+                     setTrade(updateTradeAmount({ ...trade }, "sellAmount", pct));
+                  } else {
+                     setTrade(updateTradeAmount({ ...trade }, "buyAmount", pct));
+                  }
+               }}
+            />
+         )}
          <div className="row">
             {[-percentage, -percentage / 2, 0, percentage / 2, percentage].map((pct) => {
                return (
                   <button
-                     className={cls("f1", targetPercentage === pct ? "active text-strong" : null)}
+                     className={cls(
+                        pct === 0 ? "f2" : "f1",
+                        targetPercentage === pct ? "active text-strong" : null,
+                     )}
                      key={pct}
                      onClick={() => {
                         if (targetPercentage === pct) {

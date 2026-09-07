@@ -414,6 +414,10 @@ fieldset .separator {
    flex: 1;
 }
 
+.f2 {
+   flex: 2;
+}
+
 .row .fs {
    align-self: flex-start;
 }
