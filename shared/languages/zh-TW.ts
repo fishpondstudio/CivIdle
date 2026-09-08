@@ -1870,7 +1870,7 @@ export const ZH_TW = {
    TransportCapacity: "運送能力",
    TransportCapacityMultiplier: "運送能力乘數",
    TransportManualControlTooltip: "運送這種資源用於建造/升級。",
-   TransportPlanCache: "運輸計劃快取（僅輸入偏好為距離的建築生效）",
+   TransportPlanCache: "運輸計劃快取",
    TransportPlanCacheDescHTML: "每個週期中，每個建築物都會根據其設置計算最佳運輸計劃——此過程需要高 CPU 功率。啟用此功能將嘗試快取運輸計劃的結果（如果其仍然有效），從而降低 CPU 使用率和幀率下降。<b>實驗性功能</b>",
    TransportPlanCacheTimeout: "運輸方案緩存失效自動清除",
    TransportPlanCacheTimeoutDescHTML: "有時運輸方案緩存可能會變得過時，這將強制在指定的秒數後清除緩存。<b>必須在 %{min} 和 %{max} 秒之間</b>",
