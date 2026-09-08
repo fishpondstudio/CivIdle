@@ -1871,7 +1871,7 @@ export const ZH_CN = {
    TransportCapacity: "运输能力",
    TransportCapacityMultiplier: "运输能力乘数（减少运输所需劳动者）",
    TransportManualControlTooltip: "运输此资源以建造/升级",
-   TransportPlanCache: "运输方案缓存（仅输入倾向为距离的建筑生效）",
+   TransportPlanCache: "运输方案缓存",
    TransportPlanCacheDescHTML: "每个周期，每座建筑基于其设定计算最佳运输方案——此进程对 CPU 能力需求较高。开启此项，将尝试缓存运输方案，如果已缓存的运输方案仍然有效，则可达到减少 CPU 使用率与帧率下降的效果。<b>【实验性功能】</b>",
    TransportPlanCacheTimeout: "运输方案缓存失效自动清除",
    TransportPlanCacheTimeoutDescHTML: "有时运输方案缓存可能会变得过时，这将强制在指定的秒数后清除缓存。<b>必须在 %{min} 和 %{max} 秒之间</b>",
