@@ -92,7 +92,6 @@ function showPurchaseModal(): void {
 export async function purchaseSupporterPack() {
    const product = CdvPurchase.store.get(ProductId);
    if (product) {
-      console.log(product.owned);
       try {
          await product.getOffer()?.order();
       } catch (error) {
