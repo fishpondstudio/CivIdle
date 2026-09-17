@@ -17,7 +17,7 @@ export function ChangePlayerHandleModal(): React.ReactNode {
    const [flag, setFlag] = useState(user.flag);
    const name = getCountryName(flag);
    return (
-      <div className="window">
+      <div className="window modal-window">
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.PlayerHandle)}</div>
             <div className="title-bar-controls">
@@ -36,12 +36,12 @@ export function ChangePlayerHandleModal(): React.ReactNode {
                      onChange={(e) => setHandle(e.target.value)}
                   />
                </div>
-               <PlayerFlagComponent style={{ marginLeft: 5 }} name={flag} />
+               <PlayerFlagComponent style={{ marginLeft: "0.5rem" }} name={flag} />
             </div>
             <div className="sep10"></div>
             <div
                className="inset-deep-2 white"
-               style={{ padding: "10px", height: "200px", overflowY: "auto" }}
+               style={{ padding: "1rem", height: "20rem", overflowY: "auto" }}
             >
                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
                   {jsxMapOf(CountryCode, (c, v) => {
@@ -56,7 +56,7 @@ export function ChangePlayerHandleModal(): React.ReactNode {
                </div>
             </div>
             <div className="sep15"></div>
-            <div className="row" style={{ justifyContent: "flex-end" }}>
+            <div className="row modal-actions" style={{ justifyContent: "flex-end" }}>
                <button
                   disabled={handle === user.handle && flag === user.flag}
                   onClick={async () => {
@@ -74,7 +74,6 @@ export function ChangePlayerHandleModal(): React.ReactNode {
                >
                   {$t(L.ChangePlayerHandle)}
                </button>
-               <div style={{ width: "10px" }}></div>
                <button onClick={hideModal}>{$t(L.ChangePlayerHandleCancel)}</button>
             </div>
          </div>

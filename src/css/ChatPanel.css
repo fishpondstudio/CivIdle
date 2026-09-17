@@ -33,16 +33,16 @@
    text-overflow: ellipsis;
    flex: 1;
    width: 32rem;
-   padding: 0 5px 0 0;
+   padding: 0 0.5rem 0 0;
 }
 
 #chat-panel .chat-message-item {
-   padding: 6px 8px;
+   padding: 0.6rem 0.8rem;
 }
 
 #chat-panel .chat-message-item .show-on-hover {
-   font-size: 15px;
-   margin-right: 5px;
+   font-size: 1.5rem;
+   margin-right: 0.5rem;
    cursor: pointer;
    display: none;
 }
@@ -60,22 +60,22 @@
 
 #chat-panel .chat-message-private {
    text-transform: uppercase;
-   font-size: 12px;
+   font-size: 1.2rem;
    font-weight: bold;
    color: #ffb142;
 }
 
 #chat-panel .chat-message-private .m-icon {
-   font-size: 15px;
+   font-size: 1.5rem;
 }
 
 #chat-panel .chat-message-item .chat-image {
    width: 100%;
-   max-height: 200px;
+   max-height: 20rem;
    object-fit: cover;
    display: block;
-   margin: 5px 0;
-   border-radius: 5px;
+   margin: 0.5rem 0;
+   border-radius: 0.5rem;
 }
 
 #chat-panel .chat-message-item.is-even {
@@ -90,20 +90,20 @@
 #chat-panel .language-switch {
    background: #00289e;
    color: #fff;
-   height: 19px;
-   width: 19px;
-   line-height: 19px;
+   height: 1.9rem;
+   width: 1.9rem;
+   line-height: 1.9rem;
    text-align: center;
-   margin: 0 2px 0 0;
+   margin: 0 0.2rem 0 0;
 }
 
 #chat-panel .chat-channel {
    background: #999;
    color: #fff;
    text-transform: uppercase;
-   padding: 0 2px;
-   margin: 0 0 0 2px;
-   border-radius: 2px;
+   padding: 0 0.2rem;
+   margin: 0 0 0 0.2rem;
+   border-radius: 0.2rem;
 }
 
 #chat-panel input.is-chat-command {

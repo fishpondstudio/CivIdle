@@ -39,7 +39,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                   }
                   return (
                      <div key={gp} className="row mb5">
-                        <GreatPersonImage greatPerson={gp} style={{ height: "50px", display: "block" }} />
+                        <GreatPersonImage greatPerson={gp} style={{ height: "5rem", display: "block" }} />
                         <div className="ml10">
                            <div>
                               <span className="text-strong">{def.name()}</span>
@@ -112,7 +112,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                               <td style={{ width: 0 }}>
                                  <GreatPersonImage
                                     greatPerson={k}
-                                    style={{ height: "50px", display: "block" }}
+                                    style={{ height: "5rem", display: "block" }}
                                  />
                               </td>
                               <td>

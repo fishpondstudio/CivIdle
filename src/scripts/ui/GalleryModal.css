@@ -1,12 +1,51 @@
 .gallery-modal {
-   --grid-size: min(calc((100vh - 60px) / 20), 30px);
+   /* The grid and every draggable painting share this length. Collision detection
+      continues to use the library's measured DOM rectangles in CSS pixels. */
+   --grid-size: max(
+      0.5rem,
+      min(3rem, calc((var(--modal-max-height) - 6rem) / 20), calc((var(--modal-max-width) - 2.2rem) / 20))
+   );
    --grid-height: calc(var(--grid-size) * 20);
-   overflow: hidden;
+}
+
+.gallery-layout {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 0.8rem;
+}
+
+.gallery-grid {
+   position: relative;
+   flex: none;
+   width: var(--grid-height);
+   height: var(--grid-height);
+}
+
+.gallery-sidebar {
+   display: flex;
+   flex-direction: column;
+   flex: 1 1 30rem;
+   min-width: 0;
+   height: max(30rem, var(--grid-height));
+}
+
+.gallery-sidebar .gallery-effects {
+   flex: 1;
+   min-height: 6rem;
+   overflow: auto;
+   margin-bottom: 0.8rem;
+}
+
+.gallery-pending {
+   flex: 3;
+   min-height: 0;
+   overflow: auto;
+   padding: 0.2rem;
 }
 
 .gallery-modal .grid-item {
-   margin: 1px;
-   border-radius: 2px;
+   margin: 0.1rem;
+   border-radius: 0.2rem;
    overflow: hidden;
    aspect-ratio: 1 / 1;
    border: 1px solid #999;

@@ -58,7 +58,7 @@ function _BuildingWikipediaComponent({ gameState, xy }: IBuildingComponentProps)
          <RestitutorComponent />
          <iframe
             ref={iframeEl}
-            style={{ width: "100%", height: "400px", background: "#fff", marginBottom: "10px" }}
+            style={{ width: "100%", height: "40rem", background: "#fff", marginBottom: "1rem" }}
          />
       </>
    );

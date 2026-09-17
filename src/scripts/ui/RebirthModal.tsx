@@ -72,12 +72,12 @@ export function RebirthModal(): React.ReactNode {
    const uniqueEffects = Config.City[nextCity].uniqueEffects();
    const citySize = Config.City[nextCity].size;
    return (
-      <div className="window" style={{ width: "700px" }}>
+      <div className="window modal-window" style={{ width: "70rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.Reborn)}</div>
          </div>
-         <div className="window-body">
-            <div style={{ maxHeight: "75vh", overflowY: "auto", margin: "-8px -8px 0 -8px", padding: 10 }}>
+         <div className="window-body col" style={{ overflow: "hidden" }}>
+            <div style={{ minHeight: 0, overflow: "auto", margin: "-0.8rem -0.8rem 0", padding: "1rem" }}>
                {options.rebirthInfo.length <= 0 ? (
                   <WarningComponent icon="info" className="mb10 text-small">
                      <RenderHTML html={$t(L.RebornModalDescV3)} />
@@ -147,7 +147,7 @@ export function RebirthModal(): React.ReactNode {
                            ))}
                         </select>
                      </div>
-                     <div className="separator-vertical" style={{ height: 30, margin: "-5px 20px" }} />
+                     <div className="separator-vertical" style={{ height: "3rem", margin: "-0.5rem 2rem" }} />
                      <div className="f1 row">
                         <div className="f1">{$t(L.SelectCivilization)}</div>
                         <select
@@ -190,7 +190,10 @@ export function RebirthModal(): React.ReactNode {
                      </div>
                      {Config.City[nextCity].requireSupporterPack ? (
                         <>
-                           <div className="separator-vertical" style={{ height: 30, margin: "-5px 20px" }} />
+                           <div
+                              className="separator-vertical"
+                              style={{ height: "3rem", margin: "-0.5rem 2rem" }}
+                           />
                            <LazyTippy content={$t(L.SupporterPackRequiredTooltip)}>
                               <div
                                  className="row f1 pointer"
@@ -232,7 +235,7 @@ export function RebirthModal(): React.ReactNode {
                </div>
                <div
                   className="inset-shallow white p5"
-                  style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "5px 20px" }}
+                  style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem 2rem" }}
                >
                   {mapOf(Config.City[nextCity].deposits, (dep, value) => {
                      return (
@@ -240,7 +243,7 @@ export function RebirthModal(): React.ReactNode {
                            <DepositTextureComponent
                               deposit={dep}
                               scale={0.25}
-                              style={{ filter: "invert(0.75)", margin: "0 10px 0 0" }}
+                              style={{ filter: "invert(0.75)", margin: "0 1rem 0 0" }}
                            />
                            <div className="f1">{Config.Material[dep].name()}</div>
                            <div className="text-strong">{formatPercent(value)}</div>
@@ -275,7 +278,7 @@ export function RebirthModal(): React.ReactNode {
                            className="row p5"
                            style={{ backgroundColor: i % 2 === 0 ? "#efefef" : "#fff" }}
                         >
-                           <div className="cc mr10" style={{ width: 50, height: 50 }}>
+                           <div className="cc mr10" style={{ width: "5rem", height: "5rem", flexShrink: 0 }}>
                               <BuildingSpriteComponent
                                  building={building}
                                  scale={0.5}
@@ -302,7 +305,7 @@ export function RebirthModal(): React.ReactNode {
                            className="row p5"
                            style={{ backgroundColor: i % 2 === 0 ? "#fff" : "#efefef" }}
                         >
-                           <div className="cc mr10" style={{ width: 50, height: 50 }}>
+                           <div className="cc mr10" style={{ width: "5rem", height: "5rem", flexShrink: 0 }}>
                               <BuildingSpriteComponent
                                  building={building}
                                  scale={0.5}
@@ -351,7 +354,7 @@ export function RebirthModal(): React.ReactNode {
                            >
                               <GreatPersonImage
                                  greatPerson={person}
-                                 style={{ height: 50, margin: "0 10px 0 0" }}
+                                 style={{ height: "5rem", margin: "0 1rem 0 0" }}
                               />
                               <div className="f1">
                                  <div className="row">
@@ -367,7 +370,7 @@ export function RebirthModal(): React.ReactNode {
                <div className="text-strong mt5 mb5">{$t(L.Festival)}</div>
                <div className="inset-shallow white">
                   <div className="row p5">
-                     <div className="cc mr10" style={{ width: 50, height: 50 }}>
+                     <div className="cc mr10" style={{ width: "5rem", height: "5rem", flexShrink: 0 }}>
                         <BuildingSpriteComponent
                            building={`Headquarter_${nextCity}` as any}
                            scale={0.5}
@@ -378,10 +381,10 @@ export function RebirthModal(): React.ReactNode {
                   </div>
                </div>
             </div>
-            <div className="separator" style={{ margin: "0 -8px 8px -8px" }} />
-            <div className="text-right row" style={{ justifyContent: "flex-end" }}>
+            <div className="separator" style={{ margin: "0 -0.8rem 0.8rem", flexShrink: 0 }} />
+            <div className="text-right row modal-actions" style={{ justifyContent: "flex-end" }}>
                <button
-                  style={{ padding: "0 15px" }}
+                  style={{ padding: "0 1.5rem" }}
                   onClick={() => {
                      playClick();
                      hideModal();
@@ -389,13 +392,12 @@ export function RebirthModal(): React.ReactNode {
                >
                   {$t(L.Cancel)}
                </button>
-               <div style={{ width: "6px" }} />
                <button
                   disabled={
                      permanentGreatPeopleLevel < Config.City[nextCity].requireGreatPeopleLevel ||
                      !hasSupporterPack()
                   }
-                  style={{ padding: "0 15px" }}
+                  style={{ padding: "0 1.5rem" }}
                   className="text-strong"
                   onClick={() => showModal(<RebirthConfirm nextCity={nextCity} pickPerRoll={pickPerRoll} />)}
                >

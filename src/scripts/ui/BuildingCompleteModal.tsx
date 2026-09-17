@@ -17,33 +17,29 @@ export function BuildingCompleteModal({ building }: { building: Building }): Rea
    const isNatural = isNaturalWonder(building);
    const options = getGameOptions();
    return (
-      <div className="window" style={{ width: "500px", maxWidth: "50vw" }}>
+      <div className="window modal-window" style={{ width: "50rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{def.name()}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
          </div>
-         <LazyTippy
-            content={
-               isNatural
-                  ? "The Grand Canyon of the Yellowstone, Thomas Moran, 1872"
-                  : "Octo Mundi Miracula, Maarten van Heemskerck & Philip Galle, 1572"
-            }
-         >
-            <img
-               src={isNatural ? NaturalWonders : WorldWonders}
-               className="w100"
-               style={{ display: "block" }}
-            />
-         </LazyTippy>
-         <div className="window-body" style={{ overflowY: "auto", maxHeight: "75vh" }}>
+         <div className="window-body">
+            <LazyTippy
+               content={
+                  isNatural
+                     ? "The Grand Canyon of the Yellowstone, Thomas Moran, 1872"
+                     : "Octo Mundi Miracula, Maarten van Heemskerck & Philip Galle, 1572"
+               }
+            >
+               <img src={isNatural ? NaturalWonders : WorldWonders} className="modal-hero" />
+            </LazyTippy>
             <div className="inset-shallow white row g10 p10">
                <div>
                   <BuildingSpriteComponent building={building} style={{ filter: "invert(0.75)" }} />
                </div>
                <div>
-                  <div className="f1" style={{ fontFamily: Fonts.OldTypefaces, fontSize: 24 }}>
+                  <div className="f1" style={{ fontFamily: Fonts.OldTypefaces, fontSize: "2.4rem" }}>
                      {def.name()}
                   </div>
                   <div>{def.desc?.()}</div>

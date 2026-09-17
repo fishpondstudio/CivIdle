@@ -1,8 +1,8 @@
 @import "xp.css/dist/98.css";
-@import "Modern.css";
 @import "UIExtension.css";
 @import "ChatPanel.css";
 @import "ResourcePanel.css";
+@import "Modern.css";
 
 :root {
    --game-ui-width: 45rem;
@@ -68,15 +68,15 @@ body {
 
 #debug-ui .window {
    position: absolute;
-   width: 350px;
-   left: 10px;
-   top: 50px;
+   width: 35rem;
+   left: 1rem;
+   top: 5rem;
 }
 
 #debug-ui .window .table-view {
    overflow-x: hidden;
    overflow-y: auto;
-   height: 400px;
+   height: 40rem;
 }
 
 #game-canvas {
@@ -95,13 +95,17 @@ body {
 
 #game-ui .window .window-body,
 #global-modal .window .window-body {
-   padding: 8px;
+   padding: 0.8rem;
    margin: 0;
    overflow-x: hidden;
    overflow-y: auto;
 }
 
 #global-modal.overlay {
+   --modal-max-width: calc(100vw - 2rem - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+   --modal-max-height: calc(100vh - 2rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+   padding: calc(1rem + env(safe-area-inset-top, 0px)) calc(1rem + env(safe-area-inset-right, 0px))
+      calc(1rem + env(safe-area-inset-bottom, 0px)) calc(1rem + env(safe-area-inset-left, 0px));
    position: absolute;
    left: 0;
    right: 0;
@@ -116,7 +120,58 @@ body {
 
 #global-modal .window {
    margin: 0 auto;
-   width: 350px;
+   width: 35rem;
+}
+
+@supports (height: 100dvh) {
+   #global-modal.overlay {
+      --modal-max-height: calc(100dvh - 2rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+   }
+}
+
+/* Opt in standard dialogs; graph, gallery and chart layouts retain their own sizing. */
+#global-modal .modal-window {
+   display: flex;
+   flex-direction: column;
+   min-width: 0;
+   min-height: 0;
+   max-width: var(--modal-max-width);
+   max-height: var(--modal-max-height);
+}
+
+#global-modal .modal-window > .title-bar {
+   flex-shrink: 0;
+}
+
+#global-modal .modal-window > .window-body {
+   min-width: 0;
+   min-height: 0;
+   overflow: auto;
+}
+
+#global-modal .modal-window .row > .f1 {
+   min-width: 0;
+}
+
+#global-modal .modal-window .title-bar-text {
+   min-width: 0;
+   overflow-wrap: anywhere;
+}
+
+#global-modal .modal-window .title-bar-controls {
+   flex-shrink: 0;
+}
+
+#global-modal .modal-window .modal-hero {
+   display: block;
+   width: calc(100% + 1.6rem);
+   margin: -0.8rem -0.8rem 0.8rem;
+}
+
+#global-modal .modal-window .modal-actions {
+   flex-shrink: 0;
+   flex-wrap: wrap;
+   gap: 0.6rem;
 }
 
 #global-toast {
@@ -135,13 +190,13 @@ body {
    max-width: 50vw;
    max-height: 25vh;
    overflow-y: auto;
-   margin-right: 20px;
+   margin-right: 2rem;
 }
 
 #global-toast .toast .close-button {
    position: absolute;
-   top: 5px;
-   right: 5px;
+   top: 0.5rem;
+   right: 0.5rem;
 }
 
 #global-toast .toast.command {
@@ -207,9 +262,10 @@ body .tippy-box {
 
 .todo {
    background-image: url("../images/Notepad.png");
-   width: 40px;
-   height: 40px;
-   padding: 5px 4px 3px 0;
+   width: 4rem;
+   height: 4rem;
+   background-size: 100% 100%;
+   padding: 0.5rem 0.4rem 0.3rem 0;
    display: flex;
    align-items: center;
    justify-content: center;
@@ -222,8 +278,8 @@ body .tippy-box {
 
 .todo .count {
    position: absolute;
-   top: 4px;
-   right: 5px;
+   top: 0.4rem;
+   right: 0.5rem;
    display: block;
    background: rgba(255, 255, 255, 0.75);
    font-size: 1.2rem;
@@ -236,9 +292,9 @@ body .tippy-box {
 
 @keyframes glow {
    0% {
-      text-shadow: 0 0 10px currentColor;
+      text-shadow: 0 0 1rem currentColor;
    }
    100% {
-      text-shadow: 0 0 20px currentColor;
+      text-shadow: 0 0 2rem currentColor;
    }
 }

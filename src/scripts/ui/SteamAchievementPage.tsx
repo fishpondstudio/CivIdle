@@ -33,7 +33,7 @@ export function SteamAchievementPage(): React.ReactNode {
                   })
                }
             >
-               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+               <div className="m-icon" style={{ margin: "0 0.5rem 0 -0.5rem", fontSize: "1.8rem" }}>
                   arrow_back
                </div>
                <div className="f1">{$t(L.GoBack)}</div>
@@ -43,7 +43,7 @@ export function SteamAchievementPage(): React.ReactNode {
                return (
                   <div key={key} className="inset-shallow white row p10 mb10">
                      <img
-                        style={{ width: "50px", margin: "0 10px 0 0" }}
+                        style={{ width: "5rem", margin: "0 1rem 0 0" }}
                         src={hasAchieved ? achievement.icon : achievement.iconDisabled}
                      />
                      <div className="f1">

@@ -11,13 +11,13 @@ export function PlotComponent({
    const element = useRef<HTMLDivElement>(null);
    const plot = useRef<uPlot | null>(null);
 
-   // biome-ignore lint/correctness/useExhaustiveDependencies: Perf
    useLayoutEffect(() => {
-      if (!element.current) return;
-      plot.current = new uPlot(
+      const container = element.current;
+      if (!container) return;
+      const instance = new uPlot(
          {
-            width: 0,
-            height: 50,
+            width: Math.max(1, container.clientWidth),
+            height: Math.max(1, container.clientHeight),
             pxAlign: false,
             cursor: {
                show: false,
@@ -48,18 +48,37 @@ export function PlotComponent({
             series: [{}, series],
          },
          [],
-         element.current,
+         container,
       );
-
+      plot.current = instance;
+      let frame = 0;
+      const observer = new ResizeObserver(([entry]) => {
+         cancelAnimationFrame(frame);
+         frame = requestAnimationFrame(() => {
+            const width = Math.floor(entry.contentRect.width);
+            const height = Math.floor(entry.contentRect.height);
+            if (width > 0 && height > 0) instance.setSize({ width, height });
+         });
+      });
+      observer.observe(container);
       return () => {
-         plot.current?.destroy();
+         observer.disconnect();
+         cancelAnimationFrame(frame);
+         instance.destroy();
+         plot.current = null;
       };
-   }, []);
-   plot.current?.setData(data);
-   plot.current?.setSize({ height: 50, width: element.current?.clientWidth ?? 0 });
+   }, [series]);
+   // biome-ignore lint/correctness/useExhaustiveDependencies: A series change recreates the plot, so reapply its data.
+   useLayoutEffect(() => {
+      plot.current?.setData(data);
+   }, [data, series]);
    return (
       <div>
-         <div className="inset-shallow white" ref={element}></div>
+         <div
+            className="inset-shallow white"
+            ref={element}
+            style={{ height: "calc(5rem + 2px)", minWidth: 0, overflow: "hidden" }}
+         ></div>
          <div className="row f1 text-desc text-small mt5">
             <div>
                <FormatNumber value={data[1][0]} />

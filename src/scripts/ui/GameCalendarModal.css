@@ -1,8 +1,6 @@
 #global-modal .birthday-calendar-window {
-   width: 800px;
-   max-width: 90vw;
-   height: 700px;
-   max-height: 90vh;
+   width: 80rem;
+   height: 70rem;
 }
 
 .birthday-calendar {
@@ -13,8 +11,8 @@
 .birthday-calendar-grid {
    display: grid;
    grid-template-columns: repeat(7, minmax(0, 1fr));
-   grid-template-rows: auto repeat(6, minmax(0, 1fr));
-   min-height: 0;
+   grid-template-rows: auto repeat(6, minmax(5rem, 1fr));
+   min-height: 33rem;
    border-top: 1px solid #808080;
    border-left: 1px solid #808080;
 }
@@ -26,7 +24,7 @@
 }
 
 .birthday-calendar-weekday {
-   padding: 5px 2px;
+   padding: 0.5rem 0.2rem;
 }
 
 .birthday-calendar-day {
@@ -49,14 +47,14 @@
 .birthday-calendar-person {
    min-width: 0;
    overflow: hidden;
-   padding: 2px 5px;
-   border-radius: 4px;
+   padding: 0.2rem 0.5rem;
+   border-radius: 0.4rem;
    text-overflow: ellipsis;
    color: #333;
 }
 
 .birthday-calendar-player {
-   gap: 5px;
+   gap: 0.5rem;
    display: flex;
    align-items: center;
    background: #dddddd;

@@ -38,14 +38,14 @@ export function TutorialModal(): React.ReactNode {
    }
    let unfinished = false;
    return (
-      <div className="window" style={{ width: "800px", maxWidth: "80vw" }}>
+      <div className="window modal-window" style={{ width: "80rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{tutorial.name()}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
          </div>
-         <div ref={tutorialRef} className="window-body" style={{ overflowY: "auto", maxHeight: "75vh" }}>
+         <div ref={tutorialRef} className="window-body">
             <div className="row mb5 text-desc">
                <div className="m-icon small mr5">next_plan</div>
                <div
@@ -89,7 +89,7 @@ export function TutorialModal(): React.ReactNode {
                            </div>
                         )}
                         <div className="inset-shallow white mt5 p5 row">
-                           <img src={Clippy} className="mr10" style={{ height: 50 }} />
+                           <img src={Clippy} className="mr10" style={{ height: "5rem" }} />
                            <div className="f1">
                               <div className="row text-strong">
                                  <div className="f1">{t.name()}</div>

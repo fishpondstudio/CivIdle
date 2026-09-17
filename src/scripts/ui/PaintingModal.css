@@ -1,8 +1,17 @@
 .painting-modal {
-   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-   border-radius: 10px;
+   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
+   border-radius: 1rem;
+   max-width: var(--modal-max-width);
+   max-height: var(--modal-max-height);
    overflow: hidden;
    position: relative;
+}
+
+.painting-modal .painting-image {
+   display: block;
+   max-width: min(50rem, var(--modal-max-width));
+   max-height: var(--modal-max-height);
+   object-fit: contain;
 }
 
 .painting-modal .overlay {
@@ -11,22 +20,24 @@
    left: 0;
    right: 0;
    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.75));
-   padding: 50px 10px 10px 10px;
+   padding: 5rem 1rem 1rem;
+   max-height: 100%;
+   overflow: auto;
    color: #fff;
-   text-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+   text-shadow: 0 0 1rem rgba(0, 0, 0, 0.75);
    font-family: "Cabin", sans-serif;
 }
 
 .painting-modal .title {
    font-family: "Platypi", serif;
-   font-size: 20px;
+   font-size: 2rem;
    line-height: 1.0;
 }
 
 .painting-modal .button {
    border: 1px solid #fff;
-   padding: 2px 5px;
-   border-radius: 5px;
+   padding: 0.2rem 0.5rem;
+   border-radius: 0.5rem;
    cursor: pointer;
    transition: background-color 0.3s ease;
    text-transform: uppercase;

@@ -61,7 +61,7 @@ export function ManagePermanentGreatPersonModal(props: {
       return () => cancelAnimationFrame(frame);
    }, [props.scrollToGreatPerson]);
    return (
-      <div className="window" style={{ width: "1000px", maxWidth: "90vw" }}>
+      <div className="window modal-window" style={{ width: "100rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.PermanentGreatPeople)}</div>
             <div className="title-bar-controls">
@@ -160,7 +160,7 @@ export function ManagePermanentGreatPersonModal(props: {
                      showModal(<ManageAgeWisdomModal />);
                   }}
                >
-                  <div className="m-icon" style={{ margin: "0 0 0 -5px", fontSize: "18px" }}>
+                  <div className="m-icon" style={{ margin: "0 0 0 -0.5rem", fontSize: "1.8rem" }}>
                      emoji_objects
                   </div>
                   <div>{$t(L.AgeWisdom)}</div>
@@ -222,7 +222,7 @@ export function ManagePermanentGreatPersonModal(props: {
                         className={cls(k === highlightedGreatPerson ? "great-person-scroll-highlight" : null)}
                      >
                         <td>
-                           <GreatPersonImage greatPerson={k} style={{ height: "50px", display: "block" }} />
+                           <GreatPersonImage greatPerson={k} style={{ height: "5rem", display: "block" }} />
                         </td>
                         <td>
                            {person.birthday && (
@@ -340,7 +340,7 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
                className="w100 row text-strong w100"
                disabled={!permanent || permanent.amount < total}
             >
-               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+               <div className="m-icon" style={{ margin: "0 0.5rem 0 -0.5rem", fontSize: "1.8rem" }}>
                   input_circle
                </div>
                <div className="f1 text-right">
@@ -367,7 +367,7 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
          <td>
             {permanent && isEligibleForWisdom(greatPerson) ? (
                <button
-                  style={{ padding: "0 3px" }}
+                  style={{ padding: "0 0.3rem" }}
                   disabled={!isOnlineUser()}
                   onClick={() => {
                      if (!isOnlineUser()) {
@@ -388,7 +388,7 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
                            : $t(L.FeatureRequireQuaestorOrAbove)
                      }
                   >
-                     <div className="m-icon" style={{ fontSize: 20 }}>
+                     <div className="m-icon" style={{ fontSize: "2rem" }}>
                         undo
                      </div>
                   </LazyTippy>
@@ -444,7 +444,7 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
                </select>
                <div className="w10" />
                <input
-                  style={{ width: "50px" }}
+                  style={{ width: "5rem" }}
                   type="text"
                   value={selectedAmount}
                   onChange={(e) => setSelectedAmount(safeParseInt(e.target.value, 0))}
@@ -673,7 +673,7 @@ function GreatPersonAdaptiveRow({ greatPerson }: { greatPerson: GreatPerson }): 
                className="w100 row text-strong w100"
                disabled={!permanent || permanent.amount < total}
             >
-               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+               <div className="m-icon" style={{ margin: "0 0.5rem 0 -0.5rem", fontSize: "1.8rem" }}>
                   input_circle
                </div>
                <div className="f1 text-right">

@@ -30,7 +30,7 @@ import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { LazyTippy } from "./LazyTippy";
 
-const INPUT_WIDTH = 100;
+const INPUT_WIDTH = "10rem";
 
 export function AddTradeComponent({ gameState }: { gameState: GameState }): React.ReactNode {
    const [showTrade, setShowTrade] = useState(false);
@@ -97,7 +97,7 @@ export function AddTradeFormComponent({
             {targetPercentage !== null && (
                <>
                   <div>{formatPercent(targetPercentage)}</div>
-                  <button style={{ padding: "0 5px" }} onClick={() => setTargetPercentage(null)}>
+                  <button style={{ padding: "0 0.5rem" }} onClick={() => setTargetPercentage(null)}>
                      <div className="m-icon small">refresh</div>
                   </button>
                </>
@@ -105,7 +105,7 @@ export function AddTradeFormComponent({
          </div>
          {targetPercentage !== null && (
             <input
-               style={{ marginBottom: "10px" }}
+               style={{ marginBottom: "1rem" }}
                type="range"
                min={-percentage}
                max={percentage}
@@ -149,7 +149,7 @@ export function AddTradeFormComponent({
                );
             })}
          </div>
-         <div className="separator" style={{ margin: "8px -8px" }} />
+         <div className="separator" style={{ margin: "0.8rem -0.8rem" }} />
          <div className="text-strong mb5">{$t(L.PlayerTradeIOffer)}</div>
          <div className="row">
             <select
@@ -220,7 +220,7 @@ export function AddTradeFormComponent({
                );
             })}
          </div>
-         <div className="separator" style={{ margin: "8px -8px" }} />
+         <div className="separator" style={{ margin: "0.8rem -0.8rem" }} />
          <div className="text-strong mb5">{$t(L.PlayerTradeIWant)}</div>
          <div className="row">
             <select

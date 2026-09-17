@@ -14,7 +14,7 @@ export function PendingTradesComponent({ gameState, xy }: IBuildingComponentProp
    const myXy = getOwnedTradeTile();
    if (!myXy) {
       return (
-         <article role="tabpanel" style={{ padding: "8px" }}>
+         <article role="tabpanel" style={{ padding: "0.8rem" }}>
             <WarningComponent icon="info">
                <div>{$t(L.PlayerTradeClaimTileFirstWarning)}</div>
                <div
@@ -29,7 +29,7 @@ export function PendingTradesComponent({ gameState, xy }: IBuildingComponentProp
    }
 
    return (
-      <article role="tabpanel" style={{ padding: "8px" }}>
+      <article role="tabpanel" style={{ padding: "0.8rem" }}>
          <PendingClaimComponent gameState={gameState} />
       </article>
    );

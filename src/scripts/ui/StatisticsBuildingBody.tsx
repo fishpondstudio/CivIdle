@@ -3,6 +3,7 @@ import classNames from "classnames";
 import type React from "react";
 import { useState } from "react";
 import { TableVirtuoso } from "react-virtuoso";
+import type uPlot from "uplot";
 import { BuildingSpecial, type IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import { NoPrice, NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
 import {
@@ -55,6 +56,10 @@ import { WorkerScienceComponent } from "./WorkerScienceComponent";
 
 type Tab = "resources" | "buildings" | "empire";
 let savedStatisticsTab: Tab = "empire";
+
+// Keep series identities stable: PlotComponent recreates its chart when the series changes.
+const EmpireValuePlotSeries: uPlot.Series = { stroke: "#fdcb6e", fill: "#ffeaa7" };
+const SciencePlotSeries: uPlot.Series = { stroke: "#0984e3", fill: "#74b9ff" };
 
 export function StatisticsBuildingBody({
    gameState,
@@ -117,7 +122,7 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
    const sciencePerTick = scienceFromWorkers + totalBuildingScience;
    const transportStat = getTransportStat(gameState);
    return (
-      <article role="tabpanel" className="f1 col" style={{ padding: "8px", overflow: "hidden" }}>
+      <article role="tabpanel" className="f1 col" style={{ padding: "0.8rem", overflow: "hidden" }}>
          <fieldset>
             <legend>{$t(L.TotalEmpireValue)}</legend>
             <ul className="tree-view">
@@ -189,7 +194,7 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
             <PlotComponent
                title={$t(L.EmpireValueIncrease)}
                data={[TimeSeries.deltaTick, TimeSeries.empireValueDelta]}
-               series={{ stroke: "#fdcb6e", fill: "#ffeaa7" }}
+               series={EmpireValuePlotSeries}
             />
             <div className="sep10" />
             <PlotComponent
@@ -198,7 +203,7 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                   getTimeSeriesHour(gameState),
                   gameState.valueTrackers.get(ValueToTrack.EmpireValue)?.history ?? [],
                ]}
-               series={{ stroke: "#fdcb6e", fill: "#ffeaa7" }}
+               series={EmpireValuePlotSeries}
             />
          </fieldset>
          <fieldset>
@@ -261,7 +266,7 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
             <PlotComponent
                title={$t(L.StatisticsScienceProduction)}
                data={[TimeSeries.deltaTick, TimeSeries.scienceDelta]}
-               series={{ stroke: "#0984e3", fill: "#74b9ff" }}
+               series={SciencePlotSeries}
             />
          </fieldset>
          <fieldset>
@@ -324,7 +329,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    };
    const [search, setSearch] = useState<string>("");
    return (
-      <article role="tabpanel" className="col" style={{ margin: 0, padding: 8, flex: 1 }}>
+      <article role="tabpanel" className="col" style={{ margin: 0, padding: "0.8rem", flex: 1 }}>
          <div className="row mb5">
             <input
                type="text"
@@ -522,7 +527,7 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
    };
 
    return (
-      <article role="tabpanel" className="f1 col" style={{ margin: 0, padding: 8, overflow: "auto" }}>
+      <article role="tabpanel" className="f1 col" style={{ margin: 0, padding: "0.8rem", overflow: "auto" }}>
          <div className="row mb5">
             <input
                type="text"
@@ -553,7 +558,7 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
             <LazyTippy content={$t(L.PinResourceTab)}>
                <button
                   className={cls(gs.pinStatPanel ? "active" : null)}
-                  style={{ width: 27, padding: 0 }}
+                  style={{ width: "2.7rem", padding: 0 }}
                   onClick={() => {
                      gs.pinStatPanel = !gs.pinStatPanel;
                      notifyGameStateUpdate(gs);
@@ -567,7 +572,7 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                   className={classNames({
                      active: !showTheoreticalValue,
                   })}
-                  style={{ width: 27, padding: 0 }}
+                  style={{ width: "2.7rem", padding: 0 }}
                   onClick={() => {
                      setShowTheoreticalValue(!showTheoreticalValue);
                   }}

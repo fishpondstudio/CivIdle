@@ -7,7 +7,7 @@ export function PlayerTradeModal(): React.ReactNode {
    const [modal, setModal] = useState<React.ReactNode>(null);
    return (
       <>
-         <div className="window" style={{ width: "800px", maxWidth: "80vw" }}>
+         <div className="window modal-window" style={{ width: "80rem" }}>
             <div className="title-bar">
                <div className="title-bar-text">{$t(L.PlayerTrade)}</div>
                <div className="title-bar-controls">

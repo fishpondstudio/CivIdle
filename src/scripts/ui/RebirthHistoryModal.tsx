@@ -7,6 +7,7 @@ import { $t, L } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
+import { useRemSize } from "../utilities/UIScaling";
 
 const RangeOptions = [10, 20, 50] as const;
 type RangeOption = (typeof RangeOptions)[number] | "all";
@@ -49,7 +50,7 @@ export function RebirthHistoryModal(): React.ReactNode {
    const [viewMode, setViewMode] = useState<"chart" | "table">("chart");
 
    return (
-      <div className="window" style={{ width: "800px", maxWidth: "90vw" }}>
+      <div className="window modal-window" style={{ width: "80rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.RebirthHistory)}</div>
             <div className="title-bar-controls">
@@ -58,14 +59,14 @@ export function RebirthHistoryModal(): React.ReactNode {
          </div>
          <div className="window-body">
             {all.length === 0 ? (
-               <div className="text-desc cc" style={{ fontSize: 20, height: "50vh" }}>
+               <div className="text-desc cc" style={{ fontSize: "2rem", height: "50vh" }}>
                   {$t(L.RebirthHistoryEmpty)}
                </div>
             ) : (
                <>
                   <div className="row mb5">
                      <button
-                        style={{ padding: 0, width: 30 }}
+                        style={{ padding: 0, width: "3rem" }}
                         className={cls(viewMode === "chart" ? "active" : null)}
                         onClick={() => {
                            playClick();
@@ -75,7 +76,7 @@ export function RebirthHistoryModal(): React.ReactNode {
                         <div className="m-icon small">show_chart</div>
                      </button>
                      <button
-                        style={{ padding: 0, width: 30 }}
+                        style={{ padding: 0, width: "3rem" }}
                         className={cls(viewMode === "table" ? "active" : null)}
                         onClick={() => {
                            playClick();
@@ -134,7 +135,7 @@ export function RebirthHistoryModal(): React.ReactNode {
                               }
                            }}
                            style={{
-                              width: 30,
+                              width: "3rem",
                               padding: 0,
                            }}
                         >
@@ -159,6 +160,7 @@ export function RebirthHistoryModal(): React.ReactNode {
 }
 
 function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
+   const remSize = useRemSize();
    const [range, setRange] = useState<RangeOption>(10);
    const [selectedSeries, setSelectedSeries] = useState<SeriesKey>("totalEmpireValue");
 
@@ -174,7 +176,7 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
 
    return (
       <div className="inset-shallow white">
-         <div className="row m5 g5">
+         <div className="row m5 g5" style={{ flexWrap: "wrap" }}>
             <select
                value={selectedSeries}
                onChange={(e) => {
@@ -197,7 +199,7 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
                         setRange(r);
                      }}
                      style={{
-                        width: 30,
+                        width: "3rem",
                         padding: 0,
                      }}
                      className={cls(range === r ? "active" : null)}
@@ -211,7 +213,7 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
                      setRange("all");
                   }}
                   style={{
-                     width: 40,
+                     minWidth: "4rem",
                      padding: 0,
                   }}
                   className={cls(range === "all" ? "active" : null)}
@@ -224,8 +226,8 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
                <span
                   style={{
                      display: "inline-block",
-                     width: 16,
-                     height: 3,
+                     width: "1.6rem",
+                     height: "0.3rem",
                      backgroundColor: DataSeries[selectedSeries].color,
                   }}
                />
@@ -237,13 +239,20 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
                style={{ width: "100%", maxHeight: "70vh", aspectRatio: 1.618 }}
                responsive
                data={data}
-               margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+               margin={{ top: 2 * remSize, right: 2 * remSize, bottom: 2 * remSize, left: 2 * remSize }}
             >
                <CartesianGrid strokeDasharray="3 3" stroke="rgba(128,128,128,0.3)" />
-               <XAxis dataKey="dateLabel" stroke="rgba(128,128,128,0.7)" minTickGap={24} />
+               <XAxis
+                  dataKey="dateLabel"
+                  stroke="rgba(128,128,128,0.7)"
+                  minTickGap={2.4 * remSize}
+                  height={3 * remSize}
+                  tickMargin={0.5 * remSize}
+               />
                <YAxis
                   tickFormatter={(v: number) => formatNumber(v)}
                   width="auto"
+                  tickMargin={0.5 * remSize}
                   stroke="rgba(128,128,128,0.7)"
                />
                <Tooltip content={RebirthTooltip} />
@@ -253,7 +262,7 @@ function RebirthHistoryChart({ all }: { all: RebirthInfo[] }): React.ReactNode {
                   name={DataSeries[selectedSeries].label()}
                   stroke={DataSeries[selectedSeries].color}
                   strokeWidth={2}
-                  activeDot={{ r: 5, fill: DataSeries[selectedSeries].color }}
+                  activeDot={{ r: 0.5 * remSize, fill: DataSeries[selectedSeries].color }}
                   isAnimationActive={false}
                   connectNulls
                />
@@ -304,7 +313,7 @@ function RebirthHistoryTable({ all }: { all: RebirthInfo[] }): React.ReactNode {
                            left: 0,
                            zIndex: 1,
                            fontWeight: "bold",
-                           minWidth: 100,
+                           minWidth: "10rem",
                         }}
                         className="header"
                      >
@@ -333,10 +342,10 @@ function RebirthTooltip(props: TooltipContentProps): React.ReactNode {
       <div
          className="table-view text-small"
          style={{
-            borderRadius: 5,
+            borderRadius: "0.5rem",
             border: "1px solid #ccc",
             overflow: "hidden",
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+            boxShadow: "0 0 1rem rgba(0, 0, 0, 0.2)",
          }}
       >
          <table>
@@ -410,7 +419,7 @@ function TooltipRow({
             className="text-right text-strong"
             style={{
                borderRight: `3px solid ${color}`,
-               paddingLeft: 6,
+               paddingLeft: "0.6rem",
                backgroundColor: `${color}22`,
             }}
          >

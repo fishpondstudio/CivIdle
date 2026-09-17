@@ -111,7 +111,7 @@ export function PlayerTradeComponent({
       playerFlagFilters.size;
    return (
       <>
-         <div className="row" style={{ margin: "2px 1px" }}>
+         <div className="row" style={{ margin: "0.2rem 0.1rem" }}>
             <AddTradeButtonComponent onClick={() => showModal(<AddTradeModal hideModal={hideModal} />)} />
             <button
                className={cls(PendingClaims.length > 0 ? "text-strong" : null)}
@@ -500,7 +500,7 @@ function PlayerTradeFilterModal({
    const flags = new Set<string>();
    trades.forEach((t) => flags.add(t.fromFlag));
    return (
-      <div className="window" style={{ width: 500 }}>
+      <div className="window modal-window" style={{ width: "50rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.PlayerTradeFilters)}</div>
             <div className="title-bar-controls">
@@ -508,7 +508,7 @@ function PlayerTradeFilterModal({
             </div>
          </div>
          <div className="window-body">
-            <div className="row g10" style={{ alignItems: "stretch", height: 300 }}>
+            <div className="row g10" style={{ alignItems: "stretch", height: "30rem" }}>
                <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
                   <div>{$t(L.PlayerTradePlayerNameFilter)}</div>
                   <input
@@ -599,7 +599,7 @@ function PlayerTradeFilterModal({
                   </div>
                </div>
                <div style={{ flex: 1 }}>
-                  <div className="table-view sticky-header" style={{ overflowY: "auto", height: 300 }}>
+                  <div className="table-view sticky-header" style={{ overflowY: "auto", height: "30rem" }}>
                      <table>
                         <thead>
                            <tr>

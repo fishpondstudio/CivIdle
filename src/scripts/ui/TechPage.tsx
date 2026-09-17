@@ -124,7 +124,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
          <MenuComponent />
          <div className="window-body">
             <button className="w100 row jcc mb10" onClick={goBackToCity}>
-               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+               <div className="m-icon" style={{ margin: "0 0.5rem 0 -0.5rem", fontSize: "1.8rem" }}>
                   arrow_back
                </div>
                <div className="f1">{$t(L.BackToCity)}</div>
@@ -189,7 +189,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                         <div className="f1">
                            <ProgressBarComponent progress={availableScience / totalScience} />
                         </div>
-                        <div style={{ width: "10px" }} />
+                        <div style={{ width: "1rem" }} />
                         <button disabled={!canUnlock()} onClick={() => unlock()}>
                            {$t(L.UnlockBuilding)}
                         </button>

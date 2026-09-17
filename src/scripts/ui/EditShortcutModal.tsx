@@ -35,7 +35,7 @@ export function EditShortcutModal({ action }: { action: Shortcut }): React.React
    }, []);
    const shortcut = ShortcutActions[action];
    return (
-      <div className="window">
+      <div className="window modal-window">
          <div className="title-bar">
             <div className="title-bar-text">{shortcut.name()}</div>
             <div className="title-bar-controls">
@@ -51,7 +51,7 @@ export function EditShortcutModal({ action }: { action: Shortcut }): React.React
                   </div>
                </div>
             </fieldset>
-            <div className="row" style={{ justifyContent: "flex-end" }}>
+            <div className="row modal-actions" style={{ justifyContent: "flex-end" }}>
                <button
                   onClick={() => {
                      delete options.shortcuts[action];
@@ -61,7 +61,6 @@ export function EditShortcutModal({ action }: { action: Shortcut }): React.React
                >
                   {$t(L.ShortcutClear)}
                </button>
-               <div style={{ width: "10px" }}></div>
                <button
                   disabled={!key}
                   onClick={() => {

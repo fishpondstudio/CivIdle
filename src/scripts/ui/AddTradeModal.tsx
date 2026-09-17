@@ -5,7 +5,7 @@ import { AddTradeFormComponent } from "./AddTradeComponent";
 export function AddTradeModal({ hideModal }: { hideModal: () => void }): React.ReactNode {
    const gameState = useGameState();
    return (
-      <div className="window" style={{ width: 400, maxWidth: "50vw" }}>
+      <div className="window modal-window" style={{ width: "40rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.PlayerTradeNewTrade)}</div>
             <div className="title-bar-controls">

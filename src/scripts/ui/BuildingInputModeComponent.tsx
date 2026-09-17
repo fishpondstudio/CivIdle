@@ -108,7 +108,7 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
                disabled={building.maxInputDistance === Number.POSITIVE_INFINITY}
                type="text"
                className="text-right ml10"
-               style={{ width: "60px" }}
+               style={{ width: "6rem" }}
             />
          </div>
          <div className="sep10"></div>

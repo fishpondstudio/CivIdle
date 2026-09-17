@@ -7,15 +7,15 @@ export function AlertModal({
    children,
 }: React.PropsWithChildren & { title: string }): React.ReactNode {
    return (
-      <div className="window">
+      <div className="window modal-window">
          <div className="title-bar">
             <div className="title-bar-text">{title}</div>
          </div>
-         <div className="window-body" style={{ padding: "5px 10px" }}>
+         <div className="window-body" style={{ padding: "0.5rem 1rem" }}>
             {children}
-            <div className="row" style={{ margin: "20px 0 0 0", justifyContent: "center" }}>
+            <div className="row modal-actions" style={{ margin: "2rem 0 0 0", justifyContent: "center" }}>
                <button
-                  style={{ width: "80px" }}
+                  style={{ minWidth: "8rem" }}
                   onClick={() => {
                      playClick();
                      hideModal();

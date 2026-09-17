@@ -261,7 +261,7 @@ export function FillPlayerTradeModal({
       (Config.MaterialPrice[trade.sellResource] ?? 0) * youGet -
       (Config.MaterialPrice[trade.buyResource] ?? 0) * youPay;
    return (
-      <div className="window" style={{ width: 600, maxWidth: "75vw" }}>
+      <div className="window modal-window" style={{ width: "60rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.PlayerTradeFillTradeTitle)}</div>
             <div className="title-bar-controls">
@@ -333,7 +333,7 @@ export function FillPlayerTradeModal({
                                              return new Map(old);
                                           });
                                        }}
-                                       style={{ width: 150 }}
+                                       style={{ width: "15rem" }}
                                     />
                                  </td>
                                  <td style={{ width: 0 }}>

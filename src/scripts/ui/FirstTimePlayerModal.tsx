@@ -24,7 +24,7 @@ const SubmitEvent = new TypedEvent<void>();
 export function FirstTimePlayerModal(): React.ReactNode {
    refreshOnTypedEvent(GameOptionsChanged);
    return (
-      <div className="window" style={{ width: "600px", maxWidth: "50vw" }}>
+      <div className="window modal-window" style={{ width: "60rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.FirstTimeTutorialWelcome)}</div>
          </div>
@@ -48,11 +48,11 @@ export function FirstTimePlayerModal(): React.ReactNode {
 export function FirstTimePlayerSettingsModal(): React.ReactNode {
    refreshOnTypedEvent(GameOptionsChanged);
    return (
-      <div className="window" style={{ width: "600px", maxWidth: "50vw" }}>
+      <div className="window modal-window" style={{ width: "60rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.FirstTimeTutorialWelcome)}</div>
          </div>
-         <div className="window-body" style={{ maxHeight: "80vh", overflowY: "auto" }}>
+         <div className="window-body">
             <WarningComponent icon="info">{html($t(L.FirstTimeGuideIntroHTML))}</WarningComponent>
             <div className="sep5" />
             <FirstTimePlayerSettings submitEvent={SubmitEvent} />
@@ -116,7 +116,7 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
             </div>
             <div>
                <LazyTippy content={countryName}>
-                  <PlayerFlagComponent name={flag} style={{ marginLeft: 5 }} />
+                  <PlayerFlagComponent name={flag} style={{ marginLeft: "0.5rem" }} />
                </LazyTippy>
             </div>
          </div>
@@ -125,7 +125,7 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
          <div className="sep10" />
          <div className="text-strong">{$t(L.TutorialPlayerFlag)}</div>
          <div className="sep5" />
-         <div className="inset-deep-2 white" style={{ padding: "10px", height: "100px", overflowY: "auto" }}>
+         <div className="inset-deep-2 white" style={{ padding: "1rem", height: "10rem", overflowY: "auto" }}>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
                {jsxMapOf(CountryCode, (c, v) => {
                   return (

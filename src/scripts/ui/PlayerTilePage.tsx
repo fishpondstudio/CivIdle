@@ -50,19 +50,31 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                      {tile.handle}
                   </div>
                   <LazyTippy content={getCountryName(tile.flag)}>
-                     <PlayerFlagComponent name={tile.flag} style={{ marginLeft: 5 }} scale={0.7} />
+                     <PlayerFlagComponent name={tile.flag} style={{ marginLeft: "0.5rem" }} scale={0.7} />
                   </LazyTippy>
                   <LazyTippy content={AccountLevelNames[tile.level]()}>
-                     <AccountLevelComponent level={tile.level} scale={0.17} style={{ marginLeft: 5 }} />
+                     <AccountLevelComponent
+                        level={tile.level}
+                        scale={0.17}
+                        style={{ marginLeft: "0.5rem" }}
+                     />
                   </LazyTippy>
                   {hasFlag(tile.attr, UserAttributes.DLC1) ? (
                      <LazyTippy content={$t(L.AccountSupporter)}>
-                        <MiscTextureComponent name="Supporter" scale={0.17} style={{ marginLeft: 5 }} />
+                        <MiscTextureComponent
+                           name="Supporter"
+                           scale={0.17}
+                           style={{ marginLeft: "0.5rem" }}
+                        />
                      </LazyTippy>
                   ) : null}
                   {hasFlag(tile.attr, UserAttributes.DLC3) ? (
                      <LazyTippy content={$t(L.KeeperOfOurServer)}>
-                        <MiscTextureComponent name="Supporter2" scale={0.17} style={{ marginLeft: 5 }} />
+                        <MiscTextureComponent
+                           name="Supporter2"
+                           scale={0.17}
+                           style={{ marginLeft: "0.5rem" }}
+                        />
                      </LazyTippy>
                   ) : null}
                </legend>

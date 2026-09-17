@@ -40,7 +40,7 @@ export function overwriteSaveGame(save: SavedGame): void {
 export const OnUIThemeChanged = new TypedEvent<boolean>();
 export const ToggleChatWindow = new TypedEvent<boolean>();
 
-export function syncUITheme(gameOptions: GameOptions): void {
+export function syncUITheme(app: Application, gameOptions: GameOptions): void {
    gameOptions.useModernUI ? document.body.classList.add("modern") : document.body.classList.remove("modern");
    switch (gameOptions.cursor) {
       case "BigOldFashioned":
@@ -54,7 +54,8 @@ export function syncUITheme(gameOptions: GameOptions): void {
       default:
          document.body.classList.add("old-fashioned-cursor");
    }
-   OnUIThemeChanged.emit(getGameOptions().useModernUI);
+   syncFontSizeScale(app, gameOptions);
+   OnUIThemeChanged.emit(gameOptions.useModernUI);
 }
 
 export function syncSidePanelWidth(app: Application, options: GameOptions): void {
@@ -64,11 +65,11 @@ export function syncSidePanelWidth(app: Application, options: GameOptions): void
 }
 
 export function syncFontSizeScale(app: Application, options: GameOptions): void {
-   if (!options.useModernUI) {
-      document.documentElement.style.setProperty("--base-font-size", "62.5%");
-      return;
-   }
-   const scale = isAndroid() || isIOS() ? options.fontSizeScaleMobile : options.fontSizeScale;
+   const scale = options.useModernUI
+      ? isAndroid() || isIOS()
+         ? options.fontSizeScaleMobile
+         : options.fontSizeScale
+      : 1;
    document.documentElement.style.setProperty("--base-font-size", `${scale * 62.5}%`);
    app.resize();
 }

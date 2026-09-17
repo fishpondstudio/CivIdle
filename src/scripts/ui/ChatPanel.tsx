@@ -105,9 +105,9 @@ export function ChatPanel(): React.ReactNode {
          >
             <img
                style={{
-                  width: 16,
-                  height: 16,
-                  margin: "0 5px",
+                  width: "1.6rem",
+                  height: "1.6rem",
+                  margin: "0 0.5rem",
                }}
                src={user != null ? chatActive : chatInactive}
             />
@@ -291,7 +291,7 @@ function ChatInput({
    });
    const [showChatChannel, setShowChatChannel] = useState(false);
    return (
-      <div className="row" style={{ padding: "2px", position: "relative" }}>
+      <div className="row" style={{ padding: "0.2rem", position: "relative" }}>
          <SelectChatChannelModal
             show={showChatChannel}
             style={{ position: "absolute", bottom: "100%", left: 0 }}
@@ -311,7 +311,7 @@ function ChatInput({
             ref={chatInput}
             className={classNames({ "f1 w100": true, "is-chat-command": chat.startsWith("/") })}
             type="text"
-            style={{ margin: "0 2px 0 0" }}
+            style={{ margin: "0 0.2rem 0 0" }}
             value={chat}
             onInput={(e) => {
                setChat(e.currentTarget.value);

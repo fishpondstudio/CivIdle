@@ -165,7 +165,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          <MenuComponent />
          <div className="window-body f1 col" style={{ minHeight: 0, overflow: "hidden" }}>
             {sizeOf(tile.deposit) > 0 ? (
-               <div className="row inset-shallow-2 mb5" style={{ padding: "0 5px" }}>
+               <div className="row inset-shallow-2 mb5" style={{ padding: "0 0.5rem" }}>
                   <div className="f1 text-strong">{$t(L.Deposit)}</div>
                   {jsxMapOf(tile.deposit, (k) => {
                      return (
@@ -250,10 +250,10 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                      ))}
                   </select>
                </LazyTippy>
-               <div style={{ width: 5 }}></div>
+               <div style={{ width: "0.5rem" }}></div>
                <button
                   className={cls(options.constructionGridView ? "active" : null)}
-                  style={{ width: 27, padding: 0 }}
+                  style={{ width: "2.7rem", padding: 0 }}
                   onClick={() => {
                      playClick();
                      options.constructionGridView = !options.constructionGridView;

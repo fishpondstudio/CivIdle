@@ -33,7 +33,6 @@ import { addDebugFunctions } from "./AddDebugFunctions";
 import {
    isGameDataCompatible,
    loadGame,
-   syncFontSizeScale,
    syncFontVariantNumeric,
    syncSidePanelWidth,
    syncUITheme,
@@ -113,9 +112,8 @@ export async function startGame(
    // ========== Game state is initialized ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });
    syncLanguage(Languages[options.language]);
-   syncUITheme(options);
+   syncUITheme(app, options);
    syncSidePanelWidth(app, options);
-   syncFontSizeScale(app, options);
    syncFontVariantNumeric(options);
    FormatNumberOptions.useScientific = options.useScientificFormat;
    calculateTierAndPrice(import.meta.env.DEV ? console.log : undefined);

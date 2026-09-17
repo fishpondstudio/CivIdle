@@ -124,7 +124,7 @@ export function PlayerHandleComponent() {
                      {user.handle}
                   </div>
                   <LazyTippy content={getCountryName(user?.flag)}>
-                     <PlayerFlagComponent name={user.flag} style={{ marginLeft: 5 }} scale={0.75} />
+                     <PlayerFlagComponent name={user.flag} style={{ marginLeft: "0.5rem" }} scale={0.75} />
                   </LazyTippy>
                   {hasFlag(user.attr, UserAttributes.DLC1) ? (
                      <LazyTippy content={$t(L.AccountSupporter)}>
@@ -152,7 +152,11 @@ export function PlayerHandleComponent() {
                </div>
                <div className="row text-strong mt5">
                   <div className="f1">{$t(L.AccountLevel)}</div>
-                  <AccountLevelComponent level={accountLevel} scale={0.15} style={{ marginRight: 5 }} />
+                  <AccountLevelComponent
+                     level={accountLevel}
+                     scale={0.15}
+                     style={{ marginRight: "0.5rem" }}
+                  />
                   <div>{AccountLevelNames[accountLevel]()}</div>
                </div>
             </>
@@ -190,7 +194,7 @@ function AccountDetails(): React.ReactNode {
                <AccountLevelComponent
                   level={AccountLevel.Quaestor}
                   scale={0.17}
-                  style={{ display: "inline-block", verticalAlign: "middle", marginRight: 5 }}
+                  style={{ display: "inline-block", verticalAlign: "middle", marginRight: "0.5rem" }}
                />
                {$t(L.AccountTypeShowDetailsTribune)}
             </div>
@@ -419,7 +423,7 @@ function AccountDetails(): React.ReactNode {
                         showModal(
                            <AlertModal title={$t(L.TribuneUpgradeDescGreatPeopleWarningTitle)}>
                               <div className="row">
-                                 <div className="m-icon text-orange mr10" style={{ fontSize: 48 }}>
+                                 <div className="m-icon text-orange mr10" style={{ fontSize: "4.8rem" }}>
                                     warning
                                  </div>
                                  <RenderHTML

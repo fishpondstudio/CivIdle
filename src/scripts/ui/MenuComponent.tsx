@@ -54,8 +54,8 @@ function MenuItem({ check, children }: PropsWithChildren<{ check: boolean }>): R
    return (
       <>
          <svg
-            width="16"
-            height="16"
+            width="1.6rem"
+            height="1.6rem"
             viewBox="0 0 16 16"
             xmlns="http://www.w3.org/2000/svg"
             style={{
@@ -63,8 +63,8 @@ function MenuItem({ check, children }: PropsWithChildren<{ check: boolean }>): R
                display: "inline-block",
                verticalAlign: "middle",
                visibility: check ? "visible" : "hidden",
-               marginRight: "2px",
-               marginLeft: "2px",
+               marginRight: "0.2rem",
+               marginLeft: "0.2rem",
             }}
          >
             <path d="M5 7v3l2 2 5-5V4L7 9Z"></path>
@@ -385,11 +385,11 @@ export function MenuComponent(): React.ReactNode {
                   src={SpiderWeb}
                   style={{
                      position: "absolute",
-                     top: -25,
-                     right: 50,
+                     top: "-2.5rem",
+                     right: "5rem",
                      zIndex: 1,
                      pointerEvents: "none",
-                     width: 80,
+                     width: "8rem",
                   }}
                />
             ) : null}
@@ -398,8 +398,10 @@ export function MenuComponent(): React.ReactNode {
                   src={Bat}
                   style={{
                      position: "absolute",
-                     top: -20,
-                     right: 200,
+                     top: "-2rem",
+                     right: "20rem",
+                     width: "6.2rem",
+                     height: "3.8rem",
                      zIndex: 1,
                      pointerEvents: "none",
                   }}
@@ -410,11 +412,11 @@ export function MenuComponent(): React.ReactNode {
                   src={XmasImage}
                   style={{
                      position: "absolute",
-                     top: -20,
-                     right: 80,
+                     top: "-2rem",
+                     right: "8rem",
                      zIndex: 1,
                      pointerEvents: "none",
-                     height: 50,
+                     height: "5rem",
                   }}
                />
             ) : null}

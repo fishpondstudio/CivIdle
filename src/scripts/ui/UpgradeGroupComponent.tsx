@@ -82,14 +82,7 @@ export function UpgradeGroupComponent<T>({
                         <td>
                            {unlockable.unlockBuilding?.map((b) => {
                               return (
-                                 <div
-                                    key={b}
-                                    style={{
-                                       border: "1px dashed #ccc",
-                                       margin: "5px 0",
-                                       padding: 5,
-                                    }}
-                                 >
+                                 <div key={b} className="mv5 p5" style={{ border: "1px dashed #ccc" }}>
                                     <RenderHTML
                                        html={$t(L.UnlockXHTML, { name: Config.Building[b].name() })}
                                     />
@@ -99,15 +92,7 @@ export function UpgradeGroupComponent<T>({
                            })}
                            {jsxMapOf(unlockable.buildingMultiplier, (bld, mul) => {
                               return (
-                                 <div
-                                    key={bld}
-                                    className="row"
-                                    style={{
-                                       border: "1px dashed #ccc",
-                                       margin: "5px 0",
-                                       padding: 5,
-                                    }}
-                                 >
+                                 <div key={bld} className="row mv5 p5" style={{ border: "1px dashed #ccc" }}>
                                     <div className="f1 text-strong">{Config.Building[bld].name()}</div>
                                     {mul.output ? (
                                        <div className="ml20 text-small">
@@ -129,15 +114,7 @@ export function UpgradeGroupComponent<T>({
                            })}
                            {jsxMapOf(unlockable.globalMultiplier, (k, v) => {
                               return (
-                                 <div
-                                    key={k}
-                                    className="row"
-                                    style={{
-                                       border: "1px dashed #ccc",
-                                       margin: "5px 0",
-                                       padding: 5,
-                                    }}
-                                 >
+                                 <div key={k} className="row mv5 p5" style={{ border: "1px dashed #ccc" }}>
                                     <div className="f1">{GlobalMultiplierNames[k]()}</div>
                                     <div className="text-strong">+{v}</div>
                                  </div>
@@ -147,11 +124,8 @@ export function UpgradeGroupComponent<T>({
                               return (
                                  <RenderHTML
                                     key={i}
-                                    style={{
-                                       border: "1px dashed #ccc",
-                                       margin: "5px 0",
-                                       padding: 5,
-                                    }}
+                                    className="mv5 p5"
+                                    style={{ border: "1px dashed #ccc" }}
                                     html={v}
                                  />
                               );

@@ -25,11 +25,11 @@ export function ItaipuDamBuildingBody({ gameState, xy }: IBuildingComponentProps
                <div>{$t(L.ProductionMultiplier)}</div>
             </div>
             <div className="row">
-               <div className="m-icon" style={{ marginLeft: -8 }}>
+               <div className="m-icon" style={{ marginLeft: "-0.8rem" }}>
                   south
                </div>
                <div className="f1"></div>
-               <div className="m-icon" style={{ marginRight: -8 }}>
+               <div className="m-icon" style={{ marginRight: "-0.8rem" }}>
                   south
                </div>
             </div>

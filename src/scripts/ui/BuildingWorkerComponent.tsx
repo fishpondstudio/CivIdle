@@ -146,7 +146,12 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                   <li>
                      <details>
                         <summary className="row">
-                           {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
+                           {showWarning ? (
+                              <img
+                                 src={warning}
+                                 style={{ width: "1.6rem", height: "1.6rem", margin: "0 0.2rem 0 0" }}
+                              />
+                           ) : null}
                            <div
                               className={classNames({
                                  f1: true,
@@ -240,7 +245,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                      content={$t(L.TurnOffFullBuildings, { building: Config.Building[building.type].name() })}
                   >
                      <button
-                        style={{ width: 27, padding: 0 }}
+                        style={{ width: "2.7rem", padding: 0 }}
                         onClick={() => {
                            playSuccess();
                            getStorageFullBuildings()

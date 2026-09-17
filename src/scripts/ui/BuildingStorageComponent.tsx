@@ -25,7 +25,9 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
    return (
       <fieldset>
          <legend className="row">
-            {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
+            {showWarning ? (
+               <img src={warning} style={{ width: "1.6rem", height: "1.6rem", margin: "0 0.2rem 0 0" }} />
+            ) : null}
             <div className={classNames({ f1: true, "production-warning": showWarning })}>
                {$t(L.Storage)}: {formatPercent(percentage)}
             </div>

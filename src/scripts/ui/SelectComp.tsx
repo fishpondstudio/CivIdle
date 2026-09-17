@@ -42,8 +42,8 @@ export function SelectComp<T extends string | number | null>({
          <div ref={refs.setReference} className="inset-deep-2 white pointer" {...getReferenceProps()}>
             <div className="row">
                <div className="f1 select-comp-value">{data.find((item) => item?.value === value)?.label}</div>
-               <button style={{ padding: 0, minHeight: "24px", width: "22px" }}>
-                  <div className="m-icon" style={{ margin: "-5px" }}>
+               <button style={{ padding: 0, minHeight: "2.4rem", width: "2.2rem", flexShrink: 0 }}>
+                  <div className="m-icon" style={{ margin: "-0.5rem" }}>
                      arrow_drop_down
                   </div>
                </button>

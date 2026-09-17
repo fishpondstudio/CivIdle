@@ -36,13 +36,13 @@ export function MapTileBonusComponent({ xy }: { xy: string }): React.ReactNode {
    return (
       <>
          <button className="w100 row jcc mb5" onClick={() => Singleton().sceneManager.loadScene(WorldScene)}>
-            <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+            <div className="m-icon" style={{ margin: "0 0.5rem 0 -0.5rem", fontSize: "1.8rem" }}>
                arrow_back
             </div>
             <div className="f1">{$t(L.BackToCity)}</div>
          </button>
          <button className="w100 row jcc mb10" onClick={() => showModal(<TradeMapStatModal />)}>
-            <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+            <div className="m-icon" style={{ margin: "0 0.5rem 0 -0.5rem", fontSize: "1.8rem" }}>
                insights
             </div>
             <div className="f1">{$t(L.TradeMapStatistics)}</div>
@@ -59,12 +59,12 @@ export function MapTileBonusComponent({ xy }: { xy: string }): React.ReactNode {
                <BuildingSpriteComponent
                   building={building}
                   scale={0.4}
-                  style={{ filter: "invert(0.75)", marginLeft: 10 }}
+                  style={{ filter: "invert(0.75)", marginLeft: "1rem" }}
                />
             </div>
             <div className="row mt10">
                <button
-                  style={{ padding: "0 5px" }}
+                  style={{ padding: "0 0.5rem" }}
                   onClick={() => {
                      Singleton().sceneManager.getCurrent(PlayerMapScene)?.lookAtPrevious(xy);
                   }}
@@ -82,7 +82,7 @@ export function MapTileBonusComponent({ xy }: { xy: string }): React.ReactNode {
                   {$t(L.HighlightBuilding, { building: Config.Building[building].name() })}
                </button>
                <button
-                  style={{ padding: "0 5px" }}
+                  style={{ padding: "0 0.5rem" }}
                   onClick={() => {
                      Singleton().sceneManager.getCurrent(PlayerMapScene)?.lookAtNext(xy);
                   }}
@@ -116,7 +116,7 @@ function HighlightBuildings(): React.ReactNode {
    return (
       <div
          className="inset-shallow-2 white"
-         style={{ display: "grid", gridTemplateColumns: "repeat(8, 1fr)", gap: 2 }}
+         style={{ display: "grid", gridTemplateColumns: "repeat(8, 1fr)", gap: "0.2rem" }}
       >
          {Array.from(buildings)
             .sort((a, b) => (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0))
@@ -145,7 +145,7 @@ function HighlightBuildings(): React.ReactNode {
                            height={36}
                            style={{
                               filter: highlighted.has(building) ? "invert(0)" : "invert(0.5)",
-                              margin: "5px 0",
+                              margin: "0.5rem 0",
                            }}
                         />
                      </div>
@@ -176,7 +176,7 @@ function _FindPlayerComponent(): React.ReactNode {
             <div className="w10" />
             {results.size > 0 ? (
                <button
-                  style={{ padding: "0 5px" }}
+                  style={{ padding: "0 0.5rem" }}
                   onClick={() => {
                      setResults(new Map());
                      setSearch("");

@@ -16,7 +16,7 @@ export function ManualAndGuidePage(): React.ReactNode {
          <MenuComponent />
          <div className="window-body">
             <div className="inset-shallow white row p10 mb10">
-               <div className="f1" style={{ fontSize: 16 }}>
+               <div className="f1" style={{ fontSize: "1.6rem" }}>
                   {$t(L.FirstTimeTutorialWelcome)}
                </div>
                <div>
@@ -28,7 +28,7 @@ export function ManualAndGuidePage(): React.ReactNode {
             {jsxMapOf(Advisors, (advisor, def) => {
                return (
                   <div key={advisor} className="inset-shallow white row p10 mb10">
-                     <div className="f1" style={{ fontSize: 16 }}>
+                     <div className="f1" style={{ fontSize: "1.6rem" }}>
                         {def.title()}
                      </div>
                      <div>
@@ -43,7 +43,7 @@ export function ManualAndGuidePage(): React.ReactNode {
                );
             })}
             <div className="inset-shallow white row p10 mb10">
-               <div className="f1" style={{ fontSize: 16 }}>
+               <div className="f1" style={{ fontSize: "1.6rem" }}>
                   Official New Player Guide (English)
                </div>
                <div>
@@ -53,7 +53,7 @@ export function ManualAndGuidePage(): React.ReactNode {
                </div>
             </div>
             <div className="inset-shallow white row p10 mb10">
-               <div className="f1" style={{ fontSize: 16 }}>
+               <div className="f1" style={{ fontSize: "1.6rem" }}>
                   How to Recover from Backup (English)
                </div>
                <div>
@@ -63,7 +63,7 @@ export function ManualAndGuidePage(): React.ReactNode {
                </div>
             </div>
             <div className="inset-shallow white row p10 mb10">
-               <div className="f1" style={{ fontSize: 16 }}>
+               <div className="f1" style={{ fontSize: "1.6rem" }}>
                   FAQ on Anti-Cheat (English)
                </div>
                <div>

@@ -25,7 +25,7 @@ export function ChateauFrontenacBuildingBody({ gameState, xy }: IBuildingCompone
                return (
                   <div className="row mv5" key={level}>
                      <div
-                        style={{ width: 100 }}
+                        style={{ width: "10rem" }}
                         className={cls(data.selected === undefined ? "text-strong" : "")}
                      >
                         {$t(L.LevelX, { level })}

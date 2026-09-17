@@ -5,7 +5,7 @@ import { PendingClaimComponent } from "./PendingClaimComponent";
 export function PendingClaimModal({ hideModal }: { hideModal: () => void }): React.ReactNode {
    const gameState = useGameState();
    return (
-      <div className="window" style={{ width: 500 }}>
+      <div className="window modal-window" style={{ width: "50rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.PlayerTradeTabPendingTrades)}</div>
             <div className="title-bar-controls">

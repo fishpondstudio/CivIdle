@@ -26,17 +26,17 @@ export function SupporterPackModal(): React.ReactNode {
       }
    }, []);
    return (
-      <div className="window" style={{ width: "500px", maxWidth: "50vw" }}>
+      <div className="window modal-window" style={{ width: "50rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.SupporterPack)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
          </div>
-         <LazyTippy content="Cicerone denuncia Catilina, Cesare Maccari, 1882 ~ 1888">
-            <img src={SupporterPackImage} className="w100" style={{ display: "block" }} />
-         </LazyTippy>
-         <div className="window-body" style={{ overflowY: "auto", maxHeight: "75vh" }}>
+         <div className="window-body">
+            <LazyTippy content="Cicerone denuncia Catilina, Cesare Maccari, 1882 ~ 1888">
+               <img src={SupporterPackImage} className="modal-hero" />
+            </LazyTippy>
             <div className="inset-shallow white row g10 p10">
                <div>
                   <MiscTextureComponent name="Supporter" scale={0.5} />

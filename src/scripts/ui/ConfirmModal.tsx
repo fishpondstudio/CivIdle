@@ -13,15 +13,15 @@ export function ConfirmModal({
    hideModalFunc?: () => void;
 }): React.ReactNode {
    return (
-      <div className="window">
+      <div className="window modal-window">
          <div className="title-bar">
             <div className="title-bar-text">{title}</div>
          </div>
          <div className="window-body">
             {children}
-            <div className="row mt15 jcc">
+            <div className="row mt15 jcc modal-actions">
                <button
-                  style={{ width: "80px", fontWeight: "bold" }}
+                  style={{ minWidth: "8rem", fontWeight: "bold" }}
                   onClick={() => {
                      playClick();
                      onConfirm();
@@ -30,9 +30,8 @@ export function ConfirmModal({
                >
                   {$t(L.ConfirmYes)}
                </button>
-               <div style={{ width: "10px" }}></div>
                <button
-                  style={{ width: "80px" }}
+                  style={{ minWidth: "8rem" }}
                   onClick={() => {
                      playClick();
                      hideModalFunc();

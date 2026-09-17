@@ -26,7 +26,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
    const options = useGameOptions();
    const [showWarning, setShowWarning] = useState(!isOnlineUser());
    return (
-      <div className="window" style={{ width: "500px" }}>
+      <div className="window modal-window" style={{ width: "50rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.ManageAgeWisdom)}</div>
             <div className="title-bar-controls">
@@ -41,7 +41,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                   showModal(<ManagePermanentGreatPersonModal adaptiveOnly={false} />);
                }}
             >
-               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+               <div className="m-icon" style={{ margin: "0 0.5rem 0 -0.5rem", fontSize: "1.8rem" }}>
                   arrow_back
                </div>
                <div className="f1">{$t(L.ManagePermanentGreatPeople)}</div>
@@ -50,10 +50,10 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                <RenderHTML html={$t(L.AgeWisdomDescHTML)} />
             </WarningComponent>
             {showWarning ? (
-               <div className="inset-shallow white" style={{ padding: "50px 20px" }}>
+               <div className="inset-shallow white" style={{ padding: "5rem 2rem" }}>
                   <div className="row jcc">
                      <AccountLevelComponent level={AccountLevel.Tribune} scale={0.5} />
-                     <div className="mh10 m-icon text-desc" style={{ fontSize: 36 }}>
+                     <div className="mh10 m-icon text-desc" style={{ fontSize: "3.6rem" }}>
                         east
                      </div>
                      <AccountLevelComponent level={AccountLevel.Quaestor} scale={0.5} />
@@ -61,7 +61,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                   <RenderHTML
                      html={$t(L.AgeWisdomUpgradeWarningHTMLV3)}
                      className="text-desc mt10 text-center"
-                     style={{ fontSize: 16 }}
+                     style={{ fontSize: "1.6rem" }}
                   />
                   <div className="row cc mt10">
                      <button onClick={() => setShowWarning(false)}>{$t(L.Acknowledge)}</button>
@@ -85,9 +85,9 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                               borderColor: color,
                               borderWidth: "2px",
                               borderStyle: "solid",
-                              padding: 10,
-                              margin: 10,
-                              fontSize: 20,
+                              padding: "1rem",
+                              margin: "1rem",
+                              fontSize: "2rem",
                               color: color,
                               borderRadius: 5,
                            }}

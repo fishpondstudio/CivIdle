@@ -92,7 +92,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                            indeterminate_check_box
                         </div>
                         <LazyTippy content={$t(L.ScrollWheelAdjustLevelTooltip)}>
-                           <div className="text-large text-center" style={{ width: "40px" }}>
+                           <div className="text-large text-center" style={{ width: "4rem" }}>
                               {building.desiredLevel}
                            </div>
                         </LazyTippy>

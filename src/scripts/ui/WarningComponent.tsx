@@ -30,7 +30,18 @@ export function WarningComponent({
    }
    return (
       <div className={classNames(classList)} onClick={onClick} style={style}>
-         {<img src={ICONS[icon]} style={{ alignSelf: "flex-start", margin: "2px 5px 2px 0" }} />}
+         {
+            <img
+               src={ICONS[icon]}
+               style={{
+                  alignSelf: "flex-start",
+                  width: "1.6rem",
+                  height: "1.6rem",
+                  flexShrink: 0,
+                  margin: "0.2rem 0.5rem 0.2rem 0",
+               }}
+            />
+         }
          <div className="f1">{children}</div>
       </div>
    );

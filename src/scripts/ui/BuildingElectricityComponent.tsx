@@ -107,7 +107,9 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
          <legend>{$t(L.Power)}</legend>
          {Config.Building[building.type].power ? (
             <div className="row text-strong">
-               {hasPower ? null : <img src={warning} style={{ margin: "0 2px 0 0" }} />}
+               {hasPower ? null : (
+                  <img src={warning} style={{ width: "1.6rem", height: "1.6rem", margin: "0 0.2rem 0 0" }} />
+               )}
                {$t(L.RequirePower)}
                <LazyTippy content={$t(L.RequirePowerDesc)}>
                   <div className="m-icon small ml5 text-desc help-cursor">help</div>
@@ -115,11 +117,11 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
                <div className="f1"></div>
                <div className="ml10">
                   {hasPower ? (
-                     <div className="m-icon text-green" style={{ fontSize: "2rem", margin: "-5px 0" }}>
+                     <div className="m-icon text-green" style={{ fontSize: "2rem", margin: "-0.5rem 0" }}>
                         power
                      </div>
                   ) : (
-                     <div className="m-icon text-red" style={{ fontSize: "2rem", margin: "-5px 0" }}>
+                     <div className="m-icon text-red" style={{ fontSize: "2rem", margin: "-0.5rem 0" }}>
                         power_off
                      </div>
                   )}

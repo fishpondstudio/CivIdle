@@ -28,7 +28,7 @@ export function OfflineProductionModal({
 }): React.ReactNode {
    const options = useGameOptions();
    return (
-      <div className="window" style={{ width: "500px" }}>
+      <div className="window modal-window" style={{ width: "50rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.OfflineProduction)}</div>
             <div className="title-bar-controls">

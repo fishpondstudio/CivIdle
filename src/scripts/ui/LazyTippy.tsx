@@ -16,7 +16,7 @@ export const LazyTippy = forwardRef<Element, TippyProps>(function LazyTippy(prop
       [],
    );
 
-   const computedProps: TippyProps = { ...props };
+   const computedProps: TippyProps = { maxWidth: "35rem", ...props };
    computedProps.plugins = [lazyPlugin, ...(props.plugins ?? [])];
 
    if (props.render) {

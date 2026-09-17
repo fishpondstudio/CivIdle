@@ -8,6 +8,7 @@ import flags from "../../images/textures_flag.png";
 import misc from "../../images/textures_misc.png";
 import tile from "../../images/textures_tile.png";
 import { isSingletonReady, Singleton } from "../utilities/Singleton";
+import { toRem } from "../utilities/UIScaling";
 
 export const PlayerFlagComponent = React.forwardRef<
    HTMLDivElement,
@@ -100,11 +101,22 @@ const TextureSprite = React.forwardRef<
          style={{
             ...style,
             backgroundImage: `url("${url}")`,
-            width: texture.frame.width * scale,
-            height: texture.frame.height * scale,
-            backgroundPosition: `-${texture.frame.x * scale}px -${texture.frame.y * scale}px`,
-            backgroundSize: `${texture.baseTexture.width * scale}px ${texture.baseTexture.height * scale}px`,
+            flexShrink: 0,
+            ...getTextureGeometry(texture.frame, texture.baseTexture, scale),
          }}
       ></div>
    );
 });
+
+function getTextureGeometry(
+   frame: { x: number; y: number; width: number; height: number },
+   atlas: { width: number; height: number },
+   scale: number,
+) {
+   return {
+      width: toRem(frame.width * scale),
+      height: toRem(frame.height * scale),
+      backgroundPosition: `${toRem(-frame.x * scale)} ${toRem(-frame.y * scale)}`,
+      backgroundSize: `${toRem(atlas.width * scale)} ${toRem(atlas.height * scale)}`,
+   };
+}

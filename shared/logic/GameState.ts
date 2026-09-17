@@ -250,7 +250,7 @@ export class GameOptions {
    sidePanelWidth = 450;
    sidePanelWidthMobile = 400;
    fontSizeScale = 1;
-   fontSizeScaleMobile = 0.9;
+   fontSizeScaleMobile = 0.8;
    cursor: CursorOption = "OldFashioned";
    version = SAVE_FILE_VERSION;
    showTransportArrow = true;

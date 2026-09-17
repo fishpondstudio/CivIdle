@@ -1,4 +1,3 @@
-import { LazyTippy } from "./LazyTippy";
 import { Config } from "../../../shared/logic/Config";
 import {
    CursorOptions,
@@ -23,7 +22,7 @@ import {
    safeParseInt,
 } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
-import { syncFontSizeScale, syncFontVariantNumeric, useGameOptions } from "../Global";
+import { syncFontSizeScale, syncFontVariantNumeric, syncSidePanelWidth, useGameOptions } from "../Global";
 import { copyBuildingColorToResource, randomizeBuildingAndResourceColor } from "../logic/ThemeColor";
 import { getUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
@@ -32,6 +31,7 @@ import { playClick, playError } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ColorPicker } from "./ColorPicker";
 import { showToast } from "./GlobalModal";
+import { LazyTippy } from "./LazyTippy";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { MiscTextureComponent, TileTextureComponent } from "./TextureSprites";
@@ -123,6 +123,7 @@ export function ThemePage(): React.ReactNode {
                      value={gameOptions.sidePanelWidth}
                      onChange={(e) => {
                         gameOptions.sidePanelWidth = safeParseInt(e.target.value, 400);
+                        syncSidePanelWidth(Singleton().sceneManager.getContext().app, gameOptions);
                         notifyGameOptionsUpdate(gameOptions);
                      }}
                   >
@@ -138,6 +139,7 @@ export function ThemePage(): React.ReactNode {
                      value={gameOptions.sidePanelWidthMobile}
                      onChange={(e) => {
                         gameOptions.sidePanelWidthMobile = safeParseInt(e.target.value, 400);
+                        syncSidePanelWidth(Singleton().sceneManager.getContext().app, gameOptions);
                         notifyGameOptionsUpdate(gameOptions);
                      }}
                   >
@@ -177,7 +179,7 @@ export function ThemePage(): React.ReactNode {
                   </div>
                   <input
                      type="text"
-                     style={{ width: 60, textAlign: "right" }}
+                     style={{ width: "6rem", textAlign: "right" }}
                      value={gameOptions.scrollSensitivity}
                      onChange={(e) => {
                         gameOptions.scrollSensitivity = clamp(safeParseFloat(e.target.value, 1), 0.01, 100);
@@ -222,7 +224,7 @@ export function ThemePage(): React.ReactNode {
             </fieldset>
             <fieldset>
                <legend>{$t(L.Tile)}</legend>
-               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 10 }}>
+               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "1rem" }}>
                   {TileTextures.map((i) => {
                      return (
                         <div
@@ -269,7 +271,7 @@ export function ThemePage(): React.ReactNode {
             </fieldset>
             <fieldset>
                <legend>{$t(L.Spinner)}</legend>
-               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 10 }}>
+               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "1rem" }}>
                   {SpinnerTextures.map((i) => {
                      return (
                         <div
@@ -326,7 +328,7 @@ export function ThemePage(): React.ReactNode {
                   </div>
                   <input
                      type="text"
-                     style={{ width: 60, textAlign: "right" }}
+                     style={{ width: "6rem", textAlign: "right" }}
                      value={gameOptions.spinnerSpeed}
                      onChange={(e) => {
                         gameOptions.spinnerSpeed = clamp(safeParseFloat(e.target.value, 1), 0.01, 100);
@@ -371,7 +373,7 @@ export function ThemePage(): React.ReactNode {
                               step="0.1"
                               max="1"
                               min="0"
-                              style={{ width: "50px" }}
+                              style={{ width: "5rem" }}
                               value={gameOptions.themeColors[k]}
                               onChange={(v) => {
                                  const parsed = Number.parseFloat(v.target.value);

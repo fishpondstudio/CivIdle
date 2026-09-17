@@ -420,7 +420,7 @@ export function ResourcePanel(): React.ReactNode {
 
                      <div style={{ width: "8rem" }}>
                         <span>{getRebirthGreatPeopleCount()}</span>
-                        <span className="text-desc" style={{ fontWeight: "normal", marginLeft: 5 }}>
+                        <span className="text-desc" style={{ fontWeight: "normal", marginLeft: "0.5rem" }}>
                            (
                            {formatPercent(
                               clamp(getProgressTowardsNextGreatPerson(), 0, 1),
@@ -511,7 +511,7 @@ function DeficitResources(): React.ReactNode {
          content={
             <>
                <div>{$t(L.DeficitResources)}</div>
-               <table className="date-table" style={{ minWidth: 250 }}>
+               <table className="date-table" style={{ minWidth: "25rem" }}>
                   <thead>
                      <tr>
                         <th className="text-left">{$t(L.Resource)}</th>

@@ -47,66 +47,238 @@
    font-size: 1.4rem;
 }
 
-.modern ul.tree-view details > summary:before {
-   width: 14px;
-   height: 15px;
-   line-height: 14px;
+/* Application-owned overrides for xp.css. Keep bevels, borders and focus outlines
+   in physical CSS pixels; scale control geometry only in the modern theme. */
+.modern .window {
+   padding: 0.3rem;
+}
+
+/* Keep spacing utilities such as .p0 and .ph5 more specific than this default. */
+:where(.modern) button {
+   padding: 0 1.2rem;
+}
+
+.modern button {
+   min-height: 2.5rem;
+}
+
+.modern input[type="text"],
+.modern input[type="email"],
+.modern input[type="password"] {
+   height: 2.5rem;
+}
+
+.modern input[type="text"],
+.modern input[type="email"],
+.modern input[type="password"],
+.modern textarea {
+   padding: 0.3rem 0.4rem;
+}
+
+.modern input[type="number"] {
+   min-height: 2.5rem;
+   padding: 0.3rem 0.4rem;
+}
+
+.modern select {
+   background-size: 1.9rem 1.9rem;
+   height: 2.3rem;
+   padding: 0.3rem 3.2rem 0.3rem 0.5rem;
+   background-position: top 0.2rem right 0.2rem;
+}
+
+.modern select.condensed {
+   background-size: 1.7rem 1.7rem;
+   height: 2.1rem;
+   padding-left: 0.5rem;
+   font-size: 1.2rem;
+}
+
+.modern fieldset {
+   min-width: 0;
+   padding: 0.8rem 1rem 1rem;
+}
+
+.modern .window fieldset {
+   margin-bottom: 0.9rem;
+}
+
+.modern fieldset .separator {
+   margin: 1rem -1rem;
+}
+
+.modern .separator.has-title > div {
+   top: -1rem;
+   left: 1rem;
+   padding: 0 0.2rem;
+}
+
+.modern .title-bar {
+   font-size: 1.4rem;
+   padding: 0.3rem 0.2rem 0.3rem 0.3rem;
+   flex-shrink: 0;
+}
+
+.modern .title-bar-text {
+   min-width: 0;
+   overflow-wrap: anywhere;
+   margin-right: 2.4rem;
+}
+
+.modern .title-bar button {
+   min-width: 1.6rem;
+   min-height: 1.4rem;
+}
+
+.modern .title-bar-controls {
+   flex-shrink: 0;
+}
+
+.modern .title-bar-controls button {
+   padding: 0;
+   min-width: 1.6rem;
+   min-height: 1.4rem;
+}
+
+.modern .title-bar-controls button[aria-label="Minimize"] {
+   background-size: 0.6rem 0.2rem;
+   background-position: bottom 0.3rem left 0.4rem;
+}
+
+.modern .title-bar-controls button[aria-label="Maximize"] {
+   background-size: 0.9rem 0.9rem;
+   background-position: top 0.2rem left 0.3rem;
+}
+
+.modern .title-bar-controls button[aria-label="Help"] {
+   background-size: 0.6rem 0.9rem;
+   background-position: top 0.2rem left 0.5rem;
+}
+
+.modern .title-bar-controls button[aria-label="Close"] {
+   margin-left: 0.2rem;
+   background-size: 0.8rem 0.7rem;
+   background-position: top 0.3rem left 0.4rem;
+}
+
+.modern .title-bar-controls button[aria-label="Restore"],
+.modern .title-bar-controls button[aria-label].restore {
+   background-size: 0.8rem 0.9rem;
+   background-position: top 0.2rem left 0.3rem;
+}
+
+.modern ul.tree-view {
+   padding: 0.6rem;
+}
+
+.modern ul.tree-view li {
+   margin-top: 0.3rem;
+}
+
+.modern ul.tree-view > li:first-child {
+   margin-top: 0;
 }
 
 .modern ul.tree-view ul {
-   margin-left: 23px;
+   margin-left: 2.3rem;
+   margin-top: 0.3rem;
+   padding-left: 1.6rem;
 }
 
 .modern ul.tree-view ul > li:before {
-   top: 8px;
+   top: 0.8rem;
+   left: -1.6rem;
+   width: 1.2rem;
+}
+
+.modern ul.tree-view ul > li:after {
+   top: 0.9rem;
+}
+
+.modern ul.tree-view ul > li:last-child:after {
+   left: -2rem;
+   width: 0.8rem;
+}
+
+.modern ul.tree-view ul details > summary:before {
+   margin-left: -2.2rem;
+}
+
+.modern ul.tree-view details > summary:before {
+   width: 1.4rem;
+   height: 1.5rem;
+   line-height: 1.4rem;
+   flex-shrink: 0;
+   margin-right: 0.5rem;
+   padding-left: 0.1rem;
 }
 
 .modern .menu-button .menu-popover {
    top: 2.5rem;
 }
 
-.modern ul.tree-view ul > li:after {
-   top: 9px;
+/* Keep browser-specific pseudo-elements in separate rules. */
+.modern input[type="range"] {
+   height: 1.6rem;
 }
 
-.modern input[type="text"],
-.modern input[type="email"],
-.modern input[type="password"] {
-   height: 25px;
+.modern input[type="range"]::-webkit-slider-thumb {
+   width: 1.1rem;
+   height: 2.1rem;
+   background-size: 100% 100%;
+   transform: translateY(-0.8rem);
 }
 
-.modern select {
-   background-size: 19px 19px;
-   height: 23px;
-   padding-left: 5px;
+.modern input[type="range"]::-moz-range-thumb {
+   width: 1.1rem;
+   height: 2.1rem;
+   background-size: 100% 100%;
+   transform: translateY(0.2rem);
 }
 
-.modern select.condensed {
-   background-size: 17px 17px;
-   height: 21px;
-   padding-left: 5px;
-   font-size: 1.2rem;
+.modern input[type="range"]::-webkit-slider-runnable-track {
+   height: 0.2rem;
 }
 
-.modern .title-bar {
-   font-size: 1.4rem;
+.modern input[type="range"]::-moz-range-track {
+   height: 0.2rem;
+}
+
+.modern input[type="range"].has-box-indicator::-webkit-slider-thumb {
+   background-size: 100% 100%;
+   transform: translateY(-1rem);
+}
+
+.modern input[type="range"].has-box-indicator::-moz-range-thumb {
+   background-size: 100% 100%;
+   transform: translateY(0);
+}
+
+.modern .meter {
+   height: 1.8rem;
+   padding: 0.4rem 0.4rem 0.3rem;
+}
+
+.modern .meter > .fill {
+   background-size: 2.4rem 2.4rem;
+}
+
+.modern .select-comp-item,
+.modern .select-comp-value {
+   min-height: 2.4rem;
+   height: auto;
+}
+
+.modern .tippy-content {
+   padding: 0.5rem 0.9rem;
+}
+
+.modern .separator {
+   margin: 0 0.2rem;
 }
 
 .modern .text-small {
    font-size: 90%;
-}
-
-.modern .title-bar button {
-   min-width: 16px;
-   min-height: 14px;
-}
-
-.modern button {
-   min-height: 25px;
-}
-
-.modern .separator.has-title > div {
-   top: -10px;
 }
 
 .modern .m-icon.small {
@@ -114,11 +286,38 @@
 }
 
 .modern #chat-panel .language-switch {
-   height: 25px;
-   width: 25px;
-   line-height: 25px;
+   height: 2.5rem;
+   width: 2.5rem;
+   line-height: 2.5rem;
 }
 
 .modern .player-level {
-   height: 17px;
+   height: 1.7rem;
+}
+
+/* Scale the scrollbar buttons and their embedded SVG backgrounds together. */
+.modern ::-webkit-scrollbar {
+   width: 1.6rem;
+}
+
+.modern ::-webkit-scrollbar:horizontal {
+   height: 1.7rem;
+}
+
+.modern ::-webkit-scrollbar-button:vertical {
+   height: 1.7rem;
+   background-size: 100% 100%;
+}
+
+.modern ::-webkit-scrollbar-button:horizontal {
+   width: 1.6rem;
+   background-size: 100% 100%;
+}
+
+.modern select::-webkit-scrollbar {
+   width: 1.2rem;
+}
+
+.modern select::-webkit-scrollbar-thumb {
+   border-radius: 0.6rem;
 }

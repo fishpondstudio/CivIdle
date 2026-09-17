@@ -11,14 +11,14 @@ import { getWebglRenderInfo } from "./WebglRenderInfo";
 
 export function AboutModal(): React.ReactNode {
    return (
-      <div className="window" style={{ width: "400px", maxWidth: "40vw" }}>
+      <div className="window modal-window" style={{ width: "40rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.About)}</div>
          </div>
          <div className="window-body">
-            <div className="row" style={{ margin: "15px 0 0 0" }}>
+            <div className="row" style={{ margin: "1.5rem 0 0 0" }}>
                <div style={{ alignSelf: "flex-start" }}>
-                  <img src={logo} style={{ width: "72px", height: "72px", margin: "0 10px 0 0" }} />
+                  <img src={logo} style={{ width: "7.2rem", height: "7.2rem", margin: "0 1rem 0 0" }} />
                </div>
                <div className="f1">
                   <div className="text-strong">{$t(L.CivIdle)}</div>
@@ -71,7 +71,7 @@ export function AboutModal(): React.ReactNode {
             <div className="mt20 row">
                <div className="f1" />
                <button
-                  style={{ padding: "0 30px" }}
+                  style={{ padding: "0 3rem" }}
                   onClick={() => {
                      playClick();
                      hideModal();

@@ -20,7 +20,7 @@ code {
 }
 
 .menu-button {
-   padding: 4px 6px;
+   padding: 0.4rem 0.6rem;
    background: silver;
    position: relative;
 }
@@ -28,7 +28,7 @@ code {
 .menu-popover {
    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;
    background: silver;
-   padding: 3px;
+   padding: 0.3rem;
 }
 
 .menu-button .menu-popover {
@@ -45,7 +45,7 @@ code {
 }
 
 .menu-popover-item {
-   padding: 3px 20px 3px 0;
+   padding: 0.3rem 2rem 0.3rem 0;
    white-space: nowrap;
 }
 
@@ -152,32 +152,32 @@ fieldset .separator {
 }
 
 .p5 {
-   padding: 5px;
+   padding: 0.5rem;
 }
 
 .pv5 {
-   padding-top: 5px;
-   padding-bottom: 5px;
+   padding-top: 0.5rem;
+   padding-bottom: 0.5rem;
 }
 
 .pv10 {
-   padding-top: 10px;
-   padding-bottom: 10px;
+   padding-top: 1rem;
+   padding-bottom: 1rem;
 }
 
 .ph5 {
-   padding-left: 5px;
-   padding-right: 5px;
+   padding-left: 0.5rem;
+   padding-right: 0.5rem;
 }
 
 .ph10 {
-   padding-left: 10px;
-   padding-right: 10px;
+   padding-left: 1rem;
+   padding-right: 1rem;
 }
 
 .ph15 {
-   padding-left: 15px;
-   padding-right: 15px;
+   padding-left: 1.5rem;
+   padding-right: 1.5rem;
 }
 
 .p0 {
@@ -185,15 +185,15 @@ fieldset .separator {
 }
 
 .p10 {
-   padding: 10px;
+   padding: 1rem;
 }
 
 .p8 {
-   padding: 8px;
+   padding: 0.8rem;
 }
 
 .p5 {
-   padding: 5px;
+   padding: 0.5rem;
 }
 
 .inset-deep {
@@ -332,39 +332,39 @@ fieldset .separator {
 }
 
 .mr2 {
-   margin-right: 2px;
+   margin-right: 0.2rem;
 }
 
 .mr5 {
-   margin-right: 5px;
+   margin-right: 0.5rem;
 }
 
 .mr10 {
-   margin-right: 10px;
+   margin-right: 1rem;
 }
 
 .mr15 {
-   margin-right: 15px;
+   margin-right: 1.5rem;
 }
 
 .mr20 {
-   margin-right: 20px;
+   margin-right: 2rem;
 }
 
 .ml5 {
-   margin-left: 5px;
+   margin-left: 0.5rem;
 }
 
 .ml10 {
-   margin-left: 10px;
+   margin-left: 1rem;
 }
 
 .ml15 {
-   margin-left: 15px;
+   margin-left: 1.5rem;
 }
 
 .ml20 {
-   margin-left: 20px;
+   margin-left: 2rem;
 }
 
 .row {
@@ -374,19 +374,19 @@ fieldset .separator {
 }
 
 .g5 {
-   gap: 5px;
+   gap: 0.5rem;
 }
 
 .g10 {
-   gap: 10px;
+   gap: 1rem;
 }
 
 .g15 {
-   gap: 15px;
+   gap: 1.5rem;
 }
 
 .g20 {
-   gap: 20px;
+   gap: 2rem;
 }
 
 .col {
@@ -427,89 +427,89 @@ fieldset .separator {
 }
 
 .w10 {
-   width: 10px;
+   width: 1rem;
 }
 
 .w5 {
-   width: 5px;
+   width: 0.5rem;
 }
 
 .mv5 {
-   margin-top: 5px;
-   margin-bottom: 5px;
+   margin-top: 0.5rem;
+   margin-bottom: 0.5rem;
 }
 
 .mv15 {
-   margin-top: 15px;
-   margin-bottom: 15px;
+   margin-top: 1.5rem;
+   margin-bottom: 1.5rem;
 }
 
 .mv20 {
-   margin-top: 20px;
-   margin-bottom: 20px;
+   margin-top: 2rem;
+   margin-bottom: 2rem;
 }
 
 .mh5 {
-   margin-left: 5px;
-   margin-right: 5px;
+   margin-left: 0.5rem;
+   margin-right: 0.5rem;
 }
 
 .mh10 {
-   margin-left: 10px;
-   margin-right: 10px;
+   margin-left: 1rem;
+   margin-right: 1rem;
 }
 
 .mt5 {
-   margin-top: 5px;
+   margin-top: 0.5rem;
 }
 
 .mb5 {
-   margin-bottom: 5px;
+   margin-bottom: 0.5rem;
 }
 
 .mb2 {
-   margin-bottom: 2px;
+   margin-bottom: 0.2rem;
 }
 
 .mt10 {
-   margin-top: 10px;
+   margin-top: 1rem;
 }
 
 .mt20 {
-   margin-top: 20px;
+   margin-top: 2rem;
 }
 
 .mb10 {
-   margin-bottom: 10px;
+   margin-bottom: 1rem;
 }
 
 .m10 {
-   margin: 10px;
+   margin: 1rem;
 }
 
 .mt15 {
-   margin-top: 15px;
+   margin-top: 1.5rem;
 }
 
 .mt20 {
-   margin-top: 20px;
+   margin-top: 2rem;
 }
 
 .m5 {
-   margin: 5px;
+   margin: 0.5rem;
 }
 
 .mb15 {
-   margin-bottom: 15px;
+   margin-bottom: 1.5rem;
 }
 
 .mb20 {
-   margin-bottom: 20px;
+   margin-bottom: 2rem;
 }
 
 .mv10 {
-   margin-top: 10px;
-   margin-bottom: 10px;
+   margin-top: 1rem;
+   margin-bottom: 1rem;
 }
 
 .mh0 {
@@ -518,19 +518,19 @@ fieldset .separator {
 }
 
 .sep5 {
-   height: 5px;
+   height: 0.5rem;
 }
 
 .sep10 {
-   height: 10px;
+   height: 1rem;
 }
 
 .sep15 {
-   height: 15px;
+   height: 1.5rem;
 }
 
 .sep20 {
-   height: 20px;
+   height: 2rem;
 }
 
 .text-blue,
@@ -591,7 +591,7 @@ ul.tree-view > li:first-child {
 
 .toast {
    background: #ffc;
-   padding: 5px;
+   padding: 0.5rem;
    border: 1px solid grey;
    color: #333;
    border-radius: 3px;
@@ -602,7 +602,7 @@ ul.tree-view > li:first-child {
 
 .warning-banner {
    background: #ffc;
-   padding: 5px;
+   padding: 0.5rem;
    border: 1px solid grey;
    color: #333;
    border-radius: 3px;
@@ -610,7 +610,7 @@ ul.tree-view > li:first-child {
 
 .warning-banner ul {
    padding: 0;
-   margin: 5px 0;
+   margin: 0.5rem 0;
 }
 
 .warning-banner ul li {
@@ -659,7 +659,7 @@ ul.tree-view > li:first-child {
 .table-view th,
 .table-view td {
    vertical-align: middle;
-   padding: 3px 6px;
+   padding: 0.3rem 0.6rem;
 }
 
 .table-view tr:nth-child(even) {
@@ -719,7 +719,7 @@ ul.tree-view > li:first-child {
 
 .window-content {
    background: #fff;
-   padding: 6px;
+   padding: 0.6rem;
    flex: 1;
 }
 
@@ -734,23 +734,23 @@ button {
 }
 
 .player-flag {
-   height: 17px;
+   height: 1.7rem;
    display: block;
 }
 
 .player-flag-large {
-   height: 24px;
+   height: 2.4rem;
    display: block;
 }
 
 .chat-message-item .player-flag {
-   height: 15px;
+   height: 1.5rem;
    display: block;
-   margin: 0 0 0 2px;
+   margin: 0 0 0 0.2rem;
 }
 
 .player-level {
-   height: 12px;
+   height: 1.2rem;
    display: block;
 }
 
@@ -800,7 +800,7 @@ table.date-table {
 }
 table.date-table td,
 table.date-table th {
-   padding: 0 5px;
+   padding: 0 0.5rem;
 }
 table.date-table td:first-child,
 table.date-table th:first-child {

@@ -568,7 +568,7 @@ export function GameplayOptionPage(): React.ReactNode {
                   </div>
                   <input
                      className="text-right"
-                     style={{ width: 60 }}
+                     style={{ width: "6rem" }}
                      type="text"
                      defaultValue={options.transportSourceCacheTimeout}
                      onBlur={(e) => {

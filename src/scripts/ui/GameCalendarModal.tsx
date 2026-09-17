@@ -24,15 +24,15 @@ export function GameCalendarModal(): React.ReactNode {
    const playerBirthdaysByDay = getPlayerBirthdaysByDay(playerBirthdays, month.getMonth());
 
    return (
-      <div className="window birthday-calendar-window col">
+      <div className="window modal-window birthday-calendar-window col">
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.GameCalendar)}</div>
             <div className="title-bar-controls">
-               <button onClick={hideModal} aria-label={$t(L.Close)}></button>
+               <button onClick={hideModal} aria-label="Close" title={$t(L.Close)}></button>
             </div>
          </div>
-         <div className="window-body birthday-calendar col f1" style={{ overflow: "hidden" }}>
-            <div className="row mb10">
+         <div className="window-body birthday-calendar col f1">
+            <div className="row mb10" style={{ flexWrap: "wrap", gap: "0.5rem", flexShrink: 0 }}>
                <button
                   className="ph5"
                   onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))}
@@ -226,8 +226,8 @@ function _RestitutorComponent(): React.ReactNode {
                <img
                   src={RestitutorIcon}
                   style={{
-                     width: 17,
-                     height: 17,
+                     width: "1.7rem",
+                     height: "1.7rem",
                      display: "block",
                      borderRadius: "20%",
                   }}

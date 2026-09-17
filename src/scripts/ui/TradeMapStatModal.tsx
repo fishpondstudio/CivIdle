@@ -44,7 +44,7 @@ export function TradeMapStatModal(): React.ReactNode {
    }
 
    return (
-      <div className="window" style={{ width: 700, maxWidth: "80vw" }}>
+      <div className="window modal-window" style={{ width: "70rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.TradeMapStatistics)}</div>
             <div className="title-bar-controls">
@@ -53,7 +53,11 @@ export function TradeMapStatModal(): React.ReactNode {
          </div>
          <div
             className="window-body"
-            style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}
+            style={{
+               display: "grid",
+               gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 20rem), 1fr))",
+               gap: "1rem",
+            }}
          >
             <div className="inset-shallow white p10">
                <div className="text-desc mb10">{$t(L.PlayerFlag)}</div>
@@ -62,7 +66,7 @@ export function TradeMapStatModal(): React.ReactNode {
                   .slice(0, 15)
                   .map(([flag, count], i) => (
                      <div className="row g5 mv5" key={flag}>
-                        <div style={{ width: 20 }} className="text-strong">
+                        <div style={{ width: "2rem" }} className="text-strong">
                            {i + 1}
                         </div>
                         <PlayerFlagComponent name={flag} scale={0.7} />
@@ -77,7 +81,7 @@ export function TradeMapStatModal(): React.ReactNode {
                   .sort((a, b) => b[1] - a[1])
                   .map(([city, count], i) => (
                      <div className="row g5 mv5" key={city}>
-                        <div style={{ width: 20 }} className="text-strong">
+                        <div style={{ width: "2rem" }} className="text-strong">
                            {i + 1}
                         </div>
                         <div className="f1 text-strong">{Config.City[city].name()}</div>
@@ -91,7 +95,7 @@ export function TradeMapStatModal(): React.ReactNode {
                   .sort((a, b) => b[1] - a[1])
                   .map(([techAge, count], i) => (
                      <div className="row g5 mv5" key={techAge}>
-                        <div style={{ width: 20 }} className="text-strong">
+                        <div style={{ width: "2rem" }} className="text-strong">
                            {i + 1}
                         </div>
                         <div className="f1 text-strong">{Config.TechAge[techAge].name()}</div>

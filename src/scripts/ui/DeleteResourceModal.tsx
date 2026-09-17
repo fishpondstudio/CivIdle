@@ -16,7 +16,7 @@ export function DeleteResourceModal({
    const maxAmount = Math.ceil(building.resources[resource] ?? 0);
    const [amount, setAmount] = useState(maxAmount);
    return (
-      <div className="window">
+      <div className="window modal-window">
          <div className="title-bar">
             <div className="title-bar-text">
                Destroying {Config.Material[resource].name()} from {Config.Building[building.type].name()}
@@ -40,9 +40,9 @@ export function DeleteResourceModal({
                />
             </div>
             <div className="sep15" />
-            <div className="row" style={{ justifyContent: "flex-end" }}>
+            <div className="row modal-actions" style={{ justifyContent: "flex-end" }}>
                <button
-                  style={{ width: "80px", fontWeight: "bold" }}
+                  style={{ minWidth: "8rem", fontWeight: "bold" }}
                   disabled={amount <= 0}
                   onClick={() => {
                      if (amount <= 0) {
@@ -61,9 +61,8 @@ export function DeleteResourceModal({
                >
                   {$t(L.ConfirmYes)}
                </button>
-               <div style={{ width: "10px" }}></div>
                <button
-                  style={{ width: "80px" }}
+                  style={{ minWidth: "8rem" }}
                   onClick={() => {
                      playClick();
                      hideModal();

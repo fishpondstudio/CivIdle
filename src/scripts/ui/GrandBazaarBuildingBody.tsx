@@ -75,11 +75,11 @@ function TradesTab({
 
    return (
       <>
-         <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
+         <article role="tabpanel" className="f1 column" style={{ padding: "0.8rem", overflow: "auto" }}>
             <fieldset>
                <legend>{$t(L.GrandBazaarFilters)}</legend>
                <div className="row">
-                  <div style={{ width: "80px" }}>{$t(L.GrandBazaarSeach)}</div>
+                  <div style={{ width: "8rem" }}>{$t(L.GrandBazaarSeach)}</div>
                   <input
                      type="text"
                      className="f1 mr5"
@@ -115,7 +115,7 @@ function TradesTab({
                </div>
                <div className="sep10"></div>
                <div className="row">
-                  <div style={{ width: "80px" }}>{$t(L.GrandBazaarFilterYouPay)}</div>
+                  <div style={{ width: "8rem" }}>{$t(L.GrandBazaarFilterYouPay)}</div>
                   <select
                      className="f1"
                      value={sellResourceFilter ? sellResourceFilter : ""}
@@ -140,7 +140,7 @@ function TradesTab({
                </div>
                <div className="sep10"></div>
                <div className="row">
-                  <div style={{ width: "80px" }}>{$t(L.GrandBazaarFilterYouGet)}</div>
+                  <div style={{ width: "8rem" }}>{$t(L.GrandBazaarFilterYouGet)}</div>
                   <select
                      className="f1"
                      value={buyResourceFilter ? buyResourceFilter : ""}
@@ -320,7 +320,7 @@ function ActiveTradesTab({
    gs,
 }: { allMarketTrades: IGrandBazaarMarketData[]; gs: GameState }): React.ReactNode {
    return (
-      <article role="tabpanel" className="f1" style={{ padding: "8px", overflow: "auto" }}>
+      <article role="tabpanel" className="f1" style={{ padding: "0.8rem", overflow: "auto" }}>
          <TableView
             classNames="sticky-header f1"
             header={[

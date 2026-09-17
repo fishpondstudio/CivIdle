@@ -11,11 +11,7 @@ export function PaintingModal({ painting }: { painting: Painting }): React.React
    const def = Paintings[painting];
    return (
       <div className="painting-modal">
-         <img
-            src={PaintingImages[painting]}
-            alt={def.name()}
-            style={{ maxHeight: "90vh", maxWidth: "500px" }}
-         />
+         <img src={PaintingImages[painting]} alt={def.name()} className="painting-image" />
          <div className="overlay">
             <div>
                <div className="title">{def.name()}</div>
@@ -24,7 +20,7 @@ export function PaintingModal({ painting }: { painting: Painting }): React.React
                      {Painters[def.painter]()} · {def.year} · {Themes[def.theme]()}
                      {def.masterpiece && ` · ${$t(L.Masterpiece)}`}
                   </div>
-                  <div className="row g10 mt5">
+                  <div className="row g10 mt5" style={{ flexWrap: "wrap" }}>
                      <div
                         className="button"
                         onClick={() => {

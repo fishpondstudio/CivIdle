@@ -41,7 +41,7 @@ export function GreatPersonPage(): React.ReactNode {
                   })
                }
             >
-               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+               <div className="m-icon" style={{ margin: "0 0.5rem 0 -0.5rem", fontSize: "1.8rem" }}>
                   arrow_back
                </div>
                <div className="f1">{$t(L.GoBack)}</div>
@@ -89,7 +89,7 @@ export function GreatPersonPage(): React.ReactNode {
                   return (
                      <tr key={gp}>
                         <td>
-                           <GreatPersonImage greatPerson={gp} style={{ height: "50px", display: "block" }} />
+                           <GreatPersonImage greatPerson={gp} style={{ height: "5rem", display: "block" }} />
                         </td>
                         <td>
                            <div className="text-strong">{person.name()}</div>

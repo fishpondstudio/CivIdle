@@ -106,7 +106,7 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
                   fixedHeaderContent={() => {
                      return (
                         <tr>
-                           <th style={{ width: "30px" }}></th>
+                           <th style={{ width: "3rem" }}></th>
                            <th>{$t(L.PlayerTradeResource)}</th>
                            <th>{$t(L.PlayerTradeFillBy)}</th>
                            <th className="text-right">{$t(L.PlayerTradeAmount)}</th>

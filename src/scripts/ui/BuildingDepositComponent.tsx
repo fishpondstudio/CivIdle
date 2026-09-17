@@ -29,7 +29,7 @@ export function BuildingDepositComponent({ gameState, xy }: IBuildingComponentPr
                   <li key={k} className="row">
                      <DepositTextureComponent
                         deposit={k}
-                        style={{ filter: "invert(0.75)", marginRight: 5 }}
+                        style={{ filter: "invert(0.75)", marginRight: "0.5rem" }}
                         scale={0.2}
                      />
                      {hasRequiredDeposit({ [k]: true }, xy, gameState) ? (

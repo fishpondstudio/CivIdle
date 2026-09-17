@@ -25,7 +25,7 @@ import { playError } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
-const LABEL_WIDTH = 150;
+const LABEL_WIDTH = "15rem";
 
 export function ChangeResourceImportModal({
    building,
@@ -50,7 +50,7 @@ export function ChangeResourceImportModal({
    const max = clamp(capacity - usedCapacity, 0, capacity);
    const isValid = resourceImport.perCycle >= 0 && resourceImport.perCycle <= max;
    return (
-      <div className="window" style={{ width: "450px" }}>
+      <div className="window modal-window" style={{ width: "45rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">
                {$t(L.ResourceImportSettings, { res: Config.Material[resource].name() })}
@@ -205,7 +205,7 @@ export function ChangeResourceImportModal({
                >
                   {$t(L.ChangePlayerHandle)}
                </button>
-               <div style={{ width: "10px" }}></div>
+               <div style={{ width: "1rem" }}></div>
                <button onClick={hideModal}>{$t(L.ChangePlayerHandleCancel)}</button>
             </div>
          </div>

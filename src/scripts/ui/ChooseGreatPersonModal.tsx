@@ -87,12 +87,12 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
    }
 
    return (
-      <div className="window" style={{ width: greatPeopleChoice.length * 250, maxWidth: "75vw" }}>
+      <div className="window modal-window" style={{ width: `${greatPeopleChoice.length * 25}rem` }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.AGreatPersonIsBorn)}</div>
          </div>
          <div className="window-body">
-            <div className="row" style={{ alignItems: "stretch", columnGap: 5 }}>
+            <div className="row" style={{ alignItems: "stretch", columnGap: "0.5rem" }}>
                {greatPeopleChoice.map((greatPerson, index) => {
                   const p = Config.GreatPerson[greatPerson];
                   return (
@@ -103,7 +103,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
                      >
                         <GreatPersonImage greatPerson={greatPerson} style={{ width: "100%" }} />
                         {amount > 1 ? (
-                           <div className="text-orange" style={{ fontSize: 20, fontFamily: Fonts.Cabin }}>
+                           <div className="text-orange" style={{ fontSize: "2rem", fontFamily: Fonts.Cabin }}>
                               x{formatNumber(amount)}
                            </div>
                         ) : null}
@@ -128,7 +128,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
                })}
             </div>
             <div className="sep5"></div>
-            <div className="row" style={{ columnGap: 5 }}>
+            <div className="row" style={{ columnGap: "0.5rem" }}>
                {greatPeopleChoice.map((greatPerson, index) => {
                   return (
                      <div key={index} className="f1">

@@ -40,7 +40,7 @@ export function Filter({
          className={classNames({
             active: hasFlag(filter, current),
          })}
-         style={{ width: 27, padding: 0 }}
+         style={{ width: "2.7rem", padding: 0 }}
          onClick={() => {
             savedFilter = toggleFlag(filter, current);
             onFilterChange(savedFilter);

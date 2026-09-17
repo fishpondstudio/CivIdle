@@ -46,7 +46,7 @@ function TutorialComponent(): React.ReactNode {
                clearHighlightPanel = undefined;
             }}
             className="warning-banner pointer row g5"
-            style={{ width: 300, padding: 5 }}
+            style={{ width: "30rem", padding: "0.5rem" }}
             onClick={() => {
                playClick();
                showModal(<TutorialModal />);

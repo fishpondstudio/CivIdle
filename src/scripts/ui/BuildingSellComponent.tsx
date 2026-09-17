@@ -45,7 +45,7 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
                   content={$t(L.DemolishAllBuilding, { building: def.name(), tile: range })}
                >
                   <button
-                     style={{ width: 27, padding: 0 }}
+                     style={{ width: "2.7rem", padding: 0 }}
                      onMouseEnter={() => {
                         Singleton()
                            .sceneManager.getCurrent(WorldScene)

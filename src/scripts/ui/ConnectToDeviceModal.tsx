@@ -5,7 +5,7 @@ import { hideModal, showToast } from "./GlobalModal";
 
 export function ConnectToDeviceModal(): React.ReactNode {
    return (
-      <div className="window">
+      <div className="window modal-window">
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.ConnectToADevice)}</div>
             <div className="title-bar-controls">

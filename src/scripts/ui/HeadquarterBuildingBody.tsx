@@ -229,7 +229,7 @@ export function HeadquarterBuildingBody({
                               <td className="right">
                                  <FormatNumber value={unlockCost ?? 0} />
                               </td>
-                              <td className="right" style={{ width: "65px" }}>
+                              <td className="right" style={{ width: "6.5rem" }}>
                                  {scienceAmount < unlockCost ? (
                                     formatPercent(scienceAmount / unlockCost, 0)
                                  ) : (
@@ -241,7 +241,7 @@ export function HeadquarterBuildingBody({
                                     ? formatHMS(((unlockCost - scienceAmount) * SECOND) / scienceDelta)
                                     : null}
                               </td>
-                              <td className="right" style={{ width: "50px" }}>
+                              <td className="right" style={{ width: "5rem" }}>
                                  <span
                                     className="text-link"
                                     onClick={() => {

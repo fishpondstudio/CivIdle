@@ -11,24 +11,24 @@ import { AccountLevelComponent } from "./TextureSprites";
 
 export function AccountRankUpModal({ rank, user }: { rank: AccountLevel; user: IUser }): React.ReactNode {
    return (
-      <div className="window" style={{ width: 500, maxWidth: "50vw" }}>
+      <div className="window modal-window" style={{ width: "50rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.AccountRankUp)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
          </div>
-         <img src={RomanMagistrate} className="w100" style={{ display: "block" }} />
          <div className="window-body">
+            <img src={RomanMagistrate} className="modal-hero" />
             <div className="sep10"></div>
-            <div className="row" style={{ fontFamily: Fonts.OldTypefaces, fontSize: 32 }}>
+            <div className="row" style={{ fontFamily: Fonts.OldTypefaces, fontSize: "3.2rem" }}>
                <div className="f1"></div>
-               <AccountLevelComponent level={user.level} scale={0.32} style={{ marginRight: 5 }} />
+               <AccountLevelComponent level={user.level} scale={0.32} style={{ marginRight: "0.5rem" }} />
                <div>{AccountLevelNames[user.level]()}</div>
-               <div style={{ width: 60 }} className="m-icon text-center text-desc">
+               <div style={{ width: "6rem", flexShrink: 0 }} className="m-icon text-center text-desc">
                   keyboard_double_arrow_right
                </div>
-               <AccountLevelComponent level={rank} scale={0.32} style={{ marginRight: 5 }} />
+               <AccountLevelComponent level={rank} scale={0.32} style={{ marginRight: "0.5rem" }} />
                <div>{AccountLevelNames[rank]()}</div>
                <div className="f1"></div>
             </div>

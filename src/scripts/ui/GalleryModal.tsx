@@ -27,7 +27,7 @@ export function GalleryModal({ building }: { building: IMauritshuisBuildingData 
       structuredClone(building.placedPaintings),
    );
    return (
-      <div className="window" style={{ width: "min(90vw, 1200px)" }}>
+      <div className="window modal-window" style={{ width: "120rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.Gallery)}</div>
          </div>
@@ -104,23 +104,21 @@ export function GalleryModal({ building }: { building: IMauritshuisBuildingData 
                   }
                }}
             >
-               <div className="row" style={{ gap: 8 }}>
-                  <div style={{ position: "relative" }}>
+               <div className="gallery-layout">
+                  <div className="gallery-grid">
                      <Grid placedPaintings={placedPaintings} />
                      <PlacedPaintings placedPaintings={placedPaintings} />
                   </div>
-                  <div className="col f1" style={{ alignSelf: "stretch" }}>
+                  <div className="gallery-sidebar">
                      <PaintingEffects placedPaintings={placedPaintings} />
                      <PendingPaintings placedPaintings={placedPaintings} paintings={building.paintings} />
-                     <div className="row mt10">
+                     <div className="row modal-actions mt10">
                         <button className="f1" onClick={() => setPlacedPaintings(new Map())}>
                            {$t(L.ResetLayout)}
                         </button>
-                        <div className="w10" />
                         <button className="f1" onClick={hideModal}>
                            {$t(L.CloseWithoutSaving)}
                         </button>
-                        <div className="w10" />
                         <button
                            className="f1 text-strong"
                            onClick={() => {
@@ -182,14 +180,7 @@ function PaintingEffects({
    refreshOnTypedEvent(paintingUpdated);
    const effects = calculateEffects(placedPaintings);
    return (
-      <ul
-         className="tree-view"
-         style={{
-            overflowY: "auto",
-            height: "calc(var(--grid-height) * 0.25 - 8px - 35px)",
-            marginBottom: 8,
-         }}
-      >
+      <ul className="tree-view gallery-effects">
          <li>
             <details open>
                <summary className="row text-strong">
@@ -342,14 +333,7 @@ function PendingPaintings({
 }: { placedPaintings: Map<Painting, IPaintingPlacement>; paintings: Set<Painting> }): React.ReactNode {
    refreshOnTypedEvent(paintingUpdated);
    return (
-      <div
-         className="inset-shallow white"
-         style={{
-            height: "calc(var(--grid-height) * 0.75)",
-            overflowY: "auto",
-            padding: 2,
-         }}
-      >
+      <div className="inset-shallow white gallery-pending">
          {Array.from(paintings)
             .sort((a, b) => Paintings[a].height - Paintings[b].height)
             .map((key) => {
@@ -439,7 +423,7 @@ function PaintingItem({
             style={{
                width: `calc(var(--grid-size) * ${painting.width})`,
                height: `calc(var(--grid-size) * ${painting.height})`,
-               borderRadius: 4,
+               borderRadius: "0.4rem",
                border: "2px solid rgba(255, 255, 255, 0.5)",
                overflow: "hidden",
                objectFit: "cover",

@@ -24,7 +24,7 @@ export function AvailableTradingResourcesComponent(): React.ReactNode {
    const gs = useGameState();
    if (!myXy) {
       return (
-         <article role="tabpanel" style={{ padding: "8px" }}>
+         <article role="tabpanel" style={{ padding: "0.8rem" }}>
             <WarningComponent icon="info">
                <div>{$t(L.PlayerTradeClaimTileFirstWarning)}</div>
                <div
@@ -128,10 +128,10 @@ function TableRowComponent({
                   type="text"
                   value={destroyAmount}
                   onChange={(e) => setDestroyAmount(clamp(safeParseInt(e.target.value), 0, amount))}
-                  style={{ width: 100 }}
+                  style={{ width: "10rem" }}
                />
                <button
-                  style={{ width: 25, padding: 0 }}
+                  style={{ width: "2.5rem", padding: 0 }}
                   onClick={() => {
                      const result = deductResourceFrom(
                         resource,

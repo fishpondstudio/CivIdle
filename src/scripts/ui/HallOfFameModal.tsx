@@ -5,6 +5,7 @@ import { $t, L } from "../../../shared/utilities/i18n";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import { client } from "../rpc/RPCClient";
 import { Fonts } from "../visuals/Fonts";
+import { toRem } from "../utilities/UIScaling";
 import { hideModal } from "./GlobalModal";
 import { AccountLevelComponent } from "./TextureSprites";
 
@@ -19,15 +20,15 @@ export function HallOfFameModal(): React.ReactNode {
       });
    }, []);
    return (
-      <div className="window" style={{ width: 800, maxWidth: "80vw" }}>
+      <div className="window modal-window" style={{ width: "80rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.HallOfFame)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
          </div>
-         <div style={{ overflowY: "auto", height: 600, maxHeight: "80vh" }}>
-            <div className="window-body">
+         <div className="window-body" style={{ height: "60rem" }}>
+            <div>
                {[
                   AccountLevel.Augustus,
                   AccountLevel.Caesar,
@@ -37,14 +38,18 @@ export function HallOfFameModal(): React.ReactNode {
                ].map((level) => {
                   return (
                      <fieldset key={level}>
-                        <legend className="row text-strong" style={{ fontSize: 20 }}>
-                           <AccountLevelComponent level={level} scale={0.5} style={{ marginRight: 5 }} />
+                        <legend className="row text-strong" style={{ fontSize: "2rem" }}>
+                           <AccountLevelComponent
+                              level={level}
+                              scale={0.5}
+                              style={{ marginRight: "0.5rem" }}
+                           />
                            {AccountLevelNames[level]()} ({data?.[level]?.length ?? 0})
                         </legend>
                         <div
                            style={{
                               fontFamily: Fonts.OldTypefaces,
-                              fontSize: 9 + 3 * level,
+                              fontSize: toRem(9 + 3 * level),
                               color: `rgb(${150 - 25 * level},${150 - 25 * level},${150 - 25 * level})`,
                            }}
                         >

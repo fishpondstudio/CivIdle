@@ -41,7 +41,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
       <div className="text-small row">
          <LazyTippy content={$t(L.ApplyToAllBuilding, { building: def.name() })}>
             <button
-               style={{ width: 27, padding: 0 }}
+               style={{ width: "2.7rem", padding: 0 }}
                onClick={() => {
                   playSuccess();
                   const count = applyToAllBuildings(building.type, getOptions, gameState);
@@ -55,7 +55,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
             return (
                <LazyTippy key={tile} content={$t(L.ApplyToBuildingInTile, { building: def.name(), tile })}>
                   <button
-                     style={{ width: 27, padding: 0 }}
+                     style={{ width: "2.7rem", padding: 0 }}
                      onMouseEnter={() => {
                         Singleton()
                            .sceneManager.getCurrent(WorldScene)
@@ -98,7 +98,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
                })}
             >
                <button
-                  style={{ width: 27, padding: 0 }}
+                  style={{ width: "2.7rem", padding: 0 }}
                   onClick={() => {
                      playSuccess();
                      const defaults = options.buildingDefaults;

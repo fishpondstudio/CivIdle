@@ -44,7 +44,7 @@ export function UnlockableEffectComponent({
                      <BuildingSpriteComponent
                         building={b}
                         scale={0.5}
-                        style={{ filter: "invert(0.75)", margin: "0 10px 0 0" }}
+                        style={{ filter: "invert(0.75)", margin: "0 1rem 0 0" }}
                      />
                      <div className="f1">
                         {jsxMapOf(building.input, (res, v) => {

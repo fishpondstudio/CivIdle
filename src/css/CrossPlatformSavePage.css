@@ -9,12 +9,24 @@
    display: flex;
    align-items: center;
    justify-content: center;
+   padding: calc(1rem + env(safe-area-inset-top, 0px)) calc(1rem + env(safe-area-inset-right, 0px))
+      calc(1rem + env(safe-area-inset-bottom, 0px)) calc(1rem + env(safe-area-inset-left, 0px));
 }
 
 #game-ui .cloud-save-page .window {
    margin: auto;
-   width: 600px;
+   width: 60rem;
    height: auto;
-   max-width: 60vw;
-   max-height: 80vh;
+   max-width: 100%;
+   max-height: 100%;
+   min-height: 0;
+}
+
+#game-ui .cloud-save-page .title-bar {
+   flex-shrink: 0;
+}
+
+#game-ui .cloud-save-page .window-body {
+   min-height: 0;
+   overflow: auto;
 }

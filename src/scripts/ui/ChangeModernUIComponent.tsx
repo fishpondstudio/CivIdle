@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { $t, L } from "../../../shared/utilities/i18n";
 import { syncUITheme, useGameOptions } from "../Global";
+import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
 
 export function ChangeModernUIComponent(): React.ReactNode {
@@ -13,15 +14,15 @@ export function ChangeModernUIComponent(): React.ReactNode {
             onClick={() => {
                playClick();
                gameOptions.useModernUI = !gameOptions.useModernUI;
+               syncUITheme(Singleton().sceneManager.getContext().app, gameOptions);
                notifyGameOptionsUpdate(gameOptions);
-               syncUITheme(gameOptions);
             }}
             className={classNames({
                "m-icon pointer": true,
                "text-green": gameOptions.useModernUI,
                "text-desc": !gameOptions.useModernUI,
             })}
-            style={{ margin: "-5px 0" }}
+            style={{ margin: "-0.5rem 0" }}
          >
             {gameOptions.useModernUI ? "toggle_on" : "toggle_off"}
          </div>

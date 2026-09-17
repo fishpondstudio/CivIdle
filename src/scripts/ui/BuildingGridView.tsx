@@ -157,7 +157,7 @@ function _BuildingGridItem({
             onMouseOver={onMouseOver.bind(null, building)}
             onMouseLeave={onMouseLeave.bind(null, building)}
          >
-            <div style={{ width: 50, height: 50 }} className="row cc">
+            <div style={{ width: "5rem", height: "5rem" }} className="row cc">
                <BuildingSpriteComponent building={building} scale={0.5} style={{ filter: "invert(0.75)" }} />
             </div>
             <div

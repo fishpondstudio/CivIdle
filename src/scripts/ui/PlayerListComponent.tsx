@@ -21,7 +21,7 @@ export function PlayerListComponent({ type }: { type: "supporters" | "keepers" }
       <div className="inset-deep white p10 mb10" style={{ position: "relative" }}>
          <MiscTextureComponent
             name={type === "supporters" ? "Supporter" : "Supporter2"}
-            style={{ position: "absolute", right: 5, bottom: 5 }}
+            style={{ position: "absolute", right: "0.5rem", bottom: "0.5rem" }}
             scale={0.25}
          />
          <div

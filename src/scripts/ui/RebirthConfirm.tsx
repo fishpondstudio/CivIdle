@@ -75,7 +75,7 @@ export function RebirthConfirm({
    };
 
    return (
-      <div className="window" style={{ width: "400px" }}>
+      <div className="window modal-window" style={{ width: "40rem" }}>
          <div className="title-bar">
             <div className="title-bar-text">{$t(L.RebirthAsX, { city: Config.City[nextCity].name() })}</div>
          </div>

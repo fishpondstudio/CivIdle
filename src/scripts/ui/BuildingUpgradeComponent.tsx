@@ -250,7 +250,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                   <option value={3}>{$t(L.BatchStateSelectTurnedFullStorage)}</option>
                </select>
                <select
-                  style={{ margin: "-10px 0" }}
+                  style={{ margin: "-1rem 0" }}
                   className="condensed"
                   defaultValue={0}
                   onChange={(e) => {

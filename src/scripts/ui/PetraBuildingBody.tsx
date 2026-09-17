@@ -52,7 +52,7 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
                   }
                }}
             >
-               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+               <div className="m-icon" style={{ margin: "0 0.5rem 0 -0.5rem", fontSize: "1.8rem" }}>
                   input_circle
                </div>
                <div className="f1 row text-strong">{$t(L.Upgrade)}</div>
