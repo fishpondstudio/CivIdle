@@ -540,6 +540,14 @@ export async function handleChatCommand(command: string, channel: ChatChannel): 
          addSystemMessage("Player has been removed from map");
          break;
       }
+      case "removechat": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         await client.removeChat(parts[1]);
+         addSystemMessage(`Chat messages from ${parts[1]} has been removed`);
+         break;
+      }
       case "checksum": {
          if (isSteam()) {
             addSystemMessage(
