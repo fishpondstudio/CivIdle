@@ -1598,6 +1598,7 @@ export const EN = {
    Shamanism: "Shamanism",
    Shelter: "Shelter",
    Shortcut: "Shortcut",
+   ShortcutEdit: "Edit Shortcuts",
    ShortcutBuildingPageSellBuildingV2: "Demolish Building",
    ShortcutBuildingPageToggleBuilding: "Toggle Production",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",

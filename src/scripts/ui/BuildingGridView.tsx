@@ -13,12 +13,14 @@ import { BuildingSpriteComponent } from "./TextureSprites";
 
 export function BuildingGridView({
    buildings,
+   buildingShortcutKeys,
    buildCount,
    onClick,
    onMouseOver,
    onMouseLeave,
 }: {
    buildings: Building[];
+   buildingShortcutKeys: Map<Building, string>;
    buildCount: number;
    onClick: (b: Building) => void;
    onMouseOver: (b: Building) => void;
@@ -41,6 +43,7 @@ export function BuildingGridView({
             itemContent={(_index, building) => (
                <BuildingGridItem
                   building={building}
+                  buildingShortcutKeys={buildingShortcutKeys}
                   buildCount={buildCount}
                   onClick={onClick}
                   onMouseOver={onMouseOver}
@@ -129,12 +132,14 @@ function BuildingInfoComponent({ building }: { building: Building }): React.Reac
 
 function _BuildingGridItem({
    building,
+   buildingShortcutKeys,
    buildCount,
    onClick,
    onMouseOver,
    onMouseLeave,
 }: {
    building: Building;
+   buildingShortcutKeys: Map<Building, string>;
    buildCount: number;
    onClick: (b: Building) => void;
    onMouseOver: (b: Building) => void;
@@ -170,6 +175,7 @@ function _BuildingGridItem({
                   textAlign: "center",
                }}
             >
+               {buildingShortcutKeys.has(building) ? `[${buildingShortcutKeys.get(building)?.toUpperCase()}] ` : null}
                {Config.Building[building].name()}
             </div>
          </div>
@@ -180,6 +186,7 @@ function _BuildingGridItem({
 const BuildingGridItem = memo(_BuildingGridItem, (prev, next) => {
    return (
       prev.building === next.building &&
+      prev.buildingShortcutKeys === next.buildingShortcutKeys &&
       prev.buildCount === next.buildCount &&
       prev.onClick === next.onClick &&
       prev.onMouseOver === next.onMouseOver &&

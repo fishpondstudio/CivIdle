@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import {
    applyBuildingDefaults,
@@ -8,6 +8,7 @@ import {
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getTypeBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
+import { OnKeydown, ShortcutActions, type Shortcut } from "../../../shared/logic/Shortcut";
 import type { ITileData } from "../../../shared/logic/Tile";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import {
@@ -174,6 +175,101 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             anyOf(Config.Building[v].output, (res) => Config.Material[res].name().toLowerCase().includes(s)))
       );
    });
+   const buildingShortcutKeys = useMemo(() => {
+      const tierFilters = range(1, 8).filter((tier) => hasFlag(buildingFilter, 1 << tier));
+      if (tierFilters.length !== 1 || hasFlag(buildingFilter, BuildingFilter.Wonder)) {
+         return new Map<Building, string>();
+      }
+
+      const reservedKeys = new Set<string>();
+      Object.entries(options.shortcuts).forEach(([action, shortcut]) => {
+         if (
+            ShortcutActions[action as Shortcut]?.scope === "EmptyTilePage" &&
+            shortcut &&
+            !shortcut.ctrl &&
+            !shortcut.alt &&
+            !shortcut.shift &&
+            !shortcut.meta &&
+            shortcut.key.length === 1
+         ) {
+            reservedKeys.add(shortcut.key.toLowerCase());
+         }
+      });
+
+      const shortcuts = new Map<Building, string>();
+      const names = filteredBuildings.map((building) => ({
+         building,
+         name: Config.Building[building].name().trim().toLowerCase(),
+      }));
+      const shortcutNames = names.map((entry) => ({
+         ...entry,
+         shortcutName: reservedKeys.has(entry.name[0]) ? entry.name.slice(1) : entry.name,
+      }));
+      shortcutNames.forEach(({ building, shortcutName }) => {
+         for (let length = 1; length <= shortcutName.length; length++) {
+            const key = shortcutName.slice(0, length);
+            if (
+               !reservedKeys.has(key[0]) &&
+               shortcutNames.filter((other) => other.shortcutName.startsWith(key)).length === 1
+            ) {
+               shortcuts.set(building, key);
+               break;
+            }
+         }
+      });
+      return shortcuts;
+   }, [buildingFilter, filteredBuildings, options.shortcuts]);
+
+   const buildingShortcutSequence = useRef("");
+   const buildingShortcutTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+   useEffect(() => {
+      const handleKeydown = (e: KeyboardEvent) => {
+         if (
+            e.target instanceof HTMLInputElement ||
+            e.target instanceof HTMLTextAreaElement ||
+            e.target instanceof HTMLSelectElement ||
+            e.ctrlKey ||
+            e.altKey ||
+            e.shiftKey ||
+            e.metaKey ||
+            e.key.length !== 1
+         ) {
+            return;
+         }
+         const clearSequence = () => {
+            buildingShortcutSequence.current = "";
+            if (buildingShortcutTimer.current) {
+               clearTimeout(buildingShortcutTimer.current);
+               buildingShortcutTimer.current = undefined;
+            }
+         };
+         const sequence = `${buildingShortcutSequence.current}${e.key.toLowerCase()}`;
+         const building = [...buildingShortcutKeys.entries()].find(([, key]) => key === sequence)?.[0];
+         if (building) {
+            clearSequence();
+            e.preventDefault();
+            build(building);
+            return;
+         }
+         if ([...buildingShortcutKeys.values()].some((key) => key.startsWith(sequence))) {
+            buildingShortcutSequence.current = sequence;
+            if (buildingShortcutTimer.current) {
+               clearTimeout(buildingShortcutTimer.current);
+            }
+            buildingShortcutTimer.current = setTimeout(clearSequence, 750);
+            e.preventDefault();
+         } else {
+            clearSequence();
+         }
+      };
+      const subscription = OnKeydown.on(handleKeydown);
+      return () => {
+         subscription.dispose();
+         if (buildingShortcutTimer.current) {
+            clearTimeout(buildingShortcutTimer.current);
+         }
+      };
+   }, [build, buildingShortcutKeys]);
 
    return (
       <div className="window">
@@ -291,6 +387,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             {options.constructionGridView ? (
                <BuildingGridView
                   buildings={filteredBuildings}
+                  buildingShortcutKeys={buildingShortcutKeys}
                   buildCount={buildCount}
                   onClick={build}
                   onMouseOver={onMouseOver}
@@ -300,6 +397,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                <BuildingTableView
                   buildings={filteredBuildings}
                   buildCount={buildCount}
+                  buildingShortcutKeys={buildingShortcutKeys}
                   lastBuild={lastBuild}
                   tile={tile}
                   gs={gs}
