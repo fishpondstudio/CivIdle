@@ -16,7 +16,7 @@ export function ShortcutPage(): React.ReactNode {
    const gameOptions = useGameOptions();
    return (
       <div className="window">
-         <TitleBarComponent>{$t(L.Shortcut)}</TitleBarComponent>
+         <TitleBarComponent>{$t(L.ShortcutEdit)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <fieldset>

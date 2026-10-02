@@ -4,6 +4,7 @@ import { $t, L } from "../utilities/i18n";
 import { getGameOptions } from "./GameStateLogic";
 
 export const ShortcutScopes = {
+   ShortcutPage: () => $t(L.ShortcutEdit),
    BuildingPage: () => $t(L.ShortcutScopeBuildingPage),
    TechPage: () => $t(L.ShortcutScopeTechPage),
    EmptyTilePage: () => $t(L.ShortcutScopeEmptyTilePage),
@@ -15,6 +16,18 @@ export const ShortcutScopes = {
 export type ShortcutScope = keyof typeof ShortcutScopes;
 
 export const ShortcutActions = {
+   ShortcutPageSave: {
+      scope: "ShortcutPage",
+      name: () => $t(L.ShortcutSave),
+   },
+   ShortcutPageClear: {
+      scope: "ShortcutPage",
+      name: () => $t(L.ShortcutClear),
+   },
+   ShortcutPageAssign: {
+      scope: "ShortcutPage",
+      name: () => $t(L.ShortcutAssign),
+   },
    BuildingPageSellBuilding: {
       scope: "BuildingPage",
       name: () => $t(L.ShortcutBuildingPageSellBuildingV2),
@@ -66,6 +79,42 @@ export const ShortcutActions = {
    EmptyTilePageBuildLastBuilding: {
       scope: "EmptyTilePage",
       name: () => $t(L.EmptyTilePageBuildLastBuilding),
+   },
+   EmptyTilePageFilterWonder: {
+      scope: "EmptyTilePage",
+      name: () => $t(L.Wonder),
+   },
+   EmptyTilePageFilterTier1: {
+      scope: "EmptyTilePage",
+      name: () => `${$t(L.BuildingTier)} 1`,
+   },
+   EmptyTilePageFilterTier2: {
+      scope: "EmptyTilePage",
+      name: () => `${$t(L.BuildingTier)} 2`,
+   },
+   EmptyTilePageFilterTier3: {
+      scope: "EmptyTilePage",
+      name: () => `${$t(L.BuildingTier)} 3`,
+   },
+   EmptyTilePageFilterTier4: {
+      scope: "EmptyTilePage",
+      name: () => `${$t(L.BuildingTier)} 4`,
+   },
+   EmptyTilePageFilterTier5: {
+      scope: "EmptyTilePage",
+      name: () => `${$t(L.BuildingTier)} 5`,
+   },
+   EmptyTilePageFilterTier6: {
+      scope: "EmptyTilePage",
+      name: () => `${$t(L.BuildingTier)} 6`,
+   },
+   EmptyTilePageFilterTier7: {
+      scope: "EmptyTilePage",
+      name: () => `${$t(L.BuildingTier)} 7`,
+   },
+   EmptyTilePageFilterTier8: {
+      scope: "EmptyTilePage",
+      name: () => `${$t(L.BuildingTier)} 8`,
    },
    SendAnExplorer: {
       scope: "UnexploredPage",

@@ -20,6 +20,7 @@ import {
    range,
    sizeOf,
    tileToPoint,
+   toggleFlag,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { $t, L } from "../../../shared/utilities/i18n";
@@ -128,6 +129,21 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       },
       [],
    );
+   const toggleTierFilter = useCallback(
+      (tier: number) => {
+         setBuildingFilter(toggleFlag(buildingFilter, 1 << tier));
+      },
+      [buildingFilter],
+   );
+   useShortcut("EmptyTilePageFilterTier1", () => toggleTierFilter(1), [toggleTierFilter]);
+   useShortcut("EmptyTilePageFilterTier2", () => toggleTierFilter(2), [toggleTierFilter]);
+   useShortcut("EmptyTilePageFilterTier3", () => toggleTierFilter(3), [toggleTierFilter]);
+   useShortcut("EmptyTilePageFilterTier4", () => toggleTierFilter(4), [toggleTierFilter]);
+   useShortcut("EmptyTilePageFilterTier5", () => toggleTierFilter(5), [toggleTierFilter]);
+   useShortcut("EmptyTilePageFilterTier6", () => toggleTierFilter(6), [toggleTierFilter]);
+   useShortcut("EmptyTilePageFilterTier7", () => toggleTierFilter(7), [toggleTierFilter]);
+   useShortcut("EmptyTilePageFilterTier8", () => toggleTierFilter(8), [toggleTierFilter]);
+   useShortcut("EmptyTilePageFilterWonder", () => toggleTierFilter(0), [toggleTierFilter]);
    const buildingByType = getTypeBuildings(gs);
    const filteredBuildings = keysOf(unlockedBuildings(gs)).filter((v) => {
       if ((sizeOf(constructed.get(v)) ?? 0) >= (Config.Building[v].max ?? Number.POSITIVE_INFINITY)) {
