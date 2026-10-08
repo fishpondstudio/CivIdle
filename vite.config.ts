@@ -21,7 +21,6 @@ export default defineConfig(({ command }) => {
          host: true,
       },
       build: {
-         sourcemap: true,
          target: "es2015",
       },
       test: {

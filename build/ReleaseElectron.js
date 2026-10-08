@@ -43,16 +43,16 @@ cmd("npm run build", rootPath);
 cmd("npm run optimize", rootPath);
 
 if (build > 0) {
-   cmd("sentry-cli sourcemaps inject ./dist/", rootPath);
-   cmd(`sentry-cli sourcemaps upload --org fish-pond-studio --project cividle --release Build.${build} ./dist/`, rootPath);
+   // cmd("sentry-cli sourcemaps inject ./dist/", rootPath);
+   // cmd(`sentry-cli sourcemaps upload --org fish-pond-studio --project cividle --release Build.${build} ./dist/`, rootPath);
 
-   const sourceMaps = path.join(rootPath, "dist", "assets", "*.js.map");
-   console.log(`rimraf ${sourceMaps}`)
-   rimrafSync(sourceMaps, { glob: true });
+   // const sourceMaps = path.join(rootPath, "dist", "assets", "*.js.map");
+   // console.log(`rimraf ${sourceMaps}`)
+   // rimrafSync(sourceMaps, { glob: true });
 
    console.log("========== Upload to Web Server ==========");
 
-   cmd("zip -r cividle.zip .", path.join(rootPath, "dist"));
+      cmd("zip -r cividle.zip .", path.join(rootPath, "dist"));
    fs.ensureDirSync(path.join(rootPath, "out"));
    fs.removeSync(path.join(rootPath, "out", `cividle-${build}.zip`));
    fs.moveSync(path.join(rootPath, "dist", "cividle.zip"), path.join(rootPath, "out", `cividle-${build}.zip`));
