@@ -38,6 +38,7 @@ import {
    SECOND,
    WEEK,
    clamp,
+   escapeHtml,
    forEach,
    formatNumber,
    hasFlag,
@@ -330,12 +331,12 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
                   const mentionsMe =
                      user &&
                      !BlockedPlayers.has(m.name) &&
-                     m.message.toLowerCase().includes(` @${user.handle.toLowerCase()}`);
+                     m.message.toLowerCase().includes(`@${user.handle.toLowerCase()}`);
                   const isAnnounce =
                      hasFlag(m.attr, ChatAttributes.Announce) && options.chatChannels.has(m.channel);
                   if (mentionsMe || isAnnounce) {
                      playBubble();
-                     showToast(`${m.name}: ${m.message}`);
+                     showToast(escapeHtml(`${m.name}: ${m.message}`));
                   }
                   chatMessages.push({ ...m, id: mapSafeAdd(_chatIds, m.channel, 1) });
                });
