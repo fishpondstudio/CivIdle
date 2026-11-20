@@ -22,6 +22,7 @@ import { forEach, uuid4, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { $t, L } from "../utilities/i18n";
 import { SAVE_FILE_VERSION } from "./Constants";
+import { DEFAULT_SHORTCUTS } from "./ShortcutDefaults";
 import { getGameOptions, notifyGameOptionsUpdate } from "./GameStateLogic";
 import type { IShortcutConfig, Shortcut } from "./Shortcut";
 import type { IBuildingData, ITileData } from "./Tile";
@@ -262,7 +263,7 @@ export class GameOptions {
    spinnerTexture: SpinnerTexture | null = "Spinner1";
    spinnerSpeed = 1;
    showFloaterText = true;
-   shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
+   shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = { ...DEFAULT_SHORTCUTS };
    soundEffect = true;
    tradeFilledSound = true;
    chatHideLatestMessage = false;

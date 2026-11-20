@@ -53,6 +53,7 @@ function compareBuildings(a: Building, b: Building, col: number, tile: ITileData
 export function BuildingTableView({
    buildings,
    buildCount,
+   buildingShortcutKeys,
    lastBuild,
    tile,
    gs,
@@ -63,6 +64,7 @@ export function BuildingTableView({
 }: {
    buildings: Building[];
    buildCount: number;
+   buildingShortcutKeys: Map<Building, string>;
    lastBuild: Building | null;
    tile: ITileData;
    gs: GameState;
@@ -128,6 +130,7 @@ export function BuildingTableView({
                <BuildingTableRow
                   buildingType={k}
                   buildCount={buildCount}
+                  buildingShortcutKeys={buildingShortcutKeys}
                   lastBuild={lastBuild}
                   tile={tile}
                   gs={gs}
@@ -144,6 +147,7 @@ export function BuildingTableView({
 
 function BuildingTableRow({
    buildingType,
+   buildingShortcutKeys,
    buildCount,
    lastBuild,
    tile,
@@ -154,6 +158,7 @@ function BuildingTableRow({
    onMouseLeave,
 }: {
    buildingType: Building;
+   buildingShortcutKeys: Map<Building, string>;
    buildCount: number;
    lastBuild: Building | null;
    tile: ITileData;
@@ -203,6 +208,9 @@ function BuildingTableRow({
             <div className="row">
                <div>
                   <span className="text-strong">{building.name()}</span>
+                  {buildingShortcutKeys.has(buildingType) ? (
+                     <code className="ml5">[{buildingShortcutKeys.get(buildingType)?.toUpperCase()}]</code>
+                  ) : null}
                   {building.max === 1 ? null : (
                      <span className="text-desc text-small ml5">
                         {sizeOf(buildingByType.get(buildingType))}
