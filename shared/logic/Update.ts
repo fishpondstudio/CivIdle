@@ -884,7 +884,7 @@ export function transportResource(
          continue;
       }
 
-      if (sourceBuilding.type === "SwissBank") {
+      if (sourceBuilding.type === "SwissBank" && res === "Koti") {
          const swissBank = sourceBuilding as ISwissBankBuildingData;
          if (hasFlag(swissBank.flags, SwissBankFlags.NoExport)) {
             continue;
